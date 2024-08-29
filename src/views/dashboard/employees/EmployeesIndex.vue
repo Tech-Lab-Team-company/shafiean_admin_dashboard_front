@@ -1,102 +1,84 @@
 <template>
   <div class="employees">
     <HeadersPages title="الموظفين" button="+ اضافة موظف" link="/add-employee" />
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">صوره</th>
-            <th scope="col">أسم الموظف</th>
-            <th scope="col">رقم الهاتف</th>
-            <th scope="col">البريد الالكتروني</th>
-            <th scope="col">actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>
-              <img
-                class="img-employee"
-                src="@/assets/photos/Rectangle 8917.png"
-                alt=""
-              />
-            </td>
-            <td>محمد أحمد محمد نصره</td>
-            <td>01027003762</td>
-            <td>mohamed@gmail.com</td>
-            <td class="actions">
-              <i class="fa-solid fa-pen-to-square" title="تعديل"></i>
-              <i id="delet" class="fa-solid fa-trash" title="حذف"></i>
-              <i class="fa-solid fa-eye" title="عرض"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <img
-                class="img-employee"
-                src="@/assets/photos/Rectangle 8917.png"
-                alt=""
-              />
-            </td>
-            <td>محمد أحمد محمد نصره</td>
-            <td>01027003762</td>
-            <td>mohamed@gmail.com</td>
-            <td class="actions">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i id="delet" class="fa-solid fa-trash"></i>
-              <i class="fa-solid fa-eye"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <img
-                class="img-employee"
-                src="@/assets/photos/Rectangle 8917.png"
-                alt=""
-              />
-            </td>
-            <td>محمد أحمد محمد نصره</td>
-            <td>01027003762</td>
-            <td>mohamed@gmail.com</td>
-            <td class="actions">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i id="delet" class="fa-solid fa-trash"></i>
-              <i class="fa-solid fa-eye"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <img
-                class="img-employee"
-                src="@/assets/photos/Rectangle 8917.png"
-                alt=""
-              />
-            </td>
-            <td>محمد أحمد محمد نصره</td>
-            <td>01027003762</td>
-            <td>mohamed@gmail.com</td>
-            <td class="actions">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i id="delet" class="fa-solid fa-trash"></i>
-              <i class="fa-solid fa-eye"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <TablesPageVue
+      :headers="tableHeaders"
+      :rows="tableRows"
+      :pages="tablePages"
+    />
   </div>
 </template>
+
 <script>
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
+import TablesPageVue from "@/components/tables/TablesPage.vue";
+
 export default {
   name: "EmployeesIndex",
   components: {
     HeadersPages,
+    TablesPageVue,
+  },
+  data() {
+    return {
+      tableHeaders: [
+        "ID",
+        "الصور",
+        "اسم الموظف",
+        "البريد الالكتروني",
+        "رقم الهاتف",
+        "الصلاحيات",
+        "actions",
+      ],
+      tableRows: [
+        [
+          "1",
+          require("@/assets/photos/Rectangle 8917.png"),
+          "محمد أحمد",
+          "6mXnW@example.com",
+          123456789,
+          "مدير",
+          [
+            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
+            { class: "fa-solid fa-trash", action: this.deleteEmployee },
+            { class: "fa-solid fa-eye", action: "/view-employee" },
+          ],
+        ],
+        [
+          "2",
+          require("@/assets/photos/Rectangle 8917.png"),
+          "علي حسن",
+          "ali@example.com",
+          987654321,
+          "مساعد",
+          [
+            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
+            { class: "fa-solid fa-trash", action: this.deleteEmployee },
+            { class: "fa-solid fa-eye", action: "/view-employee" },
+          ],
+        ],
+        [
+          "3",
+          require("@/assets/photos/Rectangle 8917.png"),
+          "فاطمة يوسف",
+          "fatima@example.com",
+          1122334455,
+          "محاسب",
+          [
+            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
+            { class: "fa-solid fa-trash", action: this.deleteEmployee },
+            { class: "fa-solid fa-eye", action: "/view-employee" },
+          ],
+        ],
+      ],
+      tablePages: [1, 2, 3, 4, 5],
+    };
   },
 };
 </script>
+
+<style scoped>
+.employees {
+  padding: 1rem;
+}
+</style>

@@ -1,4 +1,7 @@
 .headers {
+  a {
+    text-decoration: none;
+  }
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,7 +19,7 @@
     font-family: "regular";
     transition: 0.7s;
   }
-  button:hover {
+  a:hover {
     background-color: white;
     border: 1px solid var(--main);
     color: var(--main);
