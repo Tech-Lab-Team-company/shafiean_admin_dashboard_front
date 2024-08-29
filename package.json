@@ -19,6 +19,7 @@
     "lottie-web": "^5.12.2",
     "normalize.css": "^8.0.1",
     "pinia": "^2.2.2",
+    "primevue": "^4.0.5",
     "sweetalert2": "^11.12.4",
     "vue": "^3.2.13",
     "vue-multiselect": "^3.0.0",

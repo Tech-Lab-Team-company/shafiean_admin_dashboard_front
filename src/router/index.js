@@ -8,7 +8,8 @@ import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
 import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitieIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
-
+import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
+import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
 const routes = [
   {
     path: "/Code",
@@ -59,6 +60,16 @@ const routes = [
         path: "/Disabilities",
         name: "Disabilities",
         component: DisabilitiesIndex,
+      },
+      {
+        path: "/add-disabilities",
+        name: "DisabilitiesAdd",
+        component: DisabilitiesAdd,
+      },
+      {
+        path: "/edit-disabilities",
+        name: "DisabilitiesEdit",
+        component: DisabilitiesEdit,
       },
     ],
   },

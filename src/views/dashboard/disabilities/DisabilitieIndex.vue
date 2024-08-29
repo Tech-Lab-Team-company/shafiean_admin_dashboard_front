@@ -3,7 +3,7 @@
     <HeadersPages
       title="الأعاقات"
       button="+ اضافة اقاعة"
-      link="/add-disabilitie"
+      link="/add-disabilities"
     />
     <TablesPageVue
       :headers="tableHeaders"
@@ -32,7 +32,10 @@ export default {
           "اعاقة سمعيه",
 
           [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-disabilitie" },
+            {
+              class: "fa-solid fa-pen-to-square",
+              action: "/edit-disabilities",
+            },
             { class: "fa-solid fa-trash", action: this.deleteEmployee },
             { class: "fa-solid fa-eye", action: "/view-disabilitie" },
           ],
@@ -44,7 +47,10 @@ export default {
           "اعاقة سمعيه",
 
           [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-disabilitie" },
+            {
+              class: "fa-solid fa-pen-to-square",
+              action: "/edit-disabilities",
+            },
             { class: "fa-solid fa-trash", action: this.deleteEmployee },
             { class: "fa-solid fa-eye", action: "/view-disabilitie" },
           ],
@@ -56,7 +62,10 @@ export default {
           "اعاقة سمعيه",
 
           [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-disabilitie" },
+            {
+              class: "fa-solid fa-pen-to-square",
+              action: "/edit-disabilities",
+            },
             { class: "fa-solid fa-trash", action: this.deleteEmployee },
             { class: "fa-solid fa-eye", action: "/view-disabilitie" },
           ],
@@ -68,7 +77,10 @@ export default {
           "اعاقة سمعيه",
 
           [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-disabilitie" },
+            {
+              class: "fa-solid fa-pen-to-square",
+              action: "/edit-disabilities",
+            },
             { class: "fa-solid fa-trash", action: this.deleteEmployee },
             { class: "fa-solid fa-eye", action: "/view-disabilitie" },
           ],
