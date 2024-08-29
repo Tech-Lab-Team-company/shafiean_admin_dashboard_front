@@ -1,0 +1,41 @@
+.main-sidebar {
+  .offcanvas-body {
+    padding: 1rem;
+    background-color: var(--main);
+    ul {
+      list-style: none;
+      li {
+        margin-bottom: 2rem;
+        i {
+          margin-left: 15px;
+        }
+      }
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      font-family: "regular";
+    }
+  }
+  button.btn-close {
+    margin: unset !important;
+    margin-right: auto !important;
+  }
+  .offcanvas-header {
+    h5 {
+      font-family: "bold";
+      margin-bottom: 0;
+      color: var(--main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+.main-sidebar .offcanvas-body ul li a.router-link-active {
+  color: var(--primary);
+}

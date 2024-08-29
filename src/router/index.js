@@ -1,20 +1,47 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import Login from "@/views/dashboard/Auth/LoginPage.vue";
+import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
+import Dashboard from "@/views/dashboard/dashboard.vue";
+import HomeView from "@/views/dashboard/HomeView.vue";
+import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
+import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/login",
+    name: "login",
+    component: Login,
+    meta: { guest: true },
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/forget-password",
+    name: "forget",
+    component: Forget,
+    meta: { guest: true },
+  },
+
+  {
+    path: "/dashboard",
+    component: Dashboard,
+    meta: { requiresAuth: true },
+    name: "Dashboard",
+    children: [
+      {
+        path: "/",
+        name: "home",
+        component: HomeView,
+      },
+      {
+        path: "/employees",
+        name: "Employees",
+        component: EmployeesIndex,
+      },
+      {
+        path: "/add-employee",
+        name: "EmployeesAdd",
+        component: EmployeesAdd,
+      },
+    ],
   },
 ];
 

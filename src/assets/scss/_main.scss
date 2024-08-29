@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+  direction: rtl;
+  padding: 0;
+}
+
+@import url("../scss/layout_style/_layout.scss");
+@import url("../scss/layout_style/_navstyle.scss");
+@import url("../scss/layout_style/_sidebar.scss");
+@import url("../scss/layout_style/_footer.scss");
+@import url("../scss/headers/_headers.scss");
+@import url("../scss/employee/_employee.scss");
+@import url("../scss/employee/_addemployee.scss");
+
+@font-face {
+  font-family: "regular";
+  src: url("@/assets/font/alfont_com_Somar-Regular.otf");
+}
+@font-face {
+  font-family: "bold";
+  src: url("@/assets/font/alfont_com_Somar-Bold.otf");
+}
+@font-face {
+  font-family: "light";
+  src: url("@/assets/font/alfont_com_Somar-Light.otf");
+}
+@font-face {
+  font-family: "Medium";
+  src: url("@/assets/font/alfont_com_Somar-Medium.otf");
+}
+@font-face {
+  font-family: "ExtraBold";
+  src: url("@/assets/font/alfont_com_Somar-ExtraBold.otf");
+}
+
+:root {
+  --main: #06797e;
+  --primary: #ffeb3b;
+}
