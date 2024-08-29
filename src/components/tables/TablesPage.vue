@@ -89,14 +89,4 @@ export default {
   },
 };
 </script>
-<style>
-i {
-  cursor: pointer;
-  margin: 0 5px;
-}
-img.image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-</style>
+<style></style>
