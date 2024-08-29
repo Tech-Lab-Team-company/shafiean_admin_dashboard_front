@@ -1,0 +1,31 @@
+.editdisabilities {
+input{
+    border: 1px solid var(--main);
+      border-radius: 10px;
+      height: 40px;
+      padding: 0 0.3rem;
+      width: 100%;
+      outline: none;
+   
+}
+button{
+    background-color: var(--main);
+    color: white;
+    font-family: "regular";
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    transition: 0.7s;
+    margin-left: 10px;
+    margin-top: 13px;
+    
+}
+button:hover{
+    background-color: white;
+    border: 1px solid var(--main);
+    color: var(--main);
+
+}
+
+}
+  
