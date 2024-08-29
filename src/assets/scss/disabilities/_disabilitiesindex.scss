@@ -1,4 +1,4 @@
-.employees {
+.disabilities {
   table.table {
     text-align: center;
     font-family: "regular";
@@ -19,7 +19,7 @@
       }
     }
   }
-  img.img-employee {
+  img.img-disabilitie {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -30,13 +30,13 @@
   i#delet {
     color: red;
   }
-  .employees-table {
+  .disabilities-table {
     border: 1px solid #00000036;
     padding: 1rem;
     border-radius: 10px;
   }
   .search {
-    border: 1px solid #00000036;
+    border: 1px solid var(--main);
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     border-radius: 10px;
@@ -44,7 +44,7 @@
     input {
       border: none;
       outline: none;
-      width: 95%;
+      width: 98%;
       padding: 0 0.3rem;
     }
   }

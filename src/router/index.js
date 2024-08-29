@@ -4,7 +4,9 @@ import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
 import Dashboard from "@/views/dashboard/dashboard.vue";
 import HomeView from "@/views/dashboard/HomeView.vue";
 import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
+import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitieIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
+import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 
 const routes = [
   {
@@ -40,6 +42,16 @@ const routes = [
         path: "/add-employee",
         name: "EmployeesAdd",
         component: EmployeesAdd,
+      },
+      {
+        path: "/edit-employee",
+        name: "EmployeesEdit",
+        component: EmployeesEdit,
+      },
+      {
+        path: "/Disabilities",
+        name: "Disabilities",
+        component: DisabilitiesIndex,
       },
     ],
   },
