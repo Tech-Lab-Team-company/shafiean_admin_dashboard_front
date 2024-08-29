@@ -1,12 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/views/dashboard/Auth/LoginPage.vue";
 import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
+import CodeReset from "@/views/dashboard/Auth/CodeReset.vue";
 import Dashboard from "@/views/dashboard/dashboard.vue";
 import HomeView from "@/views/dashboard/HomeView.vue";
 import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 
 const routes = [
+  {
+    path: "/Code",
+    name: "Code",
+    component: CodeReset,
+    meta: { guest: true },
+  },
   {
     path: "/login",
     name: "login",
