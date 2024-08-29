@@ -31,7 +31,7 @@
             >
           </li>
           <li>
-            <router-link to="/" @click="closeOffcanvas">
+            <router-link to="/disabilities" @click="closeOffcanvas">
               <i class="fa-solid fa-wheelchair"></i>الأعاقات</router-link
             >
           </li>
