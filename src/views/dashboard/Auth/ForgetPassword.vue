@@ -1,31 +1,30 @@
 <template>
-  <form action="" class="formforget">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Forget Your Password</h3>
-          <input type="email" class="form-control" placeholder="email adrees" />
-          <router-link to="/Code">
-            <button type="submit">Reset Password</button>
-          </router-link>
-        </div>
-
-        <div class="col-md-8" id="forgetimg">
-          <img
-            src="@/assets/photos/25970f11-d221-4360-9f43-e344cc90260d_2000x2000.jpg"
-            alt=""
-            width="60%"
+  <div class="forgetpassword">
+    <div class="form">
+      <div class="logo">
+        <img src="../../../assets/photos/logo.png" alt="" />
+        <h4>هل نسيت كلمة المرور ؟</h4>
+      </div>
+      <form @submit.prevent>
+        <label for="email">أدخل البريد الألكتروني</label>
+        <div class="input">
+          <input
+            type="email"
+            id="email"
+            placeholder="أدخل البريد الألكتروني"
+            required
           />
         </div>
-      </div>
+        <div class="bnt">
+          <button type="submit">أرسال</button>
+        </div>
+      </form>
     </div>
-  </form>
+    <div class="img">
+      <img
+        src="../../../assets/photos/25970f11-d221-4360-9f43-e344cc90260d_2000x2000.jpg"
+        alt="Forgot Password Image"
+      />
+    </div>
+  </div>
 </template>
-
-<script>
-export default {
-  name: "ForgetPasswordPage",
-};
-</script>
-
-<style></style>

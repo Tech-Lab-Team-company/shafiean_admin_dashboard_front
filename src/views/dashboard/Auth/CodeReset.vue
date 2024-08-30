@@ -1,23 +1,26 @@
 <template>
-  <form action="" class="Codepage">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4" id="codes">
-          <h3>Enter Your Code To Reset Password</h3>
+  <form @submit.prevent="validateCode" class="Codepage">
+    <div class="content">
+      <img src="../../../assets/photos/logo.png" alt="" />
 
-          <input type="number" class="form-control" placeholder="code" />
-          <router-link to="/ResetPassword">
-            <button type="submit">Reset Password</button>
-          </router-link>
-        </div>
-
-        <div class="col-md-8">
-          <img
-            src="@/assets/photos/password-reset-vector-52497884.jpg"
-            alt=""
-            width="60%"
-          />
-        </div>
+      <h3>أدخل الكود المرسل</h3>
+      <div class="input-group mb-3">
+        <input
+          v-model="code"
+          type="text"
+          class="form-control"
+          placeholder="Enter code"
+          maxlength="6"
+          required
+        />
+      </div>
+      <button type="submit" class="btn">استرجاع كلمة المرور</button>
+      <div class="image-container">
+        <img
+          src="@/assets/photos/password-reset-vector-52497884.jpg"
+          alt="Password Reset"
+          class="img-fluid"
+        />
       </div>
     </div>
   </form>
@@ -28,10 +31,17 @@ export default {
   name: "CodeReset",
   data() {
     return {
-      value: null,
+      code: "",
     };
+  },
+  methods: {
+    validateCode() {
+      if (this.code.length === 6) {
+        this.$router.push("/ResetPassword");
+      } else {
+        alert("Please enter a valid 6-digit code.");
+      }
+    },
   },
 };
 </script>
-
-<style></style>

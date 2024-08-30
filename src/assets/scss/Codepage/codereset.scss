@@ -1,31 +1,55 @@
-.Codepage{
-    margin-top: 17%;
-    margin-right: 16%;
-
-   
-h3{
+.Codepage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to top, var(--main), #cde382);
+  padding: 2rem;
+  .content {
     text-align: center;
-    margin-top: 5%;
-    margin-bottom: 6%;
-
-}
-button{
-    width:100%;
-    margin-top: 4%;
-    
-    padding: 15px;
-    border: none;
-    background-color: var(--main);
-    color: white;
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px #cde382;
+    max-width: 400px;
+    width: 100%;
+  }
 }
 
- img{
-    margin-top: -16%;
-    margin-right: 22%;
+h3 {
+  margin-top: 0.5rem !important;
+  font-size: 1.1rem !important;
+  color: black;
+  font-family: "medium";
 }
+
+.input-group {
+  margin-bottom: 1rem;
 }
 
+button.btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  background: var(--main);
+  border: none;
+  transition: background-color 0.3s ease;
+  color: white;
+  font-family: "medium";
+  cursor: pointer;
 
+  &:hover {
+    background-color: #cde382 !important;
+  }
+}
 
+.image-container {
+  margin-top: 1.5rem;
 
+  .img-fluid {
+    max-width: 80%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px #cde382;
+  }
+}
