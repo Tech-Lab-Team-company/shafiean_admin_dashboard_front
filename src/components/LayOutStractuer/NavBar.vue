@@ -2,15 +2,9 @@
   <div class="main-nav">
     <nav class="navbars">
       <div class="allnav">
-        <button
-          class="btn"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-        >
-          <i class="fa-solid fa-bars"></i>
-        </button>
+        <div class="navbar-toggle" @click="toggleSidebar">
+          <i :class="isCollapsed ? 'fas fa-bars' : 'fas fa-times'"></i>
+        </div>
         <div class="all-info">
           <div class="dropdown">
             <button
@@ -39,6 +33,41 @@
 </template>
 <script>
 export default {
-  name: "NavBar",
+  props: {
+    isCollapsed: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  methods: {
+    toggleSidebar() {
+      this.$emit("toggle-sidebar");
+    },
+  },
 };
 </script>
+
+<style scoped>
+.navbar {
+  background-color: #34495e;
+  color: #ecf0f1;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-toggle {
+  font-size: 20px;
+  cursor: pointer;
+  color: #ecf0f1;
+}
+
+.navbar-toggle i {
+  margin-right: 15px;
+}
+
+h1 {
+  margin: 0;
+}
+</style>

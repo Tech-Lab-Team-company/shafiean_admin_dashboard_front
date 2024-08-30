@@ -2,7 +2,6 @@
   <div class="headers">
     <h4>{{ title }}</h4>
     <router-link v-if="showButton" :to="link" class="add">
-      <!-- <button class="add" type="button">{{ button }}</button> -->
       {{ button }}
     </router-link>
   </div>
