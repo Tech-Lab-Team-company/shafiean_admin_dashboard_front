@@ -1,44 +1,46 @@
 <template>
-  <div class="table">
-    <div class="header">
-      <div class="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="search" placeholder="بحث" />
+  <div class="table-responsive">
+    <div class="table">
+      <div class="header">
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" placeholder="بحث" />
+        </div>
       </div>
-    </div>
 
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th v-for="(header, index) in headers" :key="index">
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-            <td v-for="(cell, cellIndex) in row" :key="cellIndex">
-              <img
-                v-if="cellIndex === 1"
-                :src="cell"
-                alt="Image"
-                class="image"
-              />
-              <span v-else-if="cellIndex !== row.length - 1">{{ cell }}</span>
-              <span v-else>
-                <i
-                  v-for="(icon, iconIndex) in cell"
-                  :key="iconIndex"
-                  :class="icon.class"
-                  class="action-icon"
-                  @click="handleIconClick(icon.action)"
-                ></i>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th v-for="(header, index) in headers" :key="index">
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+              <td v-for="(cell, cellIndex) in row" :key="cellIndex">
+                <img
+                  v-if="cellIndex === 1"
+                  :src="cell"
+                  alt="Image"
+                  class="image"
+                />
+                <span v-else-if="cellIndex !== row.length - 1">{{ cell }}</span>
+                <span v-else>
+                  <i
+                    v-for="(icon, iconIndex) in cell"
+                    :key="iconIndex"
+                    :class="icon.class"
+                    class="action-icon"
+                    @click="handleIconClick(icon.action)"
+                  ></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="pagination">

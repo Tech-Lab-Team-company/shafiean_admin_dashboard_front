@@ -1,8 +1,11 @@
 <template>
   <div class="layout">
-    <SideBar :is-collapsed="isCollapsed" />
+    <side-bar
+      :isCollapsed="isCollapsed"
+      @update:isCollapsed="updateSidebarState"
+    />
     <div class="main" :class="{ 'sidebar-collapsed': isCollapsed }">
-      <NavBar :is-collapsed="isCollapsed" @toggle-sidebar="toggleSidebar" />
+      <NavBar :isCollapsed="isCollapsed" @toggle-sidebar="toggleSidebar" />
       <div class="content">
         <router-view />
       </div>
@@ -31,6 +34,9 @@ export default {
   methods: {
     toggleSidebar() {
       this.isCollapsed = !this.isCollapsed;
+    },
+    updateSidebarState(newState) {
+      this.isCollapsed = newState;
     },
   },
 };

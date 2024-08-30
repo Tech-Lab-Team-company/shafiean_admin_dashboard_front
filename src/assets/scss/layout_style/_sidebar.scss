@@ -6,6 +6,10 @@
   cursor: pointer;
   color: #ecf0f1;
   font-size: 20px;
+
+  i {
+    transition: color 0.3s ease;
+  }
 }
 
 .sidebar-menu {

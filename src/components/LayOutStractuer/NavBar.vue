@@ -17,9 +17,7 @@
               <h4>محمد أحمد محمد نصره</h4>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">logout</a></li>
             </ul>
           </div>
           <a class="navbar-brand" href="#"
@@ -31,6 +29,7 @@
     </nav>
   </div>
 </template>
+
 <script>
 export default {
   props: {
@@ -46,28 +45,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.navbar {
-  background-color: #34495e;
-  color: #ecf0f1;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar-toggle {
-  font-size: 20px;
-  cursor: pointer;
-  color: #ecf0f1;
-}
-
-.navbar-toggle i {
-  margin-right: 15px;
-}
-
-h1 {
-  margin: 0;
-}
-</style>
