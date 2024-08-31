@@ -6,7 +6,6 @@
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="search" placeholder="بحث" />
         </div>
-        <!-- Show the select option based on the prop -->
         <div class="select" v-if="showSelect">
           <multiselect
             v-model="value"
@@ -24,6 +23,7 @@
               <th v-for="(header, index) in headers" :key="index">
                 {{ header }}
               </th>
+              <th>actions</th>
             </tr>
           </thead>
           <tbody>
@@ -35,16 +35,23 @@
                   alt="Image"
                   class="image"
                 />
-                <span v-else-if="cellIndex !== row.length - 1">{{ cell }}</span>
-                <span v-else>
+                <span v-else>{{ cell }}</span>
+              </td>
+              <td>
+                <div class="action-icons">
                   <i
-                    v-for="(icon, iconIndex) in cell"
-                    :key="iconIndex"
-                    :class="icon.class"
-                    class="action-icon"
-                    @click="handleIconClick(icon.action)"
+                    class="fa-solid fa-trash action-icon"
+                    @click="handleIconClick('delete', row.id)"
                   ></i>
-                </span>
+                  <i
+                    class="fa-solid fa-pen-to-square action-icon"
+                    @click="handleIconClick('edit', row.id)"
+                  ></i>
+                  <i
+                    class="fa-solid fa-eye action-icon"
+                    @click="handleIconClick('view', row.id)"
+                  ></i>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -105,17 +112,23 @@ export default {
       type: Boolean,
       default: false,
     },
+    editLink: {
+      type: String,
+    },
+    viewLink: {
+      type: String,
+    },
   },
   methods: {
-    handleIconClick(action) {
-      if (typeof action === "string") {
-        this.$router.push(action); // Route to a specific path
-      } else if (typeof action === "function") {
-        action(); // Execute a specific function
+    handleIconClick(action, id) {
+      if (action === "view") {
+        this.$router.push(this.viewLink + "/" + id);
+      } else if (action === "edit") {
+        this.$router.push(this.editLink + "/" + id); // Use the editLink prop
+      } else if (action === "delete") {
+        this.$emit("delete", id);
       }
     },
   },
 };
 </script>
-
-<style></style>

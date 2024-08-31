@@ -9,6 +9,8 @@
       :headers="tableHeaders"
       :rows="tableRows"
       :pages="tablePages"
+      editLink="/edit-disabilities"
+      viewLink="/view-disabilities"
     />
   </div>
 </template>
@@ -23,67 +25,31 @@ export default {
   },
   data() {
     return {
-      tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه", "actions"],
+      tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
       tableRows: [
         [
           "1",
           require("@/assets/photos/Rectangle 8917.png"),
           "اصم",
           "اعاقة سمعيه",
-
-          [
-            {
-              class: "fa-solid fa-pen-to-square",
-              action: "/edit-disabilities",
-            },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-disabilitie" },
-          ],
         ],
         [
           "1",
           require("@/assets/photos/Rectangle 8917.png"),
           "اصم",
           "اعاقة سمعيه",
-
-          [
-            {
-              class: "fa-solid fa-pen-to-square",
-              action: "/edit-disabilities",
-            },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-disabilitie" },
-          ],
         ],
         [
           "1",
           require("@/assets/photos/Rectangle 8917.png"),
           "اصم",
           "اعاقة سمعيه",
-
-          [
-            {
-              class: "fa-solid fa-pen-to-square",
-              action: "/edit-disabilities",
-            },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-disabilitie" },
-          ],
         ],
         [
           "1",
           require("@/assets/photos/Rectangle 8917.png"),
           "اصم",
           "اعاقة سمعيه",
-
-          [
-            {
-              class: "fa-solid fa-pen-to-square",
-              action: "/edit-disabilities",
-            },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-disabilitie" },
-          ],
         ],
       ],
       tablePages: [1, 2, 3, 4, 5],
