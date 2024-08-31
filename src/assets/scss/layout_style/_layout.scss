@@ -11,7 +11,7 @@
     .content {
       flex: 1;
       overflow: auto;
-      padding: 0.5rem 2rem;
+      padding: 1.1rem 2rem;
     }
   }
 
@@ -24,10 +24,12 @@
 
     &.sidebar-expanded {
       width: 250px;
+      height: 100%;
     }
 
     &.sidebar-collapsed {
       width: 80px;
+      height: 100%;
     }
   }
 

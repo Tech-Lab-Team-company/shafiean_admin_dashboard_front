@@ -3,7 +3,7 @@
     <HeaderPages title="اضافة موظف" :showButton="false" />
     <form action="" @submit.prevent>
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
             <!-- Hidden File Input -->
@@ -27,32 +27,31 @@
             </div>
           </div>
         </div>
-        <!-- Other input fields -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for=""> أسم الموظف</label>
           <div class="input">
             <input type="text" placeholder="أدخل أسم الموظف" />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for=""> رقم الهاتف</label>
           <div class="input">
             <input type="phone" placeholder="أدخل رقم الهاتف" />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for=""> البريد الالكتروني</label>
           <div class="input">
             <input type="email" placeholder="أدخل البريد الالكتروني" />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for=""> الرقم السري</label>
           <div class="input">
             <input type="password" placeholder="أدخل الرقم السري" />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for="">الصلاحيات</label>
           <multiselect
             v-model="value"
@@ -62,7 +61,6 @@
           ></multiselect>
         </div>
       </div>
-
       <div class="all-btn">
         <button type="submit" class="save">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>

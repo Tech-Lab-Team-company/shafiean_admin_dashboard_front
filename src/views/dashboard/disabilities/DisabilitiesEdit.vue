@@ -2,9 +2,9 @@
   <div class="editdisabilities">
     <HeaderPages title="تعديل اعاقه" :showButton="false" />
 
-    <div class="editinputs">
+    <div class="disabilities-edit">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
             <!-- Hidden File Input -->
@@ -28,23 +28,23 @@
             </div>
           </div>
         </div>
-        <div class="row mt-5">
-          <div class="col-lg-6">
-            <label for=""> اسم الاعاقه</label>
-            <div>
-              <input type="text" placeholder="أدخل اسم الاعاقه" />
-            </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for=""> اسم الاعاقه</label>
+          <div class="input">
+            <input type="text" placeholder="أدخل اسم الاعاقه" />
           </div>
-          <div class="col-lg-6">
-            <label for=""> وصف الاعاقه</label>
-            <div>
-              <input type="text" placeholder="وصف الاعاقه" />
-            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for=""> وصف الاعاقه</label>
+          <div class="input">
+            <input type="text" placeholder="وصف الاعاقه" />
           </div>
         </div>
       </div>
-      <button>حفظ</button>
-      <button @click="$router.go(-1)">رجوع</button>
+      <div class="all-btn">
+        <button type="submit" class="save">تعديل</button>
+        <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
+      </div>
     </div>
   </div>
 </template>
