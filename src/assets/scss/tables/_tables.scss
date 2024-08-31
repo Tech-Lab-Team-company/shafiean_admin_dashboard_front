@@ -7,8 +7,16 @@ table.table {
   thead {
     tr {
       th {
-        background: var(--main);
+        background: var(--main) !important;
         color: white;
+        text-align: center !important;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        text-align: center !important;
       }
     }
   }

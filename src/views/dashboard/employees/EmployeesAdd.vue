@@ -1,7 +1,7 @@
 <template>
   <div class="employees-add">
     <HeaderPages title="اضافة موظف" :showButton="false" />
-    <form action="" @submit.prevent>
+    <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
@@ -18,7 +18,6 @@
             <!-- Clickable Icon - Hidden after photo is chosen -->
             <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
               <i class="fa fa-camera"></i>
-              <!-- FontAwesome icon -->
               <span>اختيار صورة</span>
             </div>
             <!-- Preview Image -->
@@ -28,34 +27,55 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> أسم الموظف</label>
+          <label for="name">أسم الموظف</label>
           <div class="input">
-            <input type="text" placeholder="أدخل أسم الموظف" />
+            <input
+              type="text"
+              id="name"
+              placeholder="أدخل أسم الموظف"
+              v-model="form.name"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> رقم الهاتف</label>
+          <label for="phone">رقم الهاتف</label>
           <div class="input">
-            <input type="phone" placeholder="أدخل رقم الهاتف" />
+            <input
+              type="text"
+              id="phone"
+              placeholder="أدخل رقم الهاتف"
+              v-model="form.phone"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> البريد الالكتروني</label>
+          <label for="email">البريد الالكتروني</label>
           <div class="input">
-            <input type="email" placeholder="أدخل البريد الالكتروني" />
+            <input
+              type="email"
+              id="email"
+              placeholder="أدخل البريد الالكتروني"
+              v-model="form.email"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> الرقم السري</label>
+          <label for="password">الرقم السري</label>
           <div class="input">
-            <input type="password" placeholder="أدخل الرقم السري" />
+            <input
+              type="password"
+              id="password"
+              placeholder="أدخل الرقم السري"
+              v-model="form.password"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">الصلاحيات</label>
+          <label for="roles">الصلاحيات</label>
           <multiselect
-            v-model="value"
-            :options="options"
+            id="roles"
+            v-model="form.role"
+            :options="rolesOptions"
             :multiple="true"
             :close-on-select="false"
           ></multiselect>
@@ -72,6 +92,7 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
+import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore"; // Ensure this path is correct
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -82,9 +103,15 @@ export default {
   },
   data() {
     return {
-      value: [],
-      options: ["list", "of", "options"],
+      rolesOptions: ["Admin", "Manager", "Employee"], // Example roles
       imageSrc: null,
+      form: {
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+        role: [],
+      },
     };
   },
   methods: {
@@ -101,8 +128,24 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+    async submitForm() {
+      try {
+        const employeesStore = useEmployeesAddStore();
+
+        if (!employeesStore) {
+          throw new Error("Failed to load employees store");
+        }
+
+        const employeeData = {
+          ...this.form,
+          image: this.imageSrc,
+        };
+        await employeesStore.fetchEmployees(employeeData);
+        this.$router.push("/employees");
+      } catch (error) {
+        console.error("Error in submitForm:", error);
+      }
+    },
   },
 };
 </script>
-
-<style scoped></style>

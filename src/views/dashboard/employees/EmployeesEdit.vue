@@ -1,6 +1,6 @@
 <template>
   <div class="employees-edit">
-    <HeaderPages title="اضافة موظف" :showButton="false" />
+    <HeaderPages title="تعديل موظف" :showButton="false" />
     <form action="" @submit.prevent>
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">

@@ -6,6 +6,8 @@
       :rows="tableRows"
       :pages="tablePages"
       :showSelect="true"
+      editLink="/edit-employee"
+      viewLink="/view-employee"
     />
   </div>
 </template>
@@ -13,6 +15,7 @@
 <script>
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 
 export default {
   name: "EmployeesIndex",
@@ -29,51 +32,24 @@ export default {
         "البريد الالكتروني",
         "رقم الهاتف",
         "الصلاحيات",
-        "actions",
       ],
-      tableRows: [
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "محمد أحمد",
-          "6mXnW@example.com",
-          123456789,
-          "مدير",
-          [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-employee" },
-          ],
-        ],
-        [
-          "2",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "علي حسن",
-          "ali@example.com",
-          987654321,
-          "مساعد",
-          [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-employee" },
-          ],
-        ],
-        [
-          "3",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "فاطمة يوسف",
-          "fatima@example.com",
-          1122334455,
-          "محاسب",
-          [
-            { class: "fa-solid fa-pen-to-square", action: "/edit-employee" },
-            { class: "fa-solid fa-trash", action: this.deleteEmployee },
-            { class: "fa-solid fa-eye", action: "/view-employee" },
-          ],
-        ],
-      ],
-      tablePages: [1, 2, 3, 4, 5],
+      tableRows: [],
+      tablePages: [],
     };
+  },
+  mounted() {
+    const employeesStore = useEmployeesStore();
+    employeesStore.fetchEmployees().then(() => {
+      this.tableRows = employeesStore.employees.map((emp) => [
+        emp.id,
+        emp.photo,
+        emp.name,
+        emp.email,
+        emp.phone,
+        emp.role,
+      ]);
+      this.tablePages = employeesStore.pages;
+    });
   },
 };
 </script>
