@@ -1,73 +1,82 @@
-.login {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 20%;
+.naim-login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(to top, var(--main), #cde382);
+  form {
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
+    label {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
 
-  h2 {
-    text-align: center;
-    font-size: 60px;
-    font-weight: bold;
-    margin-bottom: 60px;
+    .input {
+      position: relative;
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          border-color: #cde382;
+          box-shadow: 0 0 0 3px #cde382;
+        }
+      }
+    }
+
+    button {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      background: var(--main);
+      color: #ffffff;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: "Medium";
+
+      &:hover {
+        background: #cde382;
+        color: var(--main);
+      }
+    }
   }
-  input {
-    width: 55%;
-    margin: 0 auto;
-    margin-top: 3%;
+
+  .forget {
+    margin-top: 1rem;
+
+    h6 {
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 0.99rem;
+      transition: color 0.3s ease;
+      font-family: "Medium";
+
+      &:hover {
+        color: #cde382;
+      }
+    }
   }
-  button {
-    width: 56%;
-    margin-top: 4%;
-    margin-right: 22%;
-    padding: 15px;
-    border: none;
-    background-color: var(--main);
-    color: white;
-    border-radius: 8px;
-    
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  i {
-    position: relative;
-    bottom: 30px;
-    right: 74%;
-}
-}
-
-
-#forgetPass {
-
-    background-color: var(--main);
-    height: 100vh;
-    border-radius: 8px;
-
-
-h2{
-    text-align: center;
-    color: white;
-    margin-top: 45%;
-    font-size: 50px;
-    
-}
-p{
-    text-align: center;
-    color: white;
-    font-size: 26px;
-    margin-top: 50px;
-} 
-
-button{
-    margin: auto;
-    padding: 15px;
-    width: 60%;
-    background-color: white;
-    color: var(--main);
-    border: none;
-    border-radius: 18px;
-    margin-top: 100px;
-    display: block;
-    font-weight: bold;
-} 
-a{
-    text-decoration: none;
-}
 }
