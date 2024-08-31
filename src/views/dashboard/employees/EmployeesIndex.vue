@@ -5,6 +5,7 @@
       :headers="tableHeaders"
       :rows="tableRows"
       :pages="tablePages"
+      :showSelect="true"
     />
   </div>
 </template>
