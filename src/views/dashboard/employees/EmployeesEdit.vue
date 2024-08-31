@@ -62,7 +62,6 @@
           ></multiselect>
         </div>
       </div>
-
       <div class="all-btn">
         <button type="submit" class="save">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
