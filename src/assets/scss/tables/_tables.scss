@@ -3,6 +3,7 @@ table.table {
   font-family: "regular";
   border: 1px solid var(--main);
   border-radius: 10px;
+  margin-top: 0.5rem;
   thead {
     tr {
       th {
@@ -35,16 +36,32 @@ i {
   border-radius: 10px;
 }
 .search {
-  border: 1px solid #00000036;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  border: 1px solid var(--main);
+  padding: 0.2rem;
   border-radius: 10px;
+
+  width: 100%;
+
+  &.half-width {
+    width: 50%;
+  }
 
   input {
     border: none;
     outline: none;
-    width: 95%;
+    width: 90%;
     padding: 0 0.3rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .select {
+    width: 50%;
   }
 }
 .pagination {
@@ -62,4 +79,12 @@ i {
     background-color: var(--main);
     color: white;
   }
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.multiselect__select::before {
+  top: 106% !important;
 }

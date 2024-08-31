@@ -2,9 +2,18 @@
   <div class="table-responsive">
     <div class="table">
       <div class="header">
-        <div class="search">
+        <div :class="['search', { 'half-width': showSelect }]">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="search" placeholder="بحث" />
+        </div>
+        <!-- Show the select option based on the prop -->
+        <div class="select" v-if="showSelect">
+          <multiselect
+            v-model="value"
+            :options="options"
+            :multiple="true"
+            :close-on-select="false"
+          ></multiselect>
         </div>
       </div>
 
@@ -63,9 +72,22 @@
     </nav>
   </div>
 </template>
+
 <script>
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.css";
+
 export default {
   name: "TablesPage",
+  components: {
+    Multiselect,
+  },
+  data() {
+    return {
+      value: [],
+      options: ["list", "of", "options"],
+    };
+  },
   props: {
     headers: {
       type: Array,
@@ -79,6 +101,10 @@ export default {
       type: Array,
       default: () => [1, 2, 3],
     },
+    showSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     handleIconClick(action) {
@@ -91,4 +117,5 @@ export default {
   },
 };
 </script>
+
 <style></style>
