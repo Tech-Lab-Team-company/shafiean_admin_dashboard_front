@@ -10,6 +10,9 @@ import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
 import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
+import CurriculaIndex from "@/views/dashboard/Curricula/CurriculaIndex.vue";
+import CurriculaAdd from "@/views/dashboard/Curricula/CurriculaAdd.vue";
+import CurriculaEdit from "@/views/dashboard/Curricula/CurriculaEdit.vue";
 const routes = [
   {
     path: "/Code",
@@ -70,6 +73,21 @@ const routes = [
         path: "/edit-disabilities/:id",
         name: "DisabilitiesEdit",
         component: DisabilitiesEdit,
+      },
+      {
+        path: "/Curricula",
+        name: "Curricula",
+        component: CurriculaIndex,
+      },
+      {
+        path: "/add-curricula",
+        name: "CurriculaAdd",
+        component: CurriculaAdd,
+      },
+      {
+        path: "/edit-curricula",
+        name: "CurriculaEdit",
+        component: CurriculaEdit,
       },
     ],
   },
