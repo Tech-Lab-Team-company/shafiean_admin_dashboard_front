@@ -28,3 +28,21 @@
     </div>
   </div>
 </template>
+<script>
+import { useAuthStore } from "@/stores/auth/AuthStore";
+
+export default {
+  name: "ForgetPassword",
+  data() {
+    return {
+      email: "",
+    };
+  },
+  methods: {
+    async submitEmail() {
+      const authStore = useAuthStore();
+      await authStore.submitPasswordResetEmail(this.email);
+    },
+  },
+};
+</script>

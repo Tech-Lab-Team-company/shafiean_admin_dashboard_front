@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", {
     async login(credentials) {
       try {
         const response = await axios.post(
-          "https://api.shafean.x-coders.net/api/admin/login",
+          "http://192.168.1.10:8000/api/admin/login",
           credentials
         );
         this.token = response.data.data.token;
@@ -33,16 +33,47 @@ export const useAuthStore = defineStore("auth", {
         });
       }
     },
-    logout() {
-      this.token = null;
-      this.data = {};
-      axios.defaults.headers.common["Authorization"] = null;
-      localStorage.removeItem("token");
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Logout Successful",
-      });
+    async logout() {
+      try {
+        const res = axios.post("http://192.168.1.10:8000/api/admin/logout");
+        console.log(res.status);
+        if (res) {
+          this.token = null;
+          this.data = {};
+          localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Logout Successful",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong",
+        });
+      }
     },
+  },
+  async submitPasswordResetEmail(email) {
+    try {
+      await axios.post("/api/password-reset", { email });
+    } catch (error) {
+      console.error("Password reset email submission failed:", error);
+    }
+  },
+  async validateCode(code) {
+    try {
+      const response = await axios.post("/api/validate-code", { code });
+      if (response.data.valid) {
+        this.$router.push("/reset-password");
+      } else {
+        alert("Invalid code.");
+      }
+    } catch (error) {
+      console.error("Code validation failed:", error);
+    }
   },
 });
