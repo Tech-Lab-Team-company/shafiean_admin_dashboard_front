@@ -10,10 +10,9 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async login(credentials) {
       try {
-        const response = await axios.post(
-          "http://192.168.1.10:8000/api/admin/login",
-          credentials
-        );
+
+        const response = await axios.post("admin/login", credentials);
+
         this.token = response.data.data.token;
         this.data = response.data.data;
         console.log(this.data);
@@ -35,7 +34,9 @@ export const useAuthStore = defineStore("auth", {
     },
     async logout() {
       try {
-        const res = axios.post("http://192.168.1.10:8000/api/admin/logout");
+
+        const res = axios.post("admin/logout");
+
         console.log(res.status);
         if (res) {
           this.token = null;
