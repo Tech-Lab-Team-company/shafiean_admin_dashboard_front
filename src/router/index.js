@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/auth/AuthStore";
 import Login from "@/views/dashboard/Auth/LoginPage.vue";
 import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
 import CodeReset from "@/views/dashboard/Auth/CodeReset.vue";
@@ -10,13 +11,8 @@ import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
 import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
+
 const routes = [
-  {
-    path: "/Code",
-    name: "Code",
-    component: CodeReset,
-    meta: { guest: true },
-  },
   {
     path: "/login",
     name: "login",
@@ -29,12 +25,16 @@ const routes = [
     component: Forget,
     meta: { guest: true },
   },
-
+  {
+    path: "/Code",
+    name: "Code",
+    component: CodeReset,
+    meta: { guest: true },
+  },
   {
     path: "/dashboard",
     component: Dashboard,
     meta: { requiresAuth: true },
-    name: "Dashboard",
     children: [
       {
         path: "/",
@@ -73,11 +73,30 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/",
+    redirect: "/login", // Redirect to login if not authenticated
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
+});
+
+// Global Authentication Guard
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.token) {
+    // If trying to access a protected route without being authenticated, redirect to login
+    next({ name: "login" });
+  } else if (to.meta.guest && authStore.token) {
+    // If already authenticated and trying to access a guest route, redirect to dashboard
+    next({ name: "home" });
+  } else {
+    next(); // Proceed to the route
+  }
 });
 
 export default router;

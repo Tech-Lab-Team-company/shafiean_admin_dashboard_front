@@ -1,6 +1,6 @@
 <template>
   <div class="naim-login">
-    <form @submit.prevent>
+    <form @submit.prevent="login">
       <div class="logo">
         <img src="../../../assets/photos/logo.png" alt="" />
       </div>
@@ -34,6 +34,7 @@
   </div>
 </template>
 <script>
+import { useAuthStore } from "@/stores/auth/AuthStore";
 export default {
   name: "LoginPage",
   data() {
@@ -41,6 +42,21 @@ export default {
       email: "",
       password: "",
     };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
+  },
+  methods: {
+    async login() {
+      await this.authStore.login({
+        email: this.email,
+        password: this.password,
+      });
+
+      this.$router.push("/");
+    },
   },
 };
 </script>
