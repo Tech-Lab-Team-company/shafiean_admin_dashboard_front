@@ -1,22 +1,24 @@
 <template>
-  <div class="Steps">
-    <header-pages title="المراحل" button="+ اضافة مرحلة" link="/add-steps" />
-
+  <div class="countries">
+    <header-pages title="الدوله" button="+ اضافة دوله" link="/add-countries" />
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRows"
       :pages="tablePages"
-      editLink="/edit-steps"
-      viewLink="/view-steps"
+      editLink="/edit-countries"
+      viewLink="/view-countries"
     />
   </div>
 </template>
 
 <script>
+import headerPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
-import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 export default {
-  components: { HeaderPages, TablesPageVue },
+  components: {
+    headerPages,
+    TablesPageVue,
+  },
   data() {
     return {
       tableHeaders: ["ID", "الصور", "اسم المنهج", "وصف المنهج"],
