@@ -70,7 +70,11 @@ export default {
           route: "/associations",
           icon: "fa-solid fa-sitemap",
         },
-        { name: "معلومات المسؤل", route: "/", icon: "fa-solid fa-user-tie" },
+        {
+          name: "معلومات المسؤل",
+          route: "/adminInformation",
+          icon: "fa-solid fa-user-tie",
+        },
       ],
     };
   },
