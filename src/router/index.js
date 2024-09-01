@@ -24,7 +24,9 @@ import countriesEdit from "@/views/dashboard/countries/countriesEdit.vue";
 import associationsIndex from "@/views/dashboard/associations/associationsIndex.vue";
 import associationsAdd from "@/views/dashboard/associations/associationsAdd.vue";
 import associationsEdit from "@/views/dashboard/associations/associationsEdit.vue";
-
+import adminInformationIndex from "@/views/dashboard/adminInformation/adminInformationIndex.vue";
+import adminInformationAdd from "@/views/dashboard/adminInformation/adminInformationAdd.vue";
+import adminInformationEdit from "@/views/dashboard/adminInformation/adminInformationEdit.vue";
 const routes = [
   {
     path: "/login",
@@ -143,6 +145,21 @@ const routes = [
         path: "/edit-associations/:id",
         name: "associationsEdit",
         component: associationsEdit,
+      },
+      {
+        path: "/adminInformation",
+        name: "adminInformationIndex",
+        component: adminInformationIndex,
+      },
+      {
+        path: "/add-adminInformation",
+        name: "adminInformationAdd",
+        component: adminInformationAdd,
+      },
+      {
+        path: "/edit-adminInformation/:id",
+        name: "adminInformationEdit",
+        component: adminInformationEdit,
       },
     ],
   },
