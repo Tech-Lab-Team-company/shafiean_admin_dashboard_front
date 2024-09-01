@@ -53,9 +53,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.employees {
-  padding: 1rem;
-}
-</style>

@@ -46,4 +46,27 @@
   .navbar-toggle {
     display: block !important;
   }
+  .header {
+    display: block !important;
+  }
+  .half-width {
+    width: 100% !important;
+  }
+  .select {
+    width: 100% !important;
+  }
+  .multiselect__tags {
+    min-height: 40px;
+    display: block;
+    padding: 3px 14px 0px 12px !important;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+    background: #fff;
+    font-size: 13px !important;
+    margin-top: 1px;
+    border-radius: 9px !important;
+  }
+  .content {
+    padding: 0.5rem !important;
+  }
 }
