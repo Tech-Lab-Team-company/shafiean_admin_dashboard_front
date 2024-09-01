@@ -12,6 +12,19 @@ import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
 import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
 
+import CurriculaIndex from "@/views/dashboard/Curricula/CurriculaIndex.vue";
+import CurriculaAdd from "@/views/dashboard/Curricula/CurriculaAdd.vue";
+import CurriculaEdit from "@/views/dashboard/Curricula/CurriculaEdit.vue";
+import StepsIndex from "@/views/dashboard/steps/StepsIndex.vue";
+import stepsAdd from "@/views/dashboard/steps/stepsAdd.vue";
+import stepsEdit from "@/views/dashboard/steps/stepsEdit.vue";
+import countriesIndex from "@/views/dashboard/countries/countriesIndex.vue";
+import countriesAdd from "@/views/dashboard/countries/countriesAdd.vue";
+import countriesEdit from "@/views/dashboard/countries/countriesEdit.vue";
+import associationsIndex from "@/views/dashboard/associations/associationsIndex.vue";
+import associationsAdd from "@/views/dashboard/associations/associationsAdd.vue";
+import associationsEdit from "@/views/dashboard/associations/associationsEdit.vue";
+
 const routes = [
   {
     path: "/login",
@@ -70,6 +83,66 @@ const routes = [
         path: "/edit-disabilities/:id",
         name: "DisabilitiesEdit",
         component: DisabilitiesEdit,
+      },
+      {
+        path: "/Curricula",
+        name: "Curricula",
+        component: CurriculaIndex,
+      },
+      {
+        path: "/add-curricula",
+        name: "CurriculaAdd",
+        component: CurriculaAdd,
+      },
+      {
+        path: "/edit-curricula/:id",
+        name: "CurriculaEdit",
+        component: CurriculaEdit,
+      },
+      {
+        path: "/steps",
+        name: "steps",
+        component: StepsIndex,
+      },
+      {
+        path: "/add-steps",
+        name: "stepsAdd",
+        component: stepsAdd,
+      },
+      {
+        path: "/edit-steps/:id",
+        name: "stepsEdit",
+        component: stepsEdit,
+      },
+      {
+        path: "/countries",
+        name: "CountriesIndex",
+        component: countriesIndex,
+      },
+      {
+        path: "/add-countries",
+        name: "CountriesAdd",
+        component: countriesAdd,
+      },
+      {
+        path: "/edit-countries/:id",
+        name: "CountriesEdit",
+        component: countriesEdit,
+      },
+      {
+        path: "/associations",
+        name: "associationsIndex",
+        component: associationsIndex,
+      },
+      {
+        path: "/add-associations",
+        name: "associationsAdd",
+        component: associationsAdd,
+      },
+      {
+        path: "/edit-associations/:id",
+        name: "associationsEdit",
+        component: associationsEdit,
       },
     ],
   },

@@ -22,14 +22,21 @@ body {
 @import url("../scss/resoinsive/_mobile.scss");
 @import url("../scss/resoinsive/_smalllabtop.scss");
 @import url("../scss/resoinsive/_tablet.scss");
-
+@import url("../scss/steps/stepsindex.scss");
 @import url("../scss/login/login.scss");
 @import url("../scss/forgetpassword/forget.scss");
 @import url("../scss/Codepage/codereset.scss");
-
+@import url("../scss/Curricula/Curriculaedit.scss" );
 @import url("../scss/employee/_editemployee.scss");
 @import url("../scss/disabilities/_disabilitiesindex.scss");
+@import url("../scss/Curricula/Curriculaadd.scss");
 @import url("../scss/tables/_tables.scss");
+@import url("../scss/steps/stepsadd.scss");
+@import url("../scss/steps/stepsedit.scss");
+@import url("../scss/countries/countriesadd.scss");
+@import url("../scss/countries/countriesedit.scss");
+@import url("../scss/Associations/associationsadd.scss");
+@import url("../scss/Associations/associationsedit.scss");
 
 @font-face {
   font-family: "regular";

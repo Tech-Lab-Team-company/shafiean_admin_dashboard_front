@@ -54,10 +54,22 @@ export default {
           route: "/disabilities",
           icon: "fa-solid fa-wheelchair",
         },
-        { name: "المناهج", route: "/", icon: "fa-brands fa-leanpub" },
-        { name: "المراحل", route: "/", icon: "fa-solid fa-graduation-cap" },
-        { name: "الدوله", route: "/", icon: "fa-solid fa-building" },
-        { name: "الجمعيات", route: "/", icon: "fa-solid fa-sitemap" },
+        { name: "المناهج", route: "/Curricula", icon: "fa-brands fa-leanpub" },
+        {
+          name: "المراحل",
+          route: "/steps",
+          icon: "fa-solid fa-graduation-cap",
+        },
+        {
+          name: "الدوله",
+          route: "/countries",
+          icon: "fa-solid fa-building",
+        },
+        {
+          name: "الجمعيات",
+          route: "/associations",
+          icon: "fa-solid fa-sitemap",
+        },
         { name: "معلومات المسؤل", route: "/", icon: "fa-solid fa-user-tie" },
       ],
     };
