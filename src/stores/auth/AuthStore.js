@@ -10,7 +10,6 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async login(credentials) {
       try {
-
         const response = await axios.post("admin/login", credentials);
 
         this.token = response.data.data.token;
@@ -34,7 +33,6 @@ export const useAuthStore = defineStore("auth", {
     },
     async logout() {
       try {
-
         const res = axios.post("admin/logout");
 
         console.log(res.status);
