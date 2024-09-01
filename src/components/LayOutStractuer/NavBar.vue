@@ -17,7 +17,7 @@
               <h4>محمد أحمد محمد نصره</h4>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">logout</a></li>
+              <li><a class="dropdown-item" @click="logout">logout</a></li>
             </ul>
           </div>
           <a class="navbar-brand" href="#"
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/auth/AuthStore";
 export default {
   props: {
     isCollapsed: {
@@ -38,9 +39,21 @@ export default {
       required: true,
     },
   },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
+  },
   methods: {
     toggleSidebar() {
       this.$emit("toggle-sidebar");
+    },
+    showName() {
+      this.authStore.login;
+    },
+    logout() {
+      this.authStore.logout();
+      this.$router.push("/login");
     },
   },
 };
