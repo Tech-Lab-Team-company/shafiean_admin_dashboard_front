@@ -6,7 +6,6 @@
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
-            <!-- Hidden File Input -->
             <input
               type="file"
               id="avatar"
@@ -15,12 +14,10 @@
               ref="fileInput"
               style="display: none"
             />
-            <!-- Clickable Icon - Hidden after photo is chosen -->
             <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-            <!-- Preview Image -->
             <div v-if="imageSrc" class="avatar-preview">
               <img :src="imageSrc" alt="Avatar Preview" />
             </div>
@@ -78,6 +75,8 @@
             :options="rolesOptions"
             :multiple="true"
             :close-on-select="false"
+            track-by="name"
+            label="name"
           ></multiselect>
         </div>
       </div>
@@ -92,7 +91,7 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
-import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore"; // Ensure this path is correct
+import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -103,8 +102,8 @@ export default {
   },
   data() {
     return {
-      rolesOptions: ["Admin", "Manager", "Employee"], // Example roles
-      imageSrc: null,
+      rolesOptions: ["Admin", "Manager", "Employee"],
+      imageSrc: "",
       form: {
         name: "",
         phone: "",
@@ -121,6 +120,7 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.form.image = file; // Store the file in the form data
         const reader = new FileReader();
         reader.onload = (e) => {
           this.imageSrc = e.target.result;
@@ -136,11 +136,7 @@ export default {
           throw new Error("Failed to load employees store");
         }
 
-        const employeeData = {
-          ...this.form,
-          image: this.imageSrc,
-        };
-        await employeesStore.fetchEmployees(employeeData);
+        await employeesStore.fetchEmployees(this.form); // Directly pass the form data
         this.$router.push("/employees");
       } catch (error) {
         console.error("Error in submitForm:", error);

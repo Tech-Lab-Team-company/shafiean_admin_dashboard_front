@@ -19,7 +19,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="">الاعاقات</label>
           <multiselect
-            v-model="value"
+            v-model="valueone"
             :options="options"
             :multiple="true"
             :close-on-select="false"
@@ -28,7 +28,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="">المنهج</label>
           <multiselect
-            v-model="value"
+            v-model="valuetwo"
             :options="options"
             :multiple="true"
             :close-on-select="false"
@@ -37,7 +37,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="">المنهج</label>
           <multiselect
-            v-model="value"
+            v-model="valuethree"
             :options="options"
             :multiple="true"
             :close-on-select="false"
@@ -64,7 +64,9 @@ export default {
   },
   data() {
     return {
-      value: [],
+      valueone: [],
+      valuetwo: [],
+      valuethree: [],
       options: ["list", "of", "options"],
     };
   },

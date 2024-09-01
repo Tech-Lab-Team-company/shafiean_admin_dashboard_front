@@ -8,8 +8,9 @@ export const useEmployeesStore = defineStore("employees", {
   actions: {
     async fetchEmployees() {
       try {
-        const response = await axios.get("http://localhost:3000/employees");
-        this.employees = response.data.employees;
+        const response = await axios.get("admins");
+        console.log(response.data.data);
+        this.employees = response.data.data;
         this.pages = response.data.pages;
       } catch (error) {
         console.error("Error fetching employees:", error);

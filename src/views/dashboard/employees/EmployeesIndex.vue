@@ -16,6 +16,7 @@
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
+import { mapState } from "pinia";
 
 export default {
   name: "EmployeesIndex",
@@ -33,14 +34,17 @@ export default {
         "رقم الهاتف",
         "الصلاحيات",
       ],
-      tableRows: [],
-      tablePages: [],
+      editLink: "/edit-employee",
+      viewLink: "/view-employee",
     };
   },
-  mounted() {
-    const employeesStore = useEmployeesStore();
-    employeesStore.fetchEmployees().then(() => {
-      this.tableRows = employeesStore.employees.map((emp) => [
+  computed: {
+    ...mapState(useEmployeesStore, {
+      employees: (state) => state.employees,
+      pages: (state) => state.pages,
+    }),
+    tableRows() {
+      return this.employees.map((emp) => [
         emp.id,
         emp.photo,
         emp.name,
@@ -48,8 +52,14 @@ export default {
         emp.phone,
         emp.role,
       ]);
-      this.tablePages = employeesStore.pages;
-    });
+    },
+    tablePages() {
+      return this.pages;
+    },
+  },
+  async mounted() {
+    const employeesStore = useEmployeesStore();
+    await employeesStore.fetchEmployees();
   },
 };
 </script>

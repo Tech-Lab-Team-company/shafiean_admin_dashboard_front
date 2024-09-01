@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="validateCode" class="Codepage">
+  <form @submit.prevent="validateCodes" class="Codepage">
     <div class="content">
       <img src="../../../assets/photos/logo.png" alt="" />
 
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/auth/AuthStore";
 export default {
   name: "CodeReset",
   data() {
@@ -41,6 +42,10 @@ export default {
       } else {
         alert("Please enter a valid 6-digit code.");
       }
+    },
+    async validateCodes() {
+      const authStore = useAuthStore();
+      await authStore.validateCode(this.code);
     },
   },
 };
