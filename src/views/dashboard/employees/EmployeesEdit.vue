@@ -1,12 +1,11 @@
 <template>
   <div class="employees-edit">
     <HeaderPages title="تعديل موظف" :showButton="false" />
-    <form action="" @submit.prevent>
+    <form @submit.prevent="updateEmployee">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
-            <!-- Hidden File Input -->
             <input
               type="file"
               id="avatar"
@@ -15,48 +14,57 @@
               ref="fileInput"
               style="display: none"
             />
-            <!-- Clickable Icon - Hidden after photo is chosen -->
-            <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
+            <div class="upload-icon" @click="triggerFileInput">
               <i class="fa fa-camera"></i>
-              <!-- FontAwesome icon -->
               <span>اختيار صورة</span>
             </div>
-            <!-- Preview Image -->
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div
+              v-if="employee.image || employee.imageSrc"
+              class="avatar-preview"
+            >
+              <img
+                :src="employee.imageSrc ? employee.imageSrc : employee.image"
+                alt="Avatar Preview"
+              />
             </div>
           </div>
         </div>
-        <!-- Other input fields -->
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for=""> أسم الموظف</label>
           <div class="input">
-            <input type="text" placeholder="أدخل أسم الموظف" />
+            <input
+              v-model="employee.name"
+              type="text"
+              placeholder="أدخل أسم الموظف"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for=""> رقم الهاتف</label>
           <div class="input">
-            <input type="phone" placeholder="أدخل رقم الهاتف" />
+            <input
+              v-model="employee.phone"
+              type="tel"
+              placeholder="أدخل رقم الهاتف"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for=""> البريد الالكتروني</label>
           <div class="input">
-            <input type="email" placeholder="أدخل البريد الالكتروني" />
+            <input
+              v-model="employee.email"
+              type="email"
+              placeholder="أدخل البريد الالكتروني"
+            />
           </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for=""> الرقم السري</label>
-          <div class="input">
-            <input type="password" placeholder="أدخل الرقم السري" />
-          </div>
-        </div>
+
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="">الصلاحيات</label>
           <multiselect
-            v-model="value"
-            :options="options"
+            v-model="employee.permissions"
+            :options="permissionOptions"
             :multiple="true"
             :close-on-select="false"
           ></multiselect>
@@ -74,6 +82,7 @@
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { useEmployeesEditStore } from "@/stores/employees/EmployeesEditStore";
 
 export default {
   name: "EmployeesEdit",
@@ -83,9 +92,15 @@ export default {
   },
   data() {
     return {
-      value: [],
-      options: ["list", "of", "options"],
-      imageSrc: null,
+      employee: {
+        name: "",
+        phone: "",
+        email: "",
+        permissions: [],
+        image: null, // Store file object
+        imageSrc: "",
+      },
+      permissionOptions: ["list", "of", "options"], // Adjust this as needed
     };
   },
   methods: {
@@ -95,15 +110,38 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.employee.image = file; // Store the file object
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result;
+          this.employee.imageSrc = e.target.result; // For preview
         };
         reader.readAsDataURL(file);
       }
     },
+    async fetchData() {
+      const store = useEmployeesEditStore();
+      const id = this.$route.params.id;
+
+      await store.fetchEmployee(id);
+      this.employee = store.employee;
+    },
+    async updateEmployee() {
+      console.log(this.employee.image);
+
+      const store = useEmployeesEditStore();
+      const id = this.$route.params.id;
+      await store.updateEmployees(id, {
+        name: this.employee.name,
+        phone: this.employee.phone,
+        email: this.employee.email,
+        sssions: this.employee.permissions,
+        image: this.employee.image, // Pass the file object
+      });
+      this.$router.go(-1);
+    },
+  },
+  mounted() {
+    this.fetchData();
   },
 };
 </script>
-
-<style scoped></style>

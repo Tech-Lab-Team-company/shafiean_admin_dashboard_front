@@ -30,7 +30,7 @@
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
               <td v-for="(cell, cellIndex) in row" :key="cellIndex">
                 <img
-                  v-if="cellIndex === 1"
+                  v-if="cellIndex == 1"
                   :src="cell"
                   alt="Image"
                   class="image"
@@ -90,12 +90,6 @@ export default {
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      value: [],
-      options: ["list", "of", "options"],
-    };
-  },
   props: {
     headers: {
       type: Array,
@@ -120,6 +114,15 @@ export default {
       type: String,
     },
   },
+
+
+  data() {
+    return {
+      value: [],
+      options: ["list", "of", "options"],
+    };
+  },
+
   methods: {
     handleIconClick(action, id) {
       if (action === "view") {

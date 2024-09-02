@@ -48,7 +48,9 @@ export default {
     tableRows() {
       return this.employees.map((emp) => [
         emp.id,
+
         emp.image,
+
         emp.name,
         emp.email,
         emp.phone,
