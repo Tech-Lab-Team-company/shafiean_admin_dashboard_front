@@ -41,15 +41,15 @@
                 <div class="action-icons">
                   <i
                     class="fa-solid fa-trash action-icon"
-                    @click="handleIconClick('delete', row.id)"
+                    @click="handleIconClick('delete', row[0])"
                   ></i>
                   <i
                     class="fa-solid fa-pen-to-square action-icon"
-                    @click="handleIconClick('edit', row.id)"
+                    @click="handleIconClick('edit', row[0])"
                   ></i>
                   <i
                     class="fa-solid fa-eye action-icon"
-                    @click="handleIconClick('view', row.id)"
+                    @click="handleIconClick('view', row[0])"
                   ></i>
                 </div>
               </td>
@@ -83,6 +83,7 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 
 export default {
   name: "TablesPage",
@@ -119,12 +120,17 @@ export default {
       type: String,
     },
   },
+  computed: {
+    employeesStore() {
+      return useEmployeesStore();
+    },
+  },
   methods: {
     handleIconClick(action, id) {
       if (action === "view") {
         this.$router.push(this.viewLink + "/" + id);
       } else if (action === "edit") {
-        this.$router.push(this.editLink + "/" + id); // Use the editLink prop
+        this.$router.push(this.editLink + "/" + id);
       } else if (action === "delete") {
         this.$emit("delete", id);
       }
