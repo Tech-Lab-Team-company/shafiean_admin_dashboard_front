@@ -40,6 +40,7 @@
               <td>
                 <div class="action-icons">
                   <i
+                    v-if="row[5] == 0"
                     class="fa-solid fa-trash action-icon"
                     @click="handleIconClick('delete', row[0])"
                   ></i>
@@ -83,7 +84,6 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 
 export default {
   name: "TablesPage",
@@ -120,11 +120,7 @@ export default {
       type: String,
     },
   },
-  computed: {
-    employeesStore() {
-      return useEmployeesStore();
-    },
-  },
+
   methods: {
     handleIconClick(action, id) {
       if (action === "view") {

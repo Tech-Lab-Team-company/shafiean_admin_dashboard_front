@@ -4,13 +4,14 @@ import Swal from "sweetalert2";
 export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
+
     pages: [],
   }),
   actions: {
     async fetchEmployees() {
       try {
         const response = await axios.get("admins");
-        console.log(response.data.data);
+        // console.log(response.data.data);
         this.employees = response.data.data;
         this.pages = response.data.pages;
       } catch (error) {

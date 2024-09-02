@@ -27,6 +27,7 @@ import associationsEdit from "@/views/dashboard/associations/associationsEdit.vu
 import adminInformationIndex from "@/views/dashboard/adminInformation/adminInformationIndex.vue";
 import adminInformationAdd from "@/views/dashboard/adminInformation/adminInformationAdd.vue";
 import adminInformationEdit from "@/views/dashboard/adminInformation/adminInformationEdit.vue";
+import LessonsIndex from "@/views/dashboard/lessons/lessonsIndex.vue";
 const routes = [
   {
     path: "/login",
@@ -160,6 +161,11 @@ const routes = [
         path: "/edit-adminInformation/:id",
         name: "adminInformationEdit",
         component: adminInformationEdit,
+      },
+      {
+        path: "/lessons",
+        name: "lessonsIndex",
+        component: LessonsIndex,
       },
     ],
   },
