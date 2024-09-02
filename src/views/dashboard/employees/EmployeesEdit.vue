@@ -123,7 +123,7 @@ export default {
     async fetchData() {
       const store = useEmployeesEditStore();
       const id = this.$route.params.id;
-      await store.fetchEmployee(id); // Fetch data using route ID parameter
+      await store.fetchEmployee(id);
     },
     async updateEmployee() {
       const store = useEmployeesEditStore();
