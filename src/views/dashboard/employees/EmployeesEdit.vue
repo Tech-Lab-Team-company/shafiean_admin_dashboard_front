@@ -124,6 +124,7 @@ export default {
       const store = useEmployeesEditStore();
       const id = this.$route.params.id;
       await store.fetchEmployee(id);
+      this.employee = store.employees;
     },
     async updateEmployee() {
       const store = useEmployeesEditStore();
