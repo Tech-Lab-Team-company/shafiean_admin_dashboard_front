@@ -34,6 +34,7 @@ export default {
         "البريد الالكتروني",
         "رقم الهاتف",
         "الصلاحيات",
+        "is_master",
       ],
       editLink: "/edit-employee",
       viewLink: "/view-employee",
@@ -47,11 +48,14 @@ export default {
     tableRows() {
       return this.employees.map((emp) => [
         emp.id,
-        emp.image, // Assuming photo contains the image URL
+
+        emp.image,
+
         emp.name,
         emp.email,
         emp.phone,
         emp.role,
+        emp.is_master,
       ]);
     },
     tablePages() {

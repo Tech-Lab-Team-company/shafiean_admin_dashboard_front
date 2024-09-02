@@ -40,6 +40,7 @@
               <td>
                 <div class="action-icons">
                   <i
+                    v-if="row[6] === 0"
                     class="fa-solid fa-trash action-icon"
                     @click="handleIconClick('delete', row[0])"
                   ></i>
@@ -113,12 +114,15 @@ export default {
       type: String,
     },
   },
+
+
   data() {
     return {
       value: [],
       options: ["list", "of", "options"],
     };
   },
+
   methods: {
     handleIconClick(action, id) {
       if (action === "view") {
