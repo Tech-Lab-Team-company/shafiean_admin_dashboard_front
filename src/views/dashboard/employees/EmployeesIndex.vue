@@ -34,6 +34,7 @@ export default {
         "البريد الالكتروني",
         "رقم الهاتف",
         "الصلاحيات",
+        "is_master",
       ],
       editLink: "/edit-employee",
       viewLink: "/view-employee",
@@ -51,6 +52,7 @@ export default {
         emp.name,
         emp.email,
         emp.phone,
+        emp.role,
         emp.is_master,
       ]);
     },
