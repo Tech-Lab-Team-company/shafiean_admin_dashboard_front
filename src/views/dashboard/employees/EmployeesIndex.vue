@@ -6,8 +6,9 @@
       :rows="tableRows"
       :pages="tablePages"
       :showSelect="true"
-      editLink="/edit-employee"
-      viewLink="/view-employee"
+      :editLink="editLink"
+      :viewLink="viewLink"
+      @delete="handleDeleteEmployee"
     />
   </div>
 </template>
@@ -46,7 +47,7 @@ export default {
     tableRows() {
       return this.employees.map((emp) => [
         emp.id,
-        emp.photo,
+        emp.photo, // Assuming photo contains the image URL
         emp.name,
         emp.email,
         emp.phone,
@@ -55,6 +56,12 @@ export default {
     },
     tablePages() {
       return this.pages;
+    },
+  },
+  methods: {
+    async handleDeleteEmployee(id) {
+      const employeesStore = useEmployeesStore();
+      await employeesStore.deleteEmployee(id);
     },
   },
   async mounted() {

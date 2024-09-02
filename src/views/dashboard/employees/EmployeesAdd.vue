@@ -103,7 +103,6 @@ export default {
   data() {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
-      imageSrc: "",
       form: {
         name: "",
         phone: "",
@@ -111,6 +110,7 @@ export default {
         password: "",
         role: [],
       },
+      imageSrc: "",
     };
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
         this.form.image = file; // Store the file in the form data
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result;
+          this.imageSrc = e.target.result; // Correctly update imageSrc
         };
         reader.readAsDataURL(file);
       }
