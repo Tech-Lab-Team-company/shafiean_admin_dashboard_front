@@ -30,7 +30,7 @@
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
               <td v-for="(cell, cellIndex) in row" :key="cellIndex">
                 <img
-                  v-if="cellIndex === 1"
+                  v-if="cellIndex == 1"
                   :src="cell"
                   alt="Image"
                   class="image"
@@ -83,18 +83,11 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 
 export default {
   name: "TablesPage",
   components: {
     Multiselect,
-  },
-  data() {
-    return {
-      value: [],
-      options: ["list", "of", "options"],
-    };
   },
   props: {
     headers: {
@@ -120,10 +113,11 @@ export default {
       type: String,
     },
   },
-  computed: {
-    employeesStore() {
-      return useEmployeesStore();
-    },
+  data() {
+    return {
+      value: [],
+      options: ["list", "of", "options"],
+    };
   },
   methods: {
     handleIconClick(action, id) {

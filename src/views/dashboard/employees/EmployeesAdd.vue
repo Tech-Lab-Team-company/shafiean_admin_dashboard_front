@@ -14,12 +14,16 @@
               ref="fileInput"
               style="display: none"
             />
-            <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
+            <div
+              v-if="!form.imageSrc"
+              class="upload-icon"
+              @click="triggerFileInput"
+            >
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div v-if="form.imageSrc" class="avatar-preview">
+              <img :src="form.imageSrc" alt="Avatar Preview" />
             </div>
           </div>
         </div>
@@ -109,8 +113,9 @@ export default {
         email: "",
         password: "",
         role: [],
+        image: null, // Ensure `image` is initialized as null
+        imageSrc: "",
       },
-      imageSrc: "",
     };
   },
   methods: {
@@ -123,7 +128,7 @@ export default {
         this.form.image = file; // Store the file in the form data
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result; // Correctly update imageSrc
+          this.form.imageSrc = e.target.result; // Correctly update imageSrc
         };
         reader.readAsDataURL(file);
       }
@@ -131,12 +136,10 @@ export default {
     async submitForm() {
       try {
         const employeesStore = useEmployeesAddStore();
-
         if (!employeesStore) {
           throw new Error("Failed to load employees store");
         }
-
-        await employeesStore.fetchEmployees(this.form); // Directly pass the form data
+        await employeesStore.addEmployee(this.form); // Call addEmployee instead of fetchEmployees
         this.$router.push("/employees");
       } catch (error) {
         console.error("Error in submitForm:", error);
