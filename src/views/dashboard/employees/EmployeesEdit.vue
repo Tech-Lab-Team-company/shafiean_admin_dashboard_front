@@ -14,12 +14,18 @@
               ref="fileInput"
               style="display: none"
             />
-            <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
+            <div class="upload-icon" @click="triggerFileInput">
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div
+              v-if="employee.image || employee.imageSrc"
+              class="avatar-preview"
+            >
+              <img
+                :src="employee.imageSrc ? employee.imageSrc : employee.image"
+                alt="Avatar Preview"
+              />
             </div>
           </div>
         </div>
@@ -53,16 +59,7 @@
             />
           </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for=""> الرقم السري</label>
-          <div class="input">
-            <input
-              v-model="employee.password"
-              type="password"
-              placeholder="أدخل الرقم السري"
-            />
-          </div>
-        </div>
+
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="">الصلاحيات</label>
           <multiselect
@@ -99,11 +96,11 @@ export default {
         name: "",
         phone: "",
         email: "",
-        password: "",
         permissions: [],
+        image: null, // Store file object
+        imageSrc: "",
       },
       permissionOptions: ["list", "of", "options"], // Adjust this as needed
-      imageSrc: null,
     };
   },
   methods: {
@@ -113,9 +110,10 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.employee.image = file; // Store the file object
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result;
+          this.employee.imageSrc = e.target.result; // For preview
         };
         reader.readAsDataURL(file);
       }
@@ -124,11 +122,21 @@ export default {
       const store = useEmployeesEditStore();
       const id = this.$route.params.id;
       await store.fetchEmployee(id);
-      this.employee = store.employees;
+      this.employee = store.employee;
     },
     async updateEmployee() {
+      console.log(this.employee.image);
+
       const store = useEmployeesEditStore();
-      await store.updateEmployee(this.$route.params.id, this.employee); // Update employee data
+      const id = this.$route.params.id;
+      await store.updateEmployees(id, {
+        name: this.employee.name,
+        phone: this.employee.phone,
+        email: this.employee.email,
+        permissions: this.employee.permissions,
+        image: this.employee.image, // Pass the file object
+      });
+      this.$router.go(-1);
     },
   },
   mounted() {
@@ -136,5 +144,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
