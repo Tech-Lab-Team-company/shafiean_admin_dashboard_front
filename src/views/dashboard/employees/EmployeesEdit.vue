@@ -121,6 +121,7 @@ export default {
     async fetchData() {
       const store = useEmployeesEditStore();
       const id = this.$route.params.id;
+
       await store.fetchEmployee(id);
       this.employee = store.employee;
     },
@@ -133,7 +134,7 @@ export default {
         name: this.employee.name,
         phone: this.employee.phone,
         email: this.employee.email,
-        permissions: this.employee.permissions,
+        sssions: this.employee.permissions,
         image: this.employee.image, // Pass the file object
       });
       this.$router.go(-1);

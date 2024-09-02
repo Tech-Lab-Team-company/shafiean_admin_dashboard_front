@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const useEmployeesEditStore = defineStore("employeesEdit", {
   state: () => ({
@@ -46,8 +47,9 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
 
         if (response.status === 200) {
           this.employee = response.data.data;
+          Swal.fire("Success", "Employee has been updated.", "success");
         } else {
-          throw new Error("Failed to update employee data");
+          Swal.fire("Error", "Failed to update employee.", "error");
         }
       } catch (error) {
         console.error(error);
