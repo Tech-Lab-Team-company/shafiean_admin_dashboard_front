@@ -47,7 +47,7 @@ export default {
     tableRows() {
       return this.employees.map((emp) => [
         emp.id,
-        emp.photo, // Assuming photo contains the image URL
+        emp.image, // Assuming photo contains the image URL
         emp.name,
         emp.email,
         emp.phone,
