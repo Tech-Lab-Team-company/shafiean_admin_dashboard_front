@@ -137,6 +137,10 @@ export default {
       }
     },
     isMaster(index) {
+      // If the index is not found in the ismaster array, return true to show the delete icon
+      if (this.ismaster[index] === undefined) {
+        return true;
+      }
       return this.ismaster[index] === 0;
     },
   },
