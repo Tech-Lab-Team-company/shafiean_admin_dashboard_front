@@ -63,6 +63,8 @@ export default {
   methods: {
     async handleDeleteEmployee(id) {
       const employeesStore = useEmployeesStore();
+      console.log(id);
+
       await employeesStore.deleteEmployee(id);
     },
   },
