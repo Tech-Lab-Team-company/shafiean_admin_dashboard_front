@@ -41,9 +41,8 @@
                 <div class="action-icons">
                   <i
                     v-if="isMaster(rowIndex)"
-                    :key="index"
                     class="fa-solid fa-trash action-icon"
-                    @click="handleIconClick('delete', rows[0])"
+                    @click="handleIconClick('delete', row[0])"
                   ></i>
                   <i
                     class="fa-solid fa-pen-to-square action-icon"
