@@ -40,9 +40,10 @@
               <td>
                 <div class="action-icons">
                   <i
-                    v-if="row[6] === 0"
+                    v-if="isMaster(rowIndex)"
+                    :key="index"
                     class="fa-solid fa-trash action-icon"
-                    @click="handleIconClick('delete', row[0])"
+                    @click="handleIconClick('delete', rows[0])"
                   ></i>
                   <i
                     class="fa-solid fa-pen-to-square action-icon"
@@ -113,6 +114,10 @@ export default {
     viewLink: {
       type: String,
     },
+    ismaster: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
@@ -131,6 +136,9 @@ export default {
       } else if (action === "delete") {
         this.$emit("delete", id);
       }
+    },
+    isMaster(index) {
+      return this.ismaster[index] === 0;
     },
   },
 };

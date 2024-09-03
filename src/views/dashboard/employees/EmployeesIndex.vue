@@ -9,6 +9,7 @@
       :editLink="editLink"
       :viewLink="viewLink"
       @delete="handleDeleteEmployee"
+      :ismaster="ismaster"
     />
   </div>
 </template>
@@ -34,7 +35,6 @@ export default {
         "البريد الالكتروني",
         "رقم الهاتف",
         "الصلاحيات",
-        "is_master",
       ],
       editLink: "/edit-employee",
       viewLink: "/view-employee",
@@ -44,18 +44,16 @@ export default {
     ...mapState(useEmployeesStore, {
       employees: (state) => state.employees,
       pages: (state) => state.pages,
+      ismaster: (state) => state.ismaster,
     }),
     tableRows() {
       return this.employees.map((emp) => [
         emp.id,
-
         emp.image,
-
         emp.name,
         emp.email,
         emp.phone,
         emp.role,
-        emp.is_master,
       ]);
     },
     tablePages() {
@@ -68,6 +66,7 @@ export default {
       await employeesStore.deleteEmployee(id);
     },
   },
+
   async mounted() {
     const employeesStore = useEmployeesStore();
     await employeesStore.fetchEmployees();

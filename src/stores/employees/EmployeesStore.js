@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
+    ismaster: [],
 
     pages: [],
   }),
@@ -11,12 +12,14 @@ export const useEmployeesStore = defineStore("employees", {
     async fetchEmployees() {
       try {
         const response = await axios.get("admins");
-        // console.log(response.data.data);
+        console.log(response.data.data);
         this.employees = response.data.data;
         this.pages = response.data.pages;
       } catch (error) {
         console.error("Error fetching employees:", error);
       }
+      this.ismaster = this.employees.map((emp) => emp.is_master);
+      console.log(this.ismaster, "is master");
     },
     async deleteEmployee(id) {
       try {
@@ -34,7 +37,7 @@ export const useEmployeesStore = defineStore("employees", {
         if (result.isConfirmed) {
           // Proceed with deletion if confirmed
           const employee = this.employees.find((emp) => emp.id === id);
-          if (!employee) {
+          if (employee) {
             throw new Error("Employee not found");
           }
 
