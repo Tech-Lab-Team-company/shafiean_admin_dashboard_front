@@ -47,6 +47,7 @@ export default {
       ismaster: (state) => state.ismaster,
     }),
     tableRows() {
+      console.log(this.employees, "ssss");
       return this.employees.map((emp) => [
         emp.id,
         emp.image,

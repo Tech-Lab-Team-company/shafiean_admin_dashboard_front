@@ -117,9 +117,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    delete: {
-      type: Function,
-    },
   },
 
   data() {
