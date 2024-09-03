@@ -17,6 +17,7 @@
         >
           <!-- Menu Item Link -->
           <router-link
+            v-if="!item.submenu"
             :to="item.route"
             class="sidebar-link"
             @click="closeSidebarOnItemClick"
@@ -24,6 +25,37 @@
             <i :class="item.icon"></i>
             <span v-if="!localIsCollapsed">{{ item.name }}</span>
           </router-link>
+
+          <div v-else>
+            <div class="sidebar-link" @click="toggleSubmenu(index)">
+              <i :class="item.icon"></i>
+              <span v-if="!localIsCollapsed">{{ item.name }}</span>
+              <i
+                v-if="!localIsCollapsed"
+                class="up-down-icon"
+                :class="
+                  item.expanded ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+                "
+                style="margin-inline-start: 75px"
+              ></i>
+            </div>
+            <ul v-if="item.expanded && !localIsCollapsed" class="submenu">
+              <li
+                v-for="(subItem, subIndex) in item.submenu"
+                :key="subIndex"
+                class="sidebar-subitem"
+              >
+                <router-link
+                  :to="subItem.route"
+                  class="sidebar-link"
+                  @click="closeSidebarOnItemClick"
+                >
+                  <i :class="subItem.icon"></i>
+                  <span>{{ subItem.name }}</span>
+                </router-link>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
@@ -54,11 +86,31 @@ export default {
           route: "/disabilities",
           icon: "fa-solid fa-wheelchair",
         },
-        { name: "المناهج", route: "/Curricula", icon: "fa-brands fa-leanpub" },
+        {
+          name: "المناهج",
+          icon: "fa-brands fa-leanpub",
+          expanded: false,
+          submenu: [
+            {
+              name: "المناهج",
+              route: "/curricula",
+              icon: "fas fa-book",
+            },
+            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
+          ],
+        },
         {
           name: "المراحل",
           route: "/steps",
           icon: "fa-solid fa-graduation-cap",
+          submenu: [
+            {
+              name: "المناهج",
+              route: "/curricula",
+              icon: "fas fa-book",
+            },
+            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
+          ],
         },
         {
           name: "الدوله",
@@ -92,22 +144,22 @@ export default {
     },
     closeSidebarOnItemClick() {
       if (window.innerWidth <= 1024) {
-        // Adjust to 1024px for tablets and small laptops
         this.localIsCollapsed = true;
         this.$emit("update:isCollapsed", this.localIsCollapsed);
         this.updateToggleIcon();
       }
     },
+    toggleSubmenu(index) {
+      this.menuItems[index].expanded = !this.menuItems[index].expanded;
+    },
     openSidebarOnHover() {
       if (this.localIsCollapsed && window.innerWidth > 1024) {
-        // Adjust to 1024px for tablets and small laptops
         this.localIsCollapsed = false;
         this.updateToggleIcon();
       }
     },
     closeSidebarOnLeave() {
       if (!this.localIsCollapsed && window.innerWidth > 1024) {
-        // Adjust to 1024px for tablets and small laptops
         this.localIsCollapsed = true;
         this.updateToggleIcon();
       }
@@ -116,10 +168,8 @@ export default {
       if (window.innerWidth <= 600) {
         this.localIsCollapsed = true;
       } else if (window.innerWidth > 600 && window.innerWidth <= 1024) {
-        // Adjust for tablets and small laptops
-        this.localIsCollapsed = true; // Keep collapsed or adjust as needed
+        this.localIsCollapsed = true;
       } else if (window.innerWidth > 1024 && !this.localIsCollapsed) {
-        // Larger screens like desktops
         this.localIsCollapsed = false;
       }
       this.$emit("update:isCollapsed", this.localIsCollapsed);

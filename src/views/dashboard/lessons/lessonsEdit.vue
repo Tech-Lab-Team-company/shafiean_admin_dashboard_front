@@ -1,6 +1,6 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="اضافة درس" :showButton="false" />
+    <header-pages title="تعديل درس" :showButton="false" />
     <form action="">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -42,13 +42,12 @@
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
   </div>
 </template>
-
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 export default {

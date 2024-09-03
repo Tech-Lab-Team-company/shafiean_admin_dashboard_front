@@ -51,6 +51,7 @@
 
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
+import { useDisabilitieStore } from "@/stores/disabilitie/disabilitieAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -77,6 +78,18 @@ export default {
           this.imageSrc = e.target.result;
         };
         reader.readAsDataURL(file);
+      }
+    },
+    async submitForm() {
+      try {
+        const disabilitieStoreIndex = useDisabilitieStore();
+        if (!disabilitieStoreIndex) {
+          throw new Error("Failed to load employees store");
+        }
+        await disabilitieStoreIndex.addEmployee(this.form);
+        this.$router.push("/employees");
+      } catch (error) {
+        console.error("Error in submitForm:", error);
       }
     },
   },

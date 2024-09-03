@@ -28,6 +28,8 @@ import adminInformationIndex from "@/views/dashboard/adminInformation/adminInfor
 import adminInformationAdd from "@/views/dashboard/adminInformation/adminInformationAdd.vue";
 import adminInformationEdit from "@/views/dashboard/adminInformation/adminInformationEdit.vue";
 import LessonsIndex from "@/views/dashboard/lessons/lessonsIndex.vue";
+import lessonsAdd from "@/views/dashboard/lessons/lessonsAdd.vue";
+import lessonsEdit from "@/views/dashboard/lessons/lessonsEdit.vue";
 const routes = [
   {
     path: "/login",
@@ -166,6 +168,16 @@ const routes = [
         path: "/lessons",
         name: "lessonsIndex",
         component: LessonsIndex,
+      },
+      {
+        path: "/add-lessons",
+        name: "lessonsAdd",
+        component: lessonsAdd,
+      },
+      {
+        path: "/edit-lessons/:id",
+        name: "lessonsEdit",
+        component: lessonsEdit,
       },
     ],
   },
