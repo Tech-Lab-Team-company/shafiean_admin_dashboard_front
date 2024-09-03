@@ -7,16 +7,18 @@
     />
     <TablesPageVue
       :headers="tableHeaders"
-      :rows="tableRows"
+      :rows="tableRowsDisabilitie"
       :pages="tablePages"
-      editLink="/edit-disabilities"
-      viewLink="/view-disabilities"
+      :editLink="editLink"
+      :viewLink="viewLink"
     />
   </div>
 </template>
 <script>
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import { useDisabilitieStore } from "@/stores/disabilitie/disabilitieStoreIndex";
+import { mapState } from "pinia";
 export default {
   name: "DisabilitiesIndex",
   components: {
@@ -26,34 +28,33 @@ export default {
   data() {
     return {
       tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
-      tableRows: [
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-      ],
-      tablePages: [1, 2, 3, 4, 5],
+      editLink: "/edit-disabilities",
+      viewLink: "/view-disabilities",
     };
+  },
+  computed: {
+    ...mapState(useDisabilitieStore, {
+      disabilitie: (state) => state.disabilitie,
+      pages: (state) => state.pages,
+    }),
+    tableRowsDisabilitie() {
+      console.log(this.disabilitie, "nasrasssssssddddddss");
+
+      return this.disabilitie.map((dis) => [
+        dis.id,
+        dis.image,
+        dis.title,
+        dis.description,
+      ]);
+    },
+    tablePages() {
+      return this.pages;
+    },
+  },
+
+  async mounted() {
+    const disabilitiesStore = useDisabilitieStore();
+    await disabilitiesStore.fetchDisabilitie();
   },
 };
 </script>

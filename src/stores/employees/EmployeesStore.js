@@ -14,6 +14,8 @@ export const useEmployeesStore = defineStore("employees", {
         const response = await axios.get("admins");
         console.log(response.data.data);
         this.employees = response.data.data;
+        console.log(this.employees, "nas");
+
         this.pages = response.data.pages;
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -22,7 +24,7 @@ export const useEmployeesStore = defineStore("employees", {
       console.log(this.ismaster, "is master");
     },
     async deleteEmployee(id) {
-      console.log(id + "nasra");
+      // console.log(id + "nasra");
 
       try {
         // Show SweetAlert confirmation dialog
