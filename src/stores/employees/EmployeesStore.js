@@ -22,6 +22,8 @@ export const useEmployeesStore = defineStore("employees", {
       console.log(this.ismaster, "is master");
     },
     async deleteEmployee(id) {
+      console.log(id + "nasra");
+
       try {
         // Show SweetAlert confirmation dialog
         const result = await Swal.fire({
@@ -35,14 +37,7 @@ export const useEmployeesStore = defineStore("employees", {
         });
 
         if (result.isConfirmed) {
-          // Proceed with deletion if confirmed
-          const employee = this.employees.find((emp) => emp.id === id);
-          if (employee) {
-            throw new Error("Employee not found");
-          }
-
           await axios.post("admins/destroy", { id });
-
           const index = this.employees.findIndex((emp) => emp.id === id);
           if (index !== -1) {
             this.employees.splice(index, 1);
