@@ -2,12 +2,12 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const useDisabilitieStore = defineStore("disabilitiesAdd", {
+export const useDisabilitieStore = defineStore("DisabilitiesAdd", {
   state: () => ({
-    disabilitie: [],
+    Disabilities: [],
   }),
   actions: {
-    async addDisabilitie(disabilitieData) {
+    async addDisabilities(disabilitieData) {
       try {
         const formData = new FormData();
         Object.keys(disabilitieData).forEach((key) => {
@@ -18,11 +18,11 @@ export const useDisabilitieStore = defineStore("disabilitiesAdd", {
           }
         });
 
-        const response = await axios.post("/admins", formData, {
+        const response = await axios.post("fetch_disabilities", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        this.employees.push(response.data);
+        this.Disabilities.push(response.data);
 
         Swal.fire("Success", "Employee has been saved.", "success");
       } catch (error) {
