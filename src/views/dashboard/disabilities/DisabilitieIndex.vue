@@ -17,7 +17,7 @@
 <script>
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
-import { useDisabilitieStore } from "@/stores/disabilitie/disabilitieStoreIndex";
+import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
 import { mapState } from "pinia";
 export default {
   name: "DisabilitiesIndex",

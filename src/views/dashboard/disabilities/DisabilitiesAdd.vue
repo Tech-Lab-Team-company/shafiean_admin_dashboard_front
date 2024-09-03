@@ -1,13 +1,12 @@
 <template>
   <div class="disabilities-add">
     <HeaderPages title="اضافة اعاقه" :showButton="false" />
-    <form action="" @submit.prevent>
+    <form action="" @submit.prevent="submitForm">
       <div class="row">
-        <!-- Column containing the image uploader and input fields -->
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
-            <!-- Hidden File Input -->
+
             <input
               type="file"
               id="avatar"
@@ -37,7 +36,11 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> وصف الاعاقه</label>
           <div class="input">
-            <input type="text" placeholder="وصف الاعاقه" />
+            <input
+              v-model="form.discraption"
+              type="text"
+              placeholder="وصف الاعاقه"
+            />
           </div>
         </div>
       </div>
@@ -51,7 +54,7 @@
 
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
-import { useDisabilitieStore } from "@/stores/disabilitie/disabilitieAddStore";
+import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -61,9 +64,13 @@ export default {
   },
   data() {
     return {
-      value: [],
-      options: ["list", "of", "options"],
-      imageSrc: null,
+      rolesOptions: ["Admin", "Manager", "Employee"],
+      form: {
+        tittle: "",
+        discraption: "",
+        image: null,
+        imageSrc: "",
+      },
     };
   },
   methods: {
@@ -75,19 +82,19 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result;
+          this.form.imageSrc = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     },
     async submitForm() {
       try {
-        const disabilitieStoreIndex = useDisabilitieStore();
-        if (!disabilitieStoreIndex) {
-          throw new Error("Failed to load employees store");
+        const disabilitieStore = useDisabilitieStore();
+        if (!disabilitieStore) {
+          throw new Error("Failed to load disabilities store");
         }
-        await disabilitieStoreIndex.addEmployee(this.form);
-        this.$router.push("/employees");
+        await disabilitieStore.addDisability(this.form);
+        this.$router.push("/disabilities");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
