@@ -29,12 +29,9 @@
           <tbody>
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
               <td v-for="(cell, cellIndex) in row" :key="cellIndex">
-                <img
-                  v-if="cellIndex == 1"
-                  :src="cell"
-                  alt="Image"
-                  class="image"
-                />
+                <div class="img" v-if="isLink(cell)">
+                  <img :src="cell" alt="Image" class="image" />
+                </div>
                 <span v-else>{{ cell }}</span>
               </td>
               <td>
@@ -141,6 +138,14 @@ export default {
         return true;
       }
       return this.ismaster[index] === 0;
+    },
+    isLink(val) {
+      try {
+        new URL(val);
+        return true;
+      } catch (_) {
+        return false;
+      }
     },
   },
 };
