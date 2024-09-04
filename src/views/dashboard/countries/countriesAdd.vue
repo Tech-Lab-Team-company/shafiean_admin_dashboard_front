@@ -2,7 +2,7 @@
   <div class="add-countries">
     <header-pages title="اضافة دوله" link="/countries" :showButton="false" />
 
-    <form action="" @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">اسم الدوله</label>
@@ -18,9 +18,9 @@
           <label for="">كود الدوله</label>
           <div class="input">
             <input
-              type="number"
+              type="text"
               placeholder="كود الدوله"
-              v-mpdel="countries.code"
+              v-model="countries.code"
             />
           </div>
         </div>
@@ -45,20 +45,36 @@
 
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
+import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
 export default {
   data() {
     return {
-      rolesOptions: ["Admin", "Manager", "Employee"],
       countries: {
         title: "",
         code: "",
-        image: null,
         phone_code: "",
       },
     };
   },
   components: {
     headerPages,
+  },
+  methods: {
+    triggerFileInput() {
+      this.$refs.fileInput.click();
+    },
+    async submitForm() {
+      try {
+        const countriesStore = useCountriesAddStore();
+        if (!countriesStore) {
+          throw new Error("Failed to load Country store");
+        }
+        await countriesStore.addCountriesData(this.countries); // Call addEmployee instead of fetchEmployees
+        this.$router.push("/countries");
+      } catch (error) {
+        console.error("Error in submitForm:", error);
+      }
+    },
   },
 };
 </script>

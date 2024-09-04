@@ -24,6 +24,8 @@ export const useCountriesStore = defineStore("countries", {
       }
     },
     async deleteCountry(id) {
+      console.log(id + "nasra");
+
       try {
         const result = await Swal.fire({
           title: "Are you sure?",
