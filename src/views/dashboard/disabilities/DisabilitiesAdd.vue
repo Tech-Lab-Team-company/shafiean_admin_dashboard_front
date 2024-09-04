@@ -6,7 +6,6 @@
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
-
             <input
               type="file"
               id="avatar"
@@ -15,14 +14,16 @@
               ref="fileInput"
               style="display: none"
             />
-
-            <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
+            <div
+              v-if="!form.imageSrc"
+              class="upload-icon"
+              @click="triggerFileInput"
+            >
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div v-if="form.imageSrc" class="avatar-preview">
+              <img :src="form.imageSrc" alt="Avatar Preview" />
             </div>
           </div>
         </div>
