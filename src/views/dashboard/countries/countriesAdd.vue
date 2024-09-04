@@ -7,13 +7,31 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">اسم الدوله</label>
           <div class="input">
-            <input type="text" placeholder="اسم الدوله" v-model="form.title" />
+            <input
+              type="text"
+              placeholder="اسم الدوله"
+              v-model="countries.title"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">كود الدوله</label>
           <div class="input">
-            <input type="number" placeholder="كود الدوله" v-mpdel="form.code" />
+            <input
+              type="number"
+              placeholder="كود الدوله"
+              v-mpdel="countries.code"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="">كود الهاتف</label>
+          <div class="input">
+            <input
+              type="number"
+              placeholder="كود الدوله"
+              v-model="countries.phone_code"
+            />
           </div>
         </div>
       </div>
@@ -31,7 +49,7 @@ export default {
   data() {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
-      form: {
+      countries: {
         title: "",
         code: "",
         image: null,
