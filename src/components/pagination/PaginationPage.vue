@@ -72,6 +72,7 @@ export default {
     changePage(page) {
       if (page >= 1 && page <= this.total) {
         this.$emit("page-changed", page);
+        this.$store.setPage(page); 
       }
     },
   },
