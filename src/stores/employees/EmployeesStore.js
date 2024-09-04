@@ -12,9 +12,7 @@ export const useEmployeesStore = defineStore("employees", {
     async fetchEmployees() {
       try {
         const response = await axios.get("admins");
-        console.log(response.data.data);
         this.employees = response.data.data;
-        console.log(this.employees, "nas");
 
         this.pages = response.data.pages;
       } catch (error) {
