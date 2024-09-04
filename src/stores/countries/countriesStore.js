@@ -16,7 +16,6 @@ export const useCountriesStore = defineStore("countries", {
 
         this.countries = response.data.data.data;
         if (response.data.status == true) {
-          // تحديث مخزن التصفح
           paginationStore.setPage(response.data.data.current_page);
           paginationStore.setfrom(response.data.data.from);
           paginationStore.setlastpage(response.data.data.last_page);
