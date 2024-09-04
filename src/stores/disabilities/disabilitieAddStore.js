@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const useDisabilitieStore = defineStore("DisabilitiesAdd", {
+export const useDisabilitieAddStore = defineStore("DisabilitiesAdd", {
   state: () => ({
     Disabilities: [],
   }),
@@ -21,6 +21,7 @@ export const useDisabilitieStore = defineStore("DisabilitiesAdd", {
         const response = await axios.post("add_disability", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        console.log(response);
 
         this.Disabilities.push(response.data);
 
