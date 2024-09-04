@@ -57,37 +57,31 @@
       </div>
     </div>
   </div>
-  <div class="pagination">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="page in pages" :key="page">
-          <a class="page-link" href="#">{{ page }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
 </template>
 
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { isLink } from "@/helpers/isLink"; // Adjust the path as needed
+// import pagination from "laravel-vue-pagination";
+// import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
+// import { mapState, mapActions } from "pinia";
 
 export default {
   name: "TablesPage",
   components: {
     Multiselect,
+    // pagination,
   },
   props: {
+    currentPage: {
+      type: Number,
+      required: true,
+    },
+    totalPages: {
+      type: Number,
+      required: true,
+    },
     headers: {
       type: Array,
       required: true,
@@ -124,6 +118,12 @@ export default {
   },
 
   methods: {
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.$emit("page-changed", page);
+      }
+    },
+
     handleIconClick(action, id) {
       if (action === "view") {
         this.$router.push(this.viewLink + "/" + id);
@@ -139,13 +139,15 @@ export default {
       }
       return this.ismaster[index] === 0;
     },
-    isLink(val) {
-      try {
-        new URL(val);
-        return true;
-      } catch (_) {
-        return false;
-      }
+    isLink,
+  },
+
+  computed: {
+    hasPreviousPage() {
+      return this.currentPage > 1;
+    },
+    hasNextPage() {
+      return this.currentPage < this.totalPages;
     },
   },
 };

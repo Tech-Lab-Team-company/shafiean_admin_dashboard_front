@@ -5,13 +5,12 @@ export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
     ismaster: [],
-
     pages: [],
   }),
   actions: {
     async fetchEmployees() {
       try {
-        const response = await axios.get("admins");
+        const response = await axios.get(`admins`);
         this.employees = response.data.data;
 
         this.pages = response.data.pages;
