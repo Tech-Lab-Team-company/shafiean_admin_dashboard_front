@@ -10,8 +10,8 @@
       @delete="handleDeleteCountry"
     />
     <PaginationPage
-      :currentPage="currentPage"
-      :totalPages="totalPages"
+      :currentPage="pagination.current_page"
+      :totalPages="pagination.last_page"
       @page-changed="handlePageChange"
     />
   </div>
@@ -20,9 +20,9 @@
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
-import PaginationPage from "@/components/pagination/PaginationPage.vue"; 
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useCountriesStore } from "@/stores/countries/countriesStore";
-import { usePaginationStore } from "@/stores/pagination/PaginationStore";  
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
 
 export default {
@@ -31,18 +31,12 @@ export default {
     TablesPageVue,
     PaginationPage,
   },
-  data() {
-    return {
-      tableHeaders: ["ID", "اسم الدوله", "كود الدوله", "  كود الهاتف "],
-    };
-  },
   computed: {
     ...mapState(useCountriesStore, {
       countries: (state) => state.countries,
     }),
     ...mapState(usePaginationStore, {
-      currentPage: (state) => state.current_page,
-      totalPages: (state) => state.last_page,
+      pagination: (state) => state,
     }),
     tableRowsCountries() {
       return this.countries.map((count) => [
@@ -53,7 +47,7 @@ export default {
       ]);
     },
     tablePages() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      return Array.from({ length: this.pagination.last_page }, (_, i) => i + 1);
     },
   },
   methods: {
@@ -62,18 +56,13 @@ export default {
       await countriesStore.deleteCountry(id);
     },
     handlePageChange(page) {
-      const paginationStore = usePaginationStore();
-      paginationStore.setPage(page);
-      this.fetchCountriesForPage(page);  
-    },
-    fetchCountriesForPage(page) {
       const countriesStore = useCountriesStore();
-      countriesStore.fetchCountries(page); 
+      countriesStore.fetchCountries(page);
     },
   },
   mounted() {
     const countriesStore = useCountriesStore();
-    countriesStore.fetchCountries();
+    countriesStore.fetchCountries(this.pagination.current_page);
   },
 };
 </script>
