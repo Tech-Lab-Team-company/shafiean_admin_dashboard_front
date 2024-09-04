@@ -21,6 +21,7 @@
     "jquery": "^3.7.1",
     "lottie-web": "^5.12.2",
     "node-polyfill-webpack-plugin": "^4.0.0",
+    "laravel-vue-pagination": "^3.0.0",
     "normalize.css": "^8.0.1",
     "pinia": "^2.2.2",
     "primevue": "^4.0.5",
