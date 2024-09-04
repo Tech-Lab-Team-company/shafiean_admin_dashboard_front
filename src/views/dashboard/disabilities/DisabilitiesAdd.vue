@@ -42,7 +42,7 @@
           <label for=""> وصف الاعاقه</label>
           <div class="input">
             <input
-              v-model="form.discraption"
+              v-model="form.description"
               type="text"
               placeholder="وصف الاعاقه"
             />
@@ -72,7 +72,7 @@ export default {
       rolesOptions: ["Admin", "Manager", "Employee"],
       form: {
         title: "",
-        discraption: "",
+        description: "",
         image: null,
         imageSrc: "",
       },
