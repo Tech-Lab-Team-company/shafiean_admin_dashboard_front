@@ -18,7 +18,7 @@ export const useDisabilitieStore = defineStore("DisabilitiesAdd", {
           }
         });
 
-        const response = await axios.post("fetch_disabilities", formData, {
+        const response = await axios.post("add_disability", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
