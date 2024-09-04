@@ -87,7 +87,7 @@ export default {
           icon: "fa-solid fa-wheelchair",
         },
         {
-          name: "المناهج",
+          name: "التعليم",
           icon: "fa-brands fa-leanpub",
           expanded: false,
           submenu: [
@@ -97,25 +97,19 @@ export default {
               icon: "fas fa-book",
             },
             { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
+            { name: "المراحل", route: "/steps", icon: "fas fa-book" },
           ],
         },
+
         {
-          name: "المراحل",
-          route: "/steps",
-          icon: "fa-solid fa-graduation-cap",
-          submenu: [
-            {
-              name: "المناهج",
-              route: "/curricula",
-              icon: "fas fa-book",
-            },
-            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
-          ],
-        },
-        {
-          name: "الدوله",
+          name: "الدول",
           route: "/countries",
           icon: "fa-solid fa-building",
+          expanded: false,
+          submenu: [
+            { name: "الدوله", route: "/countries", icon: "fas fa-globe" },
+            { name: "المدن", route: "/cities", icon: "fas fa-city" },
+          ],
         },
         {
           name: "الجمعيات",

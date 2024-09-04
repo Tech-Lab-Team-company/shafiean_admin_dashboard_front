@@ -37,14 +37,10 @@
     margin-right: 15px;
     color: white;
     transition: color 0.3s ease;
-   
-
   }
- 
 
   span {
     font-size: 16px;
-
   }
 
   &:hover {
@@ -70,6 +66,7 @@
       margin: unset;
     }
   }
-
-
-} 
+  ul {
+    list-style: none !important;
+  }
+}
