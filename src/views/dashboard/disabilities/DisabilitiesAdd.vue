@@ -31,7 +31,11 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> اسم الاعاقه</label>
           <div class="input">
-            <input type="text" placeholder="أدخل أسم الاعاقه" />
+            <input
+              type="text"
+              placeholder="أدخل أسم الاعاقه"
+              v-model="form.title"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -55,7 +59,7 @@
 
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
-import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
+import { useDisabilitieAddStore } from "@/stores/disabilities/disabilitieAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -67,7 +71,7 @@ export default {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
       form: {
-        tittle: "",
+        title: "",
         discraption: "",
         image: null,
         imageSrc: "",
@@ -81,6 +85,7 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.form.image = file;
         const reader = new FileReader();
         reader.onload = (e) => {
           this.form.imageSrc = e.target.result;
@@ -90,15 +95,16 @@ export default {
     },
     async submitForm() {
       try {
-        const disabilitieStore = useDisabilitieStore();
+        const disabilitieStore = useDisabilitieAddStore();
         if (!disabilitieStore) {
           throw new Error("Failed to load disabilities store");
         }
-        await disabilitieStore.addDisability(this.form);
+        await disabilitieStore.addDisabilities(this.form);
         this.$router.push("/disabilities");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
+      console.log(this.form);
     },
   },
 };

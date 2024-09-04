@@ -6,7 +6,7 @@ import CodeReset from "@/views/dashboard/Auth/CodeReset.vue";
 import Dashboard from "@/views/dashboard/dashboard.vue";
 import HomeView from "@/views/dashboard/HomeView.vue";
 import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
-import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitieIndex.vue";
+import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitiesIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";

@@ -11,6 +11,7 @@
       :pages="tablePages"
       :editLink="editLink"
       :viewLink="viewLink"
+      @delete="handleDeleteDisabilitie"
     />
   </div>
 </template>
@@ -32,6 +33,7 @@ export default {
       viewLink: "/view-disabilities",
     };
   },
+
   computed: {
     ...mapState(useDisabilitieStore, {
       disabilitie: (state) => state.disabilitie,
@@ -49,6 +51,15 @@ export default {
     },
     tablePages() {
       return this.pages;
+    },
+  },
+
+  methods: {
+    async handleDeleteDisabilitie(id) {
+      const disabilitieStore = useDisabilitieStore();
+      console.log(id);
+
+      await disabilitieStore.deleteDisabilitie(id);
     },
   },
 
