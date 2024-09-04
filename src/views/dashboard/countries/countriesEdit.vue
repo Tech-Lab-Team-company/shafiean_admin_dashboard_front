@@ -1,7 +1,7 @@
 <template>
   <div class="edit-countries">
     <header-pages title="تعديل دوله" link="/countries" :showButton="false" />
-    <form action="" @submit.prevent="editCountries">
+    <form action="" @submit.prevent="updatecountries">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">اسم الدوله</label>
@@ -79,6 +79,10 @@ export default {
       });
       this.$router.go(-1);
     },
+  },
+
+  mounted() {
+    this.fetchData();
   },
 };
 </script>

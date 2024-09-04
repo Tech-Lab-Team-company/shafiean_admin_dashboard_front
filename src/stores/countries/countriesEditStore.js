@@ -9,7 +9,7 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
   actions: {
     async fetchCountries(id) {
       try {
-        const response = await axios.post("edit_country/show", { id });
+        const response = await axios.post("fetch_country_details", { id });
         if (response.status === 200) {
           this.countries = response.data.data;
         } else {
@@ -17,7 +17,6 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
         }
       } catch (error) {
         console.error(error);
-        // Handle error (e.g., show a notification)
       }
     },
 
@@ -26,14 +25,11 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
         const formData = new FormData();
         formData.append("id", id);
 
-        // Append other data
-        formData.append("name", updatedData.title);
-        formData.append("phone", updatedData.code);
-        formData.append("email", updatedData.phone_code);
+        formData.append("title", updatedData.title);
+        formData.append("code", updatedData.code);
+        formData.append("phone_code", updatedData.phone_code);
 
-        // Append the image file if available
-
-        const response = await axios.post("edit_country/update", formData, {
+        const response = await axios.post("edit_country", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -41,9 +37,9 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
 
         if (response.status === 200) {
           this.countries = response.data.data;
-          Swal.fire("Success", "Employee has been updated.", "success");
+          Swal.fire("Success", "country has been updated.", "success");
         } else {
-          Swal.fire("Error", "Failed to update employee.", "error");
+          Swal.fire("Error", "Failed to update country.", "error");
         }
       } catch (error) {
         console.error(error);
