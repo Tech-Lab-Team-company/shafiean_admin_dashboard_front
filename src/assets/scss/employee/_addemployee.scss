@@ -113,27 +113,3 @@ label {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-@media (max-width: 767px) {
-  .employees-add {
-    padding: 0;
-  }
-
-  .input {
-    margin-bottom: 1rem;
-  }
-
-  button.save,
-  button.bake {
-    padding: 0.6rem 2rem;
-  }
-
-  .avatar-preview img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .all-btn {
-    flex-direction: column;
-    gap: 10px;
-  }
-}

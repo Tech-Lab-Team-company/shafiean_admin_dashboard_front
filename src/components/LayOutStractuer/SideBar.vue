@@ -26,6 +26,7 @@
             <span v-if="!localIsCollapsed">{{ item.name }}</span>
           </router-link>
 
+          <!-- Submenu Item -->
           <div v-else>
             <div class="sidebar-link" @click="toggleSubmenu(index)">
               <i :class="item.icon"></i>
@@ -74,54 +75,7 @@ export default {
     return {
       localIsCollapsed: this.isCollapsed,
       toggleIcon: "fas fa-bars",
-      menuItems: [
-        { name: "الرئيسيه", route: "/", icon: "fas fa-home" },
-        {
-          name: "الموظفين",
-          route: "/employees",
-          icon: "fa-solid fa-building-user",
-        },
-        {
-          name: "الأعاقات",
-          route: "/disabilities",
-          icon: "fa-solid fa-wheelchair",
-        },
-        {
-          name: "التعليم",
-          icon: "fa-brands fa-leanpub",
-          expanded: false,
-          submenu: [
-            {
-              name: "المناهج",
-              route: "/curricula",
-              icon: "fas fa-book",
-            },
-            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
-            { name: "المراحل", route: "/steps", icon: "fas fa-book" },
-          ],
-        },
-
-        {
-          name: "الدول",
-          route: "/countries",
-          icon: "fa-solid fa-building",
-          expanded: false,
-          submenu: [
-            { name: "الدوله", route: "/countries", icon: "fas fa-globe" },
-            { name: "المدن", route: "/cities", icon: "fas fa-city" },
-          ],
-        },
-        {
-          name: "الجمعيات",
-          route: "/associations",
-          icon: "fa-solid fa-sitemap",
-        },
-        {
-          name: "معلومات المسؤل",
-          route: "/adminInformation",
-          icon: "fa-solid fa-user-tie",
-        },
-      ],
+      menuItems: this.getMenuItems(),
     };
   },
   watch: {
@@ -171,6 +125,48 @@ export default {
     },
     updateToggleIcon() {
       this.toggleIcon = this.localIsCollapsed ? "fas fa-bars" : "fas fa-times";
+    },
+    getMenuItems() {
+      return [
+        { name: "الرئيسيه", route: "/", icon: "fas fa-home" },
+        {
+          name: "الموظفين",
+          route: "/employees",
+          icon: "fa-solid fa-building-user",
+        },
+        {
+          name: "الأعاقات",
+          route: "/disabilities",
+          icon: "fa-solid fa-wheelchair",
+        },
+        {
+          name: "التعليم",
+          icon: "fa-brands fa-leanpub",
+          submenu: [
+            { name: "المناهج", route: "/curricula", icon: "fas fa-book" },
+            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
+            { name: "المراحل", route: "/steps", icon: "fas fa-book" },
+          ],
+        },
+        {
+          name: "الدول",
+          icon: "fa-solid fa-building",
+          submenu: [
+            { name: "الدوله", route: "/countries", icon: "fas fa-globe" },
+            { name: "المدن", route: "/cities", icon: "fas fa-city" },
+          ],
+        },
+        {
+          name: "الجمعيات",
+          route: "/associations",
+          icon: "fa-solid fa-sitemap",
+        },
+        {
+          name: "معلومات المسؤل",
+          route: "/adminInformation",
+          icon: "fa-solid fa-user-tie",
+        },
+      ];
     },
   },
   created() {

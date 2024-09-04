@@ -1,4 +1,25 @@
 @media screen and (max-width: 600px) {
+  .employees {
+    height: 100vh;
+  }
+  .disabilities {
+    height: 100vh !important;
+  }
+  .curricula {
+    height: 100vh !important;
+  }
+  .lessons {
+    height: 100vh !important;
+  }
+  .countries {
+    height: 100vh !important;
+  }
+  .Associations {
+    height: 100vh !important;
+  }
+  .admin-info {
+    height: 100vh !important;
+  }
   .sidebar {
     position: fixed;
     height: 100vh;
@@ -19,8 +40,11 @@
     display: block;
   }
 
-  input {
-    width: 80% !important;
+  .input {
+    width: 100% !important;
+    input {
+      width: 100%;
+    }
   }
   .employees-add {
     & .input {
