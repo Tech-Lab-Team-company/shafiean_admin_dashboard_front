@@ -9,51 +9,68 @@
       viewLink="/view-countries"
       @delete="handleDeleteCountry"
     />
+    <PaginationPage
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @page-changed="handlePageChange"
+    />
   </div>
 </template>
 
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import PaginationPage from "@/components/pagination/PaginationPage.vue"; 
 import { useCountriesStore } from "@/stores/countries/countriesStore";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";  
 import { mapState } from "pinia";
+
 export default {
   components: {
     headerPages,
     TablesPageVue,
+    PaginationPage,
   },
   data() {
     return {
       tableHeaders: ["ID", "اسم الدوله", "كود الدوله", "  كود الهاتف "],
-      tablePages: [1, 2, 3, 4, 5],
     };
   },
   computed: {
     ...mapState(useCountriesStore, {
       countries: (state) => state.countries,
-      pages: (state) => state.pages,
+    }),
+    ...mapState(usePaginationStore, {
+      currentPage: (state) => state.current_page,
+      totalPages: (state) => state.last_page,
     }),
     tableRowsCountries() {
-      console.log(this.countries, "Diiaaaa");
-
       return this.countries.map((count) => [
         count.id,
         count.title,
         count.code,
         count.phone_code,
-        // count.flag_url || null,
       ]);
+    },
+    tablePages() {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
   },
   methods: {
     async handleDeleteCountry(id) {
       const countriesStore = useCountriesStore();
-      console.log(id);
-
       await countriesStore.deleteCountry(id);
     },
+    handlePageChange(page) {
+      const paginationStore = usePaginationStore();
+      paginationStore.setPage(page);
+      this.fetchCountriesForPage(page);  
+    },
+    fetchCountriesForPage(page) {
+      const countriesStore = useCountriesStore();
+      countriesStore.fetchCountries(page); 
+    },
   },
-
   mounted() {
     const countriesStore = useCountriesStore();
     countriesStore.fetchCountries();
