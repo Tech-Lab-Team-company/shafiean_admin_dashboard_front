@@ -12,6 +12,28 @@
       :ismaster="ismaster"
     />
   </div>
+
+  <div class="pagination">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="linkPage in tablePages" :key="linkPage">
+          <a class="page-link" href="#" @click="paginationPage(linkPage)">{{
+            linkPage
+          }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -44,6 +66,7 @@ export default {
     ...mapState(useEmployeesStore, {
       employees: (state) => state.employees,
       pages: (state) => state.pages,
+      page: (state) => state.page,
       ismaster: (state) => state.ismaster,
     }),
     tableRows() {
@@ -68,11 +91,16 @@ export default {
 
       await employeesStore.deleteEmployee(id);
     },
+    paginationPage(page) {
+      this.page = page;
+      console.log("paginationPage", this.page);
+    },
   },
 
   async mounted() {
     const employeesStore = useEmployeesStore();
     await employeesStore.fetchEmployees();
+    console.log("mounted", this.page);
   },
 };
 </script>
