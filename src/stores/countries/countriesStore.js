@@ -14,14 +14,21 @@ export const useCountriesStore = defineStore("countries", {
         const response = await axios.post("fetch_countries", { page });
         const paginationStore = usePaginationStore();
 
-        this.countries = response.data.data.data;
+        const { current_page, from, last_page, per_page, to, total } =
+          response.data.data.meta;
+
+        console.log(response.data.data.meta, "meta Data");
+
         if (response.data.status == true) {
-          paginationStore.setPage(response.data.data.current_page);
-          paginationStore.setfrom(response.data.data.from);
-          paginationStore.setlastpage(response.data.data.last_page);
-          paginationStore.setperpage(response.data.data.per_page);
-          paginationStore.setto(response.data.data.to);
-          paginationStore.settotal(response.data.data.total);
+          this.countries = response.data.data.data;
+          console.log(this.countries, "Countries List");
+
+          paginationStore.setPage(current_page);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
         } else {
           console.log("Error fetching countries.");
         }
@@ -29,6 +36,7 @@ export const useCountriesStore = defineStore("countries", {
         console.error("Error fetching countries:", error);
       }
     },
+
     async deleteCountry(id) {
       try {
         const result = await Swal.fire({
@@ -44,6 +52,7 @@ export const useCountriesStore = defineStore("countries", {
         if (result.isConfirmed) {
           await axios.post("delete_country", { id });
 
+          // العثور على البلد وحذفه
           const index = this.countries.findIndex((emp) => emp.id === id);
           if (index !== -1) {
             this.countries.splice(index, 1);
@@ -52,7 +61,11 @@ export const useCountriesStore = defineStore("countries", {
           Swal.fire("Deleted!", "The country has been deleted.", "success");
         }
       } catch (error) {
-        Swal.fire("Error!", "There was an error deleting the country.", "error");
+        Swal.fire(
+          "Error!",
+          "There was an error deleting the country.",
+          "error"
+        );
       }
     },
   },

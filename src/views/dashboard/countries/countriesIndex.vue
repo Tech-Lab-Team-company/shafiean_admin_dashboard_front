@@ -10,8 +10,8 @@
       @delete="handleDeleteCountry"
     />
     <PaginationPage
-      :currentPage="pagination.current_page"
-      :totalPages="pagination.last_page"
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
       @page-changed="handlePageChange"
     />
   </div>
@@ -26,6 +26,11 @@ import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
 
 export default {
+  data() {
+    return {
+      tableHeaders: ["ID", "الاسم", "الكود", "رمز الهاتف"],
+    };
+  },
   components: {
     headerPages,
     TablesPageVue,
@@ -36,7 +41,12 @@ export default {
       countries: (state) => state.countries,
     }),
     ...mapState(usePaginationStore, {
-      pagination: (state) => state,
+      paginationCurrent: (state) => state.current_page,
+      paginationFrom: (state) => state.from,
+      paginationLast: (state) => state.last_page,
+      paginationPer: (state) => state.per_page,
+      paginationTo: (state) => state.to,
+      paginationTotal: (state) => state.total,
     }),
     tableRowsCountries() {
       return this.countries.map((count) => [
@@ -47,7 +57,7 @@ export default {
       ]);
     },
     tablePages() {
-      return Array.from({ length: this.pagination.last_page }, (_, i) => i + 1);
+      return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
   methods: {
@@ -62,7 +72,8 @@ export default {
   },
   mounted() {
     const countriesStore = useCountriesStore();
-    countriesStore.fetchCountries(this.pagination.current_page);
+    countriesStore.fetchCountries(this.paginationCurrent);
+    console.log("mounted", this.paginationLast);
   },
 };
 </script>
