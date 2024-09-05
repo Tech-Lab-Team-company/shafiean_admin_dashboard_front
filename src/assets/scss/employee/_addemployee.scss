@@ -113,6 +113,7 @@ label {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
+
 @media (max-width: 767px) {
   .employees-add {
     padding: 0;
@@ -137,3 +138,4 @@ label {
     gap: 10px;
   }
 }
+
