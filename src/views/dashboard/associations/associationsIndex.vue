@@ -7,7 +7,7 @@
     />
     <TablesPageVue
       :headers="tableHeaders"
-      :rows="tableRows"
+      :rows="tableRowsorganizations"
       :pages="tablePages"
       editLink="/edit-associations"
       viewLink="/view-associations"
@@ -18,39 +18,32 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import { mapState } from "pinia";
+// import { usePaginationStore } from "@/stores/pagination";
+import { useOrganizationsStore } from "@/stores/organizations/organizationsStore";
 export default {
   components: { HeaderPages, TablesPageVue },
   data() {
     return {
       tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
-      tableRows: [
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "اصم",
-          "اعاقة سمعيه",
-        ],
-      ],
-      tablePages: [1, 2, 3, 4, 5],
     };
+  },
+  computed: {
+    ...mapState(useOrganizationsStore, {
+      organizations: (state) => state.organizations,
+    }),
+    tableRowsorganizations() {
+      return this.organizations.map((org) => [
+        org.id,
+        org.image,
+        org.title,
+        org.description,
+      ]);
+    },
+  },
+  mounted() {
+    const organizationsStore = useOrganizationsStore();
+    organizationsStore.fetchOrganizations();
   },
 };
 </script>
