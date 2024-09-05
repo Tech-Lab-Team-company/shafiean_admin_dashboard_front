@@ -18,7 +18,7 @@
           <label for="">كود الدوله</label>
           <div class="input">
             <input
-              type="text"
+              type="number"
               placeholder="كود الدوله"
               v-model="countries.code"
             />
@@ -69,7 +69,7 @@ export default {
         if (!countriesStore) {
           throw new Error("Failed to load Country store");
         }
-        await countriesStore.addCountriesData(this.countries); // Call addEmployee instead of fetchEmployees
+        await countriesStore.addCountriesData(this.countries);
         this.$router.push("/countries");
       } catch (error) {
         console.error("Error in submitForm:", error);

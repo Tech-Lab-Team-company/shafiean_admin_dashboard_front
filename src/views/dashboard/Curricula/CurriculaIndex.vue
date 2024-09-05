@@ -7,6 +7,12 @@
       :pages="tablePages"
       editLink="/edit-curricula"
       viewLink="/view-curricula"
+      @delete="handleDeleteCurriculas"
+    />
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
     />
   </div>
 </template>
@@ -14,20 +20,28 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useCurriculaStore } from "@/stores/curricula/curriculaStore";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
 export default {
-  components: { HeaderPages, TablesPageVue },
+  components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
-      tableHeaders: ["ID", "الصور", "اسم المنهج", "وصف المنهج"],
-      tablePages: [1, 2, 3, 4, 5],
+      tableHeaders: ["ID", "الوصف", "رقم المنهج", "وصف المنهج"],
     };
   },
   computed: {
     ...mapState(useCurriculaStore, {
       Curriculas: (state) => state.Curriculas,
-      pages: (state) => state.pages,
+      ...mapState(usePaginationStore, {
+        paginationCurrent: (state) => state.current_page,
+        paginationFrom: (state) => state.from,
+        paginationLast: (state) => state.last_page,
+        paginationPer: (state) => state.per_page,
+        paginationTo: (state) => state.to,
+        paginationTotal: (state) => state.total,
+      }),
     }),
 
     tableRowsCurricula() {
@@ -37,6 +51,19 @@ export default {
         cur.type,
         cur.status,
       ]);
+    },
+    tablePages() {
+      return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
+    },
+  },
+  methods: {
+    async handleDeleteCurriculas(id) {
+      const curriculaStore = useCurriculaStore();
+      await curriculaStore.deleteCurriculas(id);
+    },
+    handlePageChange(page) {
+      const curriculaStore = useCurriculaStore();
+      curriculaStore.fetchCurricula(page);
     },
   },
   mounted() {
