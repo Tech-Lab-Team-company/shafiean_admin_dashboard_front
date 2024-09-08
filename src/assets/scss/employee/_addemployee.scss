@@ -21,9 +21,11 @@
     color: white;
     font-family: "regular";
     border: 0;
-    padding: 0.8rem 5rem;
+    padding: 0.8rem 2rem;
     border-radius: 10px;
     transition: 0.7s;
+    width: 20%;
+    border: 1px solid var(--main);
   }
   button.bake {
     display: block;
@@ -31,14 +33,16 @@
     color: white;
     font-family: "regular";
     border: 0;
-    padding: 0.8rem 5rem;
+    padding: 0.8rem 2rem;
     border-radius: 10px;
     transition: 0.7s;
+    border: 1px solid var(--main);
   }
   button:hover {
     background-color: white;
     border: 1px solid var(--main);
     color: var(--main);
+    transform: scale(1.06);
   }
   .all-btn {
     margin-top: 0.5rem;
@@ -138,4 +142,3 @@ label {
     gap: 10px;
   }
 }
-
