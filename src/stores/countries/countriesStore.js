@@ -11,7 +11,7 @@ export const useCountriesStore = defineStore("countries", {
   actions: {
     async fetchCountries(page = 1) {
       try {
-        const response = await axios.post("fetch_countries", { page });
+        const response = await axios.post(`fetch_countries?page=${page}`);
         const paginationStore = usePaginationStore();
 
         const { current_page, from, last_page, per_page, to, total } =

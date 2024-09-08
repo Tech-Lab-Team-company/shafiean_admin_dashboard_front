@@ -1,19 +1,31 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
     ismaster: [],
-    pages: [],
   }),
   actions: {
-    async fetchEmployees() {
+    async fetchEmployees(page = 1) {
       try {
-        const response = await axios.get(`admins`);
-        this.employees = response.data.data;
+        const response = await axios.get(`admins?page=${page}`);
+        const paginationStore = usePaginationStore();
 
-        this.pages = response.data.pages;
+        const { current_page, from, last_page, per_page, to, total } =
+          response.data.data.meta;
+        if (response.data.status == true) {
+          this.employees = response.data.data.data;
+          console.log(this.employees, "Employees List");
+
+          paginationStore.setPage(current_page);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
+        }
       } catch (error) {
         console.error("Error fetching employees:", error);
       }

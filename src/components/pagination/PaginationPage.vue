@@ -79,3 +79,11 @@ export default {
   },
 };
 </script>
+<style>
+.active > .page-link,
+.page-link.active {
+  background-color: var(--main) !important;
+  color: white !important;
+  border: 0 !important;
+}
+</style>

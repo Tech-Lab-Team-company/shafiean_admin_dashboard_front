@@ -25,7 +25,16 @@ export default {
   components: { HeaderPages, TablesPageVue },
   data() {
     return {
-      tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
+      tableHeaders: [
+        "ID",
+        "صوره",
+        "أسم المدير",
+        "أسم الجمعيه",
+        "عنوان الجمعيه",
+        "البريد الألكتروني المدير",
+
+        "رقم الهاتف",
+      ],
     };
   },
   computed: {
@@ -36,8 +45,11 @@ export default {
       return this.organizations.map((org) => [
         org.id,
         org.image,
-        org.title,
-        org.description,
+        org.manager_name,
+        org.name,
+        org.address,
+        org.manager_email,
+        org.phone,
       ]);
     },
   },

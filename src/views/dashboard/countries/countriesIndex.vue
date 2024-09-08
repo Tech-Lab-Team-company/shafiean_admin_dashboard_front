@@ -9,6 +9,11 @@
       viewLink="/view-countries"
       @delete="handleDeleteCountry"
     />
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
+    />
   </div>
 </template>
 
@@ -17,12 +22,13 @@ import headerPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { useCountriesStore } from "@/stores/countries/countriesStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
-
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { mapState } from "pinia";
 export default {
   components: {
     headerPages,
     TablesPageVue,
+    PaginationPage,
   },
   data() {
     return {
@@ -65,7 +71,7 @@ export default {
     },
     handlePageChange(page) {
       const curriculaStore = useCountriesStore();
-      curriculaStore.fetchCurricula(page);
+      curriculaStore.fetchCountries(page);
     },
   },
 
