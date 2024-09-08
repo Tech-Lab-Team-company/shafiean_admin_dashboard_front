@@ -70,3 +70,11 @@
     list-style: none !important;
   }
 }
+ul.submenu {
+  list-style: none !important;
+  transition: 0.7s;
+}
+li.sidebar-subitem {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}

@@ -30,6 +30,7 @@ import adminInformationEdit from "@/views/dashboard/adminInformation/adminInform
 import LessonsIndex from "@/views/dashboard/lessons/lessonsIndex.vue";
 import lessonsAdd from "@/views/dashboard/lessons/lessonsAdd.vue";
 import lessonsEdit from "@/views/dashboard/lessons/lessonsEdit.vue";
+import ErrorPage from "@/views/ErrorPage/ErrorPage.vue";
 const routes = [
   {
     path: "/login",
@@ -184,6 +185,11 @@ const routes = [
   {
     path: "/",
     redirect: "/login", // Redirect to login if not authenticated
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "ErrorPage",
+    component: ErrorPage,
   },
 ];
 

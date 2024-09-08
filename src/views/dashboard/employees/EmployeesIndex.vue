@@ -11,28 +11,11 @@
       @delete="handleDeleteEmployee"
       :ismaster="ismaster"
     />
-  </div>
-
-  <div class="pagination">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="linkPage in tablePages" :key="linkPage">
-          <a class="page-link" href="#" @click="paginationPage(linkPage)">{{
-            linkPage
-          }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
+    />
   </div>
 </template>
 
@@ -40,6 +23,8 @@
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { mapState } from "pinia";
 
 export default {
@@ -47,6 +32,7 @@ export default {
   components: {
     HeadersPages,
     TablesPageVue,
+    PaginationPage,
   },
   data() {
     return {
@@ -65,8 +51,14 @@ export default {
   computed: {
     ...mapState(useEmployeesStore, {
       employees: (state) => state.employees,
-      pages: (state) => state.pages,
-      page: (state) => state.page,
+      ...mapState(usePaginationStore, {
+        paginationCurrent: (state) => state.current_page,
+        paginationFrom: (state) => state.from,
+        paginationLast: (state) => state.last_page,
+        paginationPer: (state) => state.per_page,
+        paginationTo: (state) => state.to,
+        paginationTotal: (state) => state.total,
+      }),
       ismaster: (state) => state.ismaster,
     }),
     tableRows() {
@@ -81,26 +73,25 @@ export default {
       ]);
     },
     tablePages() {
-      return this.pages;
+      return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
   methods: {
+    handlePageChange(page) {
+      const curriculaStore = useEmployeesStore();
+      curriculaStore.fetchEmployees(page);
+    },
     async handleDeleteEmployee(id) {
       const employeesStore = useEmployeesStore();
       console.log(id);
 
       await employeesStore.deleteEmployee(id);
     },
-    paginationPage(page) {
-      this.page = page;
-      console.log("paginationPage", this.page);
-    },
   },
 
   async mounted() {
     const employeesStore = useEmployeesStore();
     await employeesStore.fetchEmployees();
-    console.log("mounted", this.page);
   },
 };
 </script>

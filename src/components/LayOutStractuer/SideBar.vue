@@ -37,7 +37,7 @@
                 :class="
                   item.expanded ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
                 "
-                style="margin-inline-start: 75px"
+                style="margin-inline-start: auto"
               ></i>
             </div>
             <ul v-if="item.expanded && !localIsCollapsed" class="submenu">
@@ -143,9 +143,17 @@ export default {
           name: "التعليم",
           icon: "fa-brands fa-leanpub",
           submenu: [
-            { name: "المناهج", route: "/curricula", icon: "fas fa-book" },
-            { name: "الحصص", route: "/lessons", icon: "fas fa-book" },
-            { name: "المراحل", route: "/steps", icon: "fas fa-book" },
+            {
+              name: "المناهج",
+              route: "/curricula",
+              icon: "fa-solid fa-person-chalkboard",
+            },
+            { name: "الحصص", route: "/lessons", icon: "fa-regular fa-file" },
+            {
+              name: "المراحل",
+              route: "/steps",
+              icon: "fa-regular fa-clipboard",
+            },
           ],
         },
         {

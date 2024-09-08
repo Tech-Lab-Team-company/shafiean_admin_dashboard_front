@@ -19,10 +19,12 @@
     padding: 0.5rem 1rem;
     font-family: "regular";
     transition: 0.7s;
+    border: 1px solid var(--main);
   }
   a:hover {
     background-color: white;
     border: 1px solid var(--main);
     color: var(--main);
+    letter-spacing: 0.1rem;
   }
 }
