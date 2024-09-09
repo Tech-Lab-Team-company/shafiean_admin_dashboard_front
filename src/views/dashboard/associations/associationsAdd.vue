@@ -170,7 +170,7 @@ export default {
         disabilities: [],
         link: "",
       },
-      city_values: [],
+      city_values: {},
     };
   },
   computed: {
@@ -183,7 +183,12 @@ export default {
   },
   methods: {
     updateModelValue() {
-      return this.city_values;
+      // this.city_values.map((city) => {
+      //   this.form.city_id = city.id;
+      // });
+      this.form.city_id = this.city_values.id;
+      console.log("city_values", this.form.city_id);
+      // console.log(this.form.city_id);
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -203,9 +208,7 @@ export default {
     async submitForm() {
       try {
         const organizationsStore = useOrganizationAddStore();
-        this.city_values.map((city) => {
-          this.form.city_id = city.id;
-        });
+
         if (!organizationsStore) {
           throw new Error("Failed to load employees store");
         }
