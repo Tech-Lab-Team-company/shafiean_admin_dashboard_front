@@ -110,7 +110,7 @@
             :options="CountryOptions"
             track-by="id"
             label="title"
-            :close-on-select="false"
+            :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
         </div>
@@ -122,7 +122,7 @@
             track-by="id"
             label="title"
             :options="cityOptions"
-            :close-on-select="false"
+            :close-on-select="true"
             @update:model-value="updateModelValue"
           ></multiselect>
         </div>
@@ -215,8 +215,9 @@ export default {
       console.log("Country_values", this.form.country_id);
     },
     updatedisabilitiesValue() {
-      this.form.disabilities_id = this.disabilities_values.map((dis) => dis.id);
-      // this.form.disabilities_id = this.disabilities_values.id;
+      this.form.disabilities_id = this.disabilities_values
+        .filter((dis) => dis && dis.id)
+        .map((dis) => dis.id);
       console.log("disabilities_values", this.form.disabilities_id);
     },
     triggerFileInput() {
