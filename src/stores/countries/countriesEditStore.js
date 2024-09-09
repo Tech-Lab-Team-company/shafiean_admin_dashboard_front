@@ -13,7 +13,7 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
         if (response.status === 200) {
           this.countries = response.data.data;
         } else {
-          throw new Error("Failed to fetch employee data");
+          throw new Error("Failed to fetch countries data");
         }
       } catch (error) {
         console.error(error);
