@@ -93,13 +93,25 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
+          <label for="manager-phone">بريد الالكتروني المدير</label>
+          <div class="input">
+            <input
+              type="email"
+              placeholder="بريد الالكتروني المدير "
+              v-model="form.manager_email"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
           <label for="Country">دوله</label>
           <multiselect
             id="Country"
-            v-model="form.Country"
+            v-model="Country_values"
             :options="CountryOptions"
-            :multiple="true"
-            :close-on-select="false"
+            track-by="id"
+            label="title"
+            :close-on-select="true"
+            @update:model-value="updatecountryValue"
           ></multiselect>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -110,7 +122,7 @@
             track-by="id"
             label="title"
             :options="cityOptions"
-            :close-on-select="false"
+            :close-on-select="true"
             @update:model-value="updateModelValue"
           ></multiselect>
         </div>
@@ -118,10 +130,13 @@
           <label for="disabilities">الاعاقات</label>
           <multiselect
             id="disabilities"
-            v-model="form.disabilities"
+            v-model="disabilities_values"
             :options="disabilitiesOptions"
+            track-by="id"
+            label="title"
             :multiple="true"
             :close-on-select="false"
+            @update:model-value="updatedisabilitiesValue"
           ></multiselect>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -154,7 +169,7 @@ export default {
     return {
       CountryOptions: ["مصر", "عراق", "البحرين", "السعوديه", "الكويت"],
       cityOptions: [],
-      disabilitiesOptions: ["صم", "بكم", "علم", "غير محدد"],
+      disabilitiesOptions: [],
       form: {
         imageSrc: null,
         image: null,
@@ -165,12 +180,15 @@ export default {
         address: "",
         manager_name: "",
         manager_phone: "",
-        Country: [],
+        manager_email: "",
+        country_id: "",
         city_id: "",
-        disabilities: [],
+        disabilities_id: "",
         link: "",
       },
       city_values: {},
+      Country_values: {},
+      disabilities_values: {},
     };
   },
   computed: {
@@ -178,17 +196,29 @@ export default {
       organizations: (state) => state.organizations,
       ...mapState(useOrganizationAddStore, {
         cities: (state) => state.cities,
+        ...mapState(useOrganizationAddStore, {
+          countries: (state) => state.countries,
+          ...mapState(useOrganizationAddStore, {
+            disabilities: (state) => state.disabilities,
+          }),
+        }),
       }),
     }),
   },
   methods: {
     updateModelValue() {
-      // this.city_values.map((city) => {
-      //   this.form.city_id = city.id;
-      // });
       this.form.city_id = this.city_values.id;
       console.log("city_values", this.form.city_id);
-      // console.log(this.form.city_id);
+    },
+    updatecountryValue() {
+      this.form.country_id = this.Country_values.id;
+      console.log("Country_values", this.form.country_id);
+    },
+    updatedisabilitiesValue() {
+      this.form.disabilities_id = this.disabilities_values
+        .filter((dis) => dis && dis.id)
+        .map((dis) => dis.id);
+      console.log("disabilities_values", this.form.disabilities_id);
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -196,10 +226,10 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
-        this.form.image = file; // Store the file in the form data
+        this.form.image = file;
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.form.imageSrc = e.target.result; // Correctly update imageSrc
+          this.form.imageSrc = e.target.result;
         };
         reader.readAsDataURL(file);
       }
@@ -212,7 +242,7 @@ export default {
         if (!organizationsStore) {
           throw new Error("Failed to load employees store");
         }
-        await organizationsStore.addOrganization(this.form); // Call addEmployee instead of fetchEmployees
+        await organizationsStore.addOrganization(this.form);
         this.$router.push("/associations");
       } catch (error) {
         console.error("Error in submitForm:", error);
@@ -225,7 +255,11 @@ export default {
           throw new Error("Failed to load organizations store");
         }
         await organizationsStore.getcities();
-        this.cityOptions = this.cities; // If you need to populate the multiselect options
+        this.cityOptions = this.cities;
+        await organizationsStore.getCountries();
+        this.CountryOptions = this.countries;
+        await organizationsStore.getDisabilities();
+        this.disabilitiesOptions = this.disabilities;
       } catch (error) {
         console.error("Error in fetchCities:", error);
       }
@@ -233,11 +267,6 @@ export default {
   },
   mounted() {
     this.fetchCitiess();
-    // console.log(this.organizations, "organizations");
-    // console.log(this.cities, "cities");
-    // console.log(this.cities_id, "citissssssssssssssssssssssssses_id");
-    // console.log(this.form.city, "ddassssssssssssssssssssa");
-    console.log(this.form.city_id);
   },
 };
 </script>
