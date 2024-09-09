@@ -1,7 +1,7 @@
 <template>
   <div class="associations-add">
     <header-pages title="اضافة جمعية" :showButton="false" />
-    <form action="">
+    <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
@@ -16,80 +16,118 @@
               style="display: none"
             />
 
-            <div v-if="!imageSrc" class="upload-icon" @click="triggerFileInput">
+            <div
+              v-if="!form.imageSrc"
+              class="upload-icon"
+              @click="triggerFileInput"
+            >
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
 
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div v-if="form.imageSrc" class="avatar-preview">
+              <img :src="form.imageSrc" alt="Avatar Preview" />
             </div>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">أسم الجمعية</label>
           <div class="input">
-            <input type="text" placeholder="أسم الجمعية" />
+            <input type="text" placeholder="أسم الجمعية" v-model="form.name" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">رقم الترخيص</label>
           <div class="input">
-            <input type="text" placeholder="رقم الترخيص " />
+            <input
+              type="number"
+              placeholder="رقم الترخيص "
+              v-model="form.license"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">رقم التليفون</label>
           <div class="input">
-            <input type="text" placeholder="رقم التليفون " />
+            <input
+              type="tel"
+              placeholder="رقم التليفون "
+              v-model="form.phone"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name"> البريد الالكتروني</label>
           <div class="input">
-            <input type="text" placeholder=" البريد الالكتروني " />
+            <input
+              type="email"
+              placeholder=" البريد الالكتروني "
+              v-model="form.email"
+            />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">العنوان</label>
           <div class="input">
-            <input type="text" placeholder="العنوان " />
+            <input type="text" placeholder="العنوان " v-model="form.address" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="roles">دوله</label>
-          <multiselect
-            id="roles"
-            v-model="form.role"
-            :options="rolesOptions"
-            :multiple="true"
-            :close-on-select="false"
-          ></multiselect>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for="roles">مدينه</label>
-          <multiselect
-            id="roles"
-            v-model="form.role"
-            :options="rolesOptions"
-            :multiple="true"
-            :close-on-select="false"
-          ></multiselect>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for="roles">الاعاقات</label>
-          <multiselect
-            id="roles"
-            v-model="form.role"
-            :options="rolesOptions"
-            :multiple="true"
-            :close-on-select="false"
-          ></multiselect>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for="name">link</label>
+          <label for="manager-name">اسم المدير</label>
           <div class="input">
-            <input type="link" placeholder="link " />
+            <input
+              type="text"
+              placeholder="اسم المدير "
+              v-model="form.manager_name"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="manager-phone">رقم المدير</label>
+          <div class="input">
+            <input
+              type="tel"
+              placeholder="رقم المدير "
+              v-model="form.manager_phone"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="Country">دوله</label>
+          <multiselect
+            id="Country"
+            v-model="form.Country"
+            :options="CountryOptions"
+            :multiple="true"
+            :close-on-select="false"
+          ></multiselect>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="city">مدينه</label>
+          <multiselect
+            id="city"
+            v-model="city_values"
+            track-by="id"
+            label="title"
+            :options="cityOptions"
+            :close-on-select="false"
+            @update:model-value="updateModelValue"
+          ></multiselect>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="disabilities">الاعاقات</label>
+          <multiselect
+            id="disabilities"
+            v-model="form.disabilities"
+            :options="disabilitiesOptions"
+            :multiple="true"
+            :close-on-select="false"
+          ></multiselect>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="link">link</label>
+          <div class="input">
+            <input type="link" placeholder="link " v-model="form.link" />
           </div>
         </div>
       </div>
@@ -104,6 +142,9 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.css";
+import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
+import { mapState } from "pinia";
 export default {
   components: {
     HeaderPages,
@@ -111,21 +152,89 @@ export default {
   },
   data() {
     return {
-      rolesOptions: ["Egypt", "Kewit", "Employee"],
-      imageSrc: null,
+      CountryOptions: ["مصر", "عراق", "البحرين", "السعوديه", "الكويت"],
+      cityOptions: [],
+      disabilitiesOptions: ["صم", "بكم", "علم", "غير محدد"],
       form: {
-        role: [],
+        imageSrc: null,
+        image: null,
+        name: "",
+        license: "",
+        phone: "",
+        email: "",
+        address: "",
+        manager_name: "",
+        manager_phone: "",
+        Country: [],
+        city_id: "",
+        disabilities: [],
+        link: "",
       },
+      city_values: [],
     };
   },
+  computed: {
+    ...mapState(useOrganizationAddStore, {
+      organizations: (state) => state.organizations,
+      ...mapState(useOrganizationAddStore, {
+        cities: (state) => state.cities,
+      }),
+    }),
+  },
   methods: {
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      this.imageSrc = URL.createObjectURL(file);
+    updateModelValue() {
+      return this.city_values;
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
     },
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.form.image = file; // Store the file in the form data
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.form.imageSrc = e.target.result; // Correctly update imageSrc
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+
+    async submitForm() {
+      try {
+        const organizationsStore = useOrganizationAddStore();
+        this.city_values.map((city) => {
+          this.form.city_id = city.id;
+        });
+        if (!organizationsStore) {
+          throw new Error("Failed to load employees store");
+        }
+        await organizationsStore.addOrganization(this.form); // Call addEmployee instead of fetchEmployees
+        this.$router.push("/associations");
+      } catch (error) {
+        console.error("Error in submitForm:", error);
+      }
+    },
+    async fetchCitiess() {
+      try {
+        const organizationsStore = useOrganizationAddStore();
+        if (!organizationsStore) {
+          throw new Error("Failed to load organizations store");
+        }
+        await organizationsStore.getcities();
+        this.cityOptions = this.cities; // If you need to populate the multiselect options
+      } catch (error) {
+        console.error("Error in fetchCities:", error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchCitiess();
+    // console.log(this.organizations, "organizations");
+    // console.log(this.cities, "cities");
+    // console.log(this.cities_id, "citissssssssssssssssssssssssses_id");
+    // console.log(this.form.city, "ddassssssssssssssssssssa");
+    console.log(this.form.city_id);
   },
 };
 </script>
