@@ -3,10 +3,11 @@
     <header-pages title="الدروس" button="+ اضافة درس" link="/add-lessons" />
     <tables-page-vue
       :headers="tableHeaders"
-      :rows="tableRows"
+      :rows="tableRowsLessons"
       :pages="tablePages"
       editLink="/edit-lessons"
       viewLink="/view-lessons"
+      @delete="handleDeleteLessons"
     />
   </div>
 </template>
@@ -14,6 +15,8 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
+import { useLessonsStore } from "@/stores/lessons/LessonsIndexStore";
+import { mapState } from "pinia";
 export default {
   name: "lessonsIndex",
   components: {
@@ -22,17 +25,44 @@ export default {
   },
   data() {
     return {
-      tableHeaders: ["ID", "الصور", "اسم المنهج", "وصف المنهج"],
-      tableRows: [
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "المنهج",
-          " المنهج",
-        ],
+      tableHeaders: [
+        "ID",
+        "الوصف",
+        " وصف المنهج",
+        " المنهج الدراسي",
+        " قران",
+        "الاعاقه",
       ],
-      tablePages: [1, 2, 3, 4, 5],
     };
+  },
+  computed: {
+    ...mapState(useLessonsStore, {
+      lessons: (state) => state.lessons,
+    }),
+
+    tableRowsLessons() {
+      console.log(this.lessons, "Diiaaaa");
+      return this.lessons.map((les) => [
+        les.id,
+        les.title,
+        les.description,
+        les.curriculum_id,
+        les.quraan_ids,
+        les.disability_ids,
+      ]);
+    },
+  },
+  methods: {
+    async handleDeleteLessons(id) {
+      const lessonsStore = useLessonsStore();
+      console.log(id);
+
+      await lessonsStore.deletelessons(id);
+    },
+  },
+  mounted() {
+    const lessonsStore = useLessonsStore();
+    lessonsStore.fetchLessons();
   },
 };
 </script>
