@@ -30,6 +30,9 @@ import adminInformationEdit from "@/views/dashboard/adminInformation/adminInform
 import LessonsIndex from "@/views/dashboard/lessons/lessonsIndex.vue";
 import lessonsAdd from "@/views/dashboard/lessons/lessonsAdd.vue";
 import lessonsEdit from "@/views/dashboard/lessons/lessonsEdit.vue";
+import CitiesIndex from "@/views/dashboard/cities/CitiesIndex.vue";
+import CitiesAdd from "@/views/dashboard/cities/CitiesAdd.vue";
+import CitiesEdit from "@/views/dashboard/cities/CitiesEdit.vue";
 import ErrorPage from "@/views/ErrorPage/ErrorPage.vue";
 const routes = [
   {
@@ -179,6 +182,21 @@ const routes = [
         path: "/edit-lessons/:id",
         name: "lessonsEdit",
         component: lessonsEdit,
+      },
+      {
+        path: "/cities",
+        name: "CitiesIndex",
+        component: CitiesIndex,
+      },
+      {
+        path: "/add-cities",
+        name: "CitiesAdd",
+        component: CitiesAdd,
+      },
+      {
+        path: "/edit-cities/:id",
+        name: "CitiesEdit",
+        component: CitiesEdit,
       },
     ],
   },
