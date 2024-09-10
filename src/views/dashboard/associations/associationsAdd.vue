@@ -167,7 +167,7 @@ export default {
   },
   data() {
     return {
-      CountryOptions: ["مصر", "عراق", "البحرين", "السعوديه", "الكويت"],
+      CountryOptions: [],
       cityOptions: [],
       disabilitiesOptions: [],
       form: {
