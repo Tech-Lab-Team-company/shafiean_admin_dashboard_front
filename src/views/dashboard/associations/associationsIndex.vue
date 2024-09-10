@@ -9,6 +9,7 @@
       :headers="tableHeaders"
       :rows="tableRowsorganizations"
       :pages="tablePages"
+      :showSelect="false"
       @delete="handleDeleteDisabilitie"
       editLink="/edit-associations"
       viewLink="/view-associations"

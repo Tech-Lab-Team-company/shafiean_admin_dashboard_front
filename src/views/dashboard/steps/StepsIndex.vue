@@ -4,7 +4,10 @@
 
     <TablesPageVue
       :headers="tableHeaders"
+
       :rows="tableRowsSteps"
+      :showSelect="false"
+
       :pages="tablePages"
       editLink="/edit-steps"
       viewLink="/view-steps"
