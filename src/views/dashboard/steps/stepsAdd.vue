@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     async updateValue() {
-      this.steps.curriculum_id = this.steps_value.id;
+      this.curriculum_id = this.steps_value.id;
       console.log("steps_value", this.curriculum_id);
     },
     updatedisabilitiesValue() {
