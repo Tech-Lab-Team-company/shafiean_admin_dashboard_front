@@ -5,6 +5,7 @@
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRows"
+      :showSelect="false"
       :pages="tablePages"
       editLink="/edit-steps"
       viewLink="/view-steps"

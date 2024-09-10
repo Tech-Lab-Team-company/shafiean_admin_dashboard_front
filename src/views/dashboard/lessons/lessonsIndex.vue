@@ -5,6 +5,7 @@
       :headers="tableHeaders"
       :rows="tableRowsLessons"
       :pages="tablePages"
+      :showSelect="false"
       editLink="/edit-lessons"
       viewLink="/view-lessons"
       @delete="handleDeleteLessons"
