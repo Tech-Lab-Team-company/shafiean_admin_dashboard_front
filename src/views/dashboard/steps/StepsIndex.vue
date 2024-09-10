@@ -4,10 +4,11 @@
 
     <TablesPageVue
       :headers="tableHeaders"
-      :rows="tableRows"
+      :rows="tableRowsSteps"
       :pages="tablePages"
       editLink="/edit-steps"
       viewLink="/view-steps"
+      @delete="handleDeleteSteps"
     />
   </div>
 </template>
@@ -15,33 +16,42 @@
 <script>
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
+import { useStepsStore } from "@/stores/steps/StepsStore";
+import { mapState } from "pinia";
 export default {
   components: { HeaderPages, TablesPageVue },
   data() {
     return {
-      tableHeaders: ["ID", "الصور", "اسم المنهج", "وصف المنهج"],
-      tableRows: [
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "المنهج",
-          " المنهج",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "المنهج",
-          "المنهج ",
-        ],
-        [
-          "1",
-          require("@/assets/photos/Rectangle 8917.png"),
-          "المنهج",
-          "المنهج ",
-        ],
-      ],
+      tableHeaders: ["ID", "الوصف", "  المنهج الدراسي   ", "الحاله "],
       tablePages: [1, 2, 3, 4, 5],
     };
+  },
+  computed: {
+    ...mapState(useStepsStore, {
+      steps: (state) => state.steps,
+    }),
+    tableRowsSteps() {
+      console.log(this.steps, "Diiaaaa");
+
+      return this.steps.map((st) => [
+        st.id,
+        st.title,
+        st.curriculum_id,
+        st.status,
+      ]);
+    },
+  },
+  methods: {
+    async handleDeleteSteps(id) {
+      const stepsStore = useStepsStore();
+      console.log(id);
+
+      await stepsStore.deleteSteps(id);
+    },
+  },
+  mounted() {
+    const stepsStore = useStepsStore();
+    stepsStore.getSteps();
   },
 };
 </script>

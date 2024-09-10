@@ -34,8 +34,8 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         formData.append("title", updatedData.title);
         formData.append("start_verse", updatedData.start_verse);
         formData.append("end_verse", updatedData.end_verse);
-        formData.append("stage", updatedData.stage);
-        formData.append("quraan", updatedData.quraan);
+        formData.append("stage", updatedData.stage_id);
+        formData.append("quraan", updatedData.quraan_id);
 
         const response = await axios.post("edit_session", formData, {
           headers: {

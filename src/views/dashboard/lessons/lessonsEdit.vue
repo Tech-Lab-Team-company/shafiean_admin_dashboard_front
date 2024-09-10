@@ -65,7 +65,13 @@ export default {
   components: { HeaderPages },
   data() {
     return {
-      lessons: [],
+      lessons: {
+        title: "",
+        start_verse: "",
+        end_verse: "",
+        stage_id: "",
+        quraan_id: "",
+      },
     };
   },
   methods: {
@@ -85,6 +91,10 @@ export default {
       const id = this.$route.params.id;
       await store.updateLessons(id, {
         title: this.lessons.title,
+        start_verse: this.lessons.start_verse,
+        end_verse: this.lessons.end_verse,
+        stage_id: this.lessons.stage_id,
+        quraan_id: this.lessons.quraan_id,
       });
       this.$router.go(-1);
     },
