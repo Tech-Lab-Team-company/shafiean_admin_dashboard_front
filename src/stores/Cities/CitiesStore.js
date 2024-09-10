@@ -1,18 +1,27 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 export const useCitiesStore = defineStore("cities", {
   state: () => ({
     cities: [],
   }),
   actions: {
-    async fetchCities() {
+    async fetchCities(page = 1) {
       try {
-        const response = await axios.post("fetch_cities");
+        const response = await axios.post(`fetch_cities/?page=${page}`);
+        const paginationStore = usePaginationStore();
+        const { current_page, from, last_page, per_page, to, total } =
+          response.data.data.meta;
         this.cities = response.data.data.data;
         if (response.data.status == true) {
           console.log(this.cities, "Diaaa");
+          paginationStore.setPage(current_page);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
         } else {
           console.log("Error fetching cities.");
         }
@@ -35,7 +44,6 @@ export const useCitiesStore = defineStore("cities", {
         if (result.isConfirmed) {
           await axios.post("delete_city", { id });
 
-          // العثور على البلد وحذفه
           const index = this.cities.findIndex((cit) => cit.id === id);
           if (index !== -1) {
             this.cities.splice(index, 1);
