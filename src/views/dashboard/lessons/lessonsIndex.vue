@@ -27,11 +27,11 @@ export default {
     return {
       tableHeaders: [
         "ID",
-        "الوصف",
         " وصف المنهج",
-        " المنهج الدراسي",
-        " قران",
-        "الاعاقه",
+        " من ",
+        " إلي",
+        "رقم المرحله",
+        "قران",
       ],
     };
   },
@@ -45,10 +45,10 @@ export default {
       return this.lessons.map((les) => [
         les.id,
         les.title,
-        les.description,
-        les.curriculum_id,
-        les.quraan_ids,
-        les.disability_ids,
+        les.start_verse,
+        les.end_verse,
+        les.stage.id,
+        les.quraan.id,
       ]);
     },
   },

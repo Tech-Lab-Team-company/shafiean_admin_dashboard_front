@@ -14,13 +14,31 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> وصف المرحلة </label>
+          <label for=""> من </label>
           <div class="input">
             <input
-              type="text"
-              placeholder=" وصف المرحلة  "
-              v-model="lessons.description"
+              type="date"
+              placeholder=" من   "
+              v-model="lessons.start_verse"
             />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for=""> إلي</label>
+          <div class="input">
+            <input type="date" placeholder="إلي" v-model="lessons.end_verse" />
+          </div>
+        </div>
+        <!-- selected -->
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for=""> المرحلة</label>
+          <div class="input">
+            <input
+              type="number"
+              placeholder="رقم المرحله"
+              v-model="lessons.stage.id"
+            />
+            <!-- selected -->
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -28,28 +46,8 @@
           <div class="input">
             <input
               type="number"
-              placeholder="قران"
-              v-model="lessons.quraan_ids"
-            />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> الاعاقه</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="الاعاقه"
-              v-model="lessons.disability_ids"
-            />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> المنهج الدراسي</label>
-          <div class="input">
-            <input
-              type="number"
               placeholder="المنهج الدراس"
-              v-model="lessons.curriculum_id"
+              v-model="lessons.quraan.id"
             />
           </div>
         </div>
@@ -66,7 +64,6 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useLessonsAddStore } from "@/stores/lessons/LessonsAddStore";
-import { mapState } from "pinia";
 import Swal from "sweetalert2";
 export default {
   components: { HeaderPages },
@@ -74,18 +71,14 @@ export default {
     return {
       lessons: {
         title: "",
-        description: "",
-        curriculum_id: [],
-        disability_ids: "",
-        quraan_ids: "",
+        start_verse: "",
+        end_verse: "",
+        stage: { id: null },
+        quraan: { id: null },
       },
     };
   },
-  computed: {
-    ...mapState(useLessonsAddStore, {
-      Curriculum_id: (state) => state.Curriculum_id,
-    }),
-  },
+
   methods: {
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -99,10 +92,10 @@ export default {
 
         if (
           !this.lessons.title ||
-          !this.lessons.curriculum_id ||
-          !this.lessons.quraan_ids ||
-          !this.lessons.disability_ids ||
-          !this.lessons.description
+          !this.lessons.start_verse ||
+          !this.lessons.end_verse ||
+          !this.lessons.stage.id ||
+          !this.lessons.quraan.id
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
@@ -114,11 +107,6 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
-  },
-  mounted() {
-    const LessonsIndexStore = useLessonsAddStore();
-    LessonsIndexStore.getcurriculum();
-    console.log(this.Curriculum_id, "nasra");
   },
 };
 </script>
