@@ -14,24 +14,16 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">رقم المنهج</label>
-          <div class="input">
-            <input
-              type="text"
-              placeholder="نوع المنهج"
-              v-model="Curriculas.type"
-            />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> المنهج</label>
-          <div class="input">
-            <input
-              type="text"
-              placeholder="نوع المنهج"
-              v-model="Curriculas.status"
-            />
-          </div>
+          <label for="">نوع المنهج</label>
+          <multiselect
+            id="type"
+            v-model="selectedType"
+            :options="typeOptions"
+            :close-on-select="true"
+            label="name"
+            track-by="id"
+            @update:model-value="updateTypeId"
+          ></multiselect>
         </div>
       </div>
       <div class="all-btn">
@@ -43,23 +35,34 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.css";
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCurriculumEditStore } from "@/stores/curricula/curriculaEditStore";
 export default {
   name: "CurriculaEdit",
   components: {
     headerPages,
+    Multiselect,
   },
   data() {
     return {
       Curriculas: {
         title: "",
-        type: "",
-        status: "",
+        type: null,
       },
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
+      selectedType: null,
     };
   },
   methods: {
+    updateTypeId(selectedOption) {
+      this.Curriculas.type = selectedOption.id;
+    },
     triggerFileInput() {
       this.$refs.fileInput.click();
     },
