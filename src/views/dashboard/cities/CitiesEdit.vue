@@ -8,19 +8,21 @@
             <input
               type="text"
               placeholder="اسم المدينه"
-              v-model="cities.title"
+              v-model="Cities.title"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">كود المدينه</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="كود المدينه"
-              v-model="cities.country_id"
-            />
-          </div>
+          <label for="Country">أختر الدوله </label>
+          <multiselect
+            id="Country"
+            v-model="Country_values"
+            :options="CountryOptions"
+            track-by="id"
+            label="title"
+            :close-on-select="true"
+            @update:model-value="updatecountryValue"
+          ></multiselect>
         </div>
       </div>
       <div class="all-btn">
@@ -33,16 +35,33 @@
 
 <script>
 import { useCitiesEditStore } from "@/stores/Cities/CitiesEditStore";
+import { mapState } from "pinia";
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.css";
+
 export default {
   data() {
     return {
-      cities: [],
+      Cities: {
+        title: "",
+        country_id: "",
+      },
+      Country_values: null, // Initialize with null
+      CountryOptions: [],
     };
   },
-
+  components: {
+    Multiselect,
+  },
+  computed: {
+    ...mapState(useCitiesEditStore, {
+      countries: (state) => state.countries,
+    }),
+  },
   methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
+    updatecountryValue() {
+      this.Cities.country_id = this.Country_values.id;
+      console.log("Selected Country ID:", this.Cities.country_id);
     },
 
     async fetchData() {
@@ -50,20 +69,40 @@ export default {
       const id = this.$route.params.id;
 
       await store.fetchCities(id);
-      this.cities = store.cities;
+      this.Cities = store.cities;
+
+      // Find the selected country based on city.country_id
+      this.Country_values = this.CountryOptions.find(
+        (country) => country.id === this.Cities.country_id
+      );
     },
+
     async submitForm() {
       const store = useCitiesEditStore();
       const id = this.$route.params.id;
       await store.updateCities(id, {
-        title: this.cities.title,
-        country_id: this.cities.country_id,
+        title: this.Cities.title,
+        country_id: this.Cities.country_id,
       });
       this.$router.go(-1);
+    },
+
+    async fetchEidtCountries() {
+      const store = useCitiesEditStore();
+      await store.getCountries();
+      this.CountryOptions = store.countries;
+
+      // After fetching the countries, set the selected country value
+      if (this.Cities.country_id) {
+        this.Country_values = this.CountryOptions.find(
+          (country) => country.id === this.Cities.country_id
+        );
+      }
     },
   },
 
   mounted() {
+    this.fetchEidtCountries();
     this.fetchData();
   },
 };

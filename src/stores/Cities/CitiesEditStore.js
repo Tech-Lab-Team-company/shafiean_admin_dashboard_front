@@ -4,12 +4,22 @@ import Swal from "sweetalert2";
 
 export const useCitiesEditStore = defineStore("citiesEdit", {
   state: () => ({
-    cities: {
-      title: "",
-      country_id: "",
-    },
+    cities: [],
+    countries: [],
+    country_id: [],
   }),
   actions: {
+    async getCountries() {
+      const response = await axios.post("fetch_countries");
+      if (response.data.status === true) {
+        this.countries = response.data.data.data;
+        this.countries.forEach((country) => {
+          this.country_id.push(country.id);
+        });
+      } else {
+        console.log("Error fetching countries.");
+      }
+    },
     async fetchCities(id) {
       try {
         const response = await axios.post("fetch_city_details", { id });
