@@ -10,10 +10,10 @@ export const useLessonsStore = defineStore("lessons", {
   actions: {
     async fetchLessons() {
       try {
-        const response = await axios.post("fetch_stages");
-        if (response.data.status === true) {
-          this.lessons = response.data.data.data;
-          console.log(this.lessons);
+        const response = await axios.post("fetch_sessions");
+        this.lessons = response.data.data.data;
+        if (response.status.data == true) {
+          console.log(this.lessons, "Diaaa");
         } else {
           console.log("Error fetching lessons.");
         }
@@ -34,7 +34,7 @@ export const useLessonsStore = defineStore("lessons", {
         });
 
         if (result.isConfirmed) {
-          await axios.post("delete_stage", { id });
+          await axios.post("delete_session", { id });
 
           const index = this.lessons.findIndex((les) => les.id === id);
           if (index !== -1) {
