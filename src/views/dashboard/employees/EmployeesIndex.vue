@@ -5,7 +5,7 @@
       :headers="tableHeaders"
       :rows="tableRows"
       :pages="tablePages"
-      :showSelect="true"
+      :showSelect="false"
       :editLink="editLink"
       :viewLink="viewLink"
       @delete="handleDeleteEmployee"

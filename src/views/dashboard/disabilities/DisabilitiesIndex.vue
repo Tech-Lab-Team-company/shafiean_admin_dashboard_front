@@ -9,6 +9,7 @@
       :headers="tableHeaders"
       :rows="tableRowsDisabilitie"
       :pages="tablePages"
+      :showSelect="false"
       :editLink="editLink"
       :viewLink="viewLink"
       @delete="handleDeleteDisabilitie"

@@ -4,6 +4,7 @@
     :headers="tableHeaders"
     :rows="tableRowsCities"
     :pages="tablePages"
+    :showSelect="false"
     editLink="/edit-cities"
     viewLink="/view-cities"
     @delete="handleDeleteCities"
