@@ -13,18 +13,26 @@
       :viewLink="viewLink"
       @delete="handleDeleteDisabilitie"
     />
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
+    />
   </div>
 </template>
 <script>
 import HeadersPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { mapState } from "pinia";
 export default {
   name: "DisabilitiesIndex",
   components: {
     HeadersPages,
     TablesPageVue,
+    PaginationPage,
   },
   data() {
     return {
@@ -37,7 +45,14 @@ export default {
   computed: {
     ...mapState(useDisabilitieStore, {
       disabilitie: (state) => state.disabilitie,
-      pages: (state) => state.pages,
+      ...mapState(usePaginationStore, {
+        paginationCurrent: (state) => state.current_page,
+        paginationFrom: (state) => state.from,
+        paginationLast: (state) => state.last_page,
+        paginationPer: (state) => state.per_page,
+        paginationTo: (state) => state.to,
+        paginationTotal: (state) => state.total,
+      }),
     }),
     tableRowsDisabilitie() {
       console.log(this.disabilitie, "nasrasssssssddddddss");
@@ -50,11 +65,15 @@ export default {
       ]);
     },
     tablePages() {
-      return this.pages;
+      return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
 
   methods: {
+    handlePageChange(page) {
+      const useDisabilitie = useDisabilitieStore();
+      useDisabilitie.fetchDisabilitie(page);
+    },
     async handleDeleteDisabilitie(id) {
       const disabilitieStore = useDisabilitieStore();
       console.log(id);

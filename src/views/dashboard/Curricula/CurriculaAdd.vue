@@ -4,7 +4,7 @@
     <form action="" @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">وصف المنهج</label>
+          <label for="">أسم المنهج</label>
           <div class="input">
             <input
               type="text"
@@ -14,24 +14,16 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">رقم المنهج</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="نوع المنهج"
-              v-model="Curriculas.type"
-            />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> المنهج</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="نوع المنهج"
-              v-model="Curriculas.status"
-            />
-          </div>
+          <label for="">نوع المنهج</label>
+          <multiselect
+            id="type"
+            v-model="selectedType"
+            :options="typeOptions"
+            :close-on-select="true"
+            label="name"
+            track-by="id"
+            @update:model-value="updateTypeId"
+          ></multiselect>
         </div>
       </div>
       <div class="all-btn">
@@ -41,30 +33,35 @@
     </form>
   </div>
 </template>
-
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
-import { useCurriculumAddStore } from "@/stores/curricula/curriculaAddStore";
-
+import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { useCurriculumAddStore } from "@/stores/curricula/curriculaAddStore";
 
 export default {
   name: "CurriculaAdd",
   components: {
     HeaderPages,
+    Multiselect,
   },
   data() {
     return {
       Curriculas: {
         title: "",
-        type: "",
-        status: "",
+        type: null,
       },
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
+      selectedType: null,
     };
   },
   methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
+    updateTypeId(selectedOption) {
+      this.Curriculas.type = selectedOption.id;
     },
     async submitForm() {
       try {

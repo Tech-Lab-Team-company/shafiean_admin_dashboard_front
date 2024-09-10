@@ -28,7 +28,12 @@ export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
-      tableHeaders: ["ID", "الوصف", "رقم المنهج", "وصف المنهج"],
+      tableHeaders: ["ID", "اسم المنهج", "نوع المنهج"],
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
     };
   },
   computed: {
@@ -45,12 +50,13 @@ export default {
     }),
 
     tableRowsCurricula() {
-      return this.Curriculas.map((cur) => [
-        cur.id,
-        cur.title,
-        cur.type,
-        cur.status,
-      ]);
+      return this.Curriculas.map((cur) => {
+        // Find the type name based on the type ID
+        const typeOption = this.typeOptions.find(
+          (option) => option.id === cur.type
+        );
+        return [cur.id, cur.title, typeOption ? typeOption.name : ""];
+      });
     },
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
