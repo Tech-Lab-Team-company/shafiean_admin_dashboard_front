@@ -5,8 +5,39 @@ import Swal from "sweetalert2";
 export const useStepsAddStore = defineStore("StepsAdd", {
   state: () => ({
     Steps: [],
+    Stepss: [],
+    Curriculums_id: [],
+    disabilities: [],
+    disabilities_id: [],
   }),
   actions: {
+    async fetchCurriculums() {
+      const response = await axios.post("fetch_curriculums");
+      console.log(response.data.data.data, "Curriculums");
+
+      if (response.data.status === true) {
+        this.Stepss = response.data.data.data;
+
+        this.Stepss.forEach((ste) => {
+          this.Curriculums_id.push(ste.id);
+        });
+      } else {
+        console.log("Error fetching cities.");
+      }
+    },
+    async fetchDisabilities() {
+      try {
+        const response = await axios.post("fetch_disabilities");
+        if (response.data.status === true) {
+          this.disabilities = response.data.data.data;
+        } else {
+          console.log("Error fetching disabilities.");
+        }
+      } catch (error) {
+        console.error("Error fetching disabilities:", error);
+      }
+    },
+
     async addStepsData(StepsData) {
       console.log(StepsData);
       try {

@@ -23,7 +23,13 @@ export default {
   components: { HeaderPages, TablesPageVue },
   data() {
     return {
-      tableHeaders: ["ID", "الوصف", "  المنهج الدراسي   ", "الحاله "],
+      tableHeaders: [
+        "ID",
+        "اسم المرحله",
+        "الوصف",
+        "  المنهج الدراسي   ",
+        "الاعاقات ",
+      ],
       tablePages: [1, 2, 3, 4, 5],
     };
   },
@@ -38,7 +44,8 @@ export default {
         st.id,
         st.title,
         st.curriculum_id,
-        st.status,
+        st.description,
+        st.disabilities_id,
       ]);
     },
   },
@@ -46,7 +53,6 @@ export default {
     async handleDeleteSteps(id) {
       const stepsStore = useStepsStore();
       console.log(id);
-
       await stepsStore.deleteSteps(id);
     },
   },
