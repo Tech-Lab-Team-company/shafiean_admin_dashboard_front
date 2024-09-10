@@ -5,6 +5,7 @@
       :headers="tableHeaders"
       :rows="tableRowsCurricula"
       :pages="tablePages"
+      :showSelect="false"
       editLink="/edit-curricula"
       viewLink="/view-curricula"
       @delete="handleDeleteCurriculas"

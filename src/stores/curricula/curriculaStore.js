@@ -1,19 +1,29 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 
 export const useCurriculaStore = defineStore("curricula", {
   state: () => ({
     Curriculas: [],
   }),
   actions: {
-    async fetchCurricula() {
+    async fetchCurricula(page = 1) {
       try {
-        const response = await axios.post("fetch_curriculums");
+        const response = await axios.post(`fetch_curriculums/?page=${page}`);
         this.Curriculas = response.data.data.data;
+        const paginationStore = usePaginationStore();
+        const { current_page, from, last_page, per_page, to, total } =
+          response.data.data.meta;
 
         if (response.data.status == true) {
           console.log(this.Curriculas, "Diaa");
+          paginationStore.setPage(current_page);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
         } else {
           console.log("Error fetching curricula.");
         }
@@ -26,13 +36,13 @@ export const useCurriculaStore = defineStore("curricula", {
 
       try {
         const result = await Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
+          title: "هل انتا متاكد من عملية المسح?",
+          text: "لن تتمكن من التراجع عن هذا!",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "نعم، احذفه!",
         });
 
         if (result.isConfirmed) {

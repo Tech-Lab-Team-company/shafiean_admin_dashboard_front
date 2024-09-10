@@ -5,6 +5,7 @@
       :headers="tableHeaders"
       :rows="tableRowsCountries"
       :pages="tablePages"
+      :showSelect="false"
       editLink="/edit-countries"
       viewLink="/view-countries"
       @delete="handleDeleteCountry"
