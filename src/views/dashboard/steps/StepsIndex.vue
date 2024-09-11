@@ -23,15 +23,7 @@ export default {
   components: { HeaderPages, TablesPageVue },
   data() {
     return {
-      tableHeaders: [
-        "ID",
-        "اسم المرحله",
-        "الوصف",
-        "  المنهج الدراسي   ",
-        "الاعاقات ",
-        "قران",
-      ],
-      tablePages: [1, 2, 3, 4, 5],
+      tableHeaders: ["ID", "اسم المرحله", "الوصف", "  المنهج الدراسي   "],
     };
   },
   computed: {
@@ -44,10 +36,8 @@ export default {
       return this.steps.map((st) => [
         st.id,
         st.title,
-        st.curriculum_id,
         st.description,
-        st.disabilities_id,
-        st.selectedType,
+        st.curriculum?.title || "",
       ]);
     },
   },
