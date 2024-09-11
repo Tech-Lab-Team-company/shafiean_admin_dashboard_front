@@ -11,6 +11,11 @@
       viewLink="/view-steps"
       @delete="handleDeleteSteps"
     />
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
+    />
   </div>
 </template>
 
@@ -19,16 +24,27 @@ import TablesPageVue from "@/components/tables/TablesPage.vue";
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useStepsStore } from "@/stores/steps/StepsStore";
 import { mapState } from "pinia";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
+import PaginationPage from "@/components/pagination/PaginationPage.vue";
 export default {
-  components: { HeaderPages, TablesPageVue },
+  components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
       tableHeaders: ["ID", "اسم المرحله", "الوصف", "  المنهج الدراسي   "],
     };
   },
+
   computed: {
     ...mapState(useStepsStore, {
       steps: (state) => state.steps,
+      ...mapState(usePaginationStore, {
+        paginationCurrent: (state) => state.current_page,
+        paginationFrom: (state) => state.from,
+        paginationLast: (state) => state.last_page,
+        paginationPer: (state) => state.per_page,
+        paginationTo: (state) => state.to,
+        paginationTotal: (state) => state.total,
+      }),
     }),
     tableRowsSteps() {
       console.log(this.steps, "Diiaaaa");
@@ -40,8 +56,15 @@ export default {
         st.curriculum?.title || "",
       ]);
     },
+    tablePages() {
+      return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
+    },
   },
   methods: {
+    handlePageChange(page) {
+      const stepsStore = useStepsStore();
+      stepsStore.getSteps(page);
+    },
     async handleDeleteSteps(id) {
       const stepsStore = useStepsStore();
       console.log(id);
