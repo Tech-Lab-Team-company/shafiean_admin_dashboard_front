@@ -97,6 +97,8 @@ import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
 import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "EmployeesAdd",
@@ -107,6 +109,8 @@ export default {
   data() {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
+
+      v$: useVuelidate(),
       form: {
         name: "",
         phone: "",
@@ -115,6 +119,17 @@ export default {
         role: [],
         image: null, // Ensure `image` is initialized as null
         imageSrc: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      form: {
+        name: { required },
+        phone: { required },
+        email: { required, email },
+        password: { required },
+        role: { required },
       },
     };
   },
