@@ -29,6 +29,7 @@ export default {
         "الوصف",
         "  المنهج الدراسي   ",
         "الاعاقات ",
+        "قران",
       ],
       tablePages: [1, 2, 3, 4, 5],
     };
@@ -46,6 +47,7 @@ export default {
         st.curriculum_id,
         st.description,
         st.disabilities_id,
+        st.selectedType,
       ]);
     },
   },
