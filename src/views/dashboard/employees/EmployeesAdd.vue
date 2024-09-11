@@ -98,6 +98,8 @@ import Multiselect from "vue-multiselect";
 import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 
+import Swal from "sweetalert2";
+
 export default {
   name: "EmployeesAdd",
   components: {
@@ -138,6 +140,16 @@ export default {
         const employeesStore = useEmployeesAddStore();
         if (!employeesStore) {
           throw new Error("Failed to load employees store");
+        }
+        if (
+          !this.form.name ||
+          !this.form.phone ||
+          !this.form.email ||
+          !this.form.password ||
+          !this.form.image
+        ) {
+          Swal.fire("Error", "Please fill in all fields", "error");
+          return;
         }
         await employeesStore.addEmployee(this.form); // Call addEmployee instead of fetchEmployees
         this.$router.push("/employees");
