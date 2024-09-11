@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       disabilitie: {
-        title: "", // Ensure all fields are initialized
+        title: "",
         description: "",
         image: null,
         imageSrc: "",

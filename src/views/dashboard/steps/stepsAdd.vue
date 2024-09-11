@@ -78,7 +78,7 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useStepsAddStore } from "@/stores/steps/StepsAddStore";
-import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
+// import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
 import { mapState } from "pinia";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
@@ -94,8 +94,8 @@ export default {
     return {
       steps: {
         title: "",
-        curriculum_id: "",
         description: "",
+        curriculum_id: "",
         disabilities_id: "",
       },
       disabilitiesOptions: [],
@@ -114,21 +114,22 @@ export default {
   computed: {
     ...mapState(useStepsAddStore, {
       Stepss: (state) => state.Stepss,
-      ...mapState(useOrganizationAddStore, {
+      ...mapState(useStepsAddStore, {
         disabilities: (state) => state.disabilities,
       }),
     }),
   },
   methods: {
     async updateValue() {
-      this.curriculum_id = this.steps_value.id;
-      console.log("steps_value", this.curriculum_id);
+      console.log("steps_value", this.steps_value);
+      this.steps.curriculum_id = this.steps_value.id;
+      console.log("curriculum_id", this.steps.curriculum_id);
     },
     updatedisabilitiesValue() {
-      this.disabilities_id = this.steps.disabilities_values
+      this.disabilities_id = this.disabilities_values
         .filter((dis) => dis && dis.id)
         .map((dis) => dis.id);
-      console.log("disabilities_values", this.steps.disabilities_id);
+      console.log("disabilities_values", this.disabilities_id);
     },
     async fetchCurriculums() {
       try {
@@ -150,6 +151,7 @@ export default {
         }
         await StepsStore.fetchDisabilities();
         this.disabilitiesOptions = this.disabilities;
+        console.log("disabilitiesOptions", this.disabilities);
       } catch (error) {
         console.error("Error fetching disabilities", error);
       }
@@ -162,7 +164,13 @@ export default {
           throw new Error("Failed to load steps store");
         }
 
-        if (!this.steps.title || !this.steps.curriculum_id) {
+        if (
+          !this.steps.title ||
+          !this.steps.curriculum_id ||
+          !this.steps.selectedType ||
+          !this.steps.disabilities_id ||
+          !this.steps.description
+        ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
