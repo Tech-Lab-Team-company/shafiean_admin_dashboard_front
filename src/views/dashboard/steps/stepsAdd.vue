@@ -47,7 +47,7 @@
             label="title"
             :multiple="true"
             :close-on-select="false"
-            @update:model-value="updatedisabilitiesValue"
+            @update:model-value="updateDisabilitiesValue"
           ></multiselect>
         </div>
 
@@ -94,8 +94,8 @@ export default {
     return {
       steps: {
         title: "",
-        description: "",
         curriculum_id: "",
+        description: "",
         disabilities_id: "",
       },
       disabilitiesOptions: [],
@@ -120,17 +120,22 @@ export default {
     }),
   },
   methods: {
-    async updateValue() {
-      console.log("steps_value", this.steps_value);
-      this.steps.curriculum_id = this.steps_value.id;
-      console.log("curriculum_id", this.steps.curriculum_id);
+    async updateValue(item) {
+      if (item && item.id) {
+        this.steps.curriculum_id = this.steps_value.id;
+        console.log("curriculum_id", this.steps.curriculum_id);
+      } else {
+        console.error("Item is null or undefined:", item);
+      }
     },
-    updatedisabilitiesValue() {
-      this.disabilities_id = this.disabilities_values
+
+    updateDisabilitiesValue() {
+      this.steps.disabilities_id = this.disabilities_values
         .filter((dis) => dis && dis.id)
         .map((dis) => dis.id);
-      console.log("disabilities_values", this.disabilities_id);
+      console.log("disabilities_id", this.steps.disabilities_id);
     },
+
     async fetchCurriculums() {
       try {
         const StepsStore = useStepsAddStore();
@@ -149,7 +154,7 @@ export default {
         if (!StepsStore) {
           throw new Error("Failed to load steps store");
         }
-        await StepsStore.fetchDisabilities();
+        await StepsStore.getDisabilities();
         this.disabilitiesOptions = this.disabilities;
         console.log("disabilitiesOptions", this.disabilities);
       } catch (error) {
@@ -164,13 +169,7 @@ export default {
           throw new Error("Failed to load steps store");
         }
 
-        if (
-          !this.steps.title ||
-          !this.steps.curriculum_id ||
-          !this.steps.selectedType ||
-          !this.steps.disabilities_id ||
-          !this.steps.description
-        ) {
+        if (!this.steps.title || !this.steps.curriculum_id) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }

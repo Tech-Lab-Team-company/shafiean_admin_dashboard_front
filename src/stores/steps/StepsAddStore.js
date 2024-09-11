@@ -37,14 +37,13 @@ export const useStepsAddStore = defineStore("StepsAdd", {
     //     console.error("Error fetching disabilities:", error);
     //   }
     // },
-    async fetchDisabilities() {
+    async getDisabilities() {
       const response = await axios.post("fetch_disabilities");
       if (response.data.status === true) {
-        console.log("disabilities", response.data.data.data);
         this.disabilities = response.data.data.data;
-        // this.disabilities.forEach((disability) => {
-        //   this.disabilities_id.push(disability.id);
-        // });
+        this.disabilities.forEach((disability) => {
+          this.disabilities_id.push(disability.id);
+        });
       } else {
         console.log("Error fetching disabilities.");
       }
