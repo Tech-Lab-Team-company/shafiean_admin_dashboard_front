@@ -110,12 +110,13 @@ export default {
       selectedType: null,
     };
   },
+
   computed: {
     ...mapState(useStepsAddStore, {
       Stepss: (state) => state.Stepss,
-    }),
-    ...mapState(useOrganizationAddStore, {
-      disabilities: (state) => state.disabilities,
+      ...mapState(useOrganizationAddStore, {
+        disabilities: (state) => state.disabilities,
+      }),
     }),
   },
   methods: {
@@ -124,9 +125,10 @@ export default {
       console.log("steps_value", this.curriculum_id);
     },
     updatedisabilitiesValue() {
-      this.steps.disabilities_id = this.disabilities_values
+      this.disabilities_id = this.steps.disabilities_values
         .filter((dis) => dis && dis.id)
         .map((dis) => dis.id);
+      console.log("disabilities_values", this.steps.disabilities_id);
     },
     async fetchCurriculums() {
       try {
@@ -147,7 +149,7 @@ export default {
           throw new Error("Failed to load steps store");
         }
         await StepsStore.fetchDisabilities();
-        this.disabilitiesOptions = StepsStore.disabilities; // Update this
+        this.disabilitiesOptions = this.disabilities;
       } catch (error) {
         console.error("Error fetching disabilities", error);
       }
