@@ -1,6 +1,6 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="اضافة درس" :showButton="false" />
+    <header-pages title="تعديل درس" :showButton="false" />
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -75,10 +75,6 @@ export default {
     };
   },
   methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
-
     async fetchData() {
       const store = useLessonsEditStore();
       const id = this.$route.params.id;
