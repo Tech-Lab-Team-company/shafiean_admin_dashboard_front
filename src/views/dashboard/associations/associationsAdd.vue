@@ -37,94 +37,90 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="name">رقم الترخيص</label>
+          <label for="license">رقم الترخيص</label>
           <div class="input">
             <input
               type="number"
-              placeholder="رقم الترخيص "
+              placeholder="رقم الترخيص"
               v-model="form.license"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="name">رقم التليفون</label>
+          <label for="phone">رقم التليفون</label>
           <div class="input">
-            <input
-              type="tel"
-              placeholder="رقم التليفون "
-              v-model="form.phone"
-            />
+            <input type="tel" placeholder="رقم التليفون" v-model="form.phone" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="name"> البريد الالكتروني</label>
+          <label for="email">البريد الالكتروني</label>
           <div class="input">
             <input
               type="email"
-              placeholder=" البريد الالكتروني "
+              placeholder="البريد الالكتروني"
               v-model="form.email"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="name">العنوان</label>
+          <label for="address">العنوان</label>
           <div class="input">
-            <input type="text" placeholder="العنوان " v-model="form.address" />
+            <input type="text" placeholder="العنوان" v-model="form.address" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="manager-name">اسم المدير</label>
+          <label for="manager_name">اسم المدير</label>
           <div class="input">
             <input
               type="text"
-              placeholder="اسم المدير "
+              placeholder="اسم المدير"
               v-model="form.manager_name"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="manager-phone">رقم المدير</label>
+          <label for="manager_phone">رقم المدير</label>
           <div class="input">
             <input
               type="tel"
-              placeholder="رقم المدير "
+              placeholder="رقم المدير"
               v-model="form.manager_phone"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="manager-phone">بريد الالكتروني المدير</label>
+          <label for="manager_email">بريد الالكتروني المدير</label>
           <div class="input">
             <input
               type="email"
-              placeholder="بريد الالكتروني المدير "
+              placeholder="بريد الالكتروني المدير"
               v-model="form.manager_email"
             />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="Country">دوله</label>
+          <label for="country">دوله</label>
           <multiselect
-            id="Country"
+            id="country"
             v-model="Country_values"
             :options="CountryOptions"
             track-by="id"
             label="title"
             :close-on-select="true"
-            @update:model-value="updatecountryValue"
-          ></multiselect>
+            @update:model-value="updateCountryValue"
+          />
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="city">مدينه</label>
           <multiselect
             id="city"
             v-model="city_values"
+            :options="cityOptions"
             track-by="id"
             label="title"
-            :options="cityOptions"
             :close-on-select="true"
-            @update:model-value="updateModelValue"
-          ></multiselect>
+            @update:model-value="updateCityValue"
+          />
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="disabilities">الاعاقات</label>
@@ -136,13 +132,13 @@
             label="title"
             :multiple="true"
             :close-on-select="false"
-            @update:model-value="updatedisabilitiesValue"
-          ></multiselect>
+            @update:model-value="updateDisabilitiesValue"
+          />
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="link">link</label>
+          <label for="link">Link</label>
           <div class="input">
-            <input type="link" placeholder="link " v-model="form.link" />
+            <input type="url" placeholder="Link" v-model="form.link" />
           </div>
         </div>
       </div>
@@ -160,6 +156,7 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
 import { mapState } from "pinia";
+
 export default {
   components: {
     HeaderPages,
@@ -193,43 +190,24 @@ export default {
   },
   computed: {
     ...mapState(useOrganizationAddStore, {
-      organizations: (state) => state.organizations,
-      ...mapState(useOrganizationAddStore, {
-        cities: (state) => state.cities,
-        ...mapState(useOrganizationAddStore, {
-          countries: (state) => state.countries,
-          ...mapState(useOrganizationAddStore, {
-            disabilities: (state) => state.disabilities,
-          }),
-        }),
-      }),
+      cities: (state) => state.cities,
+      countries: (state) => state.countries,
+      disabilities: (state) => state.disabilities,
     }),
   },
   methods: {
-    updateModelValue() {
-      if (this.city_values && this.city_values.id) {
-        this.form.city_id = this.city_values.id;
-      } else {
-        this.form.city_id = null;
-      }
-      console.log("city_values", this.form.city_id);
+    updateCityValue() {
+      this.form.city_id = this.city_values ? this.city_values.id : null;
     },
-    updatecountryValue() {
-      if (Array.isArray(this.countries_values)) {
-        this.form.country_id = this.countries_values
-          .filter((country) => country && country.id)
-          .map((country) => country.id);
-      } else {
-        this.form.country_id = null;
-      }
-
-      console.log("Country_values", this.form.country_id);
+    updateCountryValue() {
+      this.form.country_id = this.Country_values
+        ? this.Country_values.id
+        : null;
     },
-    updatedisabilitiesValue() {
+    updateDisabilitiesValue() {
       this.form.disabilities_id = this.disabilities_values
         .filter((dis) => dis && dis.id)
         .map((dis) => dis.id);
-      console.log("disabilities_values", this.form.disabilities_id);
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -245,13 +223,11 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-
     async submitForm() {
       try {
         const organizationsStore = useOrganizationAddStore();
-
         if (!organizationsStore) {
-          throw new Error("Failed to load employees store");
+          throw new Error("Failed to load organizations store");
         }
         await organizationsStore.addOrganization(this.form);
         this.$router.push("/associations");
@@ -259,7 +235,7 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
-    async fetchCitiess() {
+    async fetchData() {
       try {
         const organizationsStore = useOrganizationAddStore();
         if (!organizationsStore) {
@@ -272,12 +248,12 @@ export default {
         await organizationsStore.getDisabilities();
         this.disabilitiesOptions = this.disabilities;
       } catch (error) {
-        console.error("Error in fetchCities:", error);
+        console.error("Error in fetchData:", error);
       }
     },
   },
   mounted() {
-    this.fetchCitiess();
+    this.fetchData();
   },
 };
 </script>

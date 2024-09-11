@@ -223,29 +223,19 @@ export default {
   },
   methods: {
     updateModelValue() {
-      if (this.city_values && this.city_values.id) {
-        this.organizations.city_id = this.city_values.id;
-      } else {
-        this.organizations.city_id = null;
-      }
-      console.log("city_values", this.organizations.city_id);
+      this.organizations.city_id = this.city_values
+        ? this.city_values.id
+        : null;
     },
     updatecountryValue() {
-      if (Array.isArray(this.countries_values)) {
-        this.organizations.country_id = this.countries_values
-          .filter((country) => country && country.id)
-          .map((country) => country.id);
-
-        console.log("countries_values", this.organizations.country_id);
-      }
+      this.organizations.country_id = this.Country_values
+        ? this.Country_values.id
+        : null;
     },
     updatedisabilitiesValue() {
-      if (Array.isArray(this.disabilities_values)) {
-        this.organizations.disabilitey_id = this.disabilities_values
-          .filter((dis) => dis && dis.id)
-          .map((dis) => dis.id);
-        console.log("disabilities_values", this.organizations.disabilitey_id);
-      }
+      this.organizations.disabilitey_id = this.disabilities_values
+        .filter((dis) => dis && dis.id)
+        .map((dis) => dis.id);
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
