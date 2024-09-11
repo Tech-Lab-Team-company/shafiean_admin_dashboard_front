@@ -207,11 +207,22 @@ export default {
   },
   methods: {
     updateModelValue() {
-      this.form.city_id = this.city_values.id;
+      if (this.city_values && this.city_values.id) {
+        this.form.city_id = this.city_values.id;
+      } else {
+        this.form.city_id = null;
+      }
       console.log("city_values", this.form.city_id);
     },
     updatecountryValue() {
-      this.form.country_id = this.Country_values.id;
+      if (Array.isArray(this.countries_values)) {
+        this.form.country_id = this.countries_values
+          .filter((country) => country && country.id)
+          .map((country) => country.id);
+      } else {
+        this.form.country_id = null;
+      }
+
       console.log("Country_values", this.form.country_id);
     },
     updatedisabilitiesValue() {
