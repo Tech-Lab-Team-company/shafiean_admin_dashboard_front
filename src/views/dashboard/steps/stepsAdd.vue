@@ -175,6 +175,7 @@ export default {
         }
 
         await useStepsStore.addStepsData(this.steps);
+        this.$emit("stepAdded");
         this.$router.push("/steps");
       } catch (error) {
         console.error("Error in submitForm:", error);

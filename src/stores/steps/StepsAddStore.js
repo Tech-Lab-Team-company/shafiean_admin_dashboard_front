@@ -25,18 +25,7 @@ export const useStepsAddStore = defineStore("StepsAdd", {
         console.log("Error fetching cities.");
       }
     },
-    // async fetchDisabilities() {
-    //   try {
-    //     const response = await axios.post("fetch_disabilities");
-    //     if (response.data.status === true) {
-    //       this.disabilities = response.data.data.data;
-    //     } else {
-    //       console.log("Error fetching disabilities.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching disabilities:", error);
-    //   }
-    // },
+
     async getDisabilities() {
       const response = await axios.post("fetch_disabilities");
       if (response.data.status === true) {
