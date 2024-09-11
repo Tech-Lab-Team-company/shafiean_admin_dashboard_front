@@ -180,7 +180,7 @@ export default {
         manager_email: "",
         country_id: "",
         city_id: "",
-        disabilities_id: "",
+        disability_ids: [],
         link: "",
       },
       city_values: {},

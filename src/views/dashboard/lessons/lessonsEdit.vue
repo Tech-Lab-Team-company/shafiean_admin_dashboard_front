@@ -75,10 +75,6 @@ export default {
     };
   },
   methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
-
     async fetchData() {
       const store = useLessonsEditStore();
       const id = this.$route.params.id;

@@ -5,63 +5,73 @@
       <div class="row">
         <!-- Step Title Input -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">اسم المرحلة</label>
+          <label for="title">اسم المرحلة</label>
           <div class="input">
             <input
+              id="title"
               type="text"
               placeholder="اسم المرحلة"
               v-model="steps.title"
+              required
             />
           </div>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">وصف المرحلة</label>
+          <label for="description">وصف المرحلة</label>
           <div class="input">
             <input
+              id="description"
               type="text"
-              placeholder="اسم المرحلة"
+              placeholder="وصف المرحلة"
               v-model="steps.description"
+              required
             />
           </div>
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for="">المنهج الدراسي</label>
+          <label for="curricula">المنهج الدراسي</label>
           <multiselect
-            v-model="steps_value"
-            :options="Stepsoptions"
+            id="curricula"
+            v-model="curricula_values"
+            :options="curriculaOptions"
             track-by="id"
             label="title"
             :close-on-select="false"
-            @update:model-value="updateValue"
+            @update:model-value="handleCurriculaChange"
+            placeholder="اختر منهجاً دراسياً"
+            required
           ></multiselect>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="disabilities">الاعاقات</label>
+          <label for="disabilities">الإعاقات</label>
           <multiselect
+            id="disabilities"
             v-model="disabilities_values"
             :options="disabilitiesOptions"
             track-by="id"
             label="title"
             :multiple="true"
             :close-on-select="false"
-            @update:model-value="updateDisabilitiesValue"
-          ></multiselect>
+            @update:model-value="handleDisabilitiesChange"
+            placeholder="اختر الإعاقات"
+          />
         </div>
 
         <!-- Type Select -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">قرأن</label>
+          <label for="type">النوع</label>
           <multiselect
             id="type"
-            v-model="selectedType"
+            v-model="selectedType_values"
             :options="typeOptions"
             :close-on-select="true"
             label="name"
             track-by="id"
-            @update:model-value="updateTypeId"
+            @update:model-value="handleTypeChange"
+            placeholder="اختر نوعاً"
           ></multiselect>
         </div>
       </div>
@@ -78,11 +88,9 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useStepsAddStore } from "@/stores/steps/StepsAddStore";
-// import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
-import { mapState } from "pinia";
-import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { mapState } from "pinia";
 
 export default {
   name: "StepsAdd",
@@ -92,99 +100,66 @@ export default {
   },
   data() {
     return {
+      selectedType_values: [], // Initialize as an empty array for multiple selection
+      curricula_values: null, // Initialize as null for single selection
+      disabilities_values: [], // Initialize as an empty array for multiple selection
+      typeOptions: [],
+      curriculaOptions: [],
+      disabilitiesOptions: [],
       steps: {
         title: "",
-        curriculum_id: "",
         description: "",
-        disabilities_id: "",
+        type_id: "",
+        curriculum_id: null, // Initialize as null for single selection
+        disability_ids: [], // Initialize as an empty array
       },
-      disabilitiesOptions: [],
-      Stepsoptions: [],
-      steps_value: null,
-      disabilities_values: null,
-      typeOptions: [
-        { id: 1, name: "قرأن" },
-        { id: 2, name: "حديث" },
-        { id: 3, name: "فقه" },
-      ],
-      selectedType: null,
     };
   },
-
+  async created() {
+    await this.fetchData();
+  },
   computed: {
-    ...mapState(useStepsAddStore, {
-      Stepss: (state) => state.Stepss,
-      ...mapState(useStepsAddStore, {
-        disabilities: (state) => state.disabilities,
-      }),
-    }),
+    ...mapState(useStepsAddStore, ["Curriculums", "types", "disabilities"]),
   },
   methods: {
-    async updateValue(item) {
-      if (item && item.id) {
-        this.steps.curriculum_id = this.steps_value.id;
-        console.log("curriculum_id", this.steps.curriculum_id);
+    handleTypeChange() {
+      this.steps.type_id = this.selectedType_values.map((type) => type.id);
+    },
+    handleCurriculaChange() {
+      this.steps.curriculum_id = this.curricula_values
+        ? this.curricula_values.id
+        : null;
+    },
+    handleDisabilitiesChange() {
+      if (Array.isArray(this.disabilities_values)) {
+        this.steps.disability_ids = this.disabilities_values.map(
+          (dis) => dis.id
+        );
       } else {
-        console.error("Item is null or undefined:", item);
-      }
-    },
-
-    updateDisabilitiesValue() {
-      this.steps.disabilities_id = this.disabilities_values
-        .filter((dis) => dis && dis.id)
-        .map((dis) => dis.id);
-      console.log("disabilities_id", this.steps.disabilities_id);
-    },
-
-    async fetchCurriculums() {
-      try {
-        const StepsStore = useStepsAddStore();
-        if (!StepsStore) {
-          throw new Error("Failed to load steps store");
-        }
-        await StepsStore.fetchCurriculums();
-        this.Stepsoptions = this.Stepss;
-      } catch (error) {
-        console.error("Error fetching curriculums", error);
-      }
-    },
-    async fetchDisabilities() {
-      try {
-        const StepsStore = useStepsAddStore();
-        if (!StepsStore) {
-          throw new Error("Failed to load steps store");
-        }
-        await StepsStore.getDisabilities();
-        this.disabilitiesOptions = this.disabilities;
-        console.log("disabilitiesOptions", this.disabilities);
-      } catch (error) {
-        console.error("Error fetching disabilities", error);
+        this.steps.disability_ids = "";
       }
     },
 
     async submitForm() {
       try {
-        const useStepsStore = useStepsAddStore();
-        if (!useStepsStore) {
-          throw new Error("Failed to load steps store");
-        }
-
-        if (!this.steps.title || !this.steps.curriculum_id) {
-          Swal.fire("Error", "Please fill in all fields", "error");
-          return;
-        }
-
-        await useStepsStore.addStepsData(this.steps);
-        this.$emit("stepAdded");
+        const stepsStore = useStepsAddStore();
+        await stepsStore.addStepsData(this.steps);
         this.$router.push("/steps");
       } catch (error) {
-        console.error("Error in submitForm:", error);
+        console.error("Error submitting form:", error);
       }
     },
-  },
-  mounted() {
-    this.fetchCurriculums();
-    this.fetchDisabilities();
+    async fetchData() {
+      try {
+        const stepsStore = useStepsAddStore();
+        await stepsStore.fetchCurriculums();
+        this.curriculaOptions = stepsStore.Curriculums;
+        await stepsStore.getDisabilities();
+        this.disabilitiesOptions = stepsStore.disabilities;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
   },
 };
 </script>

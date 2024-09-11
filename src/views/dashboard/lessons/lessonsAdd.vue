@@ -34,7 +34,6 @@
             :options="StagesOptions"
             track-by="id"
             label="title"
-            :multiple="true"
             :close-on-select="false"
             @update:model-value="updateStagesValue"
           ></multiselect>
@@ -79,7 +78,7 @@ export default {
         end_verse: "",
         stage: { id: null },
         quraan: { id: null },
-        Stages_id: "",
+        stage_id: "",
       },
       StagesOptions: [], // Updated to hold fetched options
       Stages_values: null,
@@ -132,8 +131,8 @@ export default {
     },
 
     updateStagesValue() {
-      this.lessons.Stages_id = this.Stages_values.map((stg) => stg.id);
-      console.log("Stages_id", this.lessons.Stages_id);
+      this.lessons.stage_id = this.Stages_values.id;
+      console.log("Stages_id", this.lessons.stage_id);
     },
   },
 
