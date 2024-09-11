@@ -47,7 +47,7 @@
             label="title"
             :multiple="true"
             :close-on-select="false"
-            @update:model-value="updatedisabilitiesValue"
+            @update:model-value="updateDisabilitiesValue"
           ></multiselect>
         </div>
 
@@ -78,7 +78,7 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useStepsAddStore } from "@/stores/steps/StepsAddStore";
-import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
+// import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
 import { mapState } from "pinia";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
@@ -110,24 +110,32 @@ export default {
       selectedType: null,
     };
   },
+
   computed: {
     ...mapState(useStepsAddStore, {
       Stepss: (state) => state.Stepss,
-    }),
-    ...mapState(useOrganizationAddStore, {
-      disabilities: (state) => state.disabilities,
+      ...mapState(useStepsAddStore, {
+        disabilities: (state) => state.disabilities,
+      }),
     }),
   },
   methods: {
-    async updateValue() {
-      this.curriculum_id = this.steps_value.id;
-      console.log("steps_value", this.curriculum_id);
+    async updateValue(item) {
+      if (item && item.id) {
+        this.steps.curriculum_id = this.steps_value.id;
+        console.log("curriculum_id", this.steps.curriculum_id);
+      } else {
+        console.error("Item is null or undefined:", item);
+      }
     },
-    updatedisabilitiesValue() {
+
+    updateDisabilitiesValue() {
       this.steps.disabilities_id = this.disabilities_values
         .filter((dis) => dis && dis.id)
         .map((dis) => dis.id);
+      console.log("disabilities_id", this.steps.disabilities_id);
     },
+
     async fetchCurriculums() {
       try {
         const StepsStore = useStepsAddStore();
@@ -146,8 +154,9 @@ export default {
         if (!StepsStore) {
           throw new Error("Failed to load steps store");
         }
-        await StepsStore.fetchDisabilities();
-        this.disabilitiesOptions = StepsStore.disabilities; // Update this
+        await StepsStore.getDisabilities();
+        this.disabilitiesOptions = this.disabilities;
+        console.log("disabilitiesOptions", this.disabilities);
       } catch (error) {
         console.error("Error fetching disabilities", error);
       }

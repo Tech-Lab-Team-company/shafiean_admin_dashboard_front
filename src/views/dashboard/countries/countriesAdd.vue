@@ -46,6 +46,7 @@
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -69,7 +70,17 @@ export default {
         if (!countriesStore) {
           throw new Error("Failed to load Country store");
         }
+        if (
+          !this.countries.title ||
+          !this.countries.code ||
+          !this.countries.phone_code
+        ) {
+          Swal.fire("Error", "Please fill in all fields", "error");
+          return;
+        }
+
         await countriesStore.addCountriesData(this.countries);
+
         this.$router.push("/countries");
       } catch (error) {
         console.error("Error in submitForm:", error);

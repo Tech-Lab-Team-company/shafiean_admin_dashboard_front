@@ -2,7 +2,7 @@
   <div class="disabilities">
     <HeadersPages
       title="الأعاقات"
-      button="+ اضافة اقاعة"
+      button="+ اضافة اعاقه "
       link="/add-disabilities"
     />
     <TablesPageVue

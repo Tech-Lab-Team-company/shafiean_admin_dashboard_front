@@ -31,16 +31,17 @@ export const useDisabilitieEditStore = defineStore("disabilitiesEdit", {
         formData.append("title", updatedData.title);
         formData.append("description", updatedData.description);
         formData.append("image", updatedData.image);
+
         const response = await axios.post("edit_disability", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+
         if (response.data.status == true) {
-          console.log(this.disabilitie);
+          this.disabilitie = updatedData;
           Swal.fire("Success", "Disabilitie has been updated.", "success");
         } else {
-          console.log("erorr");
           Swal.fire("Error", "Failed to update disabilitie.", "error");
         }
       } catch (error) {
