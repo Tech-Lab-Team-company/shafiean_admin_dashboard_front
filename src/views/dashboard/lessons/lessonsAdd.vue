@@ -16,11 +16,7 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> من </label>
           <div class="input">
-            <input
-              type="date"
-              placeholder=" من   "
-              v-model="lessons.start_verse"
-            />
+            <input type="date" placeholder="من" v-model="lessons.start_verse" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -29,18 +25,21 @@
             <input type="date" placeholder="إلي" v-model="lessons.end_verse" />
           </div>
         </div>
-        <!-- selected -->
+
+        <!-- Multiselect for Stages -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> المرحلة</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="رقم المرحله"
-              v-model="lessons.stage.id"
-            />
-            <!-- selected -->
-          </div>
+          <label for="Stages">المرحلة</label>
+          <multiselect
+            v-model="Stages_values"
+            :options="StagesOptions"
+            track-by="id"
+            label="title"
+            :multiple="true"
+            :close-on-select="false"
+            @update:model-value="updateStagesValue"
+          ></multiselect>
         </div>
+
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> قران</label>
           <div class="input">
@@ -64,9 +63,14 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useLessonsAddStore } from "@/stores/lessons/LessonsAddStore";
+import "vue-multiselect/dist/vue-multiselect.css";
+import Multiselect from "vue-multiselect";
+import { mapState } from "pinia";
 import Swal from "sweetalert2";
+
 export default {
-  components: { HeaderPages },
+  components: { HeaderPages, Multiselect },
+
   data() {
     return {
       lessons: {
@@ -75,14 +79,34 @@ export default {
         end_verse: "",
         stage: { id: null },
         quraan: { id: null },
+        Stages_id: "",
       },
+      StagesOptions: [], // Updated to hold fetched options
+      Stages_values: null,
     };
   },
 
+  computed: {
+    ...mapState(useLessonsAddStore, {
+      Stages: (state) => state.lesson,
+    }),
+  },
+
   methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
+    async fetchStages() {
+      try {
+        const LessonsStore = useLessonsAddStore();
+        if (!LessonsStore) {
+          throw new Error("Failed to load Lessons store");
+        }
+        await LessonsStore.fetchSteps();
+        this.StagesOptions = LessonsStore.lesson; // Populate StagesOptions
+        console.log("StagesOptions:", this.StagesOptions);
+      } catch (error) {
+        console.error("Error fetching stages", error);
+      }
     },
+
     async submitForm() {
       try {
         const LessonsIndexStore = useLessonsAddStore();
@@ -94,7 +118,6 @@ export default {
           !this.lessons.title ||
           !this.lessons.start_verse ||
           !this.lessons.end_verse ||
-          !this.lessons.stage.id ||
           !this.lessons.quraan.id
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
@@ -107,6 +130,15 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
+
+    updateStagesValue() {
+      this.lessons.Stages_id = this.Stages_values.map((stg) => stg.id);
+      console.log("Stages_id", this.lessons.Stages_id);
+    },
+  },
+
+  mounted() {
+    this.fetchStages(); // Fetch stages when the component is mounted
   },
 };
 </script>

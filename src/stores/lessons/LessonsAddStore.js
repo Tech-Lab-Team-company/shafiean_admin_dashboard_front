@@ -5,30 +5,49 @@ import Swal from "sweetalert2";
 export const useLessonsAddStore = defineStore("LessonsAdd", {
   state: () => ({
     Lessons: [],
+    lesson: [], // Stores stages data
+    Stages_id: [],
   }),
 
   actions: {
+    async fetchSteps() {
+      try {
+        const response = await axios.post("fetch_stages");
+        console.log(response.data.data.data, "Stages");
+
+        if (response.data.status === true) {
+          this.lesson = response.data.data.data; // Assign the fetched stages to lesson
+
+          this.lesson.forEach((ste) => {
+            this.Stages_id.push(ste.id);
+          });
+        } else {
+          console.log("Error fetching Stages.");
+        }
+      } catch (error) {
+        console.error("Error fetching steps:", error);
+      }
+    },
+
     async addLessonsData(LessonsData) {
+      console.log(LessonsData);
       try {
         const formData = new FormData();
-
-        formData.append("title", LessonsData.title);
-        formData.append("start_verse", LessonsData.start_verse);
-        formData.append("end_verse", LessonsData.end_verse);
-        formData.append("stage_id", LessonsData.stage.id);
-        formData.append("quraan_id", LessonsData.quraan.id);
-
-        const response = await axios.post("add_session", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+        Object.keys(LessonsData).forEach((key) => {
+          formData.append(key, LessonsData[key]);
         });
 
-        console.log(response.data, "Response data");
+        const response = await axios.post("/add_session", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        console.log(response, "Lesson saved");
+
         this.Lessons.push(response.data);
 
         Swal.fire("Success", "Lesson has been saved.", "success");
       } catch (error) {
-        console.error("Error saving Lesson:", error);
-        Swal.fire("Error", "There was a problem saving the Lesson.", "error");
+        console.error("Error saving lesson:", error);
+        Swal.fire("Error", "There was a problem saving the lesson.", "error");
       }
     },
   },
