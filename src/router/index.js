@@ -4,7 +4,7 @@ import Login from "@/views/dashboard/Auth/LoginPage.vue";
 import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
 import CodeReset from "@/views/dashboard/Auth/CodeReset.vue";
 import Dashboard from "@/views/dashboard/dashboard.vue";
-import HomeView from "@/views/dashboard/HomeView.vue";
+import HomeView from "@/views/dashboard/Home/HomeView.vue";
 import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
 import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitiesIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
@@ -34,6 +34,8 @@ import CitiesIndex from "@/views/dashboard/cities/CitiesIndex.vue";
 import CitiesAdd from "@/views/dashboard/cities/CitiesAdd.vue";
 import CitiesEdit from "@/views/dashboard/cities/CitiesEdit.vue";
 import ErrorPage from "@/views/ErrorPage/ErrorPage.vue";
+import HeaderView from "@/views/dashboard/Home/HeaderView.vue";
+import BodyView from "@/views/dashboard/Home/BodyView.vue";
 const routes = [
   {
     path: "/login",
@@ -197,6 +199,16 @@ const routes = [
         path: "/edit-cities/:id",
         name: "CitiesEdit",
         component: CitiesEdit,
+      },
+      {
+        path: "/header",
+        name: "Header-view",
+        component: HeaderView,
+      },
+      {
+        path: "/body",
+        name: "Body-view",
+        component: BodyView,
       },
     ],
   },
