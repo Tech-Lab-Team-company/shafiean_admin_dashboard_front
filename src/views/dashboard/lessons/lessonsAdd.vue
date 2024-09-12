@@ -40,14 +40,16 @@
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> قران</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="المنهج الدراس"
-              v-model="lessons.quraan.id"
-            />
-          </div>
+          <label for="">القرأن</label>
+          <multiselect
+            id="type"
+            v-model="selectedType"
+            :options="typeOptions"
+            :close-on-select="true"
+            label="name"
+            track-by="id"
+            @update:model-value="updateTypeId"
+          ></multiselect>
         </div>
       </div>
 
@@ -76,18 +78,24 @@ export default {
         title: "",
         start_verse: "",
         end_verse: "",
-        stage: { id: null },
-        quraan: { id: null },
+        quraan_id: null,
+
         stage_id: "",
       },
       StagesOptions: [], // Updated to hold fetched options
-      Stages_values: null,
+      Stages_values: {},
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
+      selectedType: null,
     };
   },
 
   computed: {
     ...mapState(useLessonsAddStore, {
-      Stages: (state) => state.lesson,
+      lesson: (state) => state.lesson,
     }),
   },
 
@@ -116,8 +124,7 @@ export default {
         if (
           !this.lessons.title ||
           !this.lessons.start_verse ||
-          !this.lessons.end_verse ||
-          !this.lessons.quraan.id
+          !this.lessons.end_verse
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
@@ -131,8 +138,11 @@ export default {
     },
 
     updateStagesValue() {
-      this.lessons.stage_id = this.Stages_values.id;
+      this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
       console.log("Stages_id", this.lessons.stage_id);
+    },
+    updateTypeId(selectedOption) {
+      this.lessons.quraan_id = selectedOption ? selectedOption.id : null;
     },
   },
 

@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
+
 import Swal from "sweetalert2";
 
 export const useLessonsStore = defineStore("lessons", {
@@ -8,11 +10,20 @@ export const useLessonsStore = defineStore("lessons", {
   }),
 
   actions: {
-    async fetchLessons() {
+    async fetchLessons(page = 1) {
       try {
-        const response = await axios.post("fetch_sessions");
-        this.lessons = response.data.data.data;
-        if (response.status.data == true) {
+        const response = await axios.post(`fetch_sessions?page=${page}`);
+        const paginationStore = usePaginationStore();
+        const { current_page, from, last_page, per_page, to, total } =
+          response.data.data.meta;
+        if (response.data.status == true) {
+          this.lessons = response.data.data.data;
+          paginationStore.setPage(current_page);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
           console.log(this.lessons, "Diaaa");
         } else {
           console.log("Error fetching lessons.");

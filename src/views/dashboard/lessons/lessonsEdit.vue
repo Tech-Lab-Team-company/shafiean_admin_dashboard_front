@@ -4,7 +4,7 @@
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> الوصف</label>
+          <label for=""> اسم الدرس</label>
           <div class="input">
             <input
               type="text"
@@ -18,7 +18,7 @@
           <div class="input">
             <input
               type="date"
-              placeholder=" وصف المرحلة  "
+              placeholder="وصف المرحلة"
               v-model="lessons.start_verse"
             />
           </div>
@@ -26,43 +26,52 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> إلي</label>
           <div class="input">
-            <input type="date" placeholder="قران" v-model="lessons.end_verse" />
+            <input type="date" placeholder="قرأن" v-model="lessons.end_verse" />
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> الاعاقه</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="الاعاقه"
-              v-model="lessons.stage_id"
-            />
-          </div>
+          <label for="Stages">المرحلة</label>
+          <multiselect
+            v-model="Stages_values"
+            :options="StagesOptions"
+            track-by="id"
+            label="title"
+            :close-on-select="false"
+            @update:model-value="updateStagesValue"
+          ></multiselect>
         </div>
+
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> المنهج الدراسي</label>
-          <div class="input">
-            <input
-              type="number"
-              placeholder="المنهج الدراس"
-              v-model="lessons.quraan_id"
-            />
-          </div>
+          <label for="">القرأن</label>
+          <multiselect
+            id="type"
+            v-model="selectedType"
+            :options="typeOptions"
+            :close-on-select="true"
+            label="name"
+            track-by="id"
+            @update:model-value="updateTypeId"
+          ></multiselect>
         </div>
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
   </div>
 </template>
+
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useLessonsEditStore } from "@/stores/lessons/LessonsEditStore";
+import "vue-multiselect/dist/vue-multiselect.css";
+import Multiselect from "vue-multiselect";
+import { mapState } from "pinia";
+
 export default {
-  components: { HeaderPages },
+  components: { HeaderPages, Multiselect },
   data() {
     return {
       lessons: {
@@ -72,30 +81,54 @@ export default {
         stage_id: "",
         quraan_id: "",
       },
+      StagesOptions: [],
+      Stages_values: {},
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
+      selectedType: null,
     };
   },
+  computed: {
+    ...mapState(useLessonsEditStore, {
+      lessons: (state) => state.lessons,
+    }),
+  },
   methods: {
+    updateStagesValue() {
+      this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
+      console.log("Updated Stage ID:", this.lessons.stage_id);
+    },
+    updateTypeId(selectedOption) {
+      this.lessons.quraan_id = selectedOption ? selectedOption.id : null;
+    },
     async fetchData() {
       const store = useLessonsEditStore();
       const id = this.$route.params.id;
-
       await store.fetchLessons(id);
+      await store.fetchSteps();
+      this.StagesOptions = store.lesson; // Assuming this is correct
       this.lessons = store.lessons;
+      console.log(
+        this.lessons.stage.title,
+        "this.lessonssssssssssssssssssssssss"
+      );
+      this.Stages_values = this.lessons.stage
+        ? {
+            id: this.lessons.stage.id,
+            title: this.lessons.stage.title,
+          }
+        : null;
     },
     async submitForm() {
       const store = useLessonsEditStore();
       const id = this.$route.params.id;
-      await store.updateLessons(id, {
-        title: this.lessons.title,
-        start_verse: this.lessons.start_verse,
-        end_verse: this.lessons.end_verse,
-        stage_id: this.lessons.stage_id,
-        quraan_id: this.lessons.quraan_id,
-      });
+      await store.updateLessons(id, this.lessons);
       this.$router.go(-1);
     },
   },
-
   mounted() {
     this.fetchData();
   },
