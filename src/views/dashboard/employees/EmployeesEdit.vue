@@ -26,6 +26,7 @@
                 :src="employee.imageSrc ? employee.imageSrc : employee.image"
                 alt="Avatar Preview"
               />
+              <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
           </div>
         </div>
@@ -104,6 +105,10 @@ export default {
     };
   },
   methods: {
+    removeImage() {
+      this.employee.image = null;
+      this.employee.imageSrc = "";
+    },
     triggerFileInput() {
       this.$refs.fileInput.click();
     },
@@ -145,3 +150,20 @@ export default {
   },
 };
 </script>
+<style scoped>
+.avatar-preview {
+  position: relative;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgb(232 240 254);
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  color: red;
+  font-size: 20px;
+}
+</style>

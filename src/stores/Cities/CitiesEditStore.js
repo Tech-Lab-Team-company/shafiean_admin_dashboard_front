@@ -23,7 +23,7 @@ export const useCitiesEditStore = defineStore("citiesEdit", {
     async fetchCities(id) {
       try {
         const response = await axios.post("fetch_city_details", { id });
-        if (response.status === 200) {
+        if (response.data.status == true) {
           this.cities = response.data.data;
         } else {
           throw new Error("Failed to fetch Cities data");
@@ -47,7 +47,7 @@ export const useCitiesEditStore = defineStore("citiesEdit", {
           },
         });
 
-        if (response.status === 200) {
+        if (response.data.status == true) {
           this.cities = response.data.data;
           Swal.fire("Success", "cities has been updated.", "success");
         } else {

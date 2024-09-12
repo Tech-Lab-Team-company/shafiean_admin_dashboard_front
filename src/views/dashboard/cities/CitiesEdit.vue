@@ -60,7 +60,9 @@ export default {
   },
   methods: {
     updatecountryValue() {
-      this.Cities.country_id = this.Country_values.id;
+      this.Cities.country_id = this.Country_values
+        ? this.Country_values.id
+        : null;
       console.log("Selected Country ID:", this.Cities.country_id);
     },
 

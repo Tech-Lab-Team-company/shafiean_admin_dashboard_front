@@ -4,21 +4,34 @@ import Swal from "sweetalert2";
 
 export const useLessonsEditStore = defineStore("lessonsEdit", {
   state: () => ({
-    lessons: {
-      id: "",
-      title: "",
-      start_verse: "",
-      end_verse: "",
-      stage: { id: null },
-      quraan: { id: null },
-    },
+    lessons: [],
+    lesson: {}, // Stores stages data
+    Stages_id: [],
   }),
   actions: {
+    async fetchSteps() {
+      try {
+        const response = await axios.post("fetch_stages");
+        console.log(response.data.data.data, "Stages");
+
+        if (response.data.status === true) {
+          this.lesson = response.data.data.data; // Assign the fetched stages to lesson
+
+          this.lesson.forEach((ste) => {
+            this.Stages_id.push(ste.id);
+          });
+        } else {
+          console.log("Error fetching Stages.");
+        }
+      } catch (error) {
+        console.error("Error fetching steps:", error);
+      }
+    },
     async fetchLessons(id) {
       try {
         const response = await axios.post("fetch_session_details", { id });
-        if (response.status === 200) {
-          this.lessons = response.data.data.data;
+        if (response.data.status == true) {
+          this.lessons = response.data.data;
         } else {
           throw new Error("Failed to fetch lessons data");
         }
@@ -34,7 +47,7 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         formData.append("title", updatedData.title);
         formData.append("start_verse", updatedData.start_verse);
         formData.append("end_verse", updatedData.end_verse);
-        formData.append("stage", updatedData.stage_id);
+        formData.append("stage_id", updatedData.stage_id);
         formData.append("quraan", updatedData.quraan_id);
 
         const response = await axios.post("edit_session", formData, {
@@ -43,7 +56,7 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
           },
         });
 
-        if (response.status === 200) {
+        if (response.data.status == true) {
           this.lessons = response.data.data;
           Swal.fire("Success", "lessons has been updated.", "success");
         } else {

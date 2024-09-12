@@ -62,7 +62,7 @@
 
         <!-- Type Select -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="type">النوع</label>
+          <label for="type">قرأن</label>
           <multiselect
             id="type"
             v-model="selectedType_values"

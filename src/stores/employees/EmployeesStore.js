@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
+import { useLoadingStore } from "@/stores/loaderpage/LoadingStore";
+
 export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
@@ -9,34 +11,38 @@ export const useEmployeesStore = defineStore("employees", {
   }),
   actions: {
     async fetchEmployees(page = 1) {
+      const loadingStore = useLoadingStore();
+      loadingStore.startLoading();
+
       try {
         const response = await axios.get(`admins?page=${page}`);
         const paginationStore = usePaginationStore();
-
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
-        if (response.data.status == true) {
+
+        if (response.data.status) {
           this.employees = response.data.data.data;
           console.log(this.employees, "Employees List");
 
           paginationStore.setPage(current_page);
-          paginationStore.setfrom(from);
-          paginationStore.setlastpage(last_page);
-          paginationStore.setperpage(per_page);
-          paginationStore.setto(to);
-          paginationStore.settotal(total);
+          paginationStore.setFrom(from);
+          paginationStore.setLastPage(last_page);
+          paginationStore.setPerPage(per_page);
+          paginationStore.setTo(to);
+          paginationStore.setTotal(total);
         }
+
+        this.ismaster = this.employees.map((emp) => emp.is_master);
+        console.log(this.ismaster, "is master");
       } catch (error) {
         console.error("Error fetching employees:", error);
+      } finally {
+        loadingStore.stopLoading();
       }
-      this.ismaster = this.employees.map((emp) => emp.is_master);
-      console.log(this.ismaster, "is master");
     },
-    async deleteEmployee(id) {
-      // console.log(id + "nasra");
 
+    async deleteEmployee(id) {
       try {
-        // Show SweetAlert confirmation dialog
         const result = await Swal.fire({
           title: "هل انتا متاكد من عملية المسح?",
           text: "لن تتمكن من التراجع عن هذا!",
@@ -49,12 +55,7 @@ export const useEmployeesStore = defineStore("employees", {
 
         if (result.isConfirmed) {
           await axios.post("admins/destroy", { id });
-          const index = this.employees.findIndex((emp) => emp.id === id);
-          if (index !== -1) {
-            this.employees.splice(index, 1);
-          }
-
-          // Show success message
+          this.employees = this.employees.filter((emp) => emp.id !== id);
           Swal.fire("Deleted!", "The employee has been deleted.", "success");
         }
       } catch (error) {

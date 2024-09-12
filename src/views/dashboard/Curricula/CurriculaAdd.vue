@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     updateTypeId(selectedOption) {
-      this.Curriculas.type = selectedOption.id;
+      this.Curriculas.type = selectedOption ? selectedOption.id : null;
     },
     async submitForm() {
       try {

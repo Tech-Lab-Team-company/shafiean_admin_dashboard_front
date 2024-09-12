@@ -27,6 +27,7 @@
 
             <div v-if="form.imageSrc" class="avatar-preview">
               <img :src="form.imageSrc" alt="Avatar Preview" />
+              <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
           </div>
         </div>
@@ -196,6 +197,10 @@ export default {
     }),
   },
   methods: {
+    removeImage() {
+      this.form.image = null;
+      this.form.imageSrc = "";
+    },
     updateCityValue() {
       this.form.city_id = this.city_values ? this.city_values.id : null;
     },
@@ -205,9 +210,9 @@ export default {
         : null;
     },
     updateDisabilitiesValue() {
-      this.form.disabilities_id = this.disabilities_values
-        .filter((dis) => dis && dis.id)
-        .map((dis) => dis.id);
+      this.form.disability_ids = this.disabilities_values.map(
+        (dis) => dis.id && dis.title
+      );
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -257,3 +262,20 @@ export default {
   },
 };
 </script>
+<style scoped>
+.avatar-preview {
+  position: relative;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgb(232 240 254);
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  color: red;
+  font-size: 20px;
+}
+</style>
