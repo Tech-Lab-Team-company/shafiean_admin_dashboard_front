@@ -6,8 +6,9 @@
 </template>
 
 <script>
-import { useLoadingStore } from "@/stores/loaderpage/LoadingStore"; // Adjust path as needed
+import { useLoadingStore } from "@/stores/loaderpage/LoadingStore";
 import LoaderPage from "@/components/LoaderPage/LoaderPage.vue";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -22,20 +23,32 @@ export default {
   created() {
     const loadingStore = useLoadingStore();
 
-    // Set up router navigation guards
-    this.$router.beforeEach((to, from, next) => {
-      loadingStore.startLoading();
-      this.isLoading = true;
-      next();
-    });
-
-    this.$router.afterEach(() => {
-      // Hide loader after a delay
-      setTimeout(() => {
+    // Set up Axios request interceptors
+    axios.interceptors.request.use(
+      (config) => {
+        loadingStore.startLoading();
+        this.isLoading = true;
+        return config;
+      },
+      (error) => {
         loadingStore.stopLoading();
         this.isLoading = false;
-      }, 1000); // Adjust delay as needed
-    });
+        return Promise.reject(error);
+      }
+    );
+
+    axios.interceptors.response.use(
+      (response) => {
+        loadingStore.stopLoading();
+        this.isLoading = false;
+        return response;
+      },
+      (error) => {
+        loadingStore.stopLoading();
+        this.isLoading = false;
+        return Promise.reject(error);
+      }
+    );
   },
 };
 </script>
