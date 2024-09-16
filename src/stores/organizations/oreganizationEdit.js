@@ -41,22 +41,36 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
     },
 
     async getDisabilities() {
-      const response = await axios.post("fetch_disabilities");
-      if (response.data.status === true) {
-        this.disabilities = response.data.data.data;
-        this.disabilities.forEach((disability) => {
-          this.disabilities_id.push(disability.id);
-        });
-      } else {
-        console.log("Error fetching disabilities.");
+      try {
+        const response = await axios.post("fetch_disabilities");
+
+        if (response.data.status === true) {
+          // Store disabilities with both id and title
+          this.disabilities = response.data.data.data;
+
+          // Optionally store an array of objects with id and title for easy access
+          this.disabilities_id = this.disabilities.map((disability) => ({
+            id: disability.id,
+            title: disability.title, // Ensure `title` is part of the disability object
+          }));
+
+          // Log disabilities for debugging
+          console.log(this.disabilities_id);
+
+          // You can also do other things with disabilities here if needed
+        } else {
+          console.log("Error fetching disabilities.");
+        }
+      } catch (error) {
+        console.error("Error fetching disabilities:", error);
       }
     },
+
     async fetchOrganizations(id) {
       try {
         const response = await axios.post("fetch_organization_details", { id });
         if (response.data.status == true) {
           this.organizations = response.data.data;
-          console.log(this.organizations, "nasra");
         } else {
           throw new Error("Failed to fetch Cities data");
         }
@@ -75,21 +89,27 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
         formData.append("phone", updatedData.phone);
         formData.append("email", updatedData.email);
         formData.append("address", updatedData.address);
-        formData.append("link", updatedData.website_link);
+        formData.append("website_link", updatedData.website_link);
         formData.append("country_id", updatedData.country_id);
         formData.append("city_id", updatedData.city_id);
-        formData.append("disabilitey_id", updatedData.disabilitey_id);
+
+        // Append each item in the disability_ids array as a separate field
+        updatedData.disability_ids.forEach((id, index) => {
+          formData.append(`disability_ids[${index}]`, id);
+        });
+
         const response = await axios.post("edit_organization", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        if (response.data.status == true) {
+
+        if (response.data.status === true) {
           this.organizations = response.data.data;
           console.log(this.organizations);
           Swal.fire("Success", "Organization has been updated.", "success");
         } else {
-          console.log("erorr");
+          console.log("error");
           Swal.fire("Error", "Failed to update Organization.", "error");
         }
       } catch (error) {
