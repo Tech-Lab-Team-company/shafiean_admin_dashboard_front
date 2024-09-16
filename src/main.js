@@ -14,7 +14,7 @@ const pinia = createPinia();
 
 // Create the app instance and use Pinia and the router
 const app = createApp(App);
-axios.defaults.baseURL = "http://192.168.1.10:8000/api/";
+axios.defaults.baseURL = "http://192.168.1.19:8000/api/";
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "token"
 )}`;
