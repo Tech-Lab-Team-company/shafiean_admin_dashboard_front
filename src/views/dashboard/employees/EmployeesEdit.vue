@@ -28,6 +28,9 @@
               />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span class="error-feedback" v-if="v$.employee.imageSrc.$error"
+              >{{ v$.employee.imageSrc.$errors[0].$message }}
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -38,6 +41,9 @@
               type="text"
               placeholder="أدخل أسم الموظف"
             />
+            <span class="error-feedback" v-if="v$.employee.name.$error">{{
+              v$.employee.name.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -47,7 +53,11 @@
               v-model="employee.phone"
               type="tel"
               placeholder="أدخل رقم الهاتف"
+              class="no-spinner"
             />
+            <span class="error-feedback" v-if="v$.employee.phone.$error">{{
+              v$.employee.phone.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -58,6 +68,9 @@
               type="email"
               placeholder="أدخل البريد الالكتروني"
             />
+            <span class="error-feedback" v-if="v$.employee.email.$error">{{
+              v$.employee.email.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -69,10 +82,14 @@
             :multiple="true"
             :close-on-select="false"
           ></multiselect>
+
+          <span class="error-feedback" v-if="v$.employee.permissions.$error">{{
+            v$.employee.permissions.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -84,6 +101,8 @@ import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useEmployeesEditStore } from "@/stores/employees/EmployeesEditStore";
+import useVuelidate from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "EmployeesEdit",
@@ -93,6 +112,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       employee: {
         name: "",
         phone: "",
@@ -102,6 +122,17 @@ export default {
         imageSrc: "",
       },
       permissionOptions: ["list", "of", "options"], // Adjust this as needed
+    };
+  },
+  validations() {
+    return {
+      employee: {
+        name: { required },
+        phone: { required },
+        email: { required, email },
+        permissions: { required },
+        imageSrc: { required },
+      },
     };
   },
   methods: {
@@ -140,9 +171,24 @@ export default {
         phone: this.employee.phone,
         email: this.employee.email,
         sssions: this.employee.permissions,
-        image: this.employee.image, // Pass the file object
+        image: this.employee.image,
       });
+      if (
+        !this.employee.name ||
+        !this.employee.phone ||
+        !this.employee.email ||
+        !this.employee.imageSrc ||
+        !this.employee.permissions
+      ) {
+        return;
+      }
       this.$router.go(-1);
+    },
+    Edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr edit");
+      }
     },
   },
   mounted() {
@@ -153,6 +199,11 @@ export default {
 <style scoped>
 .avatar-preview {
   position: relative;
+}
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .delete-icon {
@@ -165,5 +216,9 @@ export default {
   cursor: pointer;
   color: red;
   font-size: 20px;
+}
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
 }
 </style>

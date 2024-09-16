@@ -148,12 +148,12 @@ export default {
               route: "/curricula",
               icon: "fa-solid fa-person-chalkboard",
             },
-            { name: "الحصص", route: "/lessons", icon: "fa-regular fa-file" },
             {
               name: "المراحل",
               route: "/steps",
               icon: "fa-regular fa-clipboard",
             },
+            { name: "الحصص", route: "/lessons", icon: "fa-regular fa-file" },
           ],
         },
         {

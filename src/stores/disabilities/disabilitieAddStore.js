@@ -25,10 +25,14 @@ export const useDisabilitieAddStore = defineStore("DisabilitiesAdd", {
 
         this.Disabilities.push(response.data);
 
-        Swal.fire("Success", "Employee has been saved.", "success");
+        Swal.fire("Success", "disability has been saved.", "success");
       } catch (error) {
-        console.error("Error saving employee:", error);
-        Swal.fire("Error", "There was a problem saving the employee.", "error");
+        console.error("Error saving disability:", error);
+        Swal.fire(
+          "Error",
+          "There was a problem saving the disability.",
+          "error"
+        );
       }
     },
   },

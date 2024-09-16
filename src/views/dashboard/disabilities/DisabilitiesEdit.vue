@@ -34,6 +34,9 @@
                 />
                 <i class="fa fa-times delete-icon" @click="removeImage"></i>
               </div>
+              <span class="error-feedback" v-if="v$.disabilitie.imageSrc.$error"
+                >{{ v$.disabilitie.imageSrc.$errors[0].$message }}
+              </span>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-12">
@@ -44,6 +47,9 @@
                 placeholder="أدخل اسم الاعاقه"
                 v-model="disabilitie.title"
               />
+              <span class="error-feedback" v-if="v$.disabilitie.title.$error">{{
+                v$.disabilitie.title.$errors[0].$message
+              }}</span>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-12">
@@ -54,11 +60,16 @@
                 placeholder="وصف الاعاقه"
                 v-model="disabilitie.description"
               />
+              <span
+                class="error-feedback"
+                v-if="v$.disabilitie.description.$error"
+                >{{ v$.disabilitie.description.$errors[0].$message }}</span
+              >
             </div>
           </div>
         </div>
         <div class="all-btn">
-          <button type="submit" class="save">تعديل</button>
+          <button type="submit" class="save" @click="edit()">تعديل</button>
           <button type="button" class="bake" @click="$router.go(-1)">
             رجوع
           </button>
@@ -71,7 +82,9 @@
 <script>
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useDisabilitieEditStore } from "@/stores/disabilities/disabilitieEditStore";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 export default {
   name: "edit-disabilities",
   components: {
@@ -79,11 +92,21 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       disabilitie: {
         title: "",
         description: "",
         image: null,
         imageSrc: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      disabilitie: {
+        imageSrc: { required },
+        title: { required },
+        description: { required },
       },
     };
   },
@@ -121,7 +144,21 @@ export default {
         description: this.disabilitie.description,
         image: this.disabilitie.image, // Pass the file object
       });
+      if (
+        !this.disabilitie.title ||
+        !this.disabilitie.description ||
+        !this.disabilitie.imageSrc
+      ) {
+        Swal.fire("Error", "Please fill in all fields", "error");
+        return;
+      }
       this.$router.go(-1);
+    },
+    edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr edit");
+      }
     },
   },
   async mounted() {
@@ -144,5 +181,9 @@ export default {
   cursor: pointer;
   color: red;
   font-size: 20px;
+}
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
 }
 </style>
