@@ -3,9 +3,10 @@
     <header-pages title="تعديل جمعية" :showButton="false" />
     <form @submit.prevent="submitForm">
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
+            <!-- Hidden File Input -->
             <input
               type="file"
               id="avatar"
@@ -14,24 +15,25 @@
               ref="fileInput"
               style="display: none"
             />
-            <div class="upload-icon" @click="triggerFileInput">
+
+            <div
+              v-if="!organizations.imageSrc"
+              class="upload-icon"
+              @click="triggerFileInput"
+            >
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-            <div
-              v-if="organizations.image || organizations.imageSrc"
-              class="avatar-preview"
-            >
-              <img
-                :src="
-                  organizations.imageSrc
-                    ? organizations.imageSrc
-                    : organizations.image
-                "
-                alt="Avatar Preview"
-              />
+
+            <div v-if="organizations.imageSrc" class="avatar-preview">
+              <img :src="organizations.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.imageSrc.$error"
+              >{{ v$.organizations.imageSrc.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -42,6 +44,9 @@
               placeholder="أسم الجمعية"
               v-model="organizations.name"
             />
+            <span class="error-feedback" v-if="v$.organizations.name.$error">{{
+              v$.organizations.name.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -49,9 +54,14 @@
           <div class="input">
             <input
               type="number"
-              placeholder="رقم الترخيص "
+              placeholder="رقم الترخيص"
               v-model="organizations.licence_number"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.licence_number.$error"
+              >{{ v$.organizations.licence_number.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -59,19 +69,25 @@
           <div class="input">
             <input
               type="tel"
-              placeholder="رقم التليفون "
+              placeholder="رقم التليفون"
               v-model="organizations.phone"
             />
+            <span class="error-feedback" v-if="v$.organizations.phone.$error">{{
+              v$.organizations.phone.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="email"> البريد الالكتروني</label>
+          <label for="email">البريد الالكتروني</label>
           <div class="input">
             <input
               type="email"
-              placeholder=" البريد الالكتروني "
+              placeholder="البريد الالكتروني"
               v-model="organizations.email"
             />
+            <span class="error-feedback" v-if="v$.organizations.email.$error">{{
+              v$.organizations.email.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -79,39 +95,59 @@
           <div class="input">
             <input
               type="text"
-              placeholder="العنوان "
+              placeholder="العنوان"
               v-model="organizations.address"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.address.$error"
+              >{{ v$.organizations.address.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="address">أسم المدير</label>
+          <label for="manager_name">اسم المدير</label>
           <div class="input">
             <input
               type="text"
-              placeholder="أسم المدير "
+              placeholder="اسم المدير"
               v-model="organizations.manager_name"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.manager_name.$error"
+              >{{ v$.organizations.manager_name.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="address">رقم المدير</label>
+          <label for="manager_phone">رقم المدير</label>
           <div class="input">
             <input
               type="tel"
-              placeholder="رقم المدير "
+              placeholder="رقم المدير"
               v-model="organizations.manager_phone"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.manager_phone.$error"
+              >{{ v$.organizations.manager_phone.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="address">البريد الألكتروني المدير</label>
+          <label for="manager_email">بريد الالكتروني المدير</label>
           <div class="input">
             <input
               type="email"
-              placeholder="البريد الألكتروني المدير "
+              placeholder="بريد الالكتروني المدير"
               v-model="organizations.manager_email"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.organizations.manager_email.$error"
+              >{{ v$.organizations.manager_email.$errors[0].$message }}</span
+            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -163,7 +199,7 @@
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -176,6 +212,8 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useOrganizationEditStore } from "@/stores/organizations/oreganizationEdit";
 import { mapState } from "pinia";
+import useVuelidate from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   components: {
@@ -184,6 +222,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       organizations: {
         name: "",
         licence_number: "",
@@ -206,6 +245,21 @@ export default {
       city_values: {},
       Country_values: {},
       disabilities_values: [],
+    };
+  },
+  validations() {
+    return {
+      organizations: {
+        imageSrc: { required },
+        name: { required },
+        licence_number: { required },
+        phone: { required },
+        email: { required },
+        address: { required },
+        manager_name: { required },
+        manager_phone: { required },
+        manager_email: { required, email },
+      },
     };
   },
   computed: {
@@ -294,6 +348,21 @@ export default {
     async submitForm() {
       const store = useOrganizationEditStore();
       const id = this.$route.params.id;
+      if (!store) {
+        throw new Error("Failed to load organizations store");
+      }
+      if (
+        !this.organizations.name ||
+        !this.organizations.licence_number ||
+        !this.organizations.phone ||
+        !this.organizations.email ||
+        !this.organizations.address ||
+        !this.organizations.manager_name ||
+        !this.organizations.manager_phone ||
+        !this.organizations.manager_email
+      ) {
+        return;
+      }
 
       this.organizations.country_id = this.Country_values.id;
       this.organizations.city_id = this.city_values.id;
@@ -307,6 +376,12 @@ export default {
       await store.updateOrganization(id, this.organizations);
       this.$router.go(-1);
     },
+    Edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("no error");
+      }
+    },
   },
   mounted() {
     this.fetchData();
@@ -314,6 +389,10 @@ export default {
 };
 </script>
 <style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
 .avatar-preview {
   position: relative;
 }

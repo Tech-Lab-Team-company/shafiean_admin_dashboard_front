@@ -35,11 +35,11 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
           },
         });
 
-        if (response.status === 200) {
-          this.countries = response.data.data;
-          Swal.fire("Success", "country has been updated.", "success");
-        } else {
+        if (response.data.status === 200) {
+          this.countries = this.updatedData;
           Swal.fire("Error", "Failed to update country.", "error");
+        } else {
+          Swal.fire("Success", "country has been updated.", "success");
         }
       } catch (error) {
         console.error(error);

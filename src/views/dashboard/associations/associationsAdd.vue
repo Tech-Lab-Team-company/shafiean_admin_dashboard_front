@@ -29,12 +29,18 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
+              v$.form.imageSrc.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">أسم الجمعية</label>
           <div class="input">
             <input type="text" placeholder="أسم الجمعية" v-model="form.name" />
+            <span class="error-feedback" v-if="v$.form.name.$error">{{
+              v$.form.name.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -45,12 +51,18 @@
               placeholder="رقم الترخيص"
               v-model="form.licence_number"
             />
+            <span class="error-feedback" v-if="v$.form.licence_number.$error">{{
+              v$.form.licence_number.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="phone">رقم التليفون</label>
           <div class="input">
             <input type="tel" placeholder="رقم التليفون" v-model="form.phone" />
+            <span class="error-feedback" v-if="v$.form.phone.$error">{{
+              v$.form.phone.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -61,12 +73,18 @@
               placeholder="البريد الالكتروني"
               v-model="form.email"
             />
+            <span class="error-feedback" v-if="v$.form.email.$error">{{
+              v$.form.email.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="address">العنوان</label>
           <div class="input">
             <input type="text" placeholder="العنوان" v-model="form.address" />
+            <span class="error-feedback" v-if="v$.form.address.$error">{{
+              v$.form.address.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -77,6 +95,9 @@
               placeholder="اسم المدير"
               v-model="form.manager_name"
             />
+            <span class="error-feedback" v-if="v$.form.manager_name.$error">{{
+              v$.form.manager_name.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -87,6 +108,9 @@
               placeholder="رقم المدير"
               v-model="form.manager_phone"
             />
+            <span class="error-feedback" v-if="v$.form.manager_phone.$error">{{
+              v$.form.manager_phone.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -97,6 +121,9 @@
               placeholder="بريد الالكتروني المدير"
               v-model="form.manager_email"
             />
+            <span class="error-feedback" v-if="v$.form.manager_email.$error">{{
+              v$.form.manager_email.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -110,6 +137,9 @@
             :close-on-select="true"
             @update:model-value="updateCountryValue"
           />
+          <!-- <span class="error-feedback" v-if="v$.form.country.$error">{{
+            v$.form.country.$errors[0].$message
+          }}</span> -->
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="city">مدينه</label>
@@ -122,6 +152,9 @@
             :close-on-select="true"
             @update:model-value="updateCityValue"
           />
+          <!-- <span class="error-feedback" v-if="v$.form.city.$error">{{
+            v$.form.city.$errors[0].$message
+          }}</span> -->
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="disabilities">الاعاقات</label>
@@ -135,16 +168,22 @@
             :close-on-select="false"
             @update:model-value="updateDisabilitiesValue"
           />
+          <!-- <span class="error-feedback" v-if="v$.form.disability_ids.$error">{{
+            v$.form.disability_ids.$errors[0].$message
+          }}</span> -->
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="link">Link</label>
           <div class="input">
             <input type="url" placeholder="Link" v-model="form.website_link" />
+            <!-- <span class="error-feedback" v-if="v$.form.website_link.$error">{{
+              v$.form.website_link.$errors[0].$message
+            }}</span> -->
           </div>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -157,6 +196,8 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useOrganizationAddStore } from "@/stores/organizations/organizationAddStore";
 import { mapState } from "pinia";
+import useVuelidate from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   components: {
@@ -165,6 +206,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       CountryOptions: [],
       cityOptions: [],
       disabilitiesOptions: [],
@@ -187,6 +229,21 @@ export default {
       city_values: {},
       Country_values: {},
       disabilities_values: {},
+    };
+  },
+  validations() {
+    return {
+      form: {
+        imageSrc: { required },
+        name: { required },
+        licence_number: { required },
+        phone: { required },
+        email: { required },
+        address: { required },
+        manager_name: { required },
+        manager_phone: { required },
+        manager_email: { required, email },
+      },
     };
   },
   computed: {
@@ -239,6 +296,18 @@ export default {
         if (!organizationsStore) {
           throw new Error("Failed to load organizations store");
         }
+        if (
+          !this.form.name ||
+          !this.form.licence_number ||
+          !this.form.phone ||
+          !this.form.email ||
+          !this.form.address ||
+          !this.form.manager_name ||
+          !this.form.manager_phone ||
+          !this.form.manager_email
+        ) {
+          return;
+        }
 
         // Ensure disability_ids is always an array and filter out undefined values
         if (!Array.isArray(this.form.disability_ids)) {
@@ -272,6 +341,13 @@ export default {
         console.error("Error in fetchData:", error);
       }
     },
+
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("no error");
+      }
+    },
   },
 
   mounted() {
@@ -280,6 +356,10 @@ export default {
 };
 </script>
 <style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
 .avatar-preview {
   position: relative;
 }

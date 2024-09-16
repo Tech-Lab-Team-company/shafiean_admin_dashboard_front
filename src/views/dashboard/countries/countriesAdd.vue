@@ -12,6 +12,9 @@
               placeholder="اسم الدوله"
               v-model="countries.title"
             />
+            <span class="error-feedback" v-if="v$.countries.title.$error">{{
+              v$.countries.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -22,6 +25,9 @@
               placeholder="كود الدوله"
               v-model="countries.code"
             />
+            <span class="error-feedback" v-if="v$.countries.code.$error">{{
+              v$.countries.code.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -32,11 +38,16 @@
               placeholder="كود الدوله"
               v-model="countries.phone_code"
             />
+            <span
+              class="error-feedback"
+              v-if="v$.countries.phone_code.$error"
+              >{{ v$.countries.phone_code.$errors[0].$message }}</span
+            >
           </div>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -47,13 +58,25 @@
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
 import Swal from "sweetalert2";
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
   data() {
     return {
+      v$: useVuelidate(),
       countries: {
         title: "",
         code: "",
         phone_code: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      countries: {
+        title: { required },
+        code: { required },
+        phone_code: { required },
       },
     };
   },
@@ -86,6 +109,19 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("no error");
+      }
+    },
   },
 };
 </script>
+
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>

@@ -10,6 +10,9 @@
               placeholder="اسم المدينه"
               v-model="Cities.title"
             />
+            <span class="error-feedback" v-if="v$.Cities.title.$error">{{
+              v$.Cities.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -23,10 +26,13 @@
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
+          <span class="error-feedback" v-if="v$.Cities.country_id.$error">
+            {{ v$.Cities.country_id.$errors[0].$message }}</span
+          >
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -39,15 +45,26 @@ import "vue-multiselect/dist/vue-multiselect.css";
 import { useCitiesAddStore } from "@/stores/Cities/CitiesAddStore";
 import Swal from "sweetalert2";
 import { mapState } from "pinia";
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
   data() {
     return {
+      v$: useVuelidate(),
       Cities: {
         title: "",
         country_id: "",
       },
       Country_values: {},
       CountryOptions: [],
+    };
+  },
+  validations() {
+    return {
+      Cities: {
+        title: { required },
+        country_id: { required },
+      },
     };
   },
   components: {
@@ -99,9 +116,22 @@ export default {
         console.error("Error in fetchCities:", error);
       }
     },
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("no error");
+      }
+    },
   },
   mounted() {
     this.fetchCitiess();
   },
 };
 </script>
+
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>
