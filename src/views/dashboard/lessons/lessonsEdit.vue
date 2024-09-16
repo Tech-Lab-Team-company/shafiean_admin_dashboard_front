@@ -11,9 +11,12 @@
               placeholder="اسم الدرس"
               v-model="lessons.title"
             />
+            <span class="error-feedback" v-if="v$.lessons.title.$error">{{
+              v$.lessons.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-12">
+        <!-- <div class="col-lg-6 col-md-6 col-12">
           <label for=""> من </label>
           <div class="input">
             <input
@@ -28,7 +31,7 @@
           <div class="input">
             <input type="date" placeholder="قرأن" v-model="lessons.end_verse" />
           </div>
-        </div>
+        </div> -->
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
           <multiselect
@@ -39,6 +42,9 @@
             :close-on-select="false"
             @update:model-value="updateStagesValue"
           ></multiselect>
+          <span class="error-feedback" v-if="v$.lessons.stage_id.$error">{{
+            v$.lessons.stage_id.$errors[0].$message
+          }}</span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -56,7 +62,7 @@
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -70,14 +76,18 @@ import "vue-multiselect/dist/vue-multiselect.css";
 import Multiselect from "vue-multiselect";
 import { mapState } from "pinia";
 
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
 export default {
   components: { HeaderPages, Multiselect },
   data() {
     return {
+      v$: useVuelidate(),
       lessons: {
         title: "",
-        start_verse: "",
-        end_verse: "",
+        // start_verse: "",
+        // end_verse: "",
         stage_id: "",
         quraan_id: "",
       },
@@ -89,6 +99,17 @@ export default {
         { id: 3, name: "فقه" },
       ],
       selectedType: null,
+    };
+  },
+  validations() {
+    return {
+      lessons: {
+        title: { required },
+        // start_verse: { required },
+        // end_verse: { required },
+        stage_id: { required },
+        // quraan_id: { required },
+      },
     };
   },
   computed: {
@@ -127,6 +148,12 @@ export default {
       const id = this.$route.params.id;
       await store.updateLessons(id, this.lessons);
       this.$router.go(-1);
+    },
+    Edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("lessons");
+      }
     },
   },
   mounted() {

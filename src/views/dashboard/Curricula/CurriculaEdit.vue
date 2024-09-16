@@ -11,6 +11,9 @@
               placeholder="اسم المنهج"
               v-model="Curriculas.title"
             />
+            <span class="error-feedback" v-if="v$.Curriculas.title.$error">{{
+              v$.Curriculas.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -24,10 +27,13 @@
             track-by="id"
             @update:model-value="updateTypeId"
           ></multiselect>
+          <span class="error-feedback" v-if="v$.Curriculas.type.$error">
+            {{ v$.Curriculas.type.$errors[0].$message }}</span
+          >
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -39,6 +45,8 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCurriculumEditStore } from "@/stores/curricula/curriculaEditStore";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 export default {
   name: "CurriculaEdit",
   components: {
@@ -47,6 +55,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       Curriculas: {
         title: "",
         type: null,
@@ -57,6 +66,14 @@ export default {
         { id: 3, name: "فقه" },
       ],
       selectedType: null,
+    };
+  },
+  validations() {
+    return {
+      Curriculas: {
+        title: { required },
+        type: { required },
+      },
     };
   },
   methods: {
@@ -81,7 +98,16 @@ export default {
         type: this.Curriculas.type,
         status: this.Curriculas.status,
       });
+      if (!this.Curriculas.title || !this.Curriculas.type) {
+        return;
+      }
       this.$router.go(-1);
+    },
+    Edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr save");
+      }
     },
   },
 
@@ -90,3 +116,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>

@@ -12,6 +12,9 @@
               placeholder="اسم المرحلة"
               v-model="Steps.title"
             />
+            <span class="error-feedback" v-if="v$.Steps.title.$error">{{
+              v$.Steps.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -23,6 +26,9 @@
               placeholder="اسم المرحلة"
               v-model="Steps.description"
             />
+            <span class="error-feedback" v-if="v$.Steps.description.$error">{{
+              v$.Steps.description.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -39,6 +45,9 @@
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
+          <!-- <span class="error-feedback" v-if="v$.Steps.curriculum_id.$error">{{
+            v$.Steps.curriculum_id.$errors[0].$message
+          }}</span> -->
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -54,6 +63,10 @@
             @update:model-value="handleDisabilitiesChange"
             placeholder="اختر الإعاقات"
           />
+
+          <span class="error-feedback" v-if="v$.steps.disability_ids.$error">{{
+            v$.steps.disability_ids.$errors[0].$message
+          }}</span>
         </div>
 
         <!-- Type Select -->
@@ -74,7 +87,7 @@
 
       <!-- Form Buttons -->
       <div class="all-btn">
-        <button type="submit" class="save">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -87,10 +100,13 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useStepsEditStore } from "@/stores/steps/StepsEditStore";
 import { mapState } from "pinia";
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
   components: { HeaderPages, Multiselect },
   data() {
     return {
+      v$: useVuelidate(),
       selectedType_values: [], // Initialize as an empty array for multiple selection
       curricula_values: null, // Initialize as null for single selection
       disabilities_values: [], // Initialize as an empty array for multiple selection
@@ -104,6 +120,17 @@ export default {
         type_id: "",
         curriculum_id: null, // Initialize as null for single selection
         disability_ids: "", // Initialize as an empty array
+      },
+    };
+  },
+  validations() {
+    return {
+      Steps: {
+        title: { required },
+        description: { required },
+        curriculum_id: { required },
+        // disability_ids: { required },
+        // type_id: { required },
       },
     };
   },
@@ -167,6 +194,13 @@ export default {
       const id = this.$route.params.id;
       await store.updateSteps(id, this.Steps);
       this.$router.go(-1);
+    },
+
+    Edit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr save");
+      }
     },
   },
   mounted() {

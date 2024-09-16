@@ -17,10 +17,13 @@
           </div> -->
           <div class="input">
             <input
-              type="text-erea"
+              type="text"
               placeholder="اسم الدرس"
               v-model="lessons.title"
             />
+            <span class="error-feedback" v-if="v$.lessons.title.$error">{{
+              v$.lessons.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -48,6 +51,9 @@
             :close-on-select="false"
             @update:model-value="updateStagesValue"
           ></multiselect>
+          <!-- <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
+            {{ v$.lessons.stage_id.$errors[0].$message }}
+          </span> -->
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -65,7 +71,7 @@
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -79,12 +85,14 @@ import "vue-multiselect/dist/vue-multiselect.css";
 import Multiselect from "vue-multiselect";
 import { mapState } from "pinia";
 import Swal from "sweetalert2";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 export default {
   components: { HeaderPages, Multiselect },
 
   data() {
     return {
+      v$: useVuelidate(),
       lessons: {
         title: "",
         // start_verse: "",
@@ -101,6 +109,17 @@ export default {
         { id: 3, name: "فقه" },
       ],
       selectedType: null,
+    };
+  },
+  validations() {
+    return {
+      lessons: {
+        title: { required },
+        // start_verse: { required },
+        // end_verse: { required },
+        quraan_id: { required },
+        stage_id: { required },
+      },
     };
   },
 
@@ -155,6 +174,12 @@ export default {
     updateTypeId(selectedOption) {
       this.lessons.quraan_id = selectedOption ? selectedOption.id : null;
     },
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("lessons", this.lessons);
+      }
+    },
   },
 
   mounted() {
@@ -162,3 +187,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>

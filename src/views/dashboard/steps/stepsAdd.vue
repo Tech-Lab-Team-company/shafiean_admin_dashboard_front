@@ -14,6 +14,9 @@
               v-model="steps.title"
               required
             />
+            <span class="error-feedback" v-if="v$.steps.title.$error">{{
+              v$.steps.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -27,6 +30,9 @@
               v-model="steps.description"
               required
             />
+            <span class="error-feedback" v-if="v$.steps.description.$error">{{
+              v$.steps.description.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -43,6 +49,9 @@
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
+          <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">{{
+            v$.steps.curriculum_id.$errors[0].$message
+          }}</span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -58,6 +67,9 @@
             @update:model-value="handleDisabilitiesChange"
             placeholder="اختر الإعاقات"
           />
+          <span class="error-feedback" v-if="v$.steps.disability_ids.$error">{{
+            v$.steps.disability_ids.$errors[0].$message
+          }}</span>
         </div>
 
         <!-- Type Select -->
@@ -73,12 +85,15 @@
             @update:model-value="handleTypeChange"
             placeholder="اختر نوعاً"
           ></multiselect>
+          <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">{{
+            v$.steps.type_id.$errors[0].$message
+          }}</span> -->
         </div>
       </div>
 
       <!-- Form Buttons -->
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -91,6 +106,8 @@ import { useStepsAddStore } from "@/stores/steps/StepsAddStore";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { mapState } from "pinia";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   name: "StepsAdd",
@@ -100,6 +117,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       selectedType_values: [], // Initialize as an empty array for multiple selection
       curricula_values: null, // Initialize as null for single selection
       disabilities_values: [], // Initialize as an empty array for multiple selection
@@ -112,9 +130,27 @@ export default {
         type_id: "",
         curriculum_id: null, // Initialize as null for single selection
         disability_ids: [], // Initialize as an empty array
+        typeOptions: [
+          { id: 1, name: "قرأن" },
+          { id: 2, name: "حديث" },
+          { id: 3, name: "فقه" },
+        ],
+        selectedType: null,
       },
     };
   },
+  validations() {
+    return {
+      steps: {
+        title: { required },
+        description: { required },
+        curriculum_id: { required },
+        disability_ids: { required },
+        // type_id: { required },
+      },
+    };
+  },
+
   async created() {
     await this.fetchData();
   },
@@ -123,7 +159,9 @@ export default {
   },
   methods: {
     handleTypeChange() {
-      this.steps.type_id = this.selectedType_values.map((type) => type.id);
+      this.steps.type_id = this.selectedType_values
+        ? this.selectedType_values.map((type) => type.id)
+        : "";
     },
     handleCurriculaChange() {
       this.steps.curriculum_id = this.curricula_values
@@ -136,13 +174,25 @@ export default {
           (dis) => dis.id
         );
       } else {
-        this.steps.disability_ids = "";
+        this.steps.disability_ids = [];
       }
     },
 
     async submitForm() {
       try {
         const stepsStore = useStepsAddStore();
+        if (!stepsStore) {
+          throw new Error("Failed to load steps store");
+        }
+        if (
+          !this.steps.title ||
+          !this.steps.description ||
+          !this.steps.curriculum_id ||
+          !this.steps.disability_ids
+          // !this.steps.type_id
+        ) {
+          return;
+        }
         await stepsStore.addStepsData(this.steps);
         this.$router.push("/steps");
       } catch (error) {
@@ -160,6 +210,20 @@ export default {
         console.error("Error fetching data:", error);
       }
     },
+
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr save");
+      }
+    },
   },
 };
 </script>
+
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>

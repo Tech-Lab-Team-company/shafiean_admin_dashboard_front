@@ -21,7 +21,6 @@ export const useCurriculumAddStore = defineStore("curriculaAdd", {
         console.log(response, "diaaaaaaaaaaaaa");
 
         this.Curriculas.push(response.data);
-
         Swal.fire("Success", "Curriculas has been saved.", "success");
       } catch (error) {
         console.error("Error saving Curriculas:", error);

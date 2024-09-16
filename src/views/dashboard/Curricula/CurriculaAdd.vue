@@ -11,6 +11,9 @@
               placeholder="اسم المنهج"
               v-model="Curriculas.title"
             />
+            <span class="error-feedback" v-if="v$.Curriculas.title.$error">{{
+              v$.Curriculas.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -24,10 +27,13 @@
             track-by="id"
             @update:model-value="updateTypeId"
           ></multiselect>
+          <span class="error-feedback" v-if="v$.Curriculas.type.$error">
+            {{ v$.Curriculas.type.$errors[0].$message }}</span
+          >
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -38,6 +44,8 @@ import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useCurriculumAddStore } from "@/stores/curricula/curriculaAddStore";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   name: "CurriculaAdd",
@@ -47,6 +55,7 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       Curriculas: {
         title: "",
         type: null,
@@ -59,6 +68,14 @@ export default {
       selectedType: null,
     };
   },
+  validations() {
+    return {
+      Curriculas: {
+        title: { required },
+        type: { required },
+      },
+    };
+  },
   methods: {
     updateTypeId(selectedOption) {
       this.Curriculas.type = selectedOption ? selectedOption.id : null;
@@ -69,12 +86,27 @@ export default {
         if (!curriculaStore) {
           throw new Error("Failed to load Curriculas store");
         }
+        if (!this.Curriculas.title || !this.Curriculas.type) {
+          return;
+        }
         await curriculaStore.addCurriculasData(this.Curriculas);
         this.$router.push("/Curricula");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
     },
+    save() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("errorrrrrr save");
+      }
+    },
   },
 };
 </script>
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>
