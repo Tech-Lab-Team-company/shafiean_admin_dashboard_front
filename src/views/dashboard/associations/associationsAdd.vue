@@ -43,7 +43,7 @@
             <input
               type="number"
               placeholder="رقم الترخيص"
-              v-model="form.license"
+              v-model="form.licence_number"
             />
           </div>
         </div>
@@ -139,7 +139,7 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="link">Link</label>
           <div class="input">
-            <input type="url" placeholder="Link" v-model="form.link" />
+            <input type="url" placeholder="Link" v-model="form.website_link" />
           </div>
         </div>
       </div>
@@ -172,7 +172,7 @@ export default {
         imageSrc: null,
         image: null,
         name: "",
-        license: "",
+        licence_number: "",
         phone: "",
         email: "",
         address: "",
@@ -182,7 +182,7 @@ export default {
         country_id: "",
         city_id: "",
         disability_ids: [],
-        link: "",
+        website_link: "",
       },
       city_values: {},
       Country_values: {},
@@ -210,9 +210,14 @@ export default {
         : null;
     },
     updateDisabilitiesValue() {
-      this.form.disability_ids = this.disabilities_values.map(
-        (dis) => dis.id && dis.id
-      );
+      if (Array.isArray(this.disabilities_values)) {
+        // Filter out any invalid values
+        this.form.disability_ids = this.disabilities_values
+          .map((dis) => dis.id)
+          .filter((id) => id !== undefined && id !== null);
+      } else {
+        this.form.disability_ids = [];
+      }
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -234,6 +239,16 @@ export default {
         if (!organizationsStore) {
           throw new Error("Failed to load organizations store");
         }
+
+        // Ensure disability_ids is always an array and filter out undefined values
+        if (!Array.isArray(this.form.disability_ids)) {
+          this.form.disability_ids = [];
+        } else {
+          this.form.disability_ids = this.form.disability_ids.filter(
+            (id) => id !== undefined && id !== null
+          );
+        }
+
         await organizationsStore.addOrganization(this.form);
         this.$router.push("/associations");
       } catch (error) {
@@ -252,11 +267,13 @@ export default {
         this.CountryOptions = this.countries;
         await organizationsStore.getDisabilities();
         this.disabilitiesOptions = this.disabilities;
+        this.disabilities_values = []; // Ensure this is reset
       } catch (error) {
         console.error("Error in fetchData:", error);
       }
     },
   },
+
   mounted() {
     this.fetchData();
   },
