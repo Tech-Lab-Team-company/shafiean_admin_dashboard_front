@@ -30,7 +30,7 @@ export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
-      tableHeaders: ["ID", "اسم المرحله", "الوصف", "  المنهج الدراسي   "],
+      tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   "],
     };
   },
 
