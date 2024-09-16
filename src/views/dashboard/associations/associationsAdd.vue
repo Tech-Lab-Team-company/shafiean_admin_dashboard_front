@@ -211,7 +211,7 @@ export default {
     },
     updateDisabilitiesValue() {
       this.form.disability_ids = this.disabilities_values.map(
-        (dis) => dis.id && dis.title
+        (dis) => dis.id && dis.id
       );
     },
     triggerFileInput() {
