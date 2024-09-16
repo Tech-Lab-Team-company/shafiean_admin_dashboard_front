@@ -55,28 +55,61 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
 
     async addOrganization(organizationData) {
       try {
-        const fromData = new FormData();
+        // Convert disability_ids to an array if it's a string
+        if (typeof organizationData.disability_ids === "string") {
+          organizationData.disability_ids = organizationData.disability_ids
+            .split(",")
+            .map((id) => id.trim());
+        }
+
+        // Transform the data to FormData
+        const formData = new FormData();
+
+        // Append each property to FormData
         Object.keys(organizationData).forEach((key) => {
-          if (key === "image" && organizationData[key]) {
-            fromData.append("image", organizationData[key]);
+          if (Array.isArray(organizationData[key])) {
+            // If the property is an array, append each item with the same key
+            organizationData[key].forEach((item) => {
+              formData.append(`${key}[]`, item); // Use key[] for array values
+            });
           } else {
-            fromData.append(key, organizationData[key]);
+            // Append non-array values normally
+            formData.append(key, organizationData[key]);
           }
         });
-        // fromData.append("city", organizationData[key]);
-        const response = await axios.post("add_organization", fromData, {
+
+        // Log FormData entries
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`, "FormData");
+        }
+
+        // Make the API request
+        const response = await axios.post("add_organization", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        this.organizations.push(response.data);
-        console.log(this.organizations, "organizations");
+        // Log response data
+        console.log("API Response:", response.data);
 
-        Swal.fire("Success", "Organization has been saved.", "success");
+        if (response.data.status) {
+          this.organizations.push(response.data);
+          Swal.fire(
+            "Success",
+            "Steps have been saved successfully.",
+            "success"
+          );
+        } else {
+          Swal.fire(
+            "Error",
+            "There was a problem saving the steps: " + response.data.message,
+            "error"
+          );
+        }
       } catch (error) {
-        console.error("Error saving organization:", error);
+        console.error("Error saving Steps:", error);
         Swal.fire(
           "Error",
-          "There was a problem saving the organization.",
+          "An error occurred while saving the steps.",
           "error"
         );
       }

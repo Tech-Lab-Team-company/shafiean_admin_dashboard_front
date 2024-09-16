@@ -197,7 +197,7 @@ export default {
         imageSrc: "",
         country_id: null,
         city_id: null,
-        disabilitey_id: null,
+        disability_ids: null,
         website_link: "",
       },
       CountryOptions: [],
@@ -205,7 +205,7 @@ export default {
       disabilitiesOptions: [],
       city_values: {},
       Country_values: {},
-      disabilities_values: {},
+      disabilities_values: [],
     };
   },
   computed: {
@@ -238,9 +238,16 @@ export default {
         : null;
     },
     updatedisabilitiesValue() {
-      this.organizations.disabilitey_id = this.disabilities_values
-        .filter((dis) => dis && dis.id)
-        .map((dis) => dis.id);
+      console.log("disabilities_values", this.disabilities_values);
+      console.log("organizations", this.organizations);
+
+      if (Array.isArray(this.disabilities_values)) {
+        this.organizations.disability_ids = this.disabilities_values.map(
+          (dis) => dis.id
+        );
+      } else {
+        this.organizations.disability_ids = "";
+      }
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -270,6 +277,7 @@ export default {
       this.CountryOptions = store.countries;
       this.cityOptions = store.cities;
       this.disabilitiesOptions = store.disabilities;
+      console.log(this.disabilities, "org");
 
       this.Country_values = this.CountryOptions.find(
         (country) => country.id === this.organizations.country_id
@@ -278,14 +286,10 @@ export default {
         (city) => city.id === this.organizations.city_id
       );
 
-      if (Array.isArray(this.organizations.disabilitey_id)) {
-        this.disabilities_values = this.disabilitiesOptions.filter(
-          (disability) =>
-            this.organizations.disabilitey_id.includes(disability.id)
-        );
-      } else {
-        this.disabilities_values = [];
-      }
+      this.disabilities_values = this.organizations.disabilities.map((dis) => ({
+        id: dis.id,
+        title: dis.title,
+      }));
     },
     async submitForm() {
       const store = useOrganizationEditStore();
@@ -293,9 +297,12 @@ export default {
 
       this.organizations.country_id = this.Country_values.id;
       this.organizations.city_id = this.city_values.id;
-      this.organizations.disabilitey_id = this.disabilities_values.map(
+      this.organizations.disability_ids = this.disabilities_values.map(
         (dis) => dis.id
       );
+      this.disabilities.map((dis) => {
+        dis.title;
+      });
 
       await store.updateOrganization(id, this.organizations);
       this.$router.go(-1);

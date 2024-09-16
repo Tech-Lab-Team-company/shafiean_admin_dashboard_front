@@ -58,6 +58,8 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
 
         if (response.data.status == true) {
           this.lessons = response.data.data;
+          console.log("nasa");
+
           Swal.fire("Success", "lessons has been updated.", "success");
         } else {
           Swal.fire("Error", "Failed to update lessons.", "error");
