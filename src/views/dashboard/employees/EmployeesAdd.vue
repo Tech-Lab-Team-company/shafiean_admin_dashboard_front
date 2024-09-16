@@ -26,6 +26,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error"
+              >{{ v$.form.imageSrc.$errors[0].$message }}
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -37,6 +40,9 @@
               placeholder="أدخل أسم الموظف"
               v-model="form.name"
             />
+            <span class="error-feedback" v-if="v$.form.name.$error">{{
+              v$.form.name.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -47,7 +53,11 @@
               id="phone"
               placeholder="أدخل رقم الهاتف"
               v-model="form.phone"
+              class="no-spinner"
             />
+            <span class="error-feedback" v-if="v$.form.phone.$error">{{
+              v$.form.phone.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -59,6 +69,9 @@
               placeholder="أدخل البريد الالكتروني"
               v-model="form.email"
             />
+            <span class="error-feedback" v-if="v$.form.email.$error">{{
+              v$.form.email.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -70,6 +83,9 @@
               placeholder="أدخل الرقم السري"
               v-model="form.password"
             />
+            <span class="error-feedback" v-if="v$.form.password.$error">{{
+              v$.form.password.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -83,10 +99,14 @@
             track-by="name"
             label="name"
           ></multiselect>
+
+          <span class="error-feedback" v-if="v$.form.role.$error">{{
+            v$.form.role.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -125,9 +145,11 @@ export default {
       },
     };
   },
+
   validations() {
     return {
       form: {
+        imageSrc: { required },
         name: { required },
         phone: { required },
         email: { required, email },
@@ -147,10 +169,10 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
-        this.form.image = file; // Store the file in the form data
+        this.form.image = file;
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.form.imageSrc = e.target.result; // Correctly update imageSrc
+          this.form.imageSrc = e.target.result;
         };
         reader.readAsDataURL(file);
       }
@@ -177,10 +199,24 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
+
+    save() {
+      console.log("errorrrrrr");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        // this.submitForm();
+      }
+    },
   },
 };
 </script>
 <style scoped>
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .avatar-preview {
   position: relative;
 }
@@ -195,5 +231,9 @@ export default {
   cursor: pointer;
   color: red;
   font-size: 20px;
+}
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
 }
 </style>

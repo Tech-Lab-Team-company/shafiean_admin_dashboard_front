@@ -1,19 +1,30 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="اضافة درس" :showButton="false" />
+    <header-pages title="اضافة حصه" :showButton="false" />
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <label for=""> الوصف</label>
+          <!-- <div class="input">
+            <textarea
+              id="w3review"
+              name="w3review"
+              rows="8"
+              cols="100"
+              v-model="lessons.title"
+              placeholder="اسم الحصه"
+            ></textarea>
+          </div> -->
           <div class="input">
             <input
-              type="text"
+              type="text-erea"
               placeholder="اسم الدرس"
               v-model="lessons.title"
             />
           </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-12">
+
+        <!-- <div class="col-lg-6 col-md-6 col-12">
           <label for=""> من </label>
           <div class="input">
             <input type="date" placeholder="من" v-model="lessons.start_verse" />
@@ -24,7 +35,7 @@
           <div class="input">
             <input type="date" placeholder="إلي" v-model="lessons.end_verse" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Multiselect for Stages -->
         <div class="col-lg-6 col-md-6 col-12">
@@ -76,8 +87,8 @@ export default {
     return {
       lessons: {
         title: "",
-        start_verse: "",
-        end_verse: "",
+        // start_verse: "",
+        // end_verse: "",
         quraan_id: null,
 
         stage_id: "",
@@ -122,9 +133,9 @@ export default {
         }
 
         if (
-          !this.lessons.title ||
-          !this.lessons.start_verse ||
-          !this.lessons.end_verse
+          !this.lessons.title
+          // !this.lessons.start_verse ||
+          // !this.lessons.end_verse
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;

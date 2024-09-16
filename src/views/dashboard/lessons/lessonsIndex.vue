@@ -1,6 +1,11 @@
 <template>
   <div class="lessons">
-    <header-pages title="الدروس" button="+ اضافة درس" link="/add-lessons" />
+    <header-pages
+      title="الحصص"
+      button="+ اضافة 
+    حصه"
+      link="/add-lessons"
+    />
     <tables-page-vue
       :headers="tableHeaders"
       :rows="tableRowsLessons"
@@ -34,7 +39,7 @@ export default {
   },
   data() {
     return {
-      tableHeaders: ["ID", " وصف المنهج", " من ", " إلي", " المرحله", "قران"],
+      tableHeaders: ["ID", " وصف المنهج", " المرحله", "قران"],
     };
   },
   computed: {
@@ -55,8 +60,6 @@ export default {
       return this.lessons.map((les) => [
         les.id,
         les.title,
-        les.start_verse,
-        les.end_verse,
         les.stage?.title || "",
         les.quraan?.title || "",
       ]);

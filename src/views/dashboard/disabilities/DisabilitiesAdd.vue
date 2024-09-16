@@ -26,6 +26,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
+              v$.form.imageSrc.$errors[0].$message
+            }}</span>
           </div>
         </div>
 
@@ -37,6 +40,9 @@
               placeholder="أدخل أسم الاعاقه"
               v-model="form.title"
             />
+            <span class="error-feedback" v-if="v$.form.title.$error">{{
+              v$.form.title.$errors[0].$message
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -47,11 +53,14 @@
               type="text"
               placeholder="وصف الاعاقه"
             />
+            <span class="error-feedback" v-if="v$.form.description.$error">{{
+              v$.form.description.$errors[0].$message
+            }}</span>
           </div>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save">حفظ</button>
+        <button type="submit" class="save" @click="save()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -62,6 +71,9 @@
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import { useDisabilitieAddStore } from "@/stores/disabilities/disabilitieAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 
 export default {
   name: "DisabilitiesAdd",
@@ -70,12 +82,22 @@ export default {
   },
   data() {
     return {
+      v$: useVuelidate(),
       rolesOptions: ["Admin", "Manager", "Employee"],
       form: {
         title: "",
         description: "",
         image: null,
         imageSrc: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      form: {
+        imageSrc: { required },
+        title: { required },
+        description: { required },
       },
     };
   },
@@ -104,12 +126,24 @@ export default {
         if (!disabilitieStore) {
           throw new Error("Failed to load disabilities store");
         }
+        if (!this.form.image || !this.form.title || !this.form.description) {
+          Swal.fire("Error", "Please fill in all fields", "error");
+          return;
+        }
+
         await disabilitieStore.addDisabilities(this.form);
         this.$router.push("/disabilities");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
       console.log(this.form);
+    },
+    save() {
+      console.log("errorrrrrr");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        // this.submitForm();
+      }
     },
   },
 };
@@ -129,5 +163,9 @@ export default {
   cursor: pointer;
   color: red;
   font-size: 20px;
+}
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
 }
 </style>
