@@ -46,7 +46,7 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
         });
 
         if (response.data.status === true) {
-          this.employee = this.updatedData;
+          this.employee = this.response.data.data;
           Swal.fire("Success", "Employee has been updated.", "success");
         } else {
           Swal.fire("Error", "Failed to update employee.", "error");
