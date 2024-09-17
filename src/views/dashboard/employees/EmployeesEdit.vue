@@ -103,6 +103,7 @@ import "vue-multiselect/dist/vue-multiselect.css";
 import { useEmployeesEditStore } from "@/stores/employees/EmployeesEditStore";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 
 export default {
   name: "EmployeesEdit",
@@ -186,6 +187,8 @@ export default {
         // !this.employee.imageSrc ||
         !this.employee.permissions
       ) {
+        Swal.fire("Error", "Please fill in all fields", "error");
+
         return;
       }
       this.$router.go(-1);

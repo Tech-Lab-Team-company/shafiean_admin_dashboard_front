@@ -4,7 +4,7 @@
     <form action="" @submit.prevent="updateCurricula">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">وصف المنهج</label>
+          <label for="">اسم المنهج</label>
           <div class="input">
             <input
               type="text"
@@ -47,6 +47,7 @@ import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCurriculumEditStore } from "@/stores/curricula/curriculaEditStore";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 export default {
   name: "CurriculaEdit",
   components: {
@@ -105,6 +106,8 @@ export default {
         status: this.Curriculas.status,
       });
       if (!this.Curriculas.title || !this.Curriculas.type) {
+        Swal.fire("Error", "Please fill in all fields", "error");
+
         return;
       }
       this.$router.go(-1);

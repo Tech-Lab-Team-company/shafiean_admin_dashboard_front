@@ -1,6 +1,6 @@
 <template>
   <div class="steps-add">
-    <header-pages title="اضافة مرحلة" :showButton="false" />
+    <header-pages title="تعديل مرحلة" :showButton="false" />
     <form @submit.prevent="updateSteps">
       <div class="row">
         <!-- Step Title Input -->
@@ -64,7 +64,7 @@
             placeholder="اختر الإعاقات"
           />
 
-          <span class="error-feedback" v-if="v$.disability_ids.$error">{{
+          <span class="error-feedback" v-if="v$.Steps.disability_ids.$error">{{
             getErrorMessage(v$.disability_ids)
           }}</span>
         </div>
