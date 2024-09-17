@@ -14,14 +14,12 @@ export const useCountriesAddStore = defineStore("CountriesAdd", {
         Object.keys(CountriesData).forEach((key) => {
           formData.append(key, CountriesData[key]);
         });
-
-        const response = await axios.post("/add_country", formData, {
+        const response = await axios.post("add_country", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         console.log(response, "diaaaaaaaaaaaaa");
 
         this.Countries.push(response.data);
-
         Swal.fire("Success", "Country has been saved.", "success");
       } catch (error) {
         console.error("Error saving country:", error);

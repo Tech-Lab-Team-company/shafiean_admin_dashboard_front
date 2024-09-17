@@ -30,19 +30,14 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
         formData.append("phone_code", updatedData.phone_code);
 
         const response = await axios.post("edit_country", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         });
+        console.log(response, "diaaaaaaaaaaaaa");
 
-        if (response.data.status === 200) {
-          this.countries = this.updatedData;
-          Swal.fire("Error", "Failed to update country.", "error");
-        } else {
-          Swal.fire("Success", "country has been updated.", "success");
-        }
+        this.Countries.push(response.data);
+        Swal.fire("Success", "Country has been saved.", "success");
       } catch (error) {
-        console.error(error);
+        console.error("Error", "Failed to update country.", "error");
       }
     },
   },

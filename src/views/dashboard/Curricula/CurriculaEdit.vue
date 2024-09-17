@@ -12,7 +12,7 @@
               v-model="Curriculas.title"
             />
             <span class="error-feedback" v-if="v$.Curriculas.title.$error">{{
-              v$.Curriculas.title.$errors[0].$message
+              getErrorMessage(v$.Curriculas.title)
             }}</span>
           </div>
         </div>
@@ -28,7 +28,7 @@
             @update:model-value="updateTypeId"
           ></multiselect>
           <span class="error-feedback" v-if="v$.Curriculas.type.$error">
-            {{ v$.Curriculas.type.$errors[0].$message }}</span
+            {{ getErrorMessage(v$.Curriculas.type) }}</span
           >
         </div>
       </div>
@@ -77,6 +77,12 @@ export default {
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     updateTypeId(selectedOption) {
       this.Curriculas.type = selectedOption ? selectedOption.id : null;
     },

@@ -3,30 +3,6 @@
     <header-pages title="اضافة حصه" :showButton="false" />
     <form @submit.prevent="submitForm">
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> الوصف</label>
-          <!-- <div class="input">
-            <textarea
-              id="w3review"
-              name="w3review"
-              rows="8"
-              cols="100"
-              v-model="lessons.title"
-              placeholder="اسم الحصه"
-            ></textarea>
-          </div> -->
-          <div class="input">
-            <input
-              type="text"
-              placeholder="اسم الدرس"
-              v-model="lessons.title"
-            />
-            <span class="error-feedback" v-if="v$.lessons.title.$error">{{
-              v$.lessons.title.$errors[0].$message
-            }}</span>
-          </div>
-        </div>
-
         <!-- <div class="col-lg-6 col-md-6 col-12">
           <label for=""> من </label>
           <div class="input">
@@ -51,9 +27,9 @@
             :close-on-select="false"
             @update:model-value="updateStagesValue"
           ></multiselect>
-          <!-- <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
-            {{ v$.lessons.stage_id.$errors[0].$message }}
-          </span> -->
+          <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
+            {{ getErrorMessage(v$.lessons.stage_id) }}
+          </span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -67,6 +43,20 @@
             track-by="id"
             @update:model-value="updateTypeId"
           ></multiselect>
+        </div>
+        <div class="col-lg-12 col-md-6 col-12">
+          <div class="input">
+            <label for=""> الوصف</label>
+            <textarea
+              id="description"
+              name="w3review"
+              rows="4"
+              cols="100"
+              placeholder="اسم الدرس"
+              v-model="lessons.title"
+            >
+            </textarea>
+          </div>
         </div>
       </div>
 
@@ -114,7 +104,7 @@ export default {
   validations() {
     return {
       lessons: {
-        title: { required },
+        // title: { required },
         // start_verse: { required },
         // end_verse: { required },
         quraan_id: { required },
@@ -130,6 +120,12 @@ export default {
   },
 
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     async fetchStages() {
       try {
         const LessonsStore = useLessonsAddStore();
@@ -152,7 +148,9 @@ export default {
         }
 
         if (
-          !this.lessons.title
+          !this.lessons.stage_id ||
+          !this.lessons.quraan_id
+          // !this.lessons.title
           // !this.lessons.start_verse ||
           // !this.lessons.end_verse
         ) {
@@ -183,7 +181,7 @@ export default {
   },
 
   mounted() {
-    this.fetchStages(); // Fetch stages when the component is mounted
+    this.fetchStages();
   },
 };
 </script>
@@ -192,5 +190,12 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>

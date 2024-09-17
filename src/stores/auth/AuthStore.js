@@ -35,7 +35,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         const res = axios.post("admin/logout");
 
-        console.log(res.status);
+        // console.log(res.status);
         if (res) {
           this.token = null;
           this.data = {};

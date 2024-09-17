@@ -13,7 +13,7 @@
               v-model="Steps.title"
             />
             <span class="error-feedback" v-if="v$.Steps.title.$error">{{
-              v$.Steps.title.$errors[0].$message
+              getErrorMessage(v$.Steps.title)
             }}</span>
           </div>
         </div>
@@ -27,7 +27,7 @@
               v-model="Steps.description"
             />
             <span class="error-feedback" v-if="v$.Steps.description.$error">{{
-              v$.Steps.description.$errors[0].$message
+              getErrorMessage(v$.Steps.description)
             }}</span>
           </div>
         </div>
@@ -45,9 +45,9 @@
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
-          <!-- <span class="error-feedback" v-if="v$.Steps.curriculum_id.$error">{{
-            v$.Steps.curriculum_id.$errors[0].$message
-          }}</span> -->
+          <span class="error-feedback" v-if="v$.Steps.curriculum_id.$error">{{
+            getErrorMessage(v$.Steps.curriculum_id)
+          }}</span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -64,8 +64,8 @@
             placeholder="اختر الإعاقات"
           />
 
-          <span class="error-feedback" v-if="v$.steps.disability_ids.$error">{{
-            v$.steps.disability_ids.$errors[0].$message
+          <span class="error-feedback" v-if="v$.disability_ids.$error">{{
+            getErrorMessage(v$.disability_ids)
           }}</span>
         </div>
 
@@ -129,7 +129,7 @@ export default {
         title: { required },
         description: { required },
         curriculum_id: { required },
-        // disability_ids: { required },
+        disability_ids: { required },
         // type_id: { required },
       },
     };
@@ -141,6 +141,12 @@ export default {
     ...mapState(useStepsEditStore, ["Curriculums", "types", "disabilities"]),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     handleTypeChange() {
       this.Steps.type_id = this.selectedType_values.map((type) => type.id);
     },

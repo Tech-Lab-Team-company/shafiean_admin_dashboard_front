@@ -35,7 +35,7 @@
                 <i class="fa fa-times delete-icon" @click="removeImage"></i>
               </div>
               <span class="error-feedback" v-if="v$.disabilitie.imageSrc.$error"
-                >{{ v$.disabilitie.imageSrc.$errors[0].$message }}
+                >{{ getErrorMessage(v$.disabilitie.imageSrc) }}
               </span>
             </div>
           </div>
@@ -48,7 +48,7 @@
                 v-model="disabilitie.title"
               />
               <span class="error-feedback" v-if="v$.disabilitie.title.$error">{{
-                v$.disabilitie.title.$errors[0].$message
+                getErrorMessage(v$.disabilitie.title)
               }}</span>
             </div>
           </div>
@@ -63,7 +63,7 @@
               <span
                 class="error-feedback"
                 v-if="v$.disabilitie.description.$error"
-                >{{ v$.disabilitie.description.$errors[0].$message }}</span
+                >{{ getErrorMessage(v$.disabilitie.description) }}</span
               >
             </div>
           </div>
@@ -111,6 +111,12 @@ export default {
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.disabilitie.image = null;
       this.disabilitie.imageSrc = "";
