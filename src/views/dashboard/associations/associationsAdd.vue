@@ -39,7 +39,7 @@
           <div class="input">
             <input type="text" placeholder="أسم الجمعية" v-model="form.name" />
             <span class="error-feedback" v-if="v$.form.name.$error">{{
-              v$.form.name.$errors[0].$message
+              getErrorMessage(v$.form.name)
             }}</span>
           </div>
         </div>
@@ -52,7 +52,7 @@
               v-model="form.licence_number"
             />
             <span class="error-feedback" v-if="v$.form.licence_number.$error">{{
-              v$.form.licence_number.$errors[0].$message
+              getErrorMessage(v$.form.licence_number)
             }}</span>
           </div>
         </div>
@@ -61,7 +61,7 @@
           <div class="input">
             <input type="tel" placeholder="رقم التليفون" v-model="form.phone" />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
-              v$.form.phone.$errors[0].$message
+              getErrorMessage(v$.form.phone)
             }}</span>
           </div>
         </div>
@@ -74,7 +74,7 @@
               v-model="form.email"
             />
             <span class="error-feedback" v-if="v$.form.email.$error">{{
-              v$.form.email.$errors[0].$message
+              getErrorMessage(v$.form.email)
             }}</span>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <div class="input">
             <input type="text" placeholder="العنوان" v-model="form.address" />
             <span class="error-feedback" v-if="v$.form.address.$error">{{
-              v$.form.address.$errors[0].$message
+              getErrorMessage(v$.form.address)
             }}</span>
           </div>
         </div>
@@ -96,7 +96,7 @@
               v-model="form.manager_name"
             />
             <span class="error-feedback" v-if="v$.form.manager_name.$error">{{
-              v$.form.manager_name.$errors[0].$message
+              getErrorMessage(v$.form.manager_name)
             }}</span>
           </div>
         </div>
@@ -109,7 +109,7 @@
               v-model="form.manager_phone"
             />
             <span class="error-feedback" v-if="v$.form.manager_phone.$error">{{
-              v$.form.manager_phone.$errors[0].$message
+              getErrorMessage(v$.form.manager_phone)
             }}</span>
           </div>
         </div>
@@ -122,7 +122,7 @@
               v-model="form.manager_email"
             />
             <span class="error-feedback" v-if="v$.form.manager_email.$error">{{
-              v$.form.manager_email.$errors[0].$message
+              getErrorMessage(v$.form.manager_email)
             }}</span>
           </div>
         </div>
@@ -254,6 +254,12 @@ export default {
     }),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.form.image = null;
       this.form.imageSrc = "";

@@ -12,7 +12,7 @@
               v-model="countries.title"
             />
             <span class="error-feedback" v-if="v$.countries.title.$error">{{
-              v$.countries.title.$errors[0].$message
+              getErrorMessage(v$.countries.title)
             }}</span>
           </div>
         </div>
@@ -25,7 +25,7 @@
               v-model="countries.code"
             />
             <span class="error-feedback" v-if="v$.countries.code.$error">{{
-              v$.countries.code.$errors[0].$message
+              getErrorMessage(v$.countries.code)
             }}</span>
           </div>
         </div>
@@ -40,7 +40,7 @@
             <span
               class="error-feedback"
               v-if="v$.countries.phone_code.$error"
-              >{{ v$.countries.phone_code.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.countries.phone_code) }}</span
             >
           </div>
         </div>
@@ -83,6 +83,12 @@ export default {
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     triggerFileInput() {
       this.$refs.fileInput.click();
     },

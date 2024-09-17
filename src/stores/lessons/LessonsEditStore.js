@@ -45,8 +45,8 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         const formData = new FormData();
         formData.append("id", id);
         formData.append("title", updatedData.title);
-        formData.append("start_verse", updatedData.start_verse);
-        formData.append("end_verse", updatedData.end_verse);
+        // formData.append("start_verse", updatedData.start_verse);
+        // formData.append("end_verse", updatedData.end_verse);
         formData.append("stage_id", updatedData.stage_id);
         formData.append("quraan", updatedData.quraan_id);
 
@@ -57,7 +57,7 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         });
 
         if (response.data.status == true) {
-          this.lessons = response.data.data;
+          this.lessons = this.updatedData;
           console.log("nasa");
 
           Swal.fire("Success", "lessons has been updated.", "success");

@@ -48,8 +48,8 @@ export const useCitiesEditStore = defineStore("citiesEdit", {
         });
 
         if (response.data.status == true) {
-          this.cities = response.data.data;
-          Swal.fire("Success", "cities has been updated.", "success");
+          this.cities = this.updatedData;
+          // Swal.fire("Success", "cities has been updated.", "success");
         } else {
           Swal.fire("Error", "Failed to update cities.", "error");
         }

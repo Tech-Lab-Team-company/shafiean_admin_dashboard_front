@@ -11,7 +11,7 @@
               v-model="Cities.title"
             />
             <span class="error-feedback" v-if="v$.Cities.title.$error">{{
-              v$.Cities.title.$errors[0].$message
+              getErrorMessage(v$.Cities.title)
             }}</span>
           </div>
         </div>
@@ -27,7 +27,7 @@
             @update:model-value="updatecountryValue"
           ></multiselect>
           <span class="error-feedback" v-if="v$.Cities.country_id.$error">
-            {{ v$.Cities.country_id.$errors[0].$message }}</span
+            {{ getErrorMessage(v$.Cities.country_id) }}</span
           >
         </div>
       </div>
@@ -77,6 +77,12 @@ export default {
     }),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     updatecountryValue() {
       this.Cities.country_id = this.Country_values
         ? this.Country_values.id

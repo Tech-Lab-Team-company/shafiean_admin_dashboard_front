@@ -92,57 +92,6 @@
             />
           </div>
         </div>
-        <div class="last_job">
-          <h5>الدروس المباشرة</h5>
-
-          <div class="row">
-            <!-- ====== card job ====== -->
-            <div class="col-md-6 col-12">
-              <div class="card_job">
-                <div class="pict">
-                  <img src="../../../assets/photos/Group 73024.png" alt="" />
-                </div>
-                <div class="con" style="text-align: right">
-                  <h6 class="title">
-                    درس على الجزء الأول من سورة الفتح الاية (1-25) بالتجويد
-                  </h6>
-                  <span class="name">أ-ضياء عادل , فقه وشريعة</span>
-                  <p>
-                    <span><i class="fa-regular fa-user"></i></span>مجموعة العهد
-                    الحديث
-                  </p>
-                  <div class="date">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>:تاريخ الدرس : </span>
-                    <h6>مايو22 , 2022</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-12">
-              <div class="card_job">
-                <div class="pict">
-                  <img src="../../../assets/photos/Group 73024.png" alt="" />
-                </div>
-                <div class="con" style="text-align: right">
-                  <h6 class="title">
-                    درس على الجزء الأول من سورة البقرة الاية (1-25) بالتجويد
-                  </h6>
-                  <span class="name">أ-ضياء عادل , فقه وشريعة</span>
-                  <p>
-                    <span><i class="fa-regular fa-user"></i></span>مجموعة العهد
-                    الحديث
-                  </p>
-                  <div class="date">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>:تاريخ الدرس : </span>
-                    <h6>مايو22 , 2022</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="col-lg-4 col-md-12 col-12">
         <div class="left_content">
@@ -234,44 +183,46 @@
                 </ul>
               </div>
             </div>
-            <img src="../../../assets/photos/map.png" alt="map" />
+            <img src="../../assets/photos/map.png" alt="map" />
             <div>
-              <table class="table" style="text-align: right">
-                <thead>
-                  <tr>
-                    <th scope="col">المدينة</th>
-                    <th scope="col">عدد الموظفين</th>
-                    <th scope="col">عدد الطلاب</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>الرياض</td>
-                    <td>22</td>
-                    <td>200</td>
-                  </tr>
-                  <tr>
-                    <td>الدمام</td>
-                    <td>50</td>
-                    <td>400</td>
-                  </tr>
-                  <tr>
-                    <td>الخبر</td>
-                    <td>60</td>
-                    <td>200</td>
-                  </tr>
-                  <tr>
-                    <td>المدينة</td>
-                    <td>22</td>
-                    <td>200</td>
-                  </tr>
-                  <tr>
-                    <td>مكة</td>
-                    <td>22</td>
-                    <td>200</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table" style="text-align: right">
+                  <thead>
+                    <tr>
+                      <th scope="col">المدينة</th>
+                      <th scope="col">عدد الموظفين</th>
+                      <th scope="col">عدد الطلاب</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>الرياض</td>
+                      <td>22</td>
+                      <td>200</td>
+                    </tr>
+                    <tr>
+                      <td>الدمام</td>
+                      <td>50</td>
+                      <td>400</td>
+                    </tr>
+                    <tr>
+                      <td>الخبر</td>
+                      <td>60</td>
+                      <td>200</td>
+                    </tr>
+                    <tr>
+                      <td>المدينة</td>
+                      <td>22</td>
+                      <td>200</td>
+                    </tr>
+                    <tr>
+                      <td>مكة</td>
+                      <td>22</td>
+                      <td>200</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           <!-- End Region project -->

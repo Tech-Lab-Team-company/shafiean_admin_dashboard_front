@@ -26,9 +26,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span class="error-feedback" v-if="v$.form.imageSrc.$error"
+            <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error"
               >{{ v$.form.imageSrc.$errors[0].$message }}
-            </span>
+            </span> -->
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -41,7 +41,7 @@
               v-model="form.name"
             />
             <span class="error-feedback" v-if="v$.form.name.$error">{{
-              v$.form.name.$errors[0].$message
+              getErrorMessage(v$.form.name)
             }}</span>
           </div>
         </div>
@@ -56,7 +56,7 @@
               class="no-spinner"
             />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
-              v$.form.phone.$errors[0].$message
+              getErrorMessage(v$.form.phone)
             }}</span>
           </div>
         </div>
@@ -70,7 +70,7 @@
               v-model="form.email"
             />
             <span class="error-feedback" v-if="v$.form.email.$error">{{
-              v$.form.email.$errors[0].$message
+              getErrorMessage(v$.form.email)
             }}</span>
           </div>
         </div>
@@ -84,7 +84,7 @@
               v-model="form.password"
             />
             <span class="error-feedback" v-if="v$.form.password.$error">{{
-              v$.form.password.$errors[0].$message
+              getErrorMessage(v$.form.password)
             }}</span>
           </div>
         </div>
@@ -101,7 +101,7 @@
           ></multiselect>
 
           <span class="error-feedback" v-if="v$.form.role.$error">{{
-            v$.form.role.$errors[0].$message
+            getErrorMessage(v$.form.role)
           }}</span>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default {
   validations() {
     return {
       form: {
-        imageSrc: { required },
+        // imageSrc: { required },
         name: { required },
         phone: { required },
         email: { required, email },
@@ -159,6 +159,12 @@ export default {
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.form.image = null;
       this.form.imageSrc = "";
@@ -187,8 +193,7 @@ export default {
           !this.form.name ||
           !this.form.phone ||
           !this.form.email ||
-          !this.form.password ||
-          !this.form.image
+          !this.form.password
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
@@ -232,6 +237,7 @@ export default {
   color: red;
   font-size: 20px;
 }
+
 .error-feedback {
   color: red;
   font-size: 0.85rem;

@@ -1,37 +1,8 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="تعديل درس" :showButton="false" />
-    <form @submit.prevent="submitForm">
+    <header-pages title="تعديل حصه" :showButton="false" />
+    <form @submit.prevent="updateLessons">
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> اسم الدرس</label>
-          <div class="input">
-            <input
-              type="text"
-              placeholder="اسم الدرس"
-              v-model="lessons.title"
-            />
-            <span class="error-feedback" v-if="v$.lessons.title.$error">{{
-              v$.lessons.title.$errors[0].$message
-            }}</span>
-          </div>
-        </div>
-        <!-- <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> من </label>
-          <div class="input">
-            <input
-              type="date"
-              placeholder="وصف المرحلة"
-              v-model="lessons.start_verse"
-            />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> إلي</label>
-          <div class="input">
-            <input type="date" placeholder="قرأن" v-model="lessons.end_verse" />
-          </div>
-        </div> -->
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
           <multiselect
@@ -42,9 +13,9 @@
             :close-on-select="false"
             @update:model-value="updateStagesValue"
           ></multiselect>
-          <span class="error-feedback" v-if="v$.lessons.stage_id.$error">{{
-            v$.lessons.stage_id.$errors[0].$message
-          }}</span>
+          <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
+            {{ getErrorMessage(v$.lessons.stage_id) }}
+          </span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -59,10 +30,24 @@
             @update:model-value="updateTypeId"
           ></multiselect>
         </div>
+        <div class="col-lg-12 col-md-6 col-12">
+          <div class="input">
+            <label for=""> الوصف</label>
+            <textarea
+              id="description"
+              name="w3review"
+              rows="4"
+              cols="100"
+              placeholder="اسم الدرس"
+              v-model="lessons.title"
+            >
+            </textarea>
+          </div>
+        </div>
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">تعديل</button>
+        <button type="submit" class="save" @click="Edit()">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -104,11 +89,11 @@ export default {
   validations() {
     return {
       lessons: {
-        title: { required },
+        // title: { required },
         // start_verse: { required },
         // end_verse: { required },
         stage_id: { required },
-        // quraan_id: { required },
+        quraan_id: { required },
       },
     };
   },
@@ -118,6 +103,12 @@ export default {
     }),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     updateStagesValue() {
       this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
       console.log("Updated Stage ID:", this.lessons.stage_id);
@@ -143,10 +134,13 @@ export default {
           }
         : null;
     },
-    async submitForm() {
+    async updateLessons() {
       const store = useLessonsEditStore();
       const id = this.$route.params.id;
       await store.updateLessons(id, this.lessons);
+      if (!this.lessons.stage_id || !this.lessons.quraan_id) {
+        return;
+      }
       this.$router.go(-1);
     },
     Edit() {
@@ -161,3 +155,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+</style>

@@ -23,12 +23,9 @@
               <span>اختيار صورة</span>
             </div>
             <div v-if="form.imageSrc" class="avatar-preview">
-              <img :src="form.imageSrc" alt="Avatar Preview" />
+              <img alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
-              v$.form.imageSrc.$errors[0].$message
-            }}</span>
           </div>
         </div>
 
@@ -41,7 +38,7 @@
               v-model="form.title"
             />
             <span class="error-feedback" v-if="v$.form.title.$error">{{
-              v$.form.title.$errors[0].$message
+              getErrorMessage(v$.form.title)
             }}</span>
           </div>
         </div>
@@ -54,7 +51,7 @@
               placeholder="وصف الاعاقه"
             />
             <span class="error-feedback" v-if="v$.form.description.$error">{{
-              v$.form.description.$errors[0].$message
+              getErrorMessage(v$.form.description)
             }}</span>
           </div>
         </div>
@@ -88,20 +85,26 @@ export default {
         title: "",
         description: "",
         image: null,
-        imageSrc: "",
+        // imageSrc: "",
       },
     };
   },
   validations() {
     return {
       form: {
-        imageSrc: { required },
+        // imageSrc: { required },
         title: { required },
         description: { required },
       },
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.form.image = null;
       this.form.imageSrc = "";
@@ -126,7 +129,7 @@ export default {
         if (!disabilitieStore) {
           throw new Error("Failed to load disabilities store");
         }
-        if (!this.form.image || !this.form.title || !this.form.description) {
+        if (!this.form.title || !this.form.description) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }

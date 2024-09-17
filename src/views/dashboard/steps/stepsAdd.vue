@@ -14,27 +14,31 @@
               v-model="steps.title"
               required
             />
-            <span class="error-feedback" v-if="v$.steps.title.$error">{{
-              v$.steps.title.$errors[0].$message
-            }}</span>
+            <span class="error-feedback" v-if="v$.steps.title.$error">
+              {{ getErrorMessage(v$.steps.title) }}
+            </span>
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-12">
+        <!-- <div class="col-lg-6 col-md-6 col-12">
           <label for="description">وصف المرحلة</label>
           <div class="input">
-            <input
+            <textarea
               id="description"
-              type="text"
+              name="w3review"
+              rows="4"
+              cols="110"
               placeholder="وصف المرحلة"
               v-model="steps.description"
               required
-            />
+            >
+            </textarea>
+
             <span class="error-feedback" v-if="v$.steps.description.$error">{{
               v$.steps.description.$errors[0].$message
             }}</span>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="curricula">المنهج الدراسي</label>
@@ -49,9 +53,9 @@
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
-          <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">{{
-            v$.steps.curriculum_id.$errors[0].$message
-          }}</span>
+          <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">
+            {{ getErrorMessage(v$.steps.curriculum_id) }}
+          </span>
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
@@ -67,9 +71,9 @@
             @update:model-value="handleDisabilitiesChange"
             placeholder="اختر الإعاقات"
           />
-          <span class="error-feedback" v-if="v$.steps.disability_ids.$error">{{
-            v$.steps.disability_ids.$errors[0].$message
-          }}</span>
+          <span class="error-feedback" v-if="v$.steps.disability_ids.$error">
+            {{ getErrorMessage(v$.steps.disability_ids) }}
+          </span>
         </div>
 
         <!-- Type Select -->
@@ -85,9 +89,23 @@
             @update:model-value="handleTypeChange"
             placeholder="اختر نوعاً"
           ></multiselect>
-          <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">{{
-            v$.steps.type_id.$errors[0].$message
-          }}</span> -->
+          <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">
+            {{ getErrorMessage(v$.steps.type_id) }}
+          </span> -->
+        </div>
+        <div class="col-lg-12 col-md-6 col-12 mt-3">
+          <label for="description">وصف المرحلة</label>
+          <div class="input">
+            <textarea
+              id="description"
+              name="w3review"
+              rows="4"
+              placeholder="وصف المرحلة"
+              v-model="steps.description"
+              required
+            >
+            </textarea>
+          </div>
         </div>
       </div>
 
@@ -118,9 +136,9 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      selectedType_values: [], // Initialize as an empty array for multiple selection
-      curricula_values: null, // Initialize as null for single selection
-      disabilities_values: [], // Initialize as an empty array for multiple selection
+      selectedType_values: [],
+      curricula_values: null,
+      disabilities_values: [],
       typeOptions: [],
       curriculaOptions: [],
       disabilitiesOptions: [],
@@ -128,8 +146,8 @@ export default {
         title: "",
         description: "",
         type_id: "",
-        curriculum_id: null, // Initialize as null for single selection
-        disability_ids: [], // Initialize as an empty array
+        curriculum_id: null,
+        disability_ids: [],
         typeOptions: [
           { id: 1, name: "قرأن" },
           { id: 2, name: "حديث" },
@@ -143,10 +161,10 @@ export default {
     return {
       steps: {
         title: { required },
-        description: { required },
         curriculum_id: { required },
         disability_ids: { required },
         // type_id: { required },
+        // description: { required },
       },
     };
   },
@@ -158,6 +176,12 @@ export default {
     ...mapState(useStepsAddStore, ["Curriculums", "types", "disabilities"]),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     handleTypeChange() {
       this.steps.type_id = this.selectedType_values
         ? this.selectedType_values.map((type) => type.id)
@@ -186,7 +210,6 @@ export default {
         }
         if (
           !this.steps.title ||
-          !this.steps.description ||
           !this.steps.curriculum_id ||
           !this.steps.disability_ids
           // !this.steps.type_id
@@ -225,5 +248,12 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>

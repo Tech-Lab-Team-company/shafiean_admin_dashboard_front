@@ -32,7 +32,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.imageSrc.$error"
-              >{{ v$.organizations.imageSrc.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.imageSrc) }}</span
             >
           </div>
         </div>
@@ -45,7 +45,7 @@
               v-model="organizations.name"
             />
             <span class="error-feedback" v-if="v$.organizations.name.$error">{{
-              v$.organizations.name.$errors[0].$message
+              getErrorMessage(v$.organizations.name)
             }}</span>
           </div>
         </div>
@@ -60,7 +60,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.licence_number.$error"
-              >{{ v$.organizations.licence_number.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.licence_number) }}</span
             >
           </div>
         </div>
@@ -73,7 +73,7 @@
               v-model="organizations.phone"
             />
             <span class="error-feedback" v-if="v$.organizations.phone.$error">{{
-              v$.organizations.phone.$errors[0].$message
+              getErrorMessage(v$.organizations.phone)
             }}</span>
           </div>
         </div>
@@ -86,7 +86,7 @@
               v-model="organizations.email"
             />
             <span class="error-feedback" v-if="v$.organizations.email.$error">{{
-              v$.organizations.email.$errors[0].$message
+              getErrorMessage(v$.organizations.email)
             }}</span>
           </div>
         </div>
@@ -101,7 +101,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.address.$error"
-              >{{ v$.organizations.address.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.address) }}</span
             >
           </div>
         </div>
@@ -116,7 +116,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.manager_name.$error"
-              >{{ v$.organizations.manager_name.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.manager_name) }}</span
             >
           </div>
         </div>
@@ -131,7 +131,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.manager_phone.$error"
-              >{{ v$.organizations.manager_phone.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.manager_phone) }}</span
             >
           </div>
         </div>
@@ -146,7 +146,7 @@
             <span
               class="error-feedback"
               v-if="v$.organizations.manager_email.$error"
-              >{{ v$.organizations.manager_email.$errors[0].$message }}</span
+              >{{ getErrorMessage(v$.organizations.manager_email) }}</span
             >
           </div>
         </div>
@@ -277,6 +277,12 @@ export default {
     }),
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.organizations.image = null;
       this.organizations.imageSrc = "";

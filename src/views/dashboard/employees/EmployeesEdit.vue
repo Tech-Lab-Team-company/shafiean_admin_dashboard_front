@@ -28,9 +28,9 @@
               />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span class="error-feedback" v-if="v$.employee.imageSrc.$error"
+            <!-- <span class="error-feedback" v-if="v$.employee.imageSrc.$error"
               >{{ v$.employee.imageSrc.$errors[0].$message }}
-            </span>
+            </span> -->
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -42,7 +42,7 @@
               placeholder="أدخل أسم الموظف"
             />
             <span class="error-feedback" v-if="v$.employee.name.$error">{{
-              v$.employee.name.$errors[0].$message
+              getErrorMessage(v$.employee.name)
             }}</span>
           </div>
         </div>
@@ -56,7 +56,7 @@
               class="no-spinner"
             />
             <span class="error-feedback" v-if="v$.employee.phone.$error">{{
-              v$.employee.phone.$errors[0].$message
+              getErrorMessage(v$.employee.phone)
             }}</span>
           </div>
         </div>
@@ -69,7 +69,7 @@
               placeholder="أدخل البريد الالكتروني"
             />
             <span class="error-feedback" v-if="v$.employee.email.$error">{{
-              v$.employee.email.$errors[0].$message
+              getErrorMessage(v$.employee.email)
             }}</span>
           </div>
         </div>
@@ -84,7 +84,7 @@
           ></multiselect>
 
           <span class="error-feedback" v-if="v$.employee.permissions.$error">{{
-            v$.employee.permissions.$errors[0].$message
+            getErrorMessage(v$.employee.permissions)
           }}</span>
         </div>
       </div>
@@ -131,11 +131,17 @@ export default {
         phone: { required },
         email: { required, email },
         permissions: { required },
-        imageSrc: { required },
+        // imageSrc: { required },
       },
     };
   },
   methods: {
+    getErrorMessage(field) {
+      if (field.$invalid && field.$dirty) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
     removeImage() {
       this.employee.image = null;
       this.employee.imageSrc = "";
@@ -177,7 +183,7 @@ export default {
         !this.employee.name ||
         !this.employee.phone ||
         !this.employee.email ||
-        !this.employee.imageSrc ||
+        // !this.employee.imageSrc ||
         !this.employee.permissions
       ) {
         return;
