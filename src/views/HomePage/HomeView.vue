@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import HeaderView from "./HeaderView.vue";
-import BodyView from "./BodyView.vue";
+import HeaderView from "../../components/Home/HeaderView.vue";
+import BodyView from "../../components/Home/BodyView.vue";
 export default {
   name: "HomeView",
   components: { HeaderView, BodyView },
