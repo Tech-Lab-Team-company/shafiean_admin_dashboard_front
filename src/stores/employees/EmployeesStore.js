@@ -25,11 +25,11 @@ export const useEmployeesStore = defineStore("employees", {
           console.log(this.employees, "Employees List");
 
           paginationStore.setPage(current_page);
-          paginationStore.setFrom(from);
-          paginationStore.setLastPage(last_page);
-          paginationStore.setPerPage(per_page);
-          paginationStore.setTo(to);
-          paginationStore.setTotal(total);
+          paginationStore.setfrom(from);
+          paginationStore.setlastpage(last_page);
+          paginationStore.setperpage(per_page);
+          paginationStore.setto(to);
+          paginationStore.settotal(total);
         }
 
         this.ismaster = this.employees.map((emp) => emp.is_master);

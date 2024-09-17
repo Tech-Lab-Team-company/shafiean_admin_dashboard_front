@@ -1,4 +1,5 @@
 <template>
+  <header-pages title="تعديل المدينه" :showButton="false" />
   <div class="add-countries">
     <form @submit.prevent="submitForm">
       <div class="row">
@@ -40,12 +41,14 @@
 </template>
 
 <script>
+import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCitiesEditStore } from "@/stores/Cities/CitiesEditStore";
 import { mapState } from "pinia";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -70,6 +73,7 @@ export default {
   },
   components: {
     Multiselect,
+    headerPages,
   },
   computed: {
     ...mapState(useCitiesEditStore, {
@@ -112,7 +116,10 @@ export default {
       });
 
       if (!this.Cities.title || !this.Cities.country_id) {
+        Swal.fire("Error", "Please fill in all fields", "error");
         return;
+      } else {
+        Swal.fire("Success", "تم تعديل المدينه بنجاح", "success");
       }
       this.$router.go(-1);
     },

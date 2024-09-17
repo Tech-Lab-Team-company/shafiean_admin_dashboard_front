@@ -58,6 +58,7 @@ import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesEditStore } from "@/stores/countries/countriesEditStore";
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import Swal from "sweetalert2";
 
 export default {
   components: { headerPages },
@@ -113,7 +114,11 @@ export default {
         !this.countries.code ||
         !this.countries.phone_code
       ) {
+        Swal.fire("Error", "Please fill in all fields", "error");
+
         return;
+      } else {
+        Swal.fire("تم التعديل بنجاح", "", "success");
       }
       this.$router.go(-1);
     },

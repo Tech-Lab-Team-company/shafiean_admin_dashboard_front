@@ -35,7 +35,7 @@ export const useCurriculumEditStore = defineStore("curriculaEdit", {
 
         if (response.data.status == true) {
           this.Curriculas = updatedData;
-          // Swal.fire("Success", "Curriculum has been updated.", "success");
+          Swal.fire("Success", "Curriculum has been updated.", "success");
         } else {
           Swal.fire("Error", "Failed to update curriculum.", "error");
         }

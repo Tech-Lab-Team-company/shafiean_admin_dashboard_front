@@ -3,7 +3,7 @@
     <HeaderPages title="اضافة اعاقه" :showButton="false" />
     <form action="" @submit.prevent="submitForm">
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-12">
+        <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
             <input
@@ -14,18 +14,20 @@
               ref="fileInput"
               style="display: none"
             />
-            <div
-              v-if="!form.imageSrc"
-              class="upload-icon"
-              @click="triggerFileInput"
-            >
+            <div class="upload-icon" @click="triggerFileInput">
               <i class="fa fa-camera"></i>
               <span>اختيار صورة</span>
             </div>
-            <div v-if="form.imageSrc" class="avatar-preview">
-              <img alt="Avatar Preview" />
+            <div v-if="form.image || form.imageSrc" class="avatar-preview">
+              <img
+                :src="form.imageSrc ? form.imageSrc : form.image"
+                alt="Avatar Preview"
+              />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error"
+              >{{ getErrorMessage(v$.form.imageSrc) }}
+            </span>
           </div>
         </div>
 
@@ -92,7 +94,7 @@ export default {
   validations() {
     return {
       form: {
-        // imageSrc: { required },
+        imageSrc: { required },
         title: { required },
         description: { required },
       },
