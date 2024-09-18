@@ -4,7 +4,7 @@ import Login from "@/views/dashboard/Auth/LoginPage.vue";
 import Forget from "@/views/dashboard/Auth/ForgetPassword.vue";
 import CodeReset from "@/views/dashboard/Auth/CodeReset.vue";
 import Dashboard from "@/views/dashboard/dashboard.vue";
-import HomeView from "@/views/HomePage/HomeView.vue";
+import HomeView from "@/views/dashboard/HomePage/HomeView.vue";
 import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
 import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitiesIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
