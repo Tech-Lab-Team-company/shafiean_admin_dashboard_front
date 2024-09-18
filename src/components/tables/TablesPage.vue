@@ -32,7 +32,7 @@
                 <div class="img" v-if="isLink(cell)">
                   <img :src="cell" alt="Image" class="image" />
                 </div>
-                <span v-else>{{ cell }}</span>
+                <span v-else>{{ cell === "" ? "--" : cell }}</span>
               </td>
               <td>
                 <div class="action-icons">
