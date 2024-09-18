@@ -39,37 +39,35 @@
       </div>
       <div class="col-lg-8 col-md-12 col-12 px-4">
         <div class="statistics">
-          <!-- ======== card statistics ======== -->
+          <!-- Card 1: Total Organizations -->
           <div class="card_statistics">
             <div class="d-flex justify-content-between">
               <i class="fa-solid fa-users"></i>
-              <p class="counter">5,622</p>
+              <p class="counter">{{ animatedOrganizations }}</p>
             </div>
             <div class="d-flex justify-content-between">
               <span>اجمالى عدد الجمعيات</span>
               <i class="fa-solid fa-arrow-trend-up"></i>
             </div>
           </div>
-          <!-- ======== card statistics ======== -->
 
-          <!-- ======== card statistics ======== -->
+          <!-- Card 2: Total Employees -->
           <div class="card_statistics">
             <div class="d-flex justify-content-between">
               <i class="fa-solid fa-user-check"></i>
-              <p class="counter">250</p>
+              <p class="counter">{{ animatedEmployees }}</p>
             </div>
             <div class="d-flex justify-content-between">
               <span>اجمالى عدد الموظفين</span>
               <i class="fa-solid fa-arrow-trend-up"></i>
             </div>
           </div>
-          <!-- ======== card statistics ======== -->
 
-          <!-- ======== card statistics ======== -->
+          <!-- Card 3: Total Joins -->
           <div class="card_statistics">
             <div class="d-flex justify-content-between">
               <i class="fa-solid fa-circle"></i>
-              <p class="counter">168</p>
+              <p class="counter">{{ animatedJoins }}</p>
             </div>
             <div class="d-flex justify-content-between">
               <span>اجمالى عدد الانضمامات</span>
@@ -255,6 +253,12 @@ export default {
   },
   data() {
     return {
+      organizations: 5622,
+      employees: 250,
+      joins: 168,
+      animatedOrganizations: 0,
+      animatedEmployees: 0,
+      animatedJoins: 0,
       chartData: null,
       chartOptions: null,
       chartDataAccuracy: null,
@@ -269,8 +273,32 @@ export default {
 
     this.chartDataAccuracy = this.setChartDataAccuracy();
     this.chartOptionsAccuracy = this.setChartOptionsAccuracy();
+
+    this.animateCount("animatedOrganizations", this.organizations, 1500);
+    this.animateCount("animatedEmployees", this.employees, 1500);
+    this.animateCount("animatedJoins", this.joins, 1500);
   },
   methods: {
+    animateCount(variable, target, duration) {
+      // let start = 0;
+      let startTime = null;
+
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = timestamp - startTime;
+        const increment = Math.min(progress / duration, 1); // Ensure it does not go beyond 1
+        this[variable] = Math.floor(increment * target); // Update the reactive property
+
+        if (progress < duration) {
+          window.requestAnimationFrame(step); // Continue animation
+        } else {
+          this[variable] = target; // Ensure final value is set precisely
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    },
+
     setChartData() {
       return {
         labels: [
@@ -392,3 +420,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.statistics .card_statistics {
+  margin-bottom: 20px;
+}
+
+.counter {
+  font-size: 24px;
+  font-weight: bold;
+}
+</style>
