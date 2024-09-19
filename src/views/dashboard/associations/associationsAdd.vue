@@ -50,6 +50,7 @@
               type="number"
               placeholder="رقم الترخيص"
               v-model="form.licence_number"
+              class="no-spinner"
             />
             <span class="error-feedback" v-if="v$.form.licence_number.$error">{{
               getErrorMessage(v$.form.licence_number)
@@ -198,6 +199,7 @@ import { useOrganizationAddStore } from "@/stores/organizations/organizationAddS
 import { mapState } from "pinia";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -312,6 +314,7 @@ export default {
           !this.form.manager_phone ||
           !this.form.manager_email
         ) {
+          Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 
@@ -380,5 +383,10 @@ export default {
   cursor: pointer;
   color: red;
   font-size: 20px;
+}
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

@@ -23,6 +23,7 @@
             <input
               type="number"
               placeholder="كود الدوله"
+              class="no-spinner"
               v-model="countries.code"
             />
             <span class="error-feedback" v-if="v$.countries.code.$error">{{
@@ -35,6 +36,7 @@
           <div class="input">
             <input
               type="number"
+              class="no-spinner"
               placeholder="كود الدوله"
               v-model="countries.phone_code"
             />
@@ -129,5 +131,10 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

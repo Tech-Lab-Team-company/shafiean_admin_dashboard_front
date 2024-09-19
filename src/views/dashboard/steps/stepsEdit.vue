@@ -18,20 +18,6 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for="">وصف المرحلة</label>
-          <div class="input">
-            <input
-              type="text"
-              placeholder="اسم المرحلة"
-              v-model="Steps.description"
-            />
-            <span class="error-feedback" v-if="v$.Steps.description.$error">{{
-              getErrorMessage(v$.Steps.description)
-            }}</span>
-          </div>
-        </div>
-
         <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="curricula">المنهج الدراسي</label>
           <multiselect
@@ -83,6 +69,20 @@
             placeholder="اختر نوعاً"
           ></multiselect>
         </div>
+        <div class="col-lg-12 col-md-6 col-12 mt-3">
+          <label for="description">وصف المرحلة</label>
+          <div class="input">
+            <textarea
+              id="description"
+              name="w3review"
+              rows="4"
+              placeholder="وصف المرحلة"
+              v-model="Steps.description"
+              required
+            >
+            </textarea>
+          </div>
+        </div>
       </div>
 
       <!-- Form Buttons -->
@@ -127,7 +127,7 @@ export default {
     return {
       Steps: {
         title: { required },
-        description: { required },
+        // description: { required },
         curriculum_id: { required },
         disability_ids: { required },
         // type_id: { required },
@@ -215,3 +215,13 @@ export default {
   },
 };
 </script>
+
+<style>
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+</style>
