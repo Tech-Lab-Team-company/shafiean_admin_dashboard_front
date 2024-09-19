@@ -60,13 +60,16 @@
 
   .forget {
     margin-top: 1rem;
-
+a{
+  text-decoration: none;
+}
     h6 {
       color: #ffffff;
       cursor: pointer;
       font-size: 0.99rem;
       transition: color 0.3s ease;
       font-family: "Medium";
+
 
       &:hover {
         color: #cde382;

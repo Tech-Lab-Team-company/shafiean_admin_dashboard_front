@@ -52,14 +52,18 @@
               }}</span>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-12">
-            <label for=""> وصف الاعاقه</label>
+          <div class="col-lg-12 col-md-6 col-12 mt-3">
+            <label for="description">وصف المرحلة</label>
             <div class="input">
-              <input
-                type="text"
+              <textarea
+                id="description"
+                name="w3review"
+                rows="4"
                 placeholder="وصف الاعاقه"
                 v-model="disabilitie.description"
-              />
+                required
+              >
+              </textarea>
               <span
                 class="error-feedback"
                 v-if="v$.disabilitie.description.$error"
@@ -191,5 +195,12 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>

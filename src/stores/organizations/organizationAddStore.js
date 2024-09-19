@@ -95,21 +95,22 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
           this.organizations.push(response.data);
           Swal.fire(
             "Success",
-            "Steps have been saved successfully.",
+            "organization have been saved successfully.",
             "success"
           );
         } else {
           Swal.fire(
             "Error",
-            "There was a problem saving the steps: " + response.data.message,
+            "There was a problem saving the organization:" +
+              response.data.message,
             "error"
           );
         }
       } catch (error) {
-        console.error("Error saving Steps:", error);
+        console.error("Error saving organization:", error);
         Swal.fire(
           "Error",
-          "An error occurred while saving the steps.",
+          "An error occurred while saving the organization.",
           "error"
         );
       }

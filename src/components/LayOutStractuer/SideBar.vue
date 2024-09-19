@@ -113,7 +113,7 @@ export default {
       }
     },
     handleResize() {
-      if (window.innerWidth <= 600) {
+      if (window.innerWidth <= 100) {
         this.localIsCollapsed = true;
       } else if (window.innerWidth > 600 && window.innerWidth <= 1024) {
         this.localIsCollapsed = true;

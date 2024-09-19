@@ -93,11 +93,9 @@
           <multiselect
             id="roles"
             v-model="form.role"
-            :options="rolesOptions"
+            :options="permissionOptions"
             :multiple="true"
             :close-on-select="false"
-            track-by="name"
-            label="name"
           ></multiselect>
 
           <span class="error-feedback" v-if="v$.form.role.$error">{{
@@ -143,6 +141,7 @@ export default {
         image: null, // Ensure `image` is initialized as null
         imageSrc: "",
       },
+      permissionOptions: ["list", "of", "options"],
     };
   },
 
@@ -193,7 +192,8 @@ export default {
           !this.form.name ||
           !this.form.phone ||
           !this.form.email ||
-          !this.form.password
+          !this.form.password ||
+          !this.form.role
         ) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
