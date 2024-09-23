@@ -1,35 +1,38 @@
 <template>
   <div class="add-countries">
-    <header-pages title="اضافة المدينه" :showButton="false" />
+    <header-pages title="اضافة سنه دراسيه" :showButton="false" />
+
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">اسم المدينه</label>
+          <label for="">أسم السنه</label>
           <div class="input">
             <input
               type="text"
-              placeholder="اسم المدينه"
-              v-model="Cities.title"
+              placeholder="أسم السنه"
+              v-model="form.title"
+              required
             />
-            <span class="error-feedback" v-if="v$.Cities.title.$error">{{
-              getErrorMessage(v$.Cities.title)
-            }}</span>
           </div>
+          <span class="error-feedback" v-if="v$.form.title.$error"
+            >{{ getErrorMessage(v$.form.title) }}
+          </span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="Country">أختر الدوله </label>
+          <label for="Country">أختر الدوله</label>
           <multiselect
             id="Country"
-            v-model="Country_values"
+            v-model="form.Country_values"
             :options="CountryOptions"
             track-by="id"
             label="title"
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
-          <span class="error-feedback" v-if="v$.Cities.country_id.$error">
-            {{ getErrorMessage(v$.Cities.country_id) }}</span
-          >
+
+          <span class="error-feedback" v-if="v$.form.country_id.$error">{{
+            getErrorMessage(v$.form.country_id)
+          }}</span>
         </div>
       </div>
       <div class="all-btn">
@@ -41,19 +44,25 @@
 </template>
 
 <script>
-import HeaderPages from "@/components/headerpages/HeaderPages.vue";
+import headerPages from "@/components/headerpages/HeaderPages.vue";
+import { useYearsAddStore } from "@/stores/Years/YeaesAddStore";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import { useCitiesAddStore } from "@/stores/Cities/CitiesAddStore";
 import Swal from "sweetalert2";
-import { mapState } from "pinia";
 import { required } from "@vuelidate/validators";
+
 import useVuelidate from "@vuelidate/core";
+
 export default {
+  components: {
+    headerPages,
+    Multiselect,
+  },
+
   data() {
     return {
       v$: useVuelidate(),
-      Cities: {
+      form: {
         title: "",
         country_id: "",
       },
@@ -61,70 +70,50 @@ export default {
       CountryOptions: [],
     };
   },
+
   validations() {
     return {
-      Cities: {
+      form: {
         title: { required },
         country_id: { required },
       },
     };
   },
-  components: {
-    Multiselect,
-    HeaderPages,
-  },
+
   computed: {
-    ...mapState(useCitiesAddStore, {
-      countries: (state) => state.countries,
-    }),
+    countries() {
+      const store = useYearsAddStore();
+      return store.countries;
+    },
   },
+
   methods: {
+    updatecountryValue(selected) {
+      this.Country_values = selected;
+      this.form.country_id = selected ? selected.id : null;
+      console.log("Country_values", this.form.country_id);
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
       }
       return "";
     },
-    updatecountryValue() {
-      this.Cities.country_id = this.Country_values
-        ? this.Country_values.id
-        : null;
-      console.log("Country_values", this.Cities.country_id);
-    },
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
     async submitForm() {
       try {
-        const CitiesStore = useCitiesAddStore();
-        if (!CitiesStore) {
-          throw new Error("Failed to load Country store");
-        }
-
-        if (!this.Cities.title || !this.Cities.country_id) {
+        const YearsStore = useYearsAddStore();
+        if (!this.form.title || !this.form.country_id) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 
-        await CitiesStore.addCitiesData(this.Cities);
-        this.$router.push("/cities");
+        await YearsStore.addYear(this.form);
+        this.$router.push("/years");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
     },
-    async fetchCitiess() {
-      try {
-        const CitiesStore = useCitiesAddStore();
-        if (!CitiesStore) {
-          throw new Error("Failed to load organizations store");
-        }
 
-        await CitiesStore.getCountries();
-        this.CountryOptions = this.countries;
-      } catch (error) {
-        console.error("Error in fetchCities:", error);
-      }
-    },
     save() {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -132,8 +121,11 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchCitiess();
+
+  async mounted() {
+    const YearsStore = useYearsAddStore();
+    await YearsStore.fetchCountries();
+    this.CountryOptions = YearsStore.countries;
   },
 };
 </script>

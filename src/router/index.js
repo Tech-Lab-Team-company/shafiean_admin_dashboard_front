@@ -35,6 +35,12 @@ import CitiesEdit from "@/views/dashboard/cities/CitiesEdit.vue";
 import ErrorPage from "@/views/ErrorPage/ErrorPage.vue";
 import HeaderView from "@/components/Home/HeaderView.vue";
 import BodyView from "@/components/Home/BodyView.vue";
+import YearsIndex from "@/views/dashboard/yearsSections/YearsIndex.vue";
+import YearsAdd from "@/views/dashboard/yearsSections/YearsAdd.vue";
+import YearsEdit from "@/views/dashboard/yearsSections/YearsEdit.vue";
+import ClassesIndex from "@/views/dashboard/classesSection/ClassesIndex.vue";
+import ClassesAdd from "@/views/dashboard/classesSection/ClassesAdd.vue";
+import ClassesEdit from "@/views/dashboard/classesSection/ClassesEdit.vue";
 const routes = [
   {
     path: "/login",
@@ -208,6 +214,36 @@ const routes = [
         path: "/body",
         name: "Body-view",
         component: BodyView,
+      },
+      {
+        path: "/years",
+        name: "YearsIndex",
+        component: YearsIndex,
+      },
+      {
+        path: "/add-years",
+        name: "YearsAdd",
+        component: YearsAdd,
+      },
+      {
+        path: "/edit-years/:id",
+        name: "YearsEdit",
+        component: YearsEdit,
+      },
+      {
+        path: "/classes",
+        name: "ClassesIndex",
+        component: ClassesIndex,
+      },
+      {
+        path: "/add-classes",
+        name: "ClassesAdd",
+        component: ClassesAdd,
+      },
+      {
+        path: "/edit-classes/:id",
+        name: "ClassesEdit",
+        component: ClassesEdit,
       },
     ],
   },

@@ -1,35 +1,38 @@
 <template>
-  <header-pages title="تعديل المدينه" :showButton="false" />
   <div class="add-countries">
+    <header-pages title="اضافة فصول دراسيه" :showButton="false" />
+
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">اسم المدينه</label>
+          <label for="">أسم الفصل الدراسي</label>
           <div class="input">
             <input
               type="text"
-              placeholder="اسم المدينه"
-              v-model="Cities.title"
+              placeholder="أسم الفصل الدراسي "
+              v-model="form.title"
+              required
             />
-            <span class="error-feedback" v-if="v$.Cities.title.$error">{{
-              getErrorMessage(v$.Cities.title)
-            }}</span>
           </div>
+          <span class="error-feedback" v-if="v$.form.title.$error"
+            >{{ getErrorMessage(v$.form.title) }}
+          </span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="Country">أختر الدوله </label>
+          <label for="Country">أختر الدوله</label>
           <multiselect
             id="Country"
-            v-model="Country_values"
+            v-model="form.Country_values"
             :options="CountryOptions"
             track-by="id"
             label="title"
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
-          <span class="error-feedback" v-if="v$.Cities.country_id.$error">
-            {{ getErrorMessage(v$.Cities.country_id) }}</span
-          >
+
+          <span class="error-feedback" v-if="v$.form.country_id.$error">{{
+            getErrorMessage(v$.form.country_id)
+          }}</span>
         </div>
       </div>
       <div class="all-btn">
@@ -39,47 +42,49 @@
     </form>
   </div>
 </template>
-
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
-import { useCitiesEditStore } from "@/stores/Cities/CitiesEditStore";
-import { mapState } from "pinia";
+import { useClassesEditStore } from "@/stores/Classess/ClassesEditStore";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
 import Swal from "sweetalert2";
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import { mapState } from "pinia";
 
 export default {
+  components: {
+    headerPages,
+    Multiselect,
+  },
+
   data() {
     return {
       v$: useVuelidate(),
-      Cities: {
+      form: {
         title: "",
         country_id: "",
       },
-      Country_values: null, // Initialize with null
+      Country_values: {},
       CountryOptions: [],
     };
   },
 
   validations() {
     return {
-      Cities: {
+      form: {
         title: { required },
         country_id: { required },
       },
     };
   },
-  components: {
-    Multiselect,
-    headerPages,
-  },
+
   computed: {
-    ...mapState(useCitiesEditStore, {
+    ...mapState(useClassesEditStore, {
       countries: (state) => state.countries,
     }),
   },
+
   methods: {
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
@@ -87,50 +92,45 @@ export default {
       }
       return "";
     },
-    updatecountryValue() {
-      this.Cities.country_id = this.Country_values
-        ? this.Country_values.id
-        : null;
-      console.log("Selected Country ID:", this.Cities.country_id);
+    updatecountryValue(selected) {
+      this.Country_values = selected;
+      this.form.country_id = selected ? selected.id : null;
+
+      console.log("Selected Country ID:", this.form.country_id);
     },
-
     async fetchData() {
-      const store = useCitiesEditStore();
+      const store = useClassesEditStore();
       const id = this.$route.params.id;
+      await store.fetchClasses(id);
+      this.form = store.Classes;
+      await this.fetchEidtCountries();
 
-      await store.fetchCities(id);
-      this.Cities = store.cities;
       this.Country_values = this.CountryOptions.find(
-        (country) => country.id === this.Cities.country_id
+        (country) => country.id === this.form.country_id
       );
     },
-
     async submitForm() {
-      const store = useCitiesEditStore();
+      const store = useClassesEditStore();
       const id = this.$route.params.id;
-      await store.updateCities(id, {
-        title: this.Cities.title,
-        country_id: this.Cities.country_id,
+      await store.updateClass(id, {
+        title: this.form.title,
+        country_id: this.form.country_id,
       });
-
-      if (!this.Cities.title || !this.Cities.country_id) {
+      if (!this.form.title || !this.form.country_id) {
         Swal.fire("Error", "Please fill in all fields", "error");
         return;
       } else {
-        Swal.fire("Success", "تم تعديل المدينه بنجاح", "success");
+        Swal.fire("Success", "تم تعديل السنه الدراسيه بنجاح", "success");
       }
       this.$router.go(-1);
     },
-
     async fetchEidtCountries() {
-      const store = useCitiesEditStore();
-      await store.getCountries();
-      this.CountryOptions = store.countries;
-
-      if (this.Cities.country_id) {
-        this.Country_values = this.CountryOptions.find(
-          (country) => country.id === this.Cities.country_id
-        );
+      const store = useClassesEditStore();
+      try {
+        await store.getCountries();
+        this.CountryOptions = store.countries || [];
+      } catch (error) {
+        console.error("Error fetching countries:", error);
       }
     },
 
@@ -143,14 +143,7 @@ export default {
   },
 
   mounted() {
-    this.fetchEidtCountries();
     this.fetchData();
   },
 };
 </script>
-<style scoped>
-.error-feedback {
-  color: red;
-  font-size: 0.85rem;
-}
-</style>

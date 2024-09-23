@@ -154,6 +154,16 @@ export default {
               icon: "fa-regular fa-clipboard",
             },
             { name: "الحصص", route: "/lessons", icon: "fa-regular fa-file" },
+            {
+              name: "السنين الدراسيه",
+              route: "/years",
+              icon: "fa-regular fa-file",
+            },
+            {
+              name: "الفصول الدراسيه",
+              route: "/classes",
+              icon: "fa-solid fa-person-chalkboard",
+            },
           ],
         },
         {
