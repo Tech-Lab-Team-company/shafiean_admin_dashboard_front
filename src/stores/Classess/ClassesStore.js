@@ -9,9 +9,9 @@ export const useClassesStore = defineStore("Classes", {
   }),
 
   actions: {
-    async getClasses() {
+    async getClasses(page = 1) {
       try {
-        const response = await axios.post("fetch_seasons");
+        const response = await axios.post(`fetch_years?page=${page}`);
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;

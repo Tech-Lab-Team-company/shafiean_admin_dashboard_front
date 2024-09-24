@@ -40,7 +40,7 @@ export default {
 
   data() {
     return {
-      tableHeaders: ["ID", "اسم السنة الدراسية", "المدينه"],
+      tableHeaders: ["ID", "اسم السنة الدراسية", "الدوله"],
     };
   },
 
@@ -57,8 +57,9 @@ export default {
       paginationTotal: (state) => state.total,
     }),
     tableRowsYears() {
-      return this.years.map((yr) => [yr.id, yr.title, yr.country.title]);
+      return this.years.map((yr) => [yr.id, yr.title, yr.country?.title || ""]);
     },
+
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
@@ -71,8 +72,8 @@ export default {
       yearsStore.deleteYear(id);
     },
     handlePageChange(page) {
-      const useYears = useYearsStore();
-      useYears.getYears(page);
+      const yearsStore = useYearsStore();
+      yearsStore.getYears(page);
     },
   },
   async mounted() {

@@ -147,3 +147,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-feedback {
+  color: red;
+  font-size: 0.85rem;
+}
+</style>

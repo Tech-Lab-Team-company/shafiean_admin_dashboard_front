@@ -47,7 +47,7 @@
       </div>
 
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">حفظ</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -60,6 +60,7 @@ import { useLessonsEditStore } from "@/stores/lessons/LessonsEditStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 import Multiselect from "vue-multiselect";
 import { mapState } from "pinia";
+import Swal from "sweetalert2";
 
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
@@ -139,6 +140,8 @@ export default {
       const id = this.$route.params.id;
       await store.updateLessons(id, this.lessons);
       if (!this.lessons.stage_id || !this.lessons.quraan_id) {
+        Swal.fire("Error", "Please fill in all fields", "error");
+
         return;
       }
       this.$router.go(-1);

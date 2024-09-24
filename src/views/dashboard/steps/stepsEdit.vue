@@ -156,8 +156,8 @@ export default {
         : null;
     },
     handleDisabilitiesChange() {
-      console.log("disabilities_values", this.disabilities_values);
-      console.log("steps", this.Steps);
+      // console.log("disabilities_values", this.disabilities_values);
+      // console.log("steps", this.Steps);
 
       if (Array.isArray(this.disabilities_values)) {
         this.Steps.disability_ids = this.disabilities_values.map(
@@ -211,7 +211,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-    // v-model multi select
   },
 };
 </script>

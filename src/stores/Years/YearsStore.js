@@ -9,14 +9,14 @@ export const useYearsStore = defineStore("years", {
   }),
 
   actions: {
-    async getYears() {
+    async getYears(page = 1) {
       try {
-        const response = await axios.post("fetch_years");
+        const response = await axios.post(`fetch_years?page=${page}`);
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
 
-        if (response.data.status) {
+        if (response.data.status == true) {
           this.years = response.data.data.data;
           paginationStore.setPage(current_page);
           paginationStore.setfrom(from);
