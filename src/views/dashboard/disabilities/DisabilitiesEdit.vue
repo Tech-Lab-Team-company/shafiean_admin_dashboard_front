@@ -172,7 +172,7 @@ export default {
     },
   },
   async mounted() {
-    await this.fetchData(); // Fetch data when the component is mounted
+    await this.fetchData();
   },
 };
 </script>

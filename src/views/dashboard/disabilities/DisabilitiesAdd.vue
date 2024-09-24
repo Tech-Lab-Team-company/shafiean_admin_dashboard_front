@@ -106,7 +106,7 @@ export default {
         title: "",
         description: "",
         image: null,
-        // imageSrc: "",
+        imageSrc: "",
       },
     };
   },

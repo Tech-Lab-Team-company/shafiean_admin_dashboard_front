@@ -12,7 +12,7 @@ export const useYearsEditStore = defineStore("yearsEdit", {
     async getCountries() {
       try {
         const response = await axios.post("fetch_countries");
-        if (response.data.status) {
+        if (response.data.status === true) {
           this.countries = response.data.data.data;
         } else {
           console.error("Error fetching countries.");
@@ -49,7 +49,6 @@ export const useYearsEditStore = defineStore("yearsEdit", {
         });
 
         if (response.data.status) {
-          // Find the index of the updated year and replace it
           const index = this.years.findIndex((year) => year.id === id);
           if (index !== -1) {
             this.years.splice(index, 1, {

@@ -104,7 +104,7 @@ export default {
       const id = this.$route.params.id;
       await store.fetchYears(id);
       this.form = store.years;
-      await this.fetchEidtCountries(); // Ensure countries are fetched before using
+      await this.fetchEidtCountries();
 
       this.Country_values = this.CountryOptions.find(
         (country) => country.id === this.form.country_id
