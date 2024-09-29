@@ -67,6 +67,11 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
 
         // Append each property to FormData
         Object.keys(organizationData).forEach((key) => {
+          if (key === "image" && organizationData[key]) {
+            formData.append("image", organizationData[key]);
+          } else {
+            formData.append(key, organizationData[key]);
+          }
           if (Array.isArray(organizationData[key])) {
             // If the property is an array, append each item with the same key
             organizationData[key].forEach((item) => {
@@ -78,18 +83,10 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
           }
         });
 
-        // Log FormData entries
-        for (const [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`, "FormData");
-        }
-
         // Make the API request
         const response = await axios.post("add_organization", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-
-        // Log response data
-        console.log("API Response:", response.data);
 
         if (response.data.status) {
           this.organizations.push(response.data);

@@ -29,9 +29,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
+            <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
               v$.form.imageSrc.$errors[0].$message
-            }}</span>
+            }}</span> -->
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -236,7 +236,7 @@ export default {
   validations() {
     return {
       form: {
-        imageSrc: { required },
+        // imageSrc: { required },
         name: { required },
         licence_number: { required },
         phone: { required },
