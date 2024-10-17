@@ -4,14 +4,14 @@
       <div class="header">
         <div :class="['search', { 'half-width': showSelect }]">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="بحث" type="search"/>
+          <input placeholder="بحث" type="search" />
         </div>
         <div v-if="showSelect" class="select">
           <multiselect
-              v-model="value"
-              :close-on-select="false"
-              :multiple="true"
-              :options="options"
+            v-model="value"
+            :close-on-select="false"
+            :multiple="true"
+            :options="options"
           ></multiselect>
         </div>
       </div>
@@ -19,39 +19,39 @@
       <div class="table-responsive">
         <table class="table">
           <thead>
-          <tr>
-            <th v-for="(header, index) in headers" :key="index">
-              {{ header }}
-            </th>
-            <th>actions</th>
-          </tr>
+            <tr>
+              <th v-for="(header, index) in headers" :key="index">
+                {{ header }}
+              </th>
+              <th>actions</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-            <td v-for="(cell, cellIndex) in row" :key="cellIndex">
-              <div v-if="isLink(cell)" class="img">
-                <img :src="cell" alt="Image" class="image"/>
-              </div>
-              <span v-else>{{ cell === "" ? "--" : cell }}</span>
-            </td>
-            <td>
-              <div class="action-icons">
-                <i
+            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+              <td v-for="(cell, cellIndex) in row" :key="cellIndex">
+                <div v-if="isLink(cell)" class="img">
+                  <img :src="cell" alt="Image" class="image" />
+                </div>
+                <span v-else>{{ cell === "" ? "--" : cell }}</span>
+              </td>
+              <td>
+                <div class="action-icons">
+                  <i
                     v-if="isMaster(rowIndex)"
                     class="fa-solid fa-trash action-icon"
                     @click="handleIconClick('delete', row[0])"
-                ></i>
-                <i
+                  ></i>
+                  <i
                     class="fa-solid fa-pen-to-square action-icon"
                     @click="handleIconClick('edit', row[0])"
-                ></i>
-                <!--                  <i-->
-                <!--                    class="fa-solid fa-eye action-icon"-->
-                <!--                    @click="handleIconClick('view', row[0])"-->
-                <!--                  ></i>-->
-              </div>
-            </td>
-          </tr>
+                  ></i>
+                  <!--                  <i-->
+                  <!--                    class="fa-solid fa-eye action-icon"-->
+                  <!--                    @click="handleIconClick('view', row[0])"-->
+                  <!--                  ></i>-->
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -62,7 +62,7 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import {isLink} from "@/helpers/isLink"; // Adjust the path as needed
+import { isLink } from "@/helpers/isLink"; // Adjust the path as needed
 // import pagination from "laravel-vue-pagination";
 // import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 // import { mapState, mapActions } from "pinia";
