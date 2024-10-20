@@ -1,7 +1,7 @@
 <template>
   <div class="add-courses">
     <header-pages title="اضافة صلاحية" :showButton="false" />
-    <div class="all-permisson">
+    <div class="all-permisson-permisson">
       <form action="permations.html" class="add_form">
         <div class="row">
           <div class="col-lg-6 col-md-6 col-12">
@@ -1901,6 +1901,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="Addd">
+      <button class="btn">اضافه</button>
+    </div>
   </div>
 </template>
 
@@ -1914,6 +1917,21 @@ export default {
 </script>
 
 <style lang="scss">
+.Addd button {
+  width: 15%;
+  background-color: var(--main);
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.75rem 5rem;
+  transition: 0.7s ease-in-out;
+}
+.Addd button:hover {
+  border-color: var(--main);
+  color: var(--main);
+  font-size: 0.8rem;
+  padding: 0.75rem 5rem;
+  transition: 0.7s ease-in-out;
+}
 * {
   margin: 0;
   font-family: "regular";
