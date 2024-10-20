@@ -26,7 +26,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: rgba(255, 255, 255, 0.527);
   display: flex;
   justify-content: center;
   align-items: center;

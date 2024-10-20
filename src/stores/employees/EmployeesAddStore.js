@@ -18,7 +18,7 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
           }
         });
 
-        const response = await axios.post("/admins", formData, {
+        const response = await axios.post("/admins/store", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
