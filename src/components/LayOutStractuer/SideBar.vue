@@ -184,6 +184,11 @@ export default {
           route: "/adminInformation",
           icon: "fa-solid fa-user-tie",
         },
+        {
+          name: "الصالحيات",
+          route: "/index-permission",
+          icon: "fa-solid fa-shield",
+        },
       ];
     },
   },
