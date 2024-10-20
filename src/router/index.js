@@ -41,6 +41,8 @@ import YearsEdit from "@/views/dashboard/yearsSections/YearsEdit.vue";
 import ClassesIndex from "@/views/dashboard/classesSection/ClassesIndex.vue";
 import ClassesAdd from "@/views/dashboard/classesSection/ClassesAdd.vue";
 import ClassesEdit from "@/views/dashboard/classesSection/ClassesEdit.vue";
+import IndexPermission from "@/views/dashboard/permissions/IndexPermissions.vue";
+import AddPermission from "@/views/dashboard/permissions/AddPermissions.vue";
 const routes = [
   {
     path: "/login",
@@ -244,6 +246,16 @@ const routes = [
         path: "/edit-classes/:id",
         name: "ClassesEdit",
         component: ClassesEdit,
+      },
+      {
+        path: "/index-permission",
+        name: "index-permission",
+        component: IndexPermission,
+      },
+      {
+        path: "/add-permission",
+        name: "add-permission",
+        component: AddPermission,
       },
     ],
   },
