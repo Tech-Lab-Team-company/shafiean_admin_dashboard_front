@@ -15,7 +15,7 @@ export const useEmployeesStore = defineStore("employees", {
       loadingStore.startLoading();
 
       try {
-        const response = await axios.get(`admins?page=${page}`);
+        const response = await axios.post(`admins?page=${page}`);
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
