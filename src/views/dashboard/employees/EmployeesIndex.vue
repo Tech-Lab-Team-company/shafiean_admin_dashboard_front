@@ -2,6 +2,7 @@
   <div class="employees">
     <HeadersPages title="الموظفين" button="+ اضافة موظف" link="/add-employee" />
     <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
       <input
         type="text"
         placeholder="بحث عن موظف..."
@@ -61,7 +62,6 @@ export default {
   computed: {
     ...mapState(useEmployeesStore, {
       employees: (state) => state.employees,
-      filteredEmployees: (state) => state.filteredEmployees,
       ...mapState(usePaginationStore, {
         paginationCurrent: (state) => state.current_page,
         paginationFrom: (state) => state.from,
@@ -93,7 +93,7 @@ export default {
   methods: {
     handleSearch() {
       const employeesStore = useEmployeesStore();
-      employeesStore.fetchEmployees(1, this.word).then(() => {});
+      employeesStore.fetchEmployees(1, this.word);
     },
 
     handlePageChange(page) {

@@ -8,7 +8,6 @@ export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
     ismaster: [],
-    filteredEmployees: [],
   }),
   actions: {
     async fetchEmployees(page = 1, word = "") {
@@ -72,9 +71,9 @@ export const useEmployeesStore = defineStore("employees", {
     },
     filterEmployees(word) {
       if (word === "") {
-        this.filteredEmployees = this.employees; // إعادة كل الموظفين إذا لم تكن هناك كلمة بحث
+        this.employees; // إعادة كل الموظفين إذا لم تكن هناك كلمة بحث
       } else {
-        this.filteredEmployees = this.employees.filter(
+        this.employees.filter(
           (emp) =>
             emp.name.toLowerCase().includes(word.toLowerCase()) || // البحث في الاسم
             emp.email.toLowerCase().includes(word.toLowerCase()) || // البحث في البريد الإلكتروني
