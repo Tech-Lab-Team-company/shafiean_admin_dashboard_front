@@ -1,7 +1,15 @@
 <template>
   <div class="Steps">
     <header-pages title="المراحل" button="+ اضافة مرحلة" link="/add-steps" />
-
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRowsSteps"
@@ -26,10 +34,14 @@ import { useStepsStore } from "@/stores/steps/StepsStore";
 import { mapState } from "pinia";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
+import { debounce } from "lodash"; // استيراد دالة debounce
+
 export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   "],
     };
   },
@@ -48,8 +60,8 @@ export default {
     }),
     tableRowsSteps() {
       console.log(this.steps, "Diiaaaa");
-
-      return this.steps.map((st) => [
+      const dataToDisplay = this.steps;
+      return dataToDisplay.map((st) => [
         st.id,
         st.title,
         st.description,
@@ -61,6 +73,10 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      const stepsStore = useStepsStore();
+      stepsStore.getSteps(1, this.word);
+    },
     handlePageChange(page) {
       const stepsStore = useStepsStore();
       stepsStore.getSteps(page);
@@ -74,6 +90,9 @@ export default {
   mounted() {
     const stepsStore = useStepsStore();
     stepsStore.getSteps();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

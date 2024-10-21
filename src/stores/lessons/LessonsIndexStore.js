@@ -10,9 +10,12 @@ export const useLessonsStore = defineStore("lessons", {
   }),
 
   actions: {
-    async fetchLessons(page = 1) {
+    async fetchLessons(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_sessions?page=${page}`);
+        const response = await axios.post(`fetch_sessions?page=${page}`, {
+          word: word,
+        });
+
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
@@ -59,6 +62,18 @@ export const useLessonsStore = defineStore("lessons", {
           "Error!",
           "There was an error deleting the lessons.",
           "error"
+        );
+      }
+    },
+    filterLessons(word) {
+      if (word === "") {
+        return this.lessons; // Return all Curriculas if no search word
+      } else {
+        return this.lessons.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
         );
       }
     },

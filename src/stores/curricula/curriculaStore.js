@@ -8,9 +8,11 @@ export const useCurriculaStore = defineStore("curricula", {
     Curriculas: [],
   }),
   actions: {
-    async fetchCurricula(page = 1) {
+    async fetchCurricula(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_curriculums?page=${page}`);
+        const response = await axios.post(`fetch_curriculums?page=${page}`, {
+          word: word,
+        });
         const paginationStore = usePaginationStore();
 
         const { current_page, from, last_page, per_page, to, total } =
@@ -62,6 +64,18 @@ export const useCurriculaStore = defineStore("curricula", {
           "Error!",
           "There was an error deleting the Curriculas.",
           "error"
+        );
+      }
+    },
+    filterCurriculas(word) {
+      if (word === "") {
+        return this.Curriculas; // Return all Curriculas if no search word
+      } else {
+        return this.Curriculas.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
         );
       }
     },
