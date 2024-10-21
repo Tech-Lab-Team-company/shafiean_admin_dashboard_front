@@ -8,14 +8,17 @@ export const useEmployeesStore = defineStore("employees", {
   state: () => ({
     employees: [],
     ismaster: [],
+    filteredEmployees: [],
   }),
   actions: {
-    async fetchEmployees(page = 1) {
+    async fetchEmployees(page = 1, word = "") {
       const loadingStore = useLoadingStore();
       loadingStore.startLoading();
 
       try {
-        const response = await axios.post(`admins?page=${page}`);
+        const response = await axios.post(`admins?page=${page}`, {
+          word: word,
+        });
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
@@ -64,6 +67,18 @@ export const useEmployeesStore = defineStore("employees", {
           "Error!",
           "There was an error deleting the employee.",
           "error"
+        );
+      }
+    },
+    filterEmployees(word) {
+      if (word === "") {
+        this.filteredEmployees = this.employees; // إعادة كل الموظفين إذا لم تكن هناك كلمة بحث
+      } else {
+        this.filteredEmployees = this.employees.filter(
+          (emp) =>
+            emp.name.toLowerCase().includes(word.toLowerCase()) || // البحث في الاسم
+            emp.email.toLowerCase().includes(word.toLowerCase()) || // البحث في البريد الإلكتروني
+            emp.phone.includes(word) // البحث في رقم الهاتف
         );
       }
     },

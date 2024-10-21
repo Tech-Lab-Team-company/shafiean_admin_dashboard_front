@@ -1,10 +1,9 @@
 <template>
   <div class="table-responsive">
     <div class="table">
-      <div class="header">
+      <!-- <div class="header">
         <div :class="['search', { 'half-width': showSelect }]">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="بحث" type="search" />
         </div>
         <div v-if="showSelect" class="select">
           <multiselect
@@ -14,7 +13,7 @@
             :options="options"
           ></multiselect>
         </div>
-      </div>
+      </div> -->
 
       <div class="table-responsive">
         <table class="table">
@@ -60,7 +59,7 @@
 </template>
 
 <script>
-import Multiselect from "vue-multiselect";
+// import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { isLink } from "@/helpers/isLink"; // Adjust the path as needed
 // import pagination from "laravel-vue-pagination";
@@ -70,7 +69,7 @@ import { isLink } from "@/helpers/isLink"; // Adjust the path as needed
 export default {
   name: "TablesPage",
   components: {
-    Multiselect,
+    // Multiselect,
     // pagination,
   },
   props: {

@@ -1,6 +1,14 @@
 <template>
   <div class="employees">
     <HeadersPages title="الموظفين" button="+ اضافة موظف" link="/add-employee" />
+    <div class="search">
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRows"
@@ -26,7 +34,7 @@ import { useEmployeesStore } from "@/stores/employees/EmployeesStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { mapState } from "pinia";
-
+import { debounce } from "lodash"; // استيراد دالة debounce
 export default {
   name: "EmployeesIndex",
   components: {
@@ -36,6 +44,8 @@ export default {
   },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: [
         "ID",
         "الصور",
@@ -51,6 +61,7 @@ export default {
   computed: {
     ...mapState(useEmployeesStore, {
       employees: (state) => state.employees,
+      filteredEmployees: (state) => state.filteredEmployees,
       ...mapState(usePaginationStore, {
         paginationCurrent: (state) => state.current_page,
         paginationFrom: (state) => state.from,
@@ -61,9 +72,11 @@ export default {
       }),
       ismaster: (state) => state.ismaster,
     }),
+
     tableRows() {
-      console.log(this.employees, "ssss");
-      return this.employees.map((emp) => [
+      // استخدم filteredEmployees إذا كانت كلمة البحث موجودة، وإلا استخدم employees
+      const dataToDisplay = this.employees;
+      return dataToDisplay.map((emp) => [
         emp.id,
         emp.image,
         emp.name,
@@ -72,19 +85,25 @@ export default {
         emp.role,
       ]);
     },
+
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
   methods: {
-    handlePageChange(page) {
-      const curriculaStore = useEmployeesStore();
-      curriculaStore.fetchEmployees(page);
+    handleSearch() {
+      const employeesStore = useEmployeesStore();
+      employeesStore.fetchEmployees(1, this.word).then(() => {});
     },
+
+    handlePageChange(page) {
+      const employeesStore = useEmployeesStore();
+      employeesStore.fetchEmployees(page, this.word); // قم بتمرير الكلمة البحثية أيضًا عند تغيير الصفحات
+    },
+
     async handleDeleteEmployee(id) {
       const employeesStore = useEmployeesStore();
       console.log(id);
-
       await employeesStore.deleteEmployee(id);
     },
   },
@@ -92,6 +111,10 @@ export default {
   async mounted() {
     const employeesStore = useEmployeesStore();
     await employeesStore.fetchEmployees();
+
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>
