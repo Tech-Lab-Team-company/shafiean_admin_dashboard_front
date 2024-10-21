@@ -8,14 +8,17 @@ export const useDisabilitieStore = defineStore("disabilities", {
     disabilitie: [],
   }),
   actions: {
-    async fetchDisabilitie(page = 1) {
+    async fetchDisabilitie(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_disabilities?page=${page}`);
+        const response = await axios.post(`fetch_disabilities?page=${page}`, {
+          word: word,
+        });
+
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
 
-        if (response.data.status == true) {
+        if (response.data.status) {
           this.disabilitie = response.data.data.data;
           console.log(this.disabilitie);
           paginationStore.setPage(current_page);
@@ -31,6 +34,7 @@ export const useDisabilitieStore = defineStore("disabilities", {
         console.error("Error fetching disabilities:", error);
       }
     },
+
     async deleteDisabilitie(id) {
       try {
         const result = await Swal.fire({
@@ -58,6 +62,19 @@ export const useDisabilitieStore = defineStore("disabilities", {
           "Error!",
           "There was an error deleting the disability.",
           "error"
+        );
+      }
+    },
+
+    filterDisabilities(word) {
+      if (word === "") {
+        return this.disabilitie; // Return all disabilities if no search word
+      } else {
+        return this.disabilitie.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
         );
       }
     },

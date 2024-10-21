@@ -7,9 +7,12 @@ export const useCitiesStore = defineStore("cities", {
     cities: [],
   }),
   actions: {
-    async fetchCities(page = 1) {
+    async fetchCities(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_cities/?page=${page}`);
+        const response = await axios.post(`fetch_cities/?page=${page}`, {
+          word: word,
+        });
+
         const paginationStore = usePaginationStore();
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
@@ -53,6 +56,18 @@ export const useCitiesStore = defineStore("cities", {
         }
       } catch (error) {
         Swal.fire("Error!", "There was an error deleting the cities.", "error");
+      }
+    },
+    filterCities(word) {
+      if (word === "") {
+        return this.cities; // Return all Curriculas if no search word
+      } else {
+        return this.cities.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
+        );
       }
     },
   },

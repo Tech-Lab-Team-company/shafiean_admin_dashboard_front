@@ -7,8 +7,10 @@ export const useOrganizationsStore = defineStore("associations", {
     organizations: [],
   }),
   actions: {
-    async fetchOrganizations(page = 1) {
-      const response = await axios.post(`fetch_organizations?page=${page}`);
+    async fetchOrganizations(page = 1, word = "") {
+      const response = await axios.post(`fetch_organizations?page=${page}`, {
+        word: word,
+      });
 
       const paginationStore = usePaginationStore();
       const { current_page, from, last_page, per_page, to, total } =
@@ -58,6 +60,18 @@ export const useOrganizationsStore = defineStore("associations", {
           "Error!",
           "There was an error deleting the employee.",
           "error"
+        );
+      }
+    },
+    filterOrganizations(word) {
+      if (word === "") {
+        return this.organizations; // Return all Curriculas if no search word
+      } else {
+        return this.organizations.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
         );
       }
     },

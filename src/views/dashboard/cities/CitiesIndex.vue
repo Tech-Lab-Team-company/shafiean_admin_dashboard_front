@@ -1,5 +1,14 @@
 <template>
   <header-pages title="المدن" button="+ اضافة مدينة" link="/add-cities" />
+  <div class="search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input
+      type="text"
+      placeholder="بحث عن موظف..."
+      v-model="word"
+      @input="debouncedSearch"
+    />
+  </div>
   <tables-page-vue
     :headers="tableHeaders"
     :rows="tableRowsCities"
@@ -23,11 +32,14 @@ import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useCitiesStore } from "@/stores/Cities/CitiesStore";
 import { mapState } from "pinia";
+import { debounce } from "lodash";
 
 export default {
   components: { headerPages, TablesPageVue, PaginationPage },
   data() {
     return {
+      word: "",
+      debouncedSearch: null,
       tableHeaders: ["ID", "اسم المدينة"],
     };
   },
@@ -46,13 +58,18 @@ export default {
 
     tableRowsCities() {
       // console.log(this.cities, "Diiaaaa");
-      return this.cities.map((cit) => [cit.id, cit.title]);
+      const dataToDisplay = this.cities;
+      return dataToDisplay.map((cit) => [cit.id, cit.title]);
     },
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
   methods: {
+    handleSearch() {
+      const CitiesStore = useCitiesStore();
+      CitiesStore.fetchCities(1, this.word);
+    },
     handlePageChange(page) {
       const CitiesStore = useCitiesStore();
       CitiesStore.fetchCities(page);
@@ -67,6 +84,9 @@ export default {
   mounted() {
     const CitiesStore = useCitiesStore();
     CitiesStore.fetchCities();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700);
   },
 };
 </script>

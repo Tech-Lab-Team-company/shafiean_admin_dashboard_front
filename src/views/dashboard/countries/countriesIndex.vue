@@ -1,6 +1,15 @@
 <template>
   <div class="countries">
     <header-pages title="الدوله" button="+ اضافة دوله" link="/add-countries" />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRowsCountries"
@@ -24,6 +33,8 @@ import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { useCountriesStore } from "@/stores/countries/countriesStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
+import { debounce } from "lodash"; // استيراد دالة debounce
+
 import { mapState } from "pinia";
 export default {
   components: {
@@ -33,6 +44,8 @@ export default {
   },
   data() {
     return {
+      word: "",
+      debouncedSearch: null,
       tableHeaders: ["ID", "اسم الدوله", "كود الدوله", "  كود الهاتف "],
     };
   },
@@ -50,8 +63,8 @@ export default {
     }),
     tableRowsCountries() {
       console.log(this.countries, "Diiaaaa");
-
-      return this.countries.map((count) => [
+      const dataToDisplay = this.countries;
+      return dataToDisplay.map((count) => [
         count.id,
         count.title,
         count.code,
@@ -64,6 +77,10 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      const countriesStore = useCountriesStore();
+      countriesStore.fetchCountries(1, this.word);
+    },
     async handleDeleteCountry(id) {
       const countriesStore = useCountriesStore();
       console.log(id);
@@ -79,6 +96,10 @@ export default {
   mounted() {
     const countriesStore = useCountriesStore();
     countriesStore.fetchCountries();
+
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

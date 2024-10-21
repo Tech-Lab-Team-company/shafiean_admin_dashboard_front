@@ -6,6 +6,15 @@
     حصه"
       link="/add-lessons"
     />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <tables-page-vue
       :headers="tableHeaders"
       :rows="tableRowsLessons"
@@ -30,6 +39,8 @@ import { useLessonsStore } from "@/stores/lessons/LessonsIndexStore";
 import { mapState } from "pinia";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
+import { debounce } from "lodash"; // استيراد دالة debounce
+
 export default {
   name: "lessonsIndex",
   components: {
@@ -39,6 +50,8 @@ export default {
   },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: ["ID", " وصف المنهج", " المرحله", "قران"],
     };
   },
@@ -57,7 +70,8 @@ export default {
 
     tableRowsLessons() {
       console.log(this.lessons, "Diiaaaa");
-      return this.lessons.map((les) => [
+      const dataToDisplay = this.lessons;
+      return dataToDisplay.map((les) => [
         les.id,
         les.title,
         les.stage?.title || "",
@@ -69,9 +83,13 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      const lessonsStore = useLessonsStore();
+      lessonsStore.fetchLessons(1, this.word);
+    },
     handlePageChange(page) {
-      const curriculaStore = useLessonsStore();
-      curriculaStore.fetchLessons(page);
+      const lessonsStore = useLessonsStore();
+      lessonsStore.fetchLessons(page);
     },
     async handleDeleteLessons(id) {
       const lessonsStore = useLessonsStore();
@@ -83,6 +101,9 @@ export default {
   mounted() {
     const lessonsStore = useLessonsStore();
     lessonsStore.fetchLessons();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

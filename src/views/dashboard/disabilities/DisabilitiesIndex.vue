@@ -5,6 +5,15 @@
       button="+ اضافة اعاقه "
       link="/add-disabilities"
     />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRowsDisabilitie"
@@ -28,6 +37,7 @@ import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { mapState } from "pinia";
+import { debounce } from "lodash"; // استيراد دالة debounce
 export default {
   name: "DisabilitiesIndex",
   components: {
@@ -37,6 +47,8 @@ export default {
   },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
       editLink: "/edit-disabilities",
       viewLink: "/view-disabilities",
@@ -57,8 +69,8 @@ export default {
     }),
     tableRowsDisabilitie() {
       console.log(this.disabilitie, "nasrasssssssddddddss");
-
-      return this.disabilitie.map((dis) => [
+      const dataToDisplay = this.disabilitie;
+      return dataToDisplay.map((dis) => [
         dis.id,
         dis.image,
         dis.title,
@@ -71,6 +83,10 @@ export default {
   },
 
   methods: {
+    handleSearch() {
+      const disabilitiesStore = useDisabilitieStore();
+      disabilitiesStore.fetchDisabilitie(1, this.word);
+    },
     handlePageChange(page) {
       const useDisabilitie = useDisabilitieStore();
       useDisabilitie.fetchDisabilitie(page);
@@ -86,6 +102,10 @@ export default {
   async mounted() {
     const disabilitiesStore = useDisabilitieStore();
     await disabilitiesStore.fetchDisabilitie();
+
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

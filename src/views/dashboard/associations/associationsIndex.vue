@@ -5,6 +5,15 @@
       button="اضافة جمعية"
       link="/add-associations"
     />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRowsorganizations"
@@ -29,10 +38,14 @@ import { mapState } from "pinia";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useOrganizationsStore } from "@/stores/organizations/organizationsStore";
+import { debounce } from "lodash"; // استيراد دالة debounce
+
 export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: [
         "ID",
         "صوره",
@@ -58,7 +71,8 @@ export default {
       }),
     }),
     tableRowsorganizations() {
-      return this.organizations.map((org) => [
+      const dataToDisplay = this.organizations;
+      return dataToDisplay.map((org) => [
         org.id,
         org.image,
         org.manager_name,
@@ -73,6 +87,10 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      const organizationsStore = useOrganizationsStore();
+      organizationsStore.fetchOrganizations(1, this.word);
+    },
     handlePageChange(page) {
       const organizationsStore = useOrganizationsStore();
       organizationsStore.fetchOrganizations(page);
@@ -87,6 +105,9 @@ export default {
   mounted() {
     const organizationsStore = useOrganizationsStore();
     organizationsStore.fetchOrganizations();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

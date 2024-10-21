@@ -5,6 +5,15 @@
       button="+ اضافة فصل دراسي"
       link="/add-classes"
     />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
 
     <TablesPageVue
       :headers="tableHeaders"
@@ -30,6 +39,7 @@ import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useClassesStore } from "@/stores/Classess/ClassesStore";
 import { mapState } from "pinia";
+import { debounce } from "lodash"; // استيراد دالة debounce
 
 export default {
   components: {
@@ -40,6 +50,8 @@ export default {
 
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: ["ID", "اسم الفصول الدراسية", "الدوله"],
     };
   },
@@ -57,7 +69,8 @@ export default {
       paginationTotal: (state) => state.total,
     }),
     tableRowsClasses() {
-      return this.Classes.map((cl) => [cl.id, cl.title, cl.country.title]);
+      const dataToDisplay = this.Classes;
+      return dataToDisplay.map((cl) => [cl.id, cl.title, cl.country.title]);
     },
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
@@ -65,6 +78,10 @@ export default {
   },
 
   methods: {
+    handleSearch() {
+      const ClassesStore = useClassesStore();
+      ClassesStore.getClasses(1, this.word);
+    },
     handlePageChange(page) {
       const useClasses = useClassesStore();
       useClasses.getClasses(page);
@@ -78,6 +95,9 @@ export default {
   async mounted() {
     const ClassesStore = useClassesStore();
     await ClassesStore.getClasses();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

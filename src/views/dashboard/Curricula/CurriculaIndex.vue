@@ -1,6 +1,15 @@
 <template>
   <div class="curricula">
     <header-pages title="المناهج" button="+ اضافة منهج" link="/add-curricula" />
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
     <tables-page-vue
       :headers="tableHeaders"
       :rows="tableRowsCurricula"
@@ -25,10 +34,14 @@ import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useCurriculaStore } from "@/stores/curricula/curriculaStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
+import { debounce } from "lodash"; // استيراد دالة debounce
+
 export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
+      word: "", // الكلمة المدخلة في البحث
+      debouncedSearch: null,
       tableHeaders: ["ID", "اسم المنهج", "نوع المنهج"],
       typeOptions: [
         { id: 1, name: "قرأن" },
@@ -51,7 +64,9 @@ export default {
     }),
 
     tableRowsCurricula() {
-      return this.Curriculas.map((cur) => {
+      const dataToDisplay = this.Curriculas;
+
+      return dataToDisplay.map((cur) => {
         // Find the type name based on the type ID
         const typeOption = this.typeOptions.find(
           (option) => option.id === cur.type
@@ -64,6 +79,10 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      const curriculaStore = useCurriculaStore();
+      curriculaStore.fetchCurricula(1, this.word);
+    },
     async handleDeleteCurriculas(id) {
       const curriculaStore = useCurriculaStore();
       await curriculaStore.deleteCurriculas(id);
@@ -76,6 +95,9 @@ export default {
   mounted() {
     const curriculaStore = useCurriculaStore();
     curriculaStore.fetchCurricula();
+    this.debouncedSearch = debounce(() => {
+      this.handleSearch(); // استخدم الدالة handleSearch
+    }, 700); // تأخير 1500 مللي ثانية
   },
 };
 </script>

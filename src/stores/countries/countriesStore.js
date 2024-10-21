@@ -9,9 +9,12 @@ export const useCountriesStore = defineStore("countries", {
   }),
 
   actions: {
-    async fetchCountries(page = 1) {
+    async fetchCountries(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_countries?page=${page}`);
+        const response = await axios.post(`fetch_countries?page=${page}`, {
+          word: word,
+        });
+
         const paginationStore = usePaginationStore();
 
         const { current_page, from, last_page, per_page, to, total } =
@@ -67,6 +70,18 @@ export const useCountriesStore = defineStore("countries", {
           "Error!",
           "There was an error deleting the country.",
           "error"
+        );
+      }
+    },
+    filterCountries(word) {
+      if (word === "") {
+        return this.countries; // Return all Curriculas if no search word
+      } else {
+        return this.countries.filter(
+          (dis) =>
+            dis.name.toLowerCase().includes(word.toLowerCase()) || // Search by name
+            dis.email.toLowerCase().includes(word.toLowerCase()) || // Search by email
+            dis.phone.includes(word) // Search by phone number
         );
       }
     },
