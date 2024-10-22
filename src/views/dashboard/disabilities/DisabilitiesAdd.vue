@@ -150,7 +150,7 @@ export default {
         if (!disabilitieStore) {
           throw new Error("Failed to load disabilities store");
         }
-        if (!this.form.title || !this.form.description) {
+        if (!this.form.imageSrc || !this.form.title || !this.form.description) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
