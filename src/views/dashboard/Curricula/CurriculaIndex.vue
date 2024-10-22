@@ -1,6 +1,6 @@
 <template>
+  <header-pages title="المناهج" button="+ اضافة منهج" link="/add-curricula" />
   <div class="curricula">
-    <header-pages title="المناهج" button="+ اضافة منهج" link="/add-curricula" />
     <div class="search">
       <i class="fa-solid fa-magnifying-glass"></i>
       <input
@@ -19,6 +19,10 @@
       viewLink="/view-curricula"
       @delete="handleDeleteCurriculas"
     />
+    <div v-if="errorMessage" class="error-message">
+      <h4>{{ errorMessage }}</h4>
+    </div>
+
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -42,6 +46,7 @@ export default {
     return {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "اسم المنهج", "نوع المنهج"],
       typeOptions: [
         { id: 1, name: "قرأن" },
@@ -79,10 +84,31 @@ export default {
     },
   },
   methods: {
-    handleSearch() {
-      const curriculaStore = useCurriculaStore();
-      curriculaStore.fetchCurricula(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const curriculaStore = useCurriculaStore();
+
+      // If the search word is empty, fetch all employees
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await curriculaStore.fetchCurricula(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await curriculaStore.fetchCurricula(1, this.word);
+
+      if (curriculaStore.Curriculas.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة"; // No results found
+      } else {
+        this.errorMessage = ""; // Clear error message if results found
+      }
+    },
+
     async handleDeleteCurriculas(id) {
       const curriculaStore = useCurriculaStore();
       await curriculaStore.deleteCurriculas(id);
@@ -101,3 +127,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

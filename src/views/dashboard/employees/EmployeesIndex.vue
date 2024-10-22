@@ -10,6 +10,7 @@
         @input="debouncedSearch"
       />
     </div>
+
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRows"
@@ -20,6 +21,7 @@
       @delete="handleDeleteEmployee"
       :ismaster="ismaster"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -47,6 +49,7 @@ export default {
     return {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: [
         "ID",
         "الصور",
@@ -91,9 +94,29 @@ export default {
     },
   },
   methods: {
-    handleSearch() {
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
+    },
+    async handleSearch() {
       const employeesStore = useEmployeesStore();
-      employeesStore.fetchEmployees(1, this.word);
+
+      // If the search word is empty, fetch all employees
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await employeesStore.fetchEmployees(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await employeesStore.fetchEmployees(1, this.word);
+
+      if (employeesStore.employees.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة"; // No results found
+      } else {
+        this.errorMessage = ""; // Clear error message if results found
+      }
     },
 
     handlePageChange(page) {
@@ -118,3 +141,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

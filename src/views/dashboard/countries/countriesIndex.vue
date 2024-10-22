@@ -19,6 +19,8 @@
       viewLink="/view-countries"
       @delete="handleDeleteCountry"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -46,6 +48,7 @@ export default {
     return {
       word: "",
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "اسم الدوله", "كود الدوله", "  كود الهاتف "],
     };
   },
@@ -77,10 +80,29 @@ export default {
     },
   },
   methods: {
-    handleSearch() {
-      const countriesStore = useCountriesStore();
-      countriesStore.fetchCountries(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const countriesStore = useCountriesStore();
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await countriesStore.fetchCountries(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await countriesStore.fetchCountries(1, this.word);
+
+      if (countriesStore.countries.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة";
+      } else {
+        this.errorMessage = "";
+      }
+    },
+
     async handleDeleteCountry(id) {
       const countriesStore = useCountriesStore();
       console.log(id);
@@ -103,3 +125,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

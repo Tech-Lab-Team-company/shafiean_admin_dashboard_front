@@ -22,6 +22,7 @@
       viewLink="/view-admins"
     />
   </div>
+  <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 </template>
 
 <script>
@@ -35,6 +36,7 @@ export default {
     return {
       word: "",
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "الصور", "اسم المنهج", "وصف المنهج"],
       tableRows: [
         [

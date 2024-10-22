@@ -74,7 +74,7 @@ import { useLessonsAddStore } from "@/stores/lessons/LessonsAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 import Multiselect from "vue-multiselect";
 import { mapState } from "pinia";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 export default {
@@ -154,7 +154,7 @@ export default {
           // !this.lessons.start_verse ||
           // !this.lessons.end_verse
         ) {
-          Swal.fire("Error", "Please fill in all fields", "error");
+          // Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 
