@@ -9,11 +9,12 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input
         type="text"
-        placeholder="بحث عن موظف..."
+        placeholder="بحث عن جمعيه..."
         v-model="word"
-        @input="debouncedSearch"
+        @input="handleInputChange"
       />
     </div>
+
     <TablesPageVue
       :headers="tableHeaders"
       :rows="tableRowsorganizations"
@@ -23,6 +24,8 @@
       editLink="/edit-associations"
       viewLink="/view-associations"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -38,14 +41,15 @@ import { mapState } from "pinia";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
 import { useOrganizationsStore } from "@/stores/organizations/organizationsStore";
-import { debounce } from "lodash"; // استيراد دالة debounce
+import { debounce } from "lodash";
 
 export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
-      word: "", // الكلمة المدخلة في البحث
+      word: "",
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: [
         "ID",
         "صوره",
@@ -53,7 +57,6 @@ export default {
         "أسم الجمعيه",
         "عنوان الجمعيه",
         "البريد الألكتروني المدير",
-
         "رقم الهاتف",
       ],
     };
@@ -87,18 +90,35 @@ export default {
     },
   },
   methods: {
-    handleSearch() {
-      const organizationsStore = useOrganizationsStore();
-      organizationsStore.fetchOrganizations(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const organizationsStore = useOrganizationsStore();
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await organizationsStore.fetchOrganizations(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await organizationsStore.fetchOrganizations(1, this.word);
+
+      if (organizationsStore.organizations.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة";
+      } else {
+        this.errorMessage = "";
+      }
+    },
+
     handlePageChange(page) {
       const organizationsStore = useOrganizationsStore();
       organizationsStore.fetchOrganizations(page);
     },
     async handleDeleteDisabilitie(id) {
       const organizationsStore = useOrganizationsStore();
-      // console.log(id);
-
       await organizationsStore.deleteOrganization(id);
     },
   },
@@ -106,8 +126,22 @@ export default {
     const organizationsStore = useOrganizationsStore();
     organizationsStore.fetchOrganizations();
     this.debouncedSearch = debounce(() => {
-      this.handleSearch(); // استخدم الدالة handleSearch
-    }, 700); // تأخير 1500 مللي ثانية
+      this.handleSearch();
+    }, 700);
   },
 };
 </script>
+
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

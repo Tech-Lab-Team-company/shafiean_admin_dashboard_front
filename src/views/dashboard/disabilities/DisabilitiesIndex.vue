@@ -23,6 +23,7 @@
       :viewLink="viewLink"
       @delete="handleDeleteDisabilitie"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -49,6 +50,7 @@ export default {
     return {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
       editLink: "/edit-disabilities",
       viewLink: "/view-disabilities",
@@ -83,10 +85,29 @@ export default {
   },
 
   methods: {
-    handleSearch() {
-      const disabilitiesStore = useDisabilitieStore();
-      disabilitiesStore.fetchDisabilitie(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const useDisabilitie = useDisabilitieStore();
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await useDisabilitie.fetchDisabilitie(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await useDisabilitie.fetchDisabilitie(1, this.word);
+
+      if (useDisabilitie.disabilitie.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة";
+      } else {
+        this.errorMessage = "";
+      }
+    },
+
     handlePageChange(page) {
       const useDisabilitie = useDisabilitieStore();
       useDisabilitie.fetchDisabilitie(page);
@@ -109,3 +130,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

@@ -9,7 +9,7 @@ export const useCitiesStore = defineStore("cities", {
   actions: {
     async fetchCities(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_cities/?page=${page}`, {
+        const response = await axios.post(`fetch_cities?page=${page}`, {
           word: word,
         });
 

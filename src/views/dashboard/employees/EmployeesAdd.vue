@@ -119,7 +119,7 @@ import "vue-multiselect/dist/vue-multiselect.css";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 export default {
   name: "EmployeesAdd",
@@ -195,7 +195,7 @@ export default {
           !this.form.password ||
           !this.form.role
         ) {
-          Swal.fire("Error", "Please fill in all fields", "error");
+          // Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
         await employeesStore.addEmployee(this.form); // Call addEmployee instead of fetchEmployees

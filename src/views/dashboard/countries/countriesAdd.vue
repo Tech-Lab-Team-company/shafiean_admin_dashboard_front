@@ -59,7 +59,7 @@
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
@@ -106,7 +106,7 @@ export default {
           !this.countries.code ||
           !this.countries.phone_code
         ) {
-          Swal.fire("Error", "Please fill in all fields", "error");
+          // Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 

@@ -19,6 +19,8 @@
       viewLink="/view-steps"
       @delete="handleDeleteSteps"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     <PaginationPage
       :currentPage="paginationCurrent"
       :totalPages="paginationLast"
@@ -40,8 +42,9 @@ export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
-      word: "", // الكلمة المدخلة في البحث
+      word: "",
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   "],
     };
   },
@@ -73,10 +76,29 @@ export default {
     },
   },
   methods: {
-    handleSearch() {
-      const stepsStore = useStepsStore();
-      stepsStore.getSteps(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const stepsStore = useStepsStore();
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await stepsStore.getSteps(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await stepsStore.getSteps(1, this.word);
+
+      if (stepsStore.steps.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة";
+      } else {
+        this.errorMessage = "";
+      }
+    },
+
     handlePageChange(page) {
       const stepsStore = useStepsStore();
       stepsStore.getSteps(page);
@@ -96,3 +118,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

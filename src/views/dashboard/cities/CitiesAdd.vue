@@ -45,7 +45,7 @@ import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useCitiesAddStore } from "@/stores/Cities/CitiesAddStore";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { mapState } from "pinia";
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
@@ -102,7 +102,7 @@ export default {
         }
 
         if (!this.Cities.title || !this.Cities.country_id) {
-          Swal.fire("Error", "Please fill in all fields", "error");
+          // Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 

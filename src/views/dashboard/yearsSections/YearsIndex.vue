@@ -23,6 +23,7 @@
       viewLink="/view-years"
       @delete="handleDeleteYears"
     />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
     <PaginationPage
       :currentPage="paginationCurrent"
@@ -52,6 +53,7 @@ export default {
     return {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
+      errorMessage: "",
       tableHeaders: ["ID", "اسم السنة الدراسية", "الدوله"],
     };
   },
@@ -83,10 +85,29 @@ export default {
   },
 
   methods: {
-    handleSearch() {
-      const yearsStore = useYearsStore();
-      yearsStore.getYears(1, this.word);
+    handleInputChange() {
+      this.errorMessage = "";
+      this.debouncedSearch();
     },
+    async handleSearch() {
+      const yearsStore = useYearsStore();
+      if (this.word.trim() === "") {
+        this.errorMessage = "";
+        await yearsStore.getYears(1);
+        return;
+      } else {
+        this.errorMessage = "";
+      }
+
+      await yearsStore.getYears(1, this.word);
+
+      if (yearsStore.years.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة";
+      } else {
+        this.errorMessage = "";
+      }
+    },
+
     handleDeleteYears(id) {
       const yearsStore = useYearsStore();
       console.log(id);
@@ -106,3 +127,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error-message {
+  color: white;
+  background-color: #ef0000a3;
+  margin-top: -39px;
+  margin-right: 23px;
+  width: 97.4%;
+  margin-bottom: -25px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 3px;
+}
+</style>

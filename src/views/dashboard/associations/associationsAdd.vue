@@ -199,7 +199,7 @@ import { useOrganizationAddStore } from "@/stores/organizations/organizationAddS
 import { mapState } from "pinia";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -314,7 +314,7 @@ export default {
           !this.form.manager_phone ||
           !this.form.manager_email
         ) {
-          Swal.fire("Error", "Please fill in all fields", "error");
+          // Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 
