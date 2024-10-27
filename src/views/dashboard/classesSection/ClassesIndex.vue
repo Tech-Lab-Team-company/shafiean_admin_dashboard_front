@@ -5,31 +5,33 @@
       button="+ اضافة فصل دراسي"
       link="/add-classes"
     />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+
+      <TablesPageVue
+        :headers="tableHeaders"
+        :rows="tableRowsClasses"
+        :pages="tablePages"
+        editLink="/edit-classes"
+        viewLink="/view-classes"
+        @delete="handleDeleteClasses"
+      />
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-
-    <TablesPageVue
-      :headers="tableHeaders"
-      :rows="tableRowsClasses"
-      :pages="tablePages"
-      editLink="/edit-classes"
-      viewLink="/view-classes"
-      @delete="handleDeleteClasses"
-    />
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 

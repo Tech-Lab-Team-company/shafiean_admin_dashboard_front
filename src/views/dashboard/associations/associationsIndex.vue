@@ -5,32 +5,34 @@
       button="اضافة جمعية"
       link="/add-associations"
     />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن جمعيه..."
-        v-model="word"
-        @input="handleInputChange"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن جمعيه..."
+          v-model="word"
+          @input="handleInputChange"
+        />
+      </div>
+
+      <TablesPageVue
+        :headers="tableHeaders"
+        :rows="tableRowsorganizations"
+        :pages="tablePages"
+        :showSelect="false"
+        @delete="handleDeleteDisabilitie"
+        editLink="/edit-associations"
+        viewLink="/view-associations"
+      />
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-
-    <TablesPageVue
-      :headers="tableHeaders"
-      :rows="tableRowsorganizations"
-      :pages="tablePages"
-      :showSelect="false"
-      @delete="handleDeleteDisabilitie"
-      editLink="/edit-associations"
-      viewLink="/view-associations"
-    />
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 

@@ -5,30 +5,32 @@
       button="+ اضافة اعاقه "
       link="/add-disabilities"
     />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+      <TablesPageVue
+        :headers="tableHeaders"
+        :rows="tableRowsDisabilitie"
+        :pages="tablePages"
+        :showSelect="false"
+        :editLink="editLink"
+        :viewLink="viewLink"
+        @delete="handleDeleteDisabilitie"
+      />
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-    <TablesPageVue
-      :headers="tableHeaders"
-      :rows="tableRowsDisabilitie"
-      :pages="tablePages"
-      :showSelect="false"
-      :editLink="editLink"
-      :viewLink="viewLink"
-      @delete="handleDeleteDisabilitie"
-    />
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 <script>

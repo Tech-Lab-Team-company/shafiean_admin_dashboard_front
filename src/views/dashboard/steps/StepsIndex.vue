@@ -1,31 +1,33 @@
 <template>
   <div class="Steps">
     <header-pages title="المراحل" button="+ اضافة مرحلة" link="/add-steps" />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+      <TablesPageVue
+        :headers="tableHeaders"
+        :rows="tableRowsSteps"
+        :showSelect="false"
+        :pages="tablePages"
+        editLink="/edit-steps"
+        viewLink="/view-steps"
+        @delete="handleDeleteSteps"
+      />
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-    <TablesPageVue
-      :headers="tableHeaders"
-      :rows="tableRowsSteps"
-      :showSelect="false"
-      :pages="tablePages"
-      editLink="/edit-steps"
-      viewLink="/view-steps"
-      @delete="handleDeleteSteps"
-    />
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 

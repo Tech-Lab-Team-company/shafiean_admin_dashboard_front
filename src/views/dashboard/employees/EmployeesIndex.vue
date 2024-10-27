@@ -1,32 +1,34 @@
 <template>
   <div class="employees">
     <HeadersPages title="الموظفين" button="+ اضافة موظف" link="/add-employee" />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+
+      <TablesPageVue
+        :headers="tableHeaders"
+        :rows="tableRows"
+        :pages="tablePages"
+        :showSelect="false"
+        :editLink="editLink"
+        :viewLink="viewLink"
+        @delete="handleDeleteEmployee"
+        :ismaster="ismaster"
+      />
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-
-    <TablesPageVue
-      :headers="tableHeaders"
-      :rows="tableRows"
-      :pages="tablePages"
-      :showSelect="false"
-      :editLink="editLink"
-      :viewLink="viewLink"
-      @delete="handleDeleteEmployee"
-      :ismaster="ismaster"
-    />
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 

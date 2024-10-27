@@ -88,7 +88,10 @@ label {
   object-fit: cover;
   border: 3px solid var(--main);
 }
-
+.input input:focus {
+  border: 2px solid var(--main);
+  transform: scale(1.06);
+}
 .multiselect__tags {
   min-height: 40px;
   display: block;

@@ -1,33 +1,35 @@
 <template>
   <header-pages title="المناهج" button="+ اضافة منهج" link="/add-curricula" />
-  <div class="curricula">
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+  <div class="alll">
+    <div class="curricula">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+      <tables-page-vue
+        :headers="tableHeaders"
+        :rows="tableRowsCurricula"
+        :pages="tablePages"
+        :showSelect="false"
+        editLink="/edit-curricula"
+        viewLink="/view-curricula"
+        @delete="handleDeleteCurriculas"
+      />
+      <div v-if="errorMessage" class="error-message">
+        <h4>{{ errorMessage }}</h4>
+      </div>
+
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
       />
     </div>
-    <tables-page-vue
-      :headers="tableHeaders"
-      :rows="tableRowsCurricula"
-      :pages="tablePages"
-      :showSelect="false"
-      editLink="/edit-curricula"
-      viewLink="/view-curricula"
-      @delete="handleDeleteCurriculas"
-    />
-    <div v-if="errorMessage" class="error-message">
-      <h4>{{ errorMessage }}</h4>
-    </div>
-
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
   </div>
 </template>
 

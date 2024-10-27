@@ -5,20 +5,22 @@
       button="اضافة صلاحية"
       link="/add-permission"
     />
-    <tables-page-vue
-      :headers="tableHeaders"
-      :rows="tableRows"
-      :pages="tablePages"
-      :showSelect="false"
-      :editLink="editLink"
-      :viewLink="viewLink"
-      @delete="handleDeletePermission"
-    />
-    <PaginationPage
-      :currentPage="paginationCurrent"
-      :totalPages="paginationLast"
-      @page-changed="handlePageChange"
-    />
+    <div class="alll">
+      <tables-page-vue
+        :headers="tableHeaders"
+        :rows="tableRows"
+        :pages="tablePages"
+        :showSelect="false"
+        :editLink="editLink"
+        :viewLink="viewLink"
+        @delete="handleDeletePermission"
+      />
+      <PaginationPage
+        :currentPage="paginationCurrent"
+        :totalPages="paginationLast"
+        @page-changed="handlePageChange"
+      />
+    </div>
   </div>
 </template>
 
