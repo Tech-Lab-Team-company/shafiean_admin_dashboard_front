@@ -9,6 +9,7 @@
             <input
               type="file"
               id="avatar"
+              class="form-control"
               @change="handleFileChange"
               accept="image/*"
               ref="fileInput"
@@ -26,9 +27,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error"
-              >{{ v$.form.imageSrc.$errors[0].$message }}
-            </span> -->
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
+              getErrorMessage(v$.form.imageSrc)
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -37,6 +38,7 @@
             <input
               type="text"
               id="name"
+              class="form-control"
               placeholder="أدخل أسم الموظف"
               v-model="form.name"
             />
@@ -148,7 +150,7 @@ export default {
   validations() {
     return {
       form: {
-        // imageSrc: { required },
+        imageSrc: { required },
         name: { required },
         phone: { required },
         email: { required, email },
@@ -189,6 +191,7 @@ export default {
           throw new Error("Failed to load employees store");
         }
         if (
+          !this.form.imageSrc ||
           !this.form.name ||
           !this.form.phone ||
           !this.form.email ||

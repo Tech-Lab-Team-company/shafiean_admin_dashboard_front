@@ -6,12 +6,14 @@
     margin-bottom: 0.3rem;
 
     input {
-      border: 1px solid var(--main);
-      border-radius: 6px;
-      height: 40px;
-      padding: 0 0.6rem;
+      border-radius: 33px;
+      padding: .75rem;
+      background-color: #f7f7f7;
+      padding-right: 10px;
+      border: unset;
+      font-family: "light";
+      font-size: 13px;
       width: 100%;
-      outline: none;
     }
   }
   button.save {
@@ -86,20 +88,17 @@ label {
   object-fit: cover;
   border: 3px solid var(--main);
 }
-.input input:focus {
-  border: 2px solid var(--main);
-  transform: scale(1.06);
-}
+
 .multiselect__tags {
   min-height: 40px;
   display: block;
   padding: 0px 12px 0px 9px !important;
-  border-radius: 5px;
+  border-radius: 40px;
   border: 1px solid #e8e8e8;
   background: #fff;
   font-size: 14px;
   margin-top: 7px;
-  border-radius: 12px !important;
+  border-radius: 33px !important;
 }
 .multiselect__select {
   line-height: 16px;
