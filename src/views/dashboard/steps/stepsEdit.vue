@@ -51,7 +51,7 @@
           />
 
           <span class="error-feedback" v-if="v$.Steps.disability_ids.$error">{{
-            getErrorMessage(v$.disability_ids)
+            getErrorMessage(v$.Steps.disability_ids)
           }}</span>
         </div>
 

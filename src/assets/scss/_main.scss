@@ -73,9 +73,17 @@ form {
   padding: 0.5rem;
   border-radius: 15px;
 }
-.input {
-  border-radius: 6px !important;
-}
+  input {
+    border-radius: 33px;
+    padding: .75rem;
+    background-color: #f7f7f7;
+    padding-right: 10px;
+    border: unset;
+    font-family: "light";
+    font-size: 13px;
+    width: 100%;
+  }
+
 input[type="search"] {
   width: 97% !important;
 }

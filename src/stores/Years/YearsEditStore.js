@@ -10,15 +10,14 @@ export const useYearsEditStore = defineStore("yearsEdit", {
   }),
   actions: {
     async getCountries() {
-      try {
-        const response = await axios.post("fetch_countries");
-        if (response.data.status === true) {
-          this.countries = response.data.data.data;
-        } else {
-          console.error("Error fetching countries.");
-        }
-      } catch (error) {
-        console.error("Error in getCountries:", error);
+      const response = await axios.post("fetch_countries");
+      if (response.data.status === true) {
+        this.countries = response.data.data.data;
+        this.countries.forEach((country) => {
+          this.country_id.push(country.id);
+        });
+      } else {
+        console.log("Error fetching countries.");
       }
     },
 

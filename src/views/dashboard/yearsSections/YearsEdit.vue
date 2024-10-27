@@ -10,19 +10,19 @@
             <input
               type="text"
               placeholder="أسم السنه"
-              v-model="form.title"
+              v-model="years.title"
               required
             />
           </div>
-          <span class="error-feedback" v-if="v$.form.title.$error">
-            {{ getErrorMessage(v$.form.title) }}
+          <span class="error-feedback" v-if="v$.years.title.$error">
+            {{ getErrorMessage(v$.years.title) }}
           </span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Country">أختر الدوله</label>
           <multiselect
             id="Country"
-            v-model="form.Country_values"
+            v-model="years.country"
             :options="CountryOptions"
             track-by="id"
             label="title"
@@ -30,8 +30,8 @@
             @update:model-value="updatecountryValue"
           ></multiselect>
 
-          <span class="error-feedback" v-if="v$.form.country_id.$error">
-            {{ getErrorMessage(v$.form.country_id) }}
+          <span class="error-feedback" v-if="v$.years.country_id.$error">
+            {{ getErrorMessage(v$.years.country_id) }}
           </span>
         </div>
       </div>
@@ -62,9 +62,9 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      form: {
+      years: {
         title: "",
-        country_id: "",
+        country: "",
       },
       Country_values: {},
       CountryOptions: [],
@@ -73,7 +73,7 @@ export default {
 
   validations() {
     return {
-      form: {
+      years: {
         title: { required },
         country_id: { required },
       },
@@ -93,31 +93,32 @@ export default {
       }
       return "";
     },
-    updatecountryValue(selected) {
-      this.Country_values = selected;
-      this.form.country_id = selected ? selected.id : null;
-
-      console.log("Selected Country ID:", this.form.country_id);
+    updatecountryValue() {
+      this.years.country_id = this.Country_values
+        ? this.Country_values.id
+        : null;
+      console.log("Selected Country ID:", this.years.country_id);
     },
+
     async fetchData() {
       const store = useYearsEditStore();
       const id = this.$route.params.id;
       await store.fetchYears(id);
-      this.form = store.years;
+      this.years = store.years;
       await this.fetchEidtCountries();
 
       this.Country_values = this.CountryOptions.find(
-        (country) => country.id === this.form.country_id
+        (country) => country.id === this.years.country
       );
     },
     async submitForm() {
       const store = useYearsEditStore();
       const id = this.$route.params.id;
       await store.updateYears(id, {
-        title: this.form.title,
-        country_id: this.form.country_id,
+        title: this.years.title,
+        country_id: this.years.country,
       });
-      if (!this.form.title || !this.form.country_id) {
+      if (!this.years.title || !this.years.country) {
         Swal.fire("Error", "Please fill in all fields", "error");
         return;
       } else {
@@ -125,13 +126,24 @@ export default {
       }
       this.$router.go(-1);
     },
+    // async fetchEidtCountries() {
+    //   const store = useYearsEditStore();
+    //   try {
+    //     await store.getCountries();
+    //     this.CountryOptions = store.countries || [];
+    //   } catch (error) {
+    //     console.error("Error fetching countries:", error);
+    //   }
+    // },
     async fetchEidtCountries() {
       const store = useYearsEditStore();
-      try {
-        await store.getCountries();
-        this.CountryOptions = store.countries || [];
-      } catch (error) {
-        console.error("Error fetching countries:", error);
+      await store.getCountries();
+      this.CountryOptions = store.countries || [];
+
+      if (this.years.country) {
+        this.Country_values = this.CountryOptions.find(
+          (country) => country.id === this.years.country
+        );
       }
     },
 

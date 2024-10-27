@@ -46,7 +46,7 @@
         </div>
         <div class="col-lg-12 col-md-6 col-12">
           <div class="input">
-            <label for=""> الوصف</label>
+            <label for=""> وصف المنهج</label>
             <textarea
               id="description"
               name="w3review"
@@ -56,6 +56,9 @@
               v-model="lessons.title"
             >
             </textarea>
+            <span class="error-feedback" v-if="v$.lessons.title.$error">
+              {{ getErrorMessage(v$.lessons.title) }}
+            </span>
           </div>
         </div>
       </div>
@@ -85,10 +88,7 @@ export default {
       v$: useVuelidate(),
       lessons: {
         title: "",
-        // start_verse: "",
-        // end_verse: "",
         quraan_id: null,
-
         stage_id: "",
       },
       StagesOptions: [], // Updated to hold fetched options
@@ -104,9 +104,7 @@ export default {
   validations() {
     return {
       lessons: {
-        // title: { required },
-        // start_verse: { required },
-        // end_verse: { required },
+        title: { required },
         quraan_id: { required },
         stage_id: { required },
       },
@@ -149,10 +147,8 @@ export default {
 
         if (
           !this.lessons.stage_id ||
-          !this.lessons.quraan_id
-          // !this.lessons.title
-          // !this.lessons.start_verse ||
-          // !this.lessons.end_verse
+          !this.lessons.quraan_id ||
+          !this.lessons.title
         ) {
           // Swal.fire("Error", "Please fill in all fields", "error");
           return;
