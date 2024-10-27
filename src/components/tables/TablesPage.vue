@@ -37,7 +37,7 @@
                 <div class="action-icons">
                   <i
                     v-if="isMaster(rowIndex)"
-                    class="fa-solid fa-trash action-icon"
+                    class="red fa-solid fa-trash action-icon"
                     @click="handleIconClick('delete', row[0])"
                   ></i>
                   <i

@@ -1,15 +1,18 @@
 table.table {
   text-align: center;
   font-family: "regular";
-border: 1px solid #ebeaed !important;
 
   border-radius: 10px;
   margin-top: 0.5rem;
-  padding: 5px;
+  padding: 2rem !important;
   thead {
+    border-bottom: 1px solid #ebeaed !important;
     tr {
       
       th {
+        
+
+        font-size: 0.9rem;
         background: none !important;
         color: #828c8d;
         text-align: start !important;
@@ -17,7 +20,9 @@ border: 1px solid #ebeaed !important;
     }
   }
   tbody {
+    border-bottom: 1px solid #ebeaed !important;
     tr {
+      color: #000;
       td {
         text-align: center !important;
       }
@@ -36,7 +41,7 @@ img.image {
   border-radius: 50%;
 }
 i {
-  color: var(--main);
+  color:#828c8d;
   margin: 0 5px;
   cursor: pointer;
 }
@@ -47,9 +52,11 @@ i {
   border-radius: 10px;
 }
 .search {
-  border: 1px solid var(--main);
+  background-color: #f7f7f7 !important;
+
+
   padding: 0.2rem;
-  border-radius: 10px;
+  border-radius: 33px !important;
   width: 97%;
   display: flex;
   align-items: center;

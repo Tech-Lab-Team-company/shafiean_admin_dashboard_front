@@ -5,24 +5,26 @@
       button="+ اضافة مسؤل"
       link="/add-adminInformation"
     />
-    <div class="search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="بحث عن موظف..."
-        v-model="word"
-        @input="debouncedSearch"
+    <div class="alll">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          placeholder="بحث عن موظف..."
+          v-model="word"
+          @input="debouncedSearch"
+        />
+      </div>
+      <tables-page-vue
+        :headers="tableHeaders"
+        :rows="tableRows"
+        :pages="tablePages"
+        editLink="/edit-adminInformation"
+        viewLink="/view-admins"
       />
     </div>
-    <tables-page-vue
-      :headers="tableHeaders"
-      :rows="tableRows"
-      :pages="tablePages"
-      editLink="/edit-adminInformation"
-      viewLink="/view-admins"
-    />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
   </div>
-  <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 </template>
 
 <script>

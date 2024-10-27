@@ -73,17 +73,48 @@ form {
   padding: 0.5rem;
   border-radius: 15px;
 }
+.input {
   input {
-    border-radius: 33px;
-    padding: .75rem;
-    background-color: #f7f7f7;
+    border-radius: 33px !important;
+
+    padding: 0.75rem;
+    background-color: #f7f7f7 !important;
     padding-right: 33px !important;
-    border: unset;
+    border: none !important;
     font-family: "light";
     font-size: 13px;
     width: 100%;
   }
+}
+.search {
+  input {
+    border: none !important   ;
+    background: none !important;
+  }
+}
 
 input[type="search"] {
   width: 97% !important;
 }
+.multiselect__tags  {
+  border-radius: 33px !important; 
+  border: 1px solid #e8e8e8 !important;
+  padding: 0.75rem;
+  font-family: "light";
+  font-size: 13px;
+  width: 100% !important;
+
+}
+.alll {
+  border: 1px solid #ebeaed !important;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  padding: 2rem !important;
+}
+.action-icons {
+  .red{
+    color: red;
+  }
+}
+
+

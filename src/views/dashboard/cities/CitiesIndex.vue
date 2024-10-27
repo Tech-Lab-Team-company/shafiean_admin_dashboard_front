@@ -1,30 +1,32 @@
 <template>
   <header-pages title="المدن" button="+ اضافة مدينة" link="/add-cities" />
-  <div class="search">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input
-      type="text"
-      placeholder="بحث عن موظف..."
-      v-model="word"
-      @input="debouncedSearch"
+  <div class="alll">
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="بحث عن موظف..."
+        v-model="word"
+        @input="debouncedSearch"
+      />
+    </div>
+    <tables-page-vue
+      :headers="tableHeaders"
+      :rows="tableRowsCities"
+      :pages="tablePages"
+      :showSelect="false"
+      editLink="/edit-cities"
+      viewLink="/view-cities"
+      @delete="handleDeleteCities"
+    />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <PaginationPage
+      :currentPage="paginationCurrent"
+      :totalPages="paginationLast"
+      @page-changed="handlePageChange"
     />
   </div>
-  <tables-page-vue
-    :headers="tableHeaders"
-    :rows="tableRowsCities"
-    :pages="tablePages"
-    :showSelect="false"
-    editLink="/edit-cities"
-    viewLink="/view-cities"
-    @delete="handleDeleteCities"
-  />
-  <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-  <PaginationPage
-    :currentPage="paginationCurrent"
-    :totalPages="paginationLast"
-    @page-changed="handlePageChange"
-  />
 </template>
 
 <script>
