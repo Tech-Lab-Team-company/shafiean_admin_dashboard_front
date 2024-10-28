@@ -79,15 +79,15 @@ export default {
     }),
 
     tableRows() {
-      // استخدم filteredEmployees إذا كانت كلمة البحث موجودة، وإلا استخدم employees
-      const dataToDisplay = this.employees;
+      const dataToDisplay = this.employees || [];
+      console.log(dataToDisplay); // Check the structure of employees
       return dataToDisplay.map((emp) => [
         emp.id,
         emp.image,
         emp.name,
         emp.email,
         emp.phone,
-        emp.role,
+        emp.role ? emp.role : "N/A", // Add fallback if role is missing
       ]);
     },
 

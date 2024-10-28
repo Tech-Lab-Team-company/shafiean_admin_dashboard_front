@@ -139,7 +139,7 @@ export default {
         phone: "",
         email: "",
         password: "",
-        role: [],
+        role: "",
         image: null, // Ensure `image` is initialized as null
         imageSrc: "",
       },

@@ -75,6 +75,10 @@ i {
     width: 90%;
     padding: 0 0.3rem;
   }
+  .input input:focus {
+    border: 2px solid var(--main);
+    transform: scale(1.06);
+  }
 }
 
 .header {

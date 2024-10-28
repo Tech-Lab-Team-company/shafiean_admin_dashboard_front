@@ -12,7 +12,6 @@
               type="text"
               placeholder="اسم المرحلة"
               v-model="steps.title"
-              required
             />
             <span class="error-feedback" v-if="v$.steps.title.$error">
               {{ getErrorMessage(v$.steps.title) }}
@@ -51,7 +50,6 @@
             :close-on-select="false"
             @update:model-value="handleCurriculaChange"
             placeholder="اختر منهجاً دراسياً"
-            required
           ></multiselect>
           <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">
             {{ getErrorMessage(v$.steps.curriculum_id) }}
@@ -102,7 +100,6 @@
               rows="4"
               placeholder="وصف المرحلة"
               v-model="steps.description"
-              required
             >
             </textarea>
           </div>
@@ -217,7 +214,7 @@ export default {
           return;
         }
         await stepsStore.addStepsData(this.steps);
-        this.$router.push("/steps");
+        // this.$router.push("/steps");
       } catch (error) {
         console.error("Error submitting form:", error);
       }
