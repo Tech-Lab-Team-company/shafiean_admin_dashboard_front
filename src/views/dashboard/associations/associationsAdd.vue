@@ -138,9 +138,9 @@
             :close-on-select="true"
             @update:model-value="updateCountryValue"
           />
-          <!-- <span class="error-feedback" v-if="v$.form.country.$error">{{
-            v$.form.country.$errors[0].$message
-          }}</span> -->
+          <span class="error-feedback" v-if="v$.form.country_id.$error">{{
+            getErrorMessage(v$.form.country_id)
+          }}</span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="city">مدينه</label>
@@ -153,9 +153,9 @@
             :close-on-select="true"
             @update:model-value="updateCityValue"
           />
-          <!-- <span class="error-feedback" v-if="v$.form.city.$error">{{
-            v$.form.city.$errors[0].$message
-          }}</span> -->
+          <span class="error-feedback" v-if="v$.form.city_id.$error">{{
+            getErrorMessage(v$.form.city_id)
+          }}</span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="disabilities">الاعاقات</label>
@@ -169,17 +169,17 @@
             :close-on-select="false"
             @update:model-value="updateDisabilitiesValue"
           />
-          <!-- <span class="error-feedback" v-if="v$.form.disability_ids.$error">{{
-            v$.form.disability_ids.$errors[0].$message
-          }}</span> -->
+          <span class="error-feedback" v-if="v$.form.disability_ids.$error">{{
+            getErrorMessage(v$.form.disability_ids)
+          }}</span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="link">Link</label>
           <div class="input">
             <input type="url" placeholder="Link" v-model="form.website_link" />
-            <!-- <span class="error-feedback" v-if="v$.form.website_link.$error">{{
-              v$.form.website_link.$errors[0].$message
-            }}</span> -->
+            <span class="error-feedback" v-if="v$.form.website_link.$error">{{
+              getErrorMessage(v$.form.website_link)
+            }}</span>
           </div>
         </div>
       </div>
@@ -245,6 +245,10 @@ export default {
         manager_name: { required },
         manager_phone: { required },
         manager_email: { required, email },
+        country_id: { required },
+        city_id: { required },
+        disability_ids: { required },
+        website_link: { required },
       },
     };
   },
@@ -313,7 +317,10 @@ export default {
           !this.form.address ||
           !this.form.manager_name ||
           !this.form.manager_phone ||
-          !this.form.manager_email
+          !this.form.manager_email ||
+          !this.form.country_id ||
+          !this.form.city_id ||
+          !this.form.website_link
         ) {
           // Swal.fire("Error", "Please fill in all fields", "error");
           return;
