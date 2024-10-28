@@ -29,9 +29,9 @@
               <img :src="form.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
-              v$.form.imageSrc.$errors[0].$message
-            }}</span> -->
+            <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
+              getErrorMessage(v$.form.imageSrc)
+            }}</span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -236,7 +236,7 @@ export default {
   validations() {
     return {
       form: {
-        // imageSrc: { required },
+        imageSrc: { required },
         name: { required },
         licence_number: { required },
         phone: { required },
@@ -305,6 +305,7 @@ export default {
           throw new Error("Failed to load organizations store");
         }
         if (
+          !this.form.imageSrc ||
           !this.form.name ||
           !this.form.licence_number ||
           !this.form.phone ||

@@ -115,11 +115,11 @@ export const useStepsAddStore = defineStore("StepsAdd", {
         }
       } catch (error) {
         console.error("Error saving Steps:", error);
-        Swal.fire(
-          "Error",
-          "An error occurred while saving the steps.",
-          "error"
-        );
+        // Swal.fire(
+        //   "Error",
+        //   "An error occurred while saving the steps.",
+        //   "error"
+        // );
       }
     },
   },

@@ -84,6 +84,8 @@ form {
     font-family: "light";
     font-size: 13px;
     width: 100%;
+    margin-right: -21px !important;
+
   }
 }
 .search {
@@ -116,5 +118,9 @@ input[type="search"] {
     color: red;
   }
 }
+label{
+  margin-right: 6px !important  ;
+}
+
 
 
