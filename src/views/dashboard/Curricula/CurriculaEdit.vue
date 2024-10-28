@@ -102,10 +102,10 @@ export default {
       const id = this.$route.params.id;
       await store.updateCurriculum(id, {
         title: this.Curriculas.title,
-        type: this.Curriculas.type,
+        type: this.Curriculas.city_id,
         status: this.Curriculas.status,
       });
-      if (!this.Curriculas.title || !this.Curriculas.type) {
+      if (!this.Curriculas.title || !this.Curriculas.city_id) {
         Swal.fire("Error", "Please fill in all fields", "error");
 
         return;
