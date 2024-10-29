@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: localStorage.getItem("token") || null,
-    data: {},
+    data: localStorage.getItem("user") || null,
   }),
   actions: {
     async login(credentials) {
@@ -13,11 +13,12 @@ export const useAuthStore = defineStore("auth", {
         const response = await axios.post("admin/login", credentials);
 
         this.token = response.data.data.token;
-        this.data = response.data.data;
-        console.log(this.data);
+        this.data = response.data.data.admin;
+        console.log(this.data + "login data");
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
         localStorage.setItem("token", this.token);
+        localStorage.setItem("user", JSON.stringify(this.data));
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -35,7 +36,6 @@ export const useAuthStore = defineStore("auth", {
       try {
         const res = axios.post("admin/logout");
 
-        // console.log(res.status);
         if (res) {
           this.token = null;
           this.data = {};

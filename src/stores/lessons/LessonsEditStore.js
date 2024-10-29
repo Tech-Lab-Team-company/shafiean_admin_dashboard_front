@@ -15,7 +15,7 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         console.log(response.data.data.data, "Stages");
 
         if (response.data.status === true) {
-          this.lesson = response.data.data.data; // Assign the fetched stages to lesson
+          this.lesson = response.data.data.data;
 
           this.lesson.forEach((ste) => {
             this.Stages_id.push(ste.id);
@@ -42,11 +42,11 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
 
     async updateLessons(id, updatedData) {
       try {
+        console.log(updatedData, "updatedDataaaaaaaaaaaaaaa");
+
         const formData = new FormData();
         formData.append("id", id);
         formData.append("title", updatedData.title);
-        // formData.append("start_verse", updatedData.start_verse);
-        // formData.append("end_verse", updatedData.end_verse);
         formData.append("stage_id", updatedData.stage_id);
         formData.append("quraan", updatedData.quraan_id);
 

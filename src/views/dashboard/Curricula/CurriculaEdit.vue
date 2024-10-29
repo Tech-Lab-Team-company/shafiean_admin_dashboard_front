@@ -11,9 +11,9 @@
               placeholder="اسم المنهج"
               v-model="Curriculas.title"
             />
-            <span class="error-feedback" v-if="v$.Curriculas.title.$error">{{
-              getErrorMessage(v$.Curriculas.title)
-            }}</span>
+            <span class="error-feedback" v-if="v$.Curriculas.title.$error">
+              {{ getErrorMessage(v$.Curriculas.title) }}
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -28,8 +28,8 @@
             @update:model-value="updateTypeId"
           ></multiselect>
           <span class="error-feedback" v-if="v$.Curriculas.type.$error">
-            {{ getErrorMessage(v$.Curriculas.type) }}</span
-          >
+            {{ getErrorMessage(v$.Curriculas.type) }}
+          </span>
         </div>
       </div>
       <div class="all-btn">
@@ -48,6 +48,7 @@ import { useCurriculumEditStore } from "@/stores/curricula/curriculaEditStore";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import Swal from "sweetalert2";
+
 export default {
   name: "CurriculaEdit",
   components: {
@@ -87,39 +88,46 @@ export default {
     updateTypeId(selectedOption) {
       this.Curriculas.type = selectedOption ? selectedOption.id : null;
     },
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
     async fetchData() {
-      const store = useCurriculumEditStore();
-      const id = this.$route.params.id;
+      try {
+        const store = useCurriculumEditStore();
+        const id = this.$route.params.id;
+        await store.fetchCurricula(id);
 
-      await store.fetchCurricula(id);
-      this.Curriculas = store.Curriculas;
+        // Ensure Curriculas is always an object
+        this.Curriculas = store.Curriculas || { title: "", type: null };
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        Swal.fire("Error", "Failed to load data", "error");
+      }
     },
     async updateCurricula() {
       const store = useCurriculumEditStore();
       const id = this.$route.params.id;
-      await store.updateCurriculum(id, {
-        title: this.Curriculas.title,
-        type: this.Curriculas.city_id,
-        status: this.Curriculas.status,
-      });
-      if (!this.Curriculas.title || !this.Curriculas.city_id) {
-        Swal.fire("Error", "Please fill in all fields", "error");
 
+      if (!this.Curriculas.title || !this.Curriculas.type) {
+        Swal.fire("Error", "Please fill in all fields", "error");
         return;
       }
-      this.$router.go(-1);
+
+      try {
+        await store.updateCurriculum(id, {
+          title: this.Curriculas.title,
+          type: this.Curriculas.type,
+        });
+        this.$router.go(-1);
+      } catch (error) {
+        console.error("Failed to update curriculum:", error);
+        Swal.fire("Error", "Failed to update curriculum", "error");
+      }
     },
     Edit() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        console.log("errorrrrrr save");
+        console.log("Error: Validation failed");
       }
     },
   },
-
   mounted() {
     this.fetchData();
   },

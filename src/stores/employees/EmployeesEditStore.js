@@ -31,7 +31,7 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
         formData.append("name", updatedData.name);
         formData.append("phone", updatedData.phone);
         formData.append("email", updatedData.email);
-        formData.append("permissions", JSON.stringify(updatedData.permissions));
+        formData.append("permissions", updatedData.job_title);
 
         // Append the image file if available
         if (updatedData.image) {
