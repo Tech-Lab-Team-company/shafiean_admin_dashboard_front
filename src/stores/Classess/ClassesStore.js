@@ -48,7 +48,7 @@ export const useClassesStore = defineStore("Classes", {
         });
 
         if (result.isConfirmed) {
-          await axios.post("delete_year", { id });
+          await axios.post("delete_season", { id });
 
           const index = this.Classes.findIndex((cl) => cl.id === id);
           if (index !== -1) {
