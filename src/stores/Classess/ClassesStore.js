@@ -11,7 +11,7 @@ export const useClassesStore = defineStore("Classes", {
   actions: {
     async getClasses(page = 1, word = "") {
       try {
-        const response = await axios.post(`fetch_years?page=${page}`, {
+        const response = await axios.post(`fetch_seasons?page=${page}`, {
           word: word,
         });
 
