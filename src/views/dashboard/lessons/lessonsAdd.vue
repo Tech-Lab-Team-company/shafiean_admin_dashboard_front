@@ -43,6 +43,9 @@
             track-by="id"
             @update:model-value="updateTypeId"
           ></multiselect>
+          <span class="error-feedback" v-if="v$.lessons.quraan_id.$error">
+            {{ getErrorMessage(v$.lessons.quraan_id) }}
+          </span>
         </div>
         <div class="col-lg-12 col-md-6 col-12">
           <div class="input">

@@ -329,7 +329,9 @@ export default {
       await store.fetchOrganizations(id);
 
       this.organizations = store.organizations;
-
+      if (this.organizations.image) {
+        this.organizations.imageSrc = this.organizations.image;
+      }
       await store.getCountries();
       await store.getcities();
       await store.getDisabilities();
@@ -358,6 +360,7 @@ export default {
         throw new Error("Failed to load organizations store");
       }
       if (
+        !this.organizations.imageSrc ||
         !this.organizations.name ||
         !this.organizations.licence_number ||
         !this.organizations.phone ||
