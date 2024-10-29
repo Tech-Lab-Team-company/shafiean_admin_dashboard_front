@@ -90,11 +90,11 @@ export default {
   validations() {
     return {
       lessons: {
-        // title: { required },
+        title: { required },
         // start_verse: { required },
         // end_verse: { required },
         stage_id: { required },
-        quraan_id: { required },
+        // quraan_id: { required },
       },
     };
   },
@@ -136,25 +136,53 @@ export default {
         : null;
     },
     async updateLessons() {
-      const store = useLessonsEditStore();
-      const id = this.$route.params.id;
-      await store.updateLessons(id, this.lessons);
-      if (!this.lessons.stage_id || !this.lessons.quraan_id) {
-        Swal.fire("Error", "Please fill in all fields", "error");
+      console.log("stage_id", this.lessons.stage_id);
 
+      if (
+        !this.lessons.title ||
+        !this.lessons.stage_id
+        // !this.lessons.quraan_id
+      ) {
+        // Swal.fire("Error", "Please fill in all fields", "error");
         return;
       }
-      this.$router.go(-1);
+
+      const store = useLessonsEditStore();
+      const id = this.$route.params.id;
+
+      console.log("Payload being sent:", this.lessons); // Debugging payload
+
+      try {
+        await store.updateLessons(id, this.lessons); // Sending the request
+        Swal.fire("Success", "Lesson updated successfully", "success");
+        this.$router.go(-1);
+      } catch (error) {
+        console.error("Error details:", error); // Detailed logging of the error
+        console.error("Response data:", error.response?.data); // API response
+        Swal.fire(
+          "Error",
+          error.response?.data.message || "Update failed",
+          "error"
+        );
+      }
     },
+
     Edit() {
       this.v$.$validate();
       if (!this.v$.$error) {
         console.log("lessons");
+        // this.updateLessons();
       }
     },
   },
   mounted() {
     this.fetchData();
+  },
+  watch: {
+    Stages_values(newVal) {
+      this.lessons.stage_id = newVal ? newVal.id : null;
+      console.log("Updated via watcher:", this.lessons.stage_id);
+    },
   },
 };
 </script>

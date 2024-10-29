@@ -102,6 +102,9 @@
               v-model="steps.description"
             >
             </textarea>
+            <span class="error-feedback" v-if="v$.steps.description.$error">
+              {{ getErrorMessage(v$.steps.description) }}
+            </span>
           </div>
         </div>
       </div>
@@ -161,7 +164,7 @@ export default {
         curriculum_id: { required },
         disability_ids: { required },
         // type_id: { required },
-        // description: { required },
+        description: { required },
       },
     };
   },
@@ -179,16 +182,19 @@ export default {
       }
       return "";
     },
+
     handleTypeChange() {
       this.steps.type_id = this.selectedType_values
         ? this.selectedType_values.map((type) => type.id)
         : "";
     },
+
     handleCurriculaChange() {
       this.steps.curriculum_id = this.curricula_values
         ? this.curricula_values.id
         : null;
     },
+
     handleDisabilitiesChange() {
       if (Array.isArray(this.disabilities_values)) {
         this.steps.disability_ids = this.disabilities_values.map(
@@ -200,25 +206,24 @@ export default {
     },
 
     async submitForm() {
+      this.v$.$touch(); // Mark all fields as touched to show errors
+      if (this.v$.$error) {
+        // If there are validation errors, stop submission
+        console.error("Form validation failed.");
+        return;
+      }
+
       try {
         const stepsStore = useStepsAddStore();
-        if (!stepsStore) {
-          throw new Error("Failed to load steps store");
-        }
-        if (
-          !this.steps.title ||
-          !this.steps.curriculum_id ||
-          !this.steps.disability_ids
-          // !this.steps.type_id
-        ) {
-          return;
-        }
-        await stepsStore.addStepsData(this.steps);
-        // this.$router.push("/steps");
+        if (!stepsStore) throw new Error("Failed to load steps store");
+
+        await stepsStore.addStepsData(this.steps); // Save the form data
+        this.$router.push("/steps"); // Navigate to steps page after successful save
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     },
+
     async fetchData() {
       try {
         const stepsStore = useStepsAddStore();
