@@ -74,19 +74,19 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for="">الصلاحيات</label>
-          <multiselect
-            v-model="employee.permissions"
-            :options="permissionOptions"
-            :multiple="true"
-            :close-on-select="false"
-          ></multiselect>
+<!--        <div class="col-lg-6 col-md-6 col-sm-12">-->
+<!--          <label for="">الصلاحيات</label>-->
+<!--          <multiselect-->
+<!--            v-model="employee.permissions"-->
+<!--            :options="permissionOptions"-->
+<!--            :multiple="true"-->
+<!--            :close-on-select="false"-->
+<!--          ></multiselect>-->
 
-          <span class="error-feedback" v-if="v$.employee.permissions.$error">{{
-            getErrorMessage(v$.employee.permissions)
-          }}</span>
-        </div>
+<!--          <span class="error-feedback" v-if="v$.employee.permissions.$error">{{-->
+<!--            getErrorMessage(v$.employee.permissions)-->
+<!--          }}</span>-->
+<!--        </div>-->
       </div>
       <div class="all-btn">
         <button type="submit" class="save" @click="Edit()">تعديل</button>

@@ -11,6 +11,7 @@
           @input="debouncedSearch"
         />
       </div>
+
       <tables-page-vue
         :headers="tableHeaders"
         :rows="tableRowsCurricula"

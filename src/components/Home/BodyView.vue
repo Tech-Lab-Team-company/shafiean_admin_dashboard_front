@@ -6,6 +6,7 @@
         <router-link to="/students" class="btn">عرض الكل</router-link>
       </div>
       <!-- ======= table team ======= -->
+
       <div class="table-responsive">
         <table class="table" style="text-align: start">
           <thead>

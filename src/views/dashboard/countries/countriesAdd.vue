@@ -1,7 +1,6 @@
 <template>
   <div class="add-countries">
     <header-pages title="اضافة دوله" link="/countries" :showButton="false" />
-
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
