@@ -11,6 +11,7 @@
           <router-link to="/employees" class="btn btn_title_page">
             الموظفين</router-link
           >
+
           <router-link to="/disabilities" class="btn btn_title_page"
             >الاعاقات</router-link
           >

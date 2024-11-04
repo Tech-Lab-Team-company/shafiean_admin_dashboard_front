@@ -20,7 +20,7 @@ export const useStepsStore = defineStore("steps", {
           response.data.data.meta;
 
         if (response.data.status == true) {
-          console.log(this.steps, "Diaaa");
+          // console.log(this.steps, "Diaaa");
           this.steps = response.data.data.data;
           paginationStore.setPage(current_page);
           paginationStore.setfrom(from);

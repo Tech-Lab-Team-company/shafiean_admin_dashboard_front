@@ -15,7 +15,6 @@
               ref="fileInput"
               style="display: none"
             />
-
             <div
               v-if="!form.imageSrc"
               class="upload-icon"

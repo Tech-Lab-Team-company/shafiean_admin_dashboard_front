@@ -1,7 +1,6 @@
 <template>
   <div class="editdisabilities">
-    <HeaderPages title="تعديل اعاقه" :showButton="false" />
-
+    <HeaderPages :showButton="false" title="تعديل اعاقه" />
     <div class="disabilities-edit">
       <form action="" @submit.prevent="updateDisabilitie">
         <div class="row">
@@ -9,12 +8,12 @@
             <div class="avatar-uploader">
               <label for="avatar">صوره</label>
               <input
-                type="file"
                 id="avatar"
-                @change="handleFileChange"
-                accept="image/*"
                 ref="fileInput"
+                accept="image/*"
                 style="display: none"
+                type="file"
+                @change="handleFileChange"
               />
               <div class="upload-icon" @click="triggerFileInput">
                 <i class="fa fa-camera"></i>
@@ -34,20 +33,17 @@
                 />
                 <i class="fa fa-times delete-icon" @click="removeImage"></i>
               </div>
-              <span class="error-feedback" v-if="v$.disabilitie.imageSrc.$error"
-                >{{ getErrorMessage(v$.disabilitie.imageSrc) }}
-              </span>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-12">
             <label for=""> اسم الاعاقه</label>
             <div class="input">
               <input
-                type="text"
-                placeholder="أدخل اسم الاعاقه"
                 v-model="disabilitie.title"
+                placeholder="أدخل اسم الاعاقه"
+                type="text"
               />
-              <span class="error-feedback" v-if="v$.disabilitie.title.$error">{{
+              <span v-if="v$.disabilitie.title.$error" class="error-feedback">{{
                 getErrorMessage(v$.disabilitie.title)
               }}</span>
             </div>
@@ -57,24 +53,24 @@
             <div class="input">
               <textarea
                 id="description"
-                name="w3review"
-                rows="4"
-                placeholder="وصف الاعاقه"
                 v-model="disabilitie.description"
+                name="w3review"
+                placeholder="وصف الاعاقه"
                 required
+                rows="4"
               >
               </textarea>
               <span
-                class="error-feedback"
                 v-if="v$.disabilitie.description.$error"
+                class="error-feedback"
                 >{{ getErrorMessage(v$.disabilitie.description) }}</span
               >
             </div>
           </div>
         </div>
         <div class="all-btn">
-          <button type="submit" class="save" @click="edit()">تعديل</button>
-          <button type="button" class="bake" @click="$router.go(-1)">
+          <button class="save" type="submit" @click="edit()">تعديل</button>
+          <button class="bake" type="button" @click="$router.go(-1)">
             رجوع
           </button>
         </div>
@@ -89,6 +85,7 @@ import { useDisabilitieEditStore } from "@/stores/disabilities/disabilitieEditSt
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import Swal from "sweetalert2";
+
 export default {
   name: "edit-disabilities",
   components: {
@@ -108,7 +105,6 @@ export default {
   validations() {
     return {
       disabilitie: {
-        imageSrc: { required },
         title: { required },
         description: { required },
       },
@@ -154,11 +150,7 @@ export default {
         description: this.disabilitie.description,
         image: this.disabilitie.image, // Pass the file object
       });
-      if (
-        !this.disabilitie.title ||
-        !this.disabilitie.description ||
-        !this.disabilitie.imageSrc
-      ) {
+      if (!this.disabilitie.title || !this.disabilitie.description) {
         Swal.fire("Error", "Please fill in all fields", "error");
         return;
       }
@@ -192,10 +184,12 @@ export default {
   color: red;
   font-size: 20px;
 }
+
 .error-feedback {
   color: red;
   font-size: 0.85rem;
 }
+
 textarea {
   border: 1px solid #06797e;
   border-radius: 5px;

@@ -5,6 +5,7 @@
       button="+ اضافة فصل دراسي"
       link="/add-classes"
     />
+
     <div class="alll">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>

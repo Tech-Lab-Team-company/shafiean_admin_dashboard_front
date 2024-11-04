@@ -16,6 +16,7 @@
             }}</span>
           </div>
         </div>
+
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">نوع المنهج</label>
           <multiselect

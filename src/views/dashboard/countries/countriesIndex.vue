@@ -11,6 +11,7 @@
           @input="debouncedSearch"
         />
       </div>
+
       <TablesPageVue
         :headers="tableHeaders"
         :rows="tableRowsCountries"

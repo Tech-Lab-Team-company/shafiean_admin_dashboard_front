@@ -15,7 +15,6 @@
               ref="fileInput"
               style="display: none"
             />
-
             <div
               v-if="!organizations.imageSrc"
               class="upload-icon"

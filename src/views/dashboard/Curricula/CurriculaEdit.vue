@@ -16,6 +16,7 @@
             </span>
           </div>
         </div>
+
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">نوع المنهج</label>
           <multiselect
@@ -62,6 +63,7 @@ export default {
         title: "",
         type: null,
       },
+
       typeOptions: [
         { id: 1, name: "قرأن" },
         { id: 2, name: "حديث" },
@@ -84,6 +86,24 @@ export default {
         return "هذا الحقل مطلوب";
       }
       return "";
+    },
+    getType(selectedOption) {
+      if (selectedOption === 1) {
+        return {
+          id: 1,
+          name: "قرأن",
+        };
+      } else if (selectedOption === 2) {
+        return {
+          id: 2,
+          name: "حديث",
+        };
+      } else if (selectedOption === 3) {
+        return {
+          id: 3,
+          name: "فقه",
+        };
+      }
     },
     updateTypeId(selectedOption) {
       this.Curriculas.type = selectedOption ? selectedOption.id : null;
@@ -128,8 +148,14 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchData();
+  async mounted() {
+    await this.fetchData();
+// console.log("Curriculas:", this.Curriculas);
+    // Ensure type is always an object
+    if (this.Curriculas.type) {
+      this.selectedType = this.getType(this.Curriculas.type);
+    }
+    this.getType(this.Curriculas.type);
   },
 };
 </script>

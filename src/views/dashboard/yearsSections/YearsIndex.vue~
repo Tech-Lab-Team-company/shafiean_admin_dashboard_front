@@ -1,7 +1,10 @@
 <template>
-  <div class="Steps">
-    <header-pages title="المراحل" button="+ اضافة مرحلة" link="/add-steps" />
-
+  <div class="years">
+    <header-pages
+      title=" السنوات الدراسية"
+      button="+  اضافة سنة دراسية"
+      link="/add-years"
+    />
     <div class="alll">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -12,14 +15,14 @@
           @input="debouncedSearch"
         />
       </div>
+
       <TablesPageVue
         :headers="tableHeaders"
-        :rows="tableRowsSteps"
-        :showSelect="false"
+        :rows="tableRowsYears"
         :pages="tablePages"
-        editLink="/edit-steps"
-        viewLink="/view-steps"
-        @delete="handleDeleteSteps"
+        editLink="/edit-years"
+        viewLink="/view-years"
+        @delete="handleDeleteYears"
       />
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
@@ -33,88 +36,93 @@
 </template>
 
 <script>
-import TablesPageVue from "@/components/tables/TablesPage.vue";
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
-import { useStepsStore } from "@/stores/steps/StepsStore";
-import { mapState } from "pinia";
+import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
+import { useYearsStore } from "@/stores/Years/YearsStore";
+import { mapState } from "pinia";
 import { debounce } from "lodash"; // استيراد دالة debounce
 
 export default {
-  components: { HeaderPages, TablesPageVue, PaginationPage },
+  components: {
+    HeaderPages,
+    TablesPageVue,
+    PaginationPage,
+  },
+
   data() {
     return {
-      word: "",
+      word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
       errorMessage: "",
-      tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   "],
+      tableHeaders: ["ID", "اسم السنة الدراسية", "الدوله"],
     };
   },
 
   computed: {
-    ...mapState(useStepsStore, {
-      steps: (state) => state.steps,
-      ...mapState(usePaginationStore, {
-        paginationCurrent: (state) => state.current_page,
-        paginationFrom: (state) => state.from,
-        paginationLast: (state) => state.last_page,
-        paginationPer: (state) => state.per_page,
-        paginationTo: (state) => state.to,
-        paginationTotal: (state) => state.total,
-      }),
+    ...mapState(useYearsStore, {
+      years: (state) => state.years,
     }),
-    tableRowsSteps() {
-      // console.log(this.steps, "Diiaaaa");
-      const dataToDisplay = this.steps;
-      return dataToDisplay.map((st) => [
-        st.id,
-        st.title,
-        st.description,
-        st.curriculum?.title || "",
+    ...mapState(usePaginationStore, {
+      paginationCurrent: (state) => state.current_page,
+      paginationFrom: (state) => state.from,
+      paginationLast: (state) => state.last_page,
+      paginationPer: (state) => state.per_page,
+      paginationTo: (state) => state.to,
+      paginationTotal: (state) => state.total,
+    }),
+    tableRowsYears() {
+      const dataToDisplay = this.years;
+      return dataToDisplay.map((yr) => [
+        yr.id,
+        yr.title,
+        yr.country?.title || "",
       ]);
     },
+
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
+
   methods: {
     handleInputChange() {
       this.errorMessage = "";
       this.debouncedSearch();
     },
     async handleSearch() {
-      const stepsStore = useStepsStore();
+      const yearsStore = useYearsStore();
       if (this.word.trim() === "") {
         this.errorMessage = "";
-        await stepsStore.getSteps(1);
+        await yearsStore.getYears(1);
         return;
       } else {
         this.errorMessage = "";
       }
 
-      await stepsStore.getSteps(1, this.word);
+      await yearsStore.getYears(1, this.word);
 
-      if (stepsStore.steps.length === 0) {
+      if (yearsStore.years.length === 0) {
         this.errorMessage = "لم يتم العثور على أي كلمة";
       } else {
         this.errorMessage = "";
       }
     },
 
-    handlePageChange(page) {
-      const stepsStore = useStepsStore();
-      stepsStore.getSteps(page);
-    },
-    async handleDeleteSteps(id) {
-      const stepsStore = useStepsStore();
+    handleDeleteYears(id) {
+      const yearsStore = useYearsStore();
       console.log(id);
-      await stepsStore.deleteSteps(id);
+      yearsStore.deleteYear(id);
+    },
+    handlePageChange(page) {
+      const yearsStore = useYearsStore();
+      yearsStore.getYears(page);
     },
   },
-  mounted() {
-    const stepsStore = useStepsStore();
-    stepsStore.getSteps();
+  async mounted() {
+    const yearsStore = useYearsStore();
+    await yearsStore.getYears();
     this.debouncedSearch = debounce(() => {
       this.handleSearch(); // استخدم الدالة handleSearch
     }, 700); // تأخير 1500 مللي ثانية

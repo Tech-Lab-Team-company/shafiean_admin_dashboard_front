@@ -1,12 +1,7 @@
 <template>
-  <div class="disabilities">
-    <HeadersPages
-      title="الأعاقات"
-      button="+ اضافة اعاقه "
-      link="/add-disabilities"
-    />
-
-    <div class="alll">
+  <header-pages title="المناهج" button="+ اضافة منهج" link="/add-curricula" />
+  <div class="alll">
+    <div class="curricula">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
@@ -16,16 +11,19 @@
           @input="debouncedSearch"
         />
       </div>
-      <TablesPageVue
+      <tables-page-vue
         :headers="tableHeaders"
-        :rows="tableRowsDisabilitie"
+        :rows="tableRowsCurricula"
         :pages="tablePages"
         :showSelect="false"
-        :editLink="editLink"
-        :viewLink="viewLink"
-        @delete="handleDeleteDisabilitie"
+        editLink="/edit-curricula"
+        viewLink="/view-curricula"
+        @delete="handleDeleteCurriculas"
       />
-      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div v-if="errorMessage" class="error-message">
+        <h4>{{ errorMessage }}</h4>
+      </div>
+
       <PaginationPage
         :currentPage="paginationCurrent"
         :totalPages="paginationLast"
@@ -34,35 +32,34 @@
     </div>
   </div>
 </template>
+
 <script>
-import HeadersPages from "@/components/headerpages/HeaderPages.vue";
+import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
-import { useDisabilitieStore } from "@/stores/disabilities/disabilitieStore";
-import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
+import { useCurriculaStore } from "@/stores/curricula/curriculaStore";
+import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
 import { debounce } from "lodash"; // استيراد دالة debounce
+
 export default {
-  name: "DisabilitiesIndex",
-  components: {
-    HeadersPages,
-    TablesPageVue,
-    PaginationPage,
-  },
+  components: { HeaderPages, TablesPageVue, PaginationPage },
   data() {
     return {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
       errorMessage: "",
-      tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
-      editLink: "/edit-disabilities",
-      viewLink: "/view-disabilities",
+      tableHeaders: ["ID", "اسم المنهج", "نوع المنهج"],
+      typeOptions: [
+        { id: 1, name: "قرأن" },
+        { id: 2, name: "حديث" },
+        { id: 3, name: "فقه" },
+      ],
     };
   },
-
   computed: {
-    ...mapState(useDisabilitieStore, {
-      disabilitie: (state) => state.disabilitie,
+    ...mapState(useCurriculaStore, {
+      Curriculas: (state) => state.Curriculas,
       ...mapState(usePaginationStore, {
         paginationCurrent: (state) => state.current_page,
         paginationFrom: (state) => state.from,
@@ -72,61 +69,60 @@ export default {
         paginationTotal: (state) => state.total,
       }),
     }),
-    tableRowsDisabilitie() {
-      console.log(this.disabilitie, "nasrasssssssddddddss");
-      const dataToDisplay = this.disabilitie;
-      return dataToDisplay.map((dis) => [
-        dis.id,
-        dis.image,
-        dis.title,
-        dis.description,
-      ]);
+
+    tableRowsCurricula() {
+      const dataToDisplay = this.Curriculas;
+
+      return dataToDisplay.map((cur) => {
+        // Find the type name based on the type ID
+        const typeOption = this.typeOptions.find(
+          (option) => option.id === cur.type
+        );
+        return [cur.id, cur.title, typeOption ? typeOption.name : ""];
+      });
     },
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
   },
-
   methods: {
     handleInputChange() {
       this.errorMessage = "";
       this.debouncedSearch();
     },
     async handleSearch() {
-      const useDisabilitie = useDisabilitieStore();
+      const curriculaStore = useCurriculaStore();
+
+      // If the search word is empty, fetch all employees
       if (this.word.trim() === "") {
         this.errorMessage = "";
-        await useDisabilitie.fetchDisabilitie(1);
+        await curriculaStore.fetchCurricula(1);
         return;
       } else {
         this.errorMessage = "";
       }
 
-      await useDisabilitie.fetchDisabilitie(1, this.word);
+      await curriculaStore.fetchCurricula(1, this.word);
 
-      if (useDisabilitie.disabilitie.length === 0) {
-        this.errorMessage = "لم يتم العثور على أي كلمة";
+      if (curriculaStore.Curriculas.length === 0) {
+        this.errorMessage = "لم يتم العثور على أي كلمة"; // No results found
       } else {
-        this.errorMessage = "";
+        this.errorMessage = ""; // Clear error message if results found
       }
     },
 
-    handlePageChange(page) {
-      const useDisabilitie = useDisabilitieStore();
-      useDisabilitie.fetchDisabilitie(page);
+    async handleDeleteCurriculas(id) {
+      const curriculaStore = useCurriculaStore();
+      await curriculaStore.deleteCurriculas(id);
     },
-    async handleDeleteDisabilitie(id) {
-      const disabilitieStore = useDisabilitieStore();
-      console.log(id);
-
-      await disabilitieStore.deleteDisabilitie(id);
+    handlePageChange(page) {
+      const curriculaStore = useCurriculaStore();
+      curriculaStore.fetchCurricula(page);
     },
   },
-
-  async mounted() {
-    const disabilitiesStore = useDisabilitieStore();
-    await disabilitiesStore.fetchDisabilitie();
-
+  mounted() {
+    const curriculaStore = useCurriculaStore();
+    curriculaStore.fetchCurricula();
     this.debouncedSearch = debounce(() => {
       this.handleSearch(); // استخدم الدالة handleSearch
     }, 700); // تأخير 1500 مللي ثانية
