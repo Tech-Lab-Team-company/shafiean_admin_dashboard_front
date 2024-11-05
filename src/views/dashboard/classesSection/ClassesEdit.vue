@@ -1,5 +1,5 @@
 <template>
-  <div class="add-countries">
+  <div class="ىحة">
     <header-pages title="اضافة فصول دراسيه" :showButton="false" />
 
     <form @submit.prevent="submitForm">
