@@ -51,11 +51,12 @@
           <label for="phone">رقم الهاتف</label>
           <div class="input">
             <input
-              type="number"
+              type="tel"
               id="phone"
+              class="no-spinner"
               placeholder="أدخل رقم الهاتف"
               v-model="form.phone"
-              class="no-spinner"
+              @keypress="onlyAllowNumbers"
             />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
               getErrorMessage(v$.form.phone)
@@ -70,6 +71,7 @@
               id="email"
               placeholder="أدخل البريد الالكتروني"
               v-model="form.email"
+              @input="validatePhone"
             />
             <span class="error-feedback" v-if="v$.form.email.$error">{{
               getErrorMessage(v$.form.email)
@@ -160,6 +162,12 @@ export default {
     };
   },
   methods: {
+    onlyAllowNumbers(event) {
+      const char = String.fromCharCode(event.keyCode);
+      if (!/[0-9]/.test(char)) {
+        event.preventDefault();
+      }
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
