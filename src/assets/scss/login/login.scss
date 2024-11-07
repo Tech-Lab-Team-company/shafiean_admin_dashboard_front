@@ -23,21 +23,18 @@
 
     .input {
       position: relative;
-      background-color: #e8f0fe !important;
-      border-radius: 20px !important;
-      margin-top: 5px;
-      
 
       input {
-        width: 96%;
+        width: 100%;
         padding: 0.75rem;
         border: 1px solid #ddd;
         border-radius: 6px;
         font-size: 0.875rem;
         outline: none;
-        background-color: #e8f0fe !important;
+        transition: border-color 0.3s ease;
 
         &:focus {
+          border-color: #cde382;
           box-shadow: 0 0 0 3px #cde382;
         }
       }
