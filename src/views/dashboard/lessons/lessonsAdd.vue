@@ -23,7 +23,7 @@
             :options="StagesOptions"
             track-by="id"
             label="title"
-            :close-on-select="false"
+            :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
           <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
@@ -47,8 +47,8 @@
           </span>
         </div>
         <div class="col-lg-12 col-md-6 col-12">
+          <label for="" class="mt-3"> وصف المنهج</label>
           <div class="input">
-            <label for=""> وصف المنهج</label>
             <textarea
               id="description"
               name="w3review"
@@ -188,12 +188,5 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
-}
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
 }
 </style>
