@@ -68,9 +68,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-i.fa.fa-eye {
-  margin-top: 15px !important;
-  color: var(--main);
-}
-</style>
+<style scoped></style>
