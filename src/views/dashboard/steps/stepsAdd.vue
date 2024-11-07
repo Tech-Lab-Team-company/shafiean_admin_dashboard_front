@@ -97,7 +97,7 @@
             <textarea
               id="description"
               name="w3review"
-              rows="4"
+              rows="3"
               placeholder="وصف المرحلة"
               v-model="steps.description"
             >
@@ -252,10 +252,11 @@ export default {
   font-size: 0.85rem;
 }
 textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
   padding: 10px;
-  width: 100%;
+  width: 102%;
   margin-bottom: 10px;
+  margin-right: -11px;
 }
 </style>
