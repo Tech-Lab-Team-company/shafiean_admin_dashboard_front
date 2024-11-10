@@ -56,7 +56,7 @@
           <div class="card_statistics">
             <div class="d-flex justify-content-between">
               <i class="fa-solid fa-user-check"></i>
-              <p class="counter">{{ animatedEmployees }}</p>
+              <p class="counter">{{ animatedTeacher }}</p>
             </div>
             <div class="d-flex justify-content-between">
               <span>اجمالى عدد الموظفين</span>
@@ -68,7 +68,7 @@
           <div class="card_statistics">
             <div class="d-flex justify-content-between">
               <i class="fa-solid fa-circle"></i>
-              <p class="counter">{{ animatedJoins }}</p>
+              <p class="counter">{{ animatedUser }}</p>
             </div>
             <div class="d-flex justify-content-between">
               <span>اجمالى عدد الانضمامات</span>
@@ -84,7 +84,7 @@
           <div class="card">
             <Chart
               type="bar"
-              style="height: 700px"
+              style="height: 500px"
               :data="chartData"
               :options="chartOptions"
               class="h-[30rem]"
@@ -193,15 +193,19 @@
           <!-- End best performance job -->
 
           <!-- Start best performance project -->
-          <div class="best_project">
+          <div
+            class="best_project"
+            v-for="student in this.store.MostActive"
+            :key="student.id"
+          >
             <!-- Start Card project -->
             <div class="card_project">
               <div class="percentage_bar" data-percent="90%">
                 <div class="bar">
-                  <div class="title">مجموعة العهد الحديث</div>
+                  <div class="title">{{ student.name }}</div>
                   <div class="number_person">
                     <i class="fa-solid fa-people-group"></i>
-                    <span>40</span>
+                    <span>{{ student.user_count }}</span>
                   </div>
                 </div>
                 <div class="percent">90%</div>
@@ -209,7 +213,7 @@
             </div>
             <!-- End Card project -->
             <!-- Start Card project -->
-            <div class="card_project">
+            <!-- <div class="card_project">
               <div class="percentage_bar" data-percent="70%">
                 <div class="bar">
                   <div class="title">مجموعة الطالب المتفوق</div>
@@ -220,11 +224,11 @@
                 </div>
                 <div class="percent">70%</div>
               </div>
-            </div>
+            </div> -->
             <!-- End Card project -->
 
             <!-- Start Card project -->
-            <div class="card_project">
+            <!-- <div class="card_project">
               <div class="percentage_bar" data-percent="50%">
                 <div class="bar">
                   <div class="title">مجموعة الشطار</div>
@@ -235,7 +239,7 @@
                 </div>
                 <div class="percent">50%</div>
               </div>
-            </div>
+            </div> -->
             <!-- End Card project -->
 
             <!-- End best performance project -->
@@ -339,6 +343,7 @@
 </template>
 
 <script>
+import { useHomeStore } from "@/stores/HomeStore/HomeStore";
 import Chart from "primevue/chart";
 export default {
   components: {
@@ -346,12 +351,14 @@ export default {
   },
   data() {
     return {
-      organizations: 5622,
-      employees: 250,
-      joins: 168,
+      store: useHomeStore(),
       animatedOrganizations: 0,
-      animatedEmployees: 0,
-      animatedJoins: 0,
+      organizationCount: null,
+      animatedTeacher: 0,
+      teacherCount: null,
+      animatedUser: 0,
+      userCount: null,
+
       chartData: null,
       chartOptions: null,
       chartDataAccuracy: null,
@@ -362,9 +369,14 @@ export default {
       chartOptionspercentageProjectsDay: null,
     };
   },
-  mounted() {
+  async mounted() {
+    await this.store.getCounts();
+    await this.store.fetchMostActive();
+    await this.store.fetchFirstChart();
+    await this.store.fetchPlaces();
+
     this.chartData = this.setChartData();
-    this.chartOptions = this.setChartOptions();
+    // this.chartOptions = this.setChartOptions();
 
     this.chartDataAccuracy = this.setChartDataAccuracy();
     this.chartOptionsAccuracy = this.setChartOptionsAccuracy();
@@ -372,13 +384,26 @@ export default {
     this.chartDatapercentageProjectsDay =
       this.setChartDatapercentageProjectsDay();
 
-    this.animateCount("animatedOrganizations", this.organizations, 1500);
-    this.animateCount("animatedEmployees", this.employees, 1500);
-    this.animateCount("animatedJoins", this.joins, 1500);
+    // counter
+    this.animateCount(
+      "animatedOrganizations",
+      (this.organizationCount = this.store.Counts.organization_count),
+      1500
+    );
+    this.animateCount(
+      "animatedTeacher",
+      (this.teacherCount = this.store.Counts.teacher_count),
+      1500
+    );
+    this.animateCount(
+      "animatedUser",
+      (this.userCount = this.store.Counts.user_count),
+      1500
+    );
+    console.log(this.store.ChartData.user_counts);
   },
   methods: {
     animateCount(variable, target, duration) {
-      // let start = 0;
       let startTime = null;
 
       const step = (timestamp) => {
@@ -399,15 +424,8 @@ export default {
 
     setChartData() {
       return {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-        ],
+        labels: this.store.ChartData.months,
+
         datasets: [
           {
             type: "line",
@@ -432,7 +450,7 @@ export default {
             borderColor: "#E8EFED",
             borderWidth: 1,
             tension: 0.1,
-            data: [6, 9, 7, 3, 10, 7, 4, 6, 7, 10, 8],
+            data: this.store.ChartData.user_counts,
           },
         ],
       };
