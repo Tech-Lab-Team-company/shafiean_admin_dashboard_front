@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-12">
         <div class="welcome">
-          <h5>صباح الخير 😄</h5>
+          <!-- <h5>صباح الخير 😄</h5> -->
+          <h5>{{ greeting }}</h5>
         </div>
       </div>
       <div class="col-lg-12 col-md-12 col-12" style="text-align: start">
@@ -351,6 +352,7 @@ export default {
   },
   data() {
     return {
+      greeting: "",
       store: useHomeStore(),
       animatedOrganizations: 0,
       organizationCount: null,
@@ -402,6 +404,7 @@ export default {
     );
     console.log(this.store.ChartData.user_counts);
   },
+
   methods: {
     animateCount(variable, target, duration) {
       let startTime = null;
@@ -611,6 +614,17 @@ export default {
         },
       };
     },
+    setGreeting() {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 15 || currentHour < 5) {
+        this.greeting = "مساء الخير 😄";
+      } else {
+        this.greeting = "صباح الخير 😄";
+      }
+    },
+  },
+  created() {
+    this.setGreeting();
   },
 };
 </script>
