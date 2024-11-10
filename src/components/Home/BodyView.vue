@@ -18,61 +18,27 @@
           </thead>
           <tbody>
             <!-- For loop this details team -->
-            <tr>
+            <tr v-for="student in this.store.lastStudents" :key="student.id">
               <td class="name">
                 <div class="details_team">
                   <div class="contact">
-                    <img src="../../assets/photos//Diaa.jpeg" alt="" />
+                    <img :src="student.image" alt="" />
                     <div>
-                      <p>Diaa Adel</p>
-                      <span>01017745465</span>
+                      <p>{{ student.name }}</p>
+                      <span>{{ student.phone }}</span>
                     </div>
                   </div>
                 </div>
               </td>
-              <td data-label="المستوي الوظيفي">إعاقة سمعية</td>
-              <td data-label="رقم الهاتف">مجموعة العهد الحديث</td>
+              <td data-label="المستوي الاعاقة">
+                {{ student.disability_type }}
+              </td>
+              <td data-label="رقم الهاتف">{{ student.group.title }}</td>
               <td data-label="نوع العمل">
-                <span class="type_work total">مارس22, 2012</span>
+                <span class="type_work total">{{ student.created_at }}</span>
               </td>
             </tr>
             <!-- For loop this details team -->
-            <tr>
-              <td class="name">
-                <div class="details_team">
-                  <div class="contact">
-                    <img src="../../assets/photos//Diaa.jpeg" alt="" />
-                    <div>
-                      <p>Diaa Adel</p>
-                      <span>01017745465</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td data-label="المستوي الوظيفي">إعاقة سمعية</td>
-              <td data-label="رقم الهاتف">مجموعة العهد الحديث</td>
-              <td data-label="نوع العمل">
-                <span class="type_work total">مارس22, 2012</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="name">
-                <div class="details_team">
-                  <div class="contact">
-                    <img src="../../assets/photos//Diaa.jpeg" alt="" />
-                    <div>
-                      <p>Diaa Adel</p>
-                      <span>01017745465</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td data-label="المستوي الوظيفي">إعاقة سمعية</td>
-              <td data-label="رقم الهاتف">مجموعة العهد الحديث</td>
-              <td data-label="نوع العمل">
-                <span class="type_work total">مارس22, 2012</span>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -97,6 +63,8 @@
 </template>
 
 <script>
+import { useHomeStore } from "@/stores/HomeStore/HomeStore";
+
 import Chart from "primevue/chart";
 export default {
   components: {
@@ -104,15 +72,19 @@ export default {
   },
   data() {
     return {
+      store: useHomeStore(),
       chartDatapercentageProjectsDay: null,
       chartOptionspercentageProjectsDay: null,
       chartOptionsRates: null,
       chartDataRates: null,
     };
   },
-  mounted() {
+
+  async mounted() {
     this.chartDataRates = this.setChartDataRates();
     this.chartOptionsRates = this.setChartOptionsRates();
+    await this.store.getLastStudents();
+    // console.log(this.store.lastStudents, "llllll");
   },
   methods: {
     // =============Chart Employment Rates=============
