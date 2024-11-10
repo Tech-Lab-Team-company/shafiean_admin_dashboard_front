@@ -615,7 +615,7 @@ export default {
     },
     setGreeting() {
       const currentHour = new Date().getHours();
-      if (currentHour >= 15 || currentHour < 5) {
+      if (currentHour >= 14 || currentHour < 2) {
         this.greeting = "مساء الخير 😄";
       } else {
         this.greeting = "صباح الخير 😄";
