@@ -22,20 +22,21 @@
     }
 
     .input {
-      position: relative;
+      background: #e8f0fe !important;
+      width: 100% !important;
+      border-radius: 19px !important;
+      margin: 0;
 
       input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 0.875rem;
-        outline: none;
-        transition: border-color 0.3s ease;
+        border: 0;
+        background-color: unset !important;
+        width: 96%;
+        
 
-        &:focus {
-          border-color: #cde382;
-          box-shadow: 0 0 0 3px #cde382;
+        &:focus-visible {
+          border: 0 !important;
+          box-shadow: unset !important;
+          outline: none;
         }
       }
     }
@@ -60,16 +61,13 @@
 
   .forget {
     margin-top: 1rem;
-a{
-  text-decoration: none;
-}
+
     h6 {
       color: #ffffff;
       cursor: pointer;
       font-size: 0.99rem;
       transition: color 0.3s ease;
       font-family: "Medium";
-
 
       &:hover {
         color: #cde382;
@@ -80,5 +78,27 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  i {
+    color: var(--main);
+    margin: 0 5px;
+    cursor: pointer;
+}
+}
+
+@media screen and (max-width: 600px) {
+  .input {
+    height: 41px;
+    width: 108% !important;
+
+    input {
+      border: 0;
+      background-color: unset !important;
+      width: 91% !important;
+      padding-top: 11px !important;
+    }
+  }
+  form {
+    width: 98% !important;
   }
 }
