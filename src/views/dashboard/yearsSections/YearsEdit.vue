@@ -121,7 +121,7 @@ export default {
         this.$router.go(-1);
         return;
       } else {
-        Swal.fire("Success", "تم تعديل السنه الدراسيه بنجاح", "success");
+        Swal.fire("Success", "تم تعديـل السنه الدراسيه بنجاح", "success");
       }
     },
     // async fetchEidtCountries() {
