@@ -122,7 +122,7 @@ export default {
         Swal.fire("Error", "Please fill in all fields", "error");
         return;
       } else {
-        Swal.fire("Success", "تم تعديل السنه الدراسيه بنجاح", "success");
+        Swal.fire("Success", "تم تعديـل السنه الدراسيه بنجاح", "success");
       }
       this.$router.go(-1);
     },
