@@ -85,6 +85,7 @@ form {
     font-family: "light";
     font-size: 13px;
     width: 100%;
+    margin-right: -20px;
   }
 }
 .search {
@@ -97,14 +98,13 @@ form {
 input[type="search"] {
   width: 97% !important;
 }
-.multiselect__tags  {
-  border-radius: 33px !important; 
+.multiselect__tags {
+  border-radius: 33px !important;
   border: 1px solid #e8e8e8 !important;
   padding: 0.75rem;
   font-family: "light";
   font-size: 13px;
   width: 100% !important;
-
 }
 .alll {
   border: 1px solid #ebeaed !important;
@@ -113,11 +113,11 @@ input[type="search"] {
   padding: 2rem !important;
 }
 .action-icons {
-  .red{
+  .red {
     color: red;
   }
 }
-label{
+label {
   margin-right: 6px !important  ;
 }
 textarea {
@@ -128,5 +128,3 @@ textarea {
   margin-bottom: 10px !important;
   margin-right: -11px !important;
 }
-
-
