@@ -68,4 +68,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::placeholder {
+  color: #999;
+  margin-right: 20px;
+}
+</style>
