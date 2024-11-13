@@ -92,19 +92,19 @@
             }}</span>
           </div>
         </div>
-<!--        <div class="col-lg-6 col-md-6 col-12">-->
-<!--          <label for="roles">الصلاحيات</label>-->
-<!--          <multiselect-->
-<!--            id="roles"-->
-<!--            v-model="form.role"-->
-<!--            :options="permissionOptions"-->
-<!--            :multiple="true"-->
-<!--            :close-on-select="false"-->
-<!--          ></multiselect>-->
-<!--          <span class="error-feedback" v-if="v$.form.role.$error">{{-->
-<!--            getErrorMessage(v$.form.role)-->
-<!--          }}</span>-->
-<!--        </div>-->
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="roles">الصلاحيات</label>
+          <multiselect
+            id="roles"
+            v-model="form.role"
+            :options="permissionOptions"
+            :multiple="true"
+            :close-on-select="false"
+          ></multiselect>
+          <span class="error-feedback" v-if="v$.form.role.$error">{{
+            getErrorMessage(v$.form.role)
+          }}</span>
+        </div>
       </div>
       <div class="all-btn">
         <button type="submit" class="save" @click="save()">حفظ</button>

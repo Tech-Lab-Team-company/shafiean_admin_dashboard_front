@@ -24,7 +24,7 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
         });
 
         this.employees.push(response.data);
-        await router.push("/employees")
+        await router.push("/employees");
 
         Swal.fire("Success", "Employee has been saved.", "success");
       } catch (error) {
