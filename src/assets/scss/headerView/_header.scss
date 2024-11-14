@@ -321,3 +321,23 @@
     border-radius: 5px !important;
   }
 }
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+.accuracy_projects {
+  position: relative;
+  height: 350px;
+
+  
+    .text-chart {
+        position: absolute;
+        top: 10rem !important;
+        right: 8.6rem !important;
+    }
+}
+canvas{
+  box-sizing: border-box;
+  display: block;
+  height: 333px !important;
+  width: 341px !important;
+}
+}
