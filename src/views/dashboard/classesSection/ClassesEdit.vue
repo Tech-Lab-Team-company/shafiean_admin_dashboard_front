@@ -1,6 +1,6 @@
 <template>
-  <div class="ىحة">
-    <header-pages title="اضافة فصول دراسيه" :showButton="false" />
+  <div class="employees-edit">
+    <header-pages title="تعديل فصول دراسيه" :showButton="false" />
 
     <form @submit.prevent="submitForm">
       <div class="row">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">تعديل</button>
+        <button type="submit" class="save" >تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
