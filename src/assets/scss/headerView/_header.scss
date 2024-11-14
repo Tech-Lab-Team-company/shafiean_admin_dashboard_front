@@ -74,31 +74,8 @@
   color: #06797e;
   border: 1px solid #06797e;
 }
-.statistics {
-  padding: 1.5rem;
-  border-radius: 4px;
-  height: 100%;
-  margin-top: 0;
-}
-.statistics {
-  display: flex;
-  .card_statistics {
-    width: 33.3%;
-    padding: 1.5rem 2rem;
-    -webkit-margin-end: 1.5rem;
-    margin-inline-end: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 3px 6px 12px rgba(63, 63, 68, 0.1);
-    p {
-      color: #b2d23f;
-      font-family: bold;
-    }
-    span {
-      font-size: 0.7rem;
-      font-family: "bold";
-    }
-  }
-}
+
+
 .percentage_jobs {
   margin-top: 20px;
   h5 {
