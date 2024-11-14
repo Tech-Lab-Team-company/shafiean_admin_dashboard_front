@@ -155,7 +155,7 @@
                   :data="chartDatapercentageProjectsDay"
                   :options="chartOptionspercentageProjectsDay"
                   sssss
-                  style="height: 500px"
+                  style="height: 500px !important"
                   class="h-[30rem]"
                 />
               </div>
