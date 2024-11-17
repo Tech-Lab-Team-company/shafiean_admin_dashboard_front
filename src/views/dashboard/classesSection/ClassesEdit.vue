@@ -3,8 +3,8 @@
     <header-pages title="تعديل فصول دراسيه" :showButton="false" />
 
     <form @submit.prevent="submitForm">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-12">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
           <label for="">أسم الفصل الدراسي</label>
           <div class="input">
             <input

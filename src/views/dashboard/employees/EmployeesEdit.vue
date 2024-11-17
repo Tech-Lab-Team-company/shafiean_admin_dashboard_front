@@ -187,11 +187,11 @@ export default {
         // !this.employee.imageSrc ||
         !this.employee.permissions
       ) {
-        Swal.fire("Error", "Please fill in all fields", "error");
+    
 
+        this.$router.go(-1);
         return;
       }
-      this.$router.go(-1);
     },
     Edit() {
       this.v$.$validate();
