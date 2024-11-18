@@ -1,5 +1,8 @@
 <template>
-  <header-pages title="تعديل المدينه" :showButton="false" />
+  <div class="plus">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <header-pages title="تعديل المدينه" :showButton="false" />
+  </div>
   <div class="add-countries">
     <form @submit.prevent="submitForm">
       <div class="row">

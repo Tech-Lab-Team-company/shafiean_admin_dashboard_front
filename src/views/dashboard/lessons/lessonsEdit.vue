@@ -1,6 +1,9 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="تعديل حصه" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل حصه" :showButton="false" />
+    </div>
     <form @submit.prevent="updateLessons">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">

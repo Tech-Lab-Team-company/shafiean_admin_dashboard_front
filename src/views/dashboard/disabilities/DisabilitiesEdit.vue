@@ -1,6 +1,9 @@
 <template>
   <div class="editdisabilities">
-    <HeaderPages title="تعديل اعاقه" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <HeaderPages title="تعديل اعاقه" :showButton="false" />
+    </div>
 
     <div class="disabilities-edit">
       <form action="" @submit.prevent="updateDisabilitie">

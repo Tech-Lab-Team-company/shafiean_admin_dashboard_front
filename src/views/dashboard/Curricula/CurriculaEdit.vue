@@ -1,5 +1,8 @@
 <template>
-  <header-pages title="تعديل منهج" :showButton="false" />
+  <div class="plus">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <header-pages title="تعديل منهج" :showButton="false" />
+  </div>
   <div class="edit-curricula">
     <form action="" @submit.prevent="updateCurricula">
       <div class="row">

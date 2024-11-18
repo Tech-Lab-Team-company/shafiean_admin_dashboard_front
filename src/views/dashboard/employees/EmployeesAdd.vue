@@ -82,16 +82,23 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="password">الرقم السري</label>
           <div class="input">
-            <i class="fa-solid fa-eye"></i>
-            <input
-              type="password"
-              id="password"
-              placeholder="أدخل الرقم السري"
-              v-model="form.password"
-            />
-            <span class="error-feedback" v-if="v$.form.password.$error">{{
-              getErrorMessage(v$.form.password)
-            }}</span>
+            <div class="pas">
+              <input
+                :type="showPassword ? 'text' : 'password'"
+                id="password"
+                placeholder="أدخل الرقم السري"
+                v-model="form.password"
+              />
+              <i
+                class="fa-solid"
+                :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                @click="togglePasswordVisibility"
+                style="cursor: pointer"
+              ></i>
+            </div>
+            <span class="error-feedback" v-if="v$.form.password.$error">
+              {{ getErrorMessage(v$.form.password) }}
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -136,6 +143,7 @@ export default {
   data() {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
+      showPassword: false,
 
       v$: useVuelidate(),
       form: {
@@ -164,6 +172,9 @@ export default {
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
@@ -223,6 +234,16 @@ export default {
 };
 </script>
 <style scoped>
+#password {
+  border: 0 !important;
+}
+.pas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  border-radius: 33px;
+}
 .no-spinner::-webkit-inner-spin-button,
 .no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -248,8 +269,5 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
-}
-.upload-icon {
-  margin-top: 0.9rem !important;
 }
 </style>

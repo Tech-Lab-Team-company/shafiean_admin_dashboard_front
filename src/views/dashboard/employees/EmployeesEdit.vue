@@ -1,6 +1,9 @@
 <template>
   <div class="employees-edit">
-    <HeaderPages title="تعديل موظف" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <HeaderPages title="تعديل موظف" :showButton="false" />
+    </div>
     <form @submit.prevent="updateEmployee">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
