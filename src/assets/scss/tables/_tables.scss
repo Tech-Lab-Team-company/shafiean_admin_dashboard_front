@@ -7,11 +7,12 @@ table.table {
   padding: 2rem !important;
   thead {
     border-bottom: 1px solid #ebeaed !important;
+    background-color: var(--main);
     tr {
       th {
         font-size: 0.9rem;
         background: none !important;
-        color: #828c8d;
+        color: #ffffff;
       }
     }
   }
