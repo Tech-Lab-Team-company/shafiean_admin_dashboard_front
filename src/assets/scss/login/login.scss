@@ -22,20 +22,20 @@
     }
 
     .input {
-      position: relative;
+      width: 101% !important;
+      border-radius: 19px !important;
+      margin: 0;
+      background-color: #e8f0fe !important ;
 
       input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 0.875rem;
-        outline: none;
-        transition: border-color 0.3s ease;
+        border: 0;
+        width: 94% ;
+        background-color: #e8f0fe !important;
 
-        &:focus {
-          border-color: #cde382;
-          box-shadow: 0 0 0 3px #cde382;
+        &:focus-visible {
+          border: 0 !important;
+          box-shadow: unset !important;
+          outline: none;
         }
       }
     }
@@ -60,16 +60,15 @@
 
   .forget {
     margin-top: 1rem;
-a{
-  text-decoration: none;
-}
+    a {
+      text-decoration: none;
+    }
     h6 {
       color: #ffffff;
       cursor: pointer;
       font-size: 0.99rem;
       transition: color 0.3s ease;
       font-family: "Medium";
-
 
       &:hover {
         color: #cde382;
@@ -80,5 +79,44 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  i {
+    color: var(--main);
+    margin: 0 25px !important;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+  .naim-login{
+
+  .input {
+    height: 41px;
+    width: 80% !important;
+
+    input {
+      border: 0;
+      background-color: unset !important;
+      width: 80% !important;
+      padding-top: 11px !important;
+    }
+  }
+  form {
+    width: 98% !important;
+  }
+}
+
+}
+
+  
+
+
+@media screen and (min-width: 600px) and (max-width: 1780px) {
+  .naim-login {
+      i {
+          color: var(--main);
+          margin: 0 0 !important;
+          cursor: pointer;
+      }
   }
 }

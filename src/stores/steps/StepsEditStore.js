@@ -81,7 +81,7 @@ export const useStepsEditStore = defineStore("stepsEdit", {
             .split(",")
             .map((id) => id.trim());
         }
-        console.log("updatedData", updatedData.disability_ids);
+        // console.log("updatedData", updatedData.disability_ids);
         const formData = new FormData();
         // Append each property to FormData
         Object.keys(updatedData).forEach((key) => {

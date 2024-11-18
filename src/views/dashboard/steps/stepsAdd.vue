@@ -21,7 +21,6 @@
             </span>
           </div>
         </div>
-
         <!-- <div class="col-lg-6 col-md-6 col-12">
           <label for="description">وصف المرحلة</label>
           <div class="input">
@@ -97,7 +96,7 @@
             <textarea
               id="description"
               name="w3review"
-              rows="4"
+              rows="3"
               placeholder="وصف المرحلة"
               v-model="steps.description"
             >
@@ -251,4 +250,6 @@ export default {
   color: red;
   font-size: 0.85rem;
 }
+
+
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div class="Steps">
     <header-pages title="المراحل" button="+ اضافة مرحلة" link="/add-steps" />
+
     <div class="alll">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن موظف..."
+          placeholder="بحث عن مرحلة..."
           v-model="word"
           @input="debouncedSearch"
         />
@@ -64,7 +65,7 @@ export default {
       }),
     }),
     tableRowsSteps() {
-      console.log(this.steps, "Diiaaaa");
+      // console.log(this.steps, "Diiaaaa");
       const dataToDisplay = this.steps;
       return dataToDisplay.map((st) => [
         st.id,

@@ -17,6 +17,7 @@
             {{ getErrorMessage(v$.lessons.stage_id) }}
           </span>
         </div>
+
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">القرأن</label>
           <multiselect
@@ -189,5 +190,12 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+textarea {
+  border: 1px solid #06797e;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>

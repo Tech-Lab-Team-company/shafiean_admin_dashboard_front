@@ -1,6 +1,7 @@
 <template>
   <div class="steps-add">
     <header-pages title="تعديل مرحلة" :showButton="false" />
+
     <form @submit.prevent="updateSteps">
       <div class="row">
         <!-- Step Title Input -->
@@ -27,7 +28,6 @@
             track-by="id"
             label="title"
             :close-on-select="false"
-            @update:model-value="handleCurriculaChange"
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
@@ -46,7 +46,6 @@
             label="title"
             :multiple="true"
             :close-on-select="false"
-            @update:model-value="handleDisabilitiesChange"
             placeholder="اختر الإعاقات"
           />
 
@@ -112,6 +111,7 @@ export default {
       disabilities_values: [], // Initialize as an empty array for multiple selection
       typeOptions: [],
       curriculaOptions: [],
+      disability_ids: [],
       disabilitiesOptions: [],
       Steps: {
         title: "",
@@ -155,18 +155,18 @@ export default {
         ? this.curricula_values.id
         : null;
     },
-    handleDisabilitiesChange() {
-      // console.log("disabilities_values", this.disabilities_values);
-      // console.log("steps", this.Steps);
-
-      if (Array.isArray(this.disabilities_values)) {
-        this.Steps.disability_ids = this.disabilities_values.map(
-          (dis) => dis.id
-        );
-      } else {
-        this.Steps.disability_ids = "";
-      }
-    },
+    // handleDisabilitiesChange() {
+    //   // console.log("disabilities_values", this.disabilities_values);
+    //   // console.log("steps", this.Steps);
+    //
+    //   if (Array.isArray(this.disabilities_values)) {
+    //     this.Steps.disability_ids = this.disabilities_values.map(
+    //       (dis) => dis.id
+    //     );
+    //   } else {
+    //     this.Steps.disability_ids = "";
+    //   }
+    // },
     async fetchData() {
       const store = useStepsEditStore();
       const id = this.$route.params.id;
@@ -185,8 +185,8 @@ export default {
         title: dis.title,
       }));
 
-      console.log("curricula_values", this.curricula_values);
-      console.log("disabilities_values", this.disabilities_values);
+      // console.log("curricula_values", this.curricula_values);
+      // console.log("disabilities_values", this.disabilities_values);
 
       // Fetch options for multiselect components
       await store.fetchCurriculums();
@@ -198,6 +198,9 @@ export default {
     async updateSteps() {
       const store = useStepsEditStore();
       const id = this.$route.params.id;
+      this.Steps.curriculum_id = this.curricula_values.id;
+
+      this.Steps.disability_ids = this.disabilities_values.map((dis) => dis.id);
       await store.updateSteps(id, this.Steps);
       this.$router.go(-1);
     },

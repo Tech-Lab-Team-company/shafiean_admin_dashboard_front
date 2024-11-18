@@ -1,10 +1,10 @@
 <template>
-  <div class="add-countries">
-    <header-pages title="اضافة فصول دراسيه" :showButton="false" />
+  <div class="employees-edit">
+    <header-pages title="تعديل فصول دراسيه" :showButton="false" />
 
     <form @submit.prevent="submitForm">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-12">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
           <label for="">أسم الفصل الدراسي</label>
           <div class="input">
             <input
@@ -22,21 +22,20 @@
           <label for="Country">أختر الدوله</label>
           <multiselect
             id="Country"
-            v-model="form.Country_values"
+            v-model="form.country"
             :options="CountryOptions"
             track-by="id"
             label="title"
             :close-on-select="true"
-            @update:model-value="updatecountryValue"
           ></multiselect>
 
-          <span class="error-feedback" v-if="v$.form.country_id.$error">{{
-            getErrorMessage(v$.form.country_id)
+          <span class="error-feedback" v-if="v$.form.country.$error">{{
+            getErrorMessage(v$.form.country)
           }}</span>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">تعديل</button>
+        <button type="submit" class="save" >تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -74,7 +73,7 @@ export default {
     return {
       form: {
         title: { required },
-        country_id: { required },
+        country: { required },
       },
     };
   },
@@ -92,12 +91,6 @@ export default {
       }
       return "";
     },
-    updatecountryValue(selected) {
-      this.Country_values = selected;
-      this.form.country_id = selected ? selected.id : null;
-
-      console.log("Selected Country ID:", this.form.country_id);
-    },
     async fetchData() {
       const store = useClassesEditStore();
       const id = this.$route.params.id;
@@ -105,18 +98,17 @@ export default {
       this.form = store.Classes;
       await this.fetchEidtCountries();
 
-      this.Country_values = this.CountryOptions.find(
-        (country) => country.id === this.form.country_id
-      );
+      this.Country_values = this.form.country;
+      console.log("Selected Country ID:", this.form);
     },
     async submitForm() {
       const store = useClassesEditStore();
       const id = this.$route.params.id;
       await store.updateClass(id, {
         title: this.form.title,
-        country_id: this.form.country_id,
+        country_id: this.form.country.id,
       });
-      if (!this.form.title || !this.form.country_id) {
+      if (!this.form.title || !this.form.country) {
         Swal.fire("Error", "Please fill in all fields", "error");
         return;
       } else {
@@ -141,7 +133,6 @@ export default {
       }
     },
   },
-
   mounted() {
     this.fetchData();
   },

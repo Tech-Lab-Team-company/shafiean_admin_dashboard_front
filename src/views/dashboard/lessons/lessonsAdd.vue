@@ -18,7 +18,6 @@
             <input type="date" placeholder="إلي" v-model="lessons.end_verse" />
           </div>
         </div> -->
-
         <!-- Multiselect for Stages -->
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
@@ -27,7 +26,7 @@
             :options="StagesOptions"
             track-by="id"
             label="title"
-            :close-on-select="false"
+            :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
           <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
@@ -51,8 +50,8 @@
           </span>
         </div>
         <div class="col-lg-12 col-md-6 col-12">
+          <label for="" class="mt-3"> وصف المنهج</label>
           <div class="input">
-            <label for=""> وصف المنهج</label>
             <textarea
               id="description"
               name="w3review"

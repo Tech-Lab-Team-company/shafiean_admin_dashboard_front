@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useEmployeesAddStore = defineStore("employeesAdd", {
   state: () => ({
@@ -23,6 +24,7 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
         });
 
         this.employees.push(response.data);
+        await router.push("/employees");
 
         Swal.fire("Success", "Employee has been saved.", "success");
       } catch (error) {
