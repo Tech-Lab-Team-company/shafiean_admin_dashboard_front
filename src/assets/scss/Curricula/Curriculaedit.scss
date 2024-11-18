@@ -1,45 +1,6 @@
 .edit-curricula{
     height: 100vh;
-    .input {
-        border-radius: 10px;
-        padding: 0.5rem;
-        margin-bottom: 0.3rem;
-    
-        input {
-            border: 1px solid var(--main);
-            border-radius: 10px;
-            height: 40px;
-            padding: 0 0.3rem;
-            width: 100%;
-            outline: none;
-        }
-    }
-    button.save {
-        display: block;
-        margin-inline-start: auto;
-        background-color: var(--main);
-        color: white;
-        font-family: "regular";
-        border: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 10px;
-        transition: 0.7s;
-      }
-      button.bake {
-        display: block;
-        background-color: var(--main);
-        color: white;
-        font-family: "regular";
-        border: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 10px;
-        transition: 0.7s;
-      }
-      button:hover {
-        background-color: white;
-        border: 1px solid var(--main);
-        color: var(--main);
-      }
+  
       .all-btn {
         margin-top: 0.5rem;
         display: flex;

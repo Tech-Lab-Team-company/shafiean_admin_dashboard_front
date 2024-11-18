@@ -1,6 +1,12 @@
 <template>
   <div class="add-countries">
-    <header-pages title="اضافة سنه دراسيه" :showButton="false" />
+
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة سنه دراسيه" :showButton="false" />
+    </div>
+
+
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">

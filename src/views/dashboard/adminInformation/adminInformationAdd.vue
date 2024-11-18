@@ -1,10 +1,15 @@
 <template>
-  <div class="add-countries">
-    <header-pages
-      :showButton="false"
-      link="/add-admins"
-      title="معلومات المسؤل"
-    />
+
+  <div class="admininfo-add">
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages
+        title="معلومات المسؤل"
+        :showButton="false"
+        link="/add-admins"
+      />
+    </div>
+
 
     <form @submit.prevent="save()">
       <div class="row">
