@@ -250,6 +250,4 @@ export default {
   color: red;
   font-size: 0.85rem;
 }
-
-
 </style>

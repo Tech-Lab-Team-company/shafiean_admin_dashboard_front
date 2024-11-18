@@ -1,11 +1,13 @@
 <template>
   <div class="admininfo-add">
-    <header-pages
-      title="معلومات المسؤل"
-      :showButton="false"
-      link="/Edit-admins"
-    />
-
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages
+        title="معلومات المسؤل"
+        :showButton="false"
+        link="/Edit-admins"
+      />
+    </div>
     <form action="">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">

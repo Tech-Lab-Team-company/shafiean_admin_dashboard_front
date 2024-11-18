@@ -75,8 +75,8 @@ form {
 }
 
 .input {
+  margin-bottom: 1rem;
   input {
-
     border-radius: 33px !important;
     padding: 0.75rem !important;
     background-color: transparent;
@@ -97,15 +97,12 @@ form {
       border: none !important;
       box-shadow: none !important;
     }
-
   }
 }
 
 ::placeholder {
   color: #0000003d !important;
 }
-
-
 
 .alll {
   border: 1px solid #ebeaed !important;
@@ -119,7 +116,6 @@ form {
   }
 }
 label {
-
   margin-right: 15px !important  ;
 }
 .multiselect__tags {
@@ -176,6 +172,7 @@ label {
     width: 98%;
     padding: 0.3rem;
     border: 0;
+
     &:focus {
       outline: none !important;
       border: 1px solid #5c9ded !important;
@@ -196,39 +193,39 @@ textarea {
   border-radius: 15px;
 }
 button.bake {
-  background-color: var(--main) ;
-  color: white ;
-  font-family: "regular" ;
+  background-color: var(--main);
+  color: white;
+  font-family: "regular";
   border: 0;
-  padding: 0.8rem 2rem ;
-  border-radius: 10px ;
-  transition: 0.7s ;
-  width: 10% ;
-  border: 1px solid var(--main) ;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  transition: 0.7s;
+  width: 10%;
+  border: 1px solid var(--main);
   &:hover {
-    background-color: white ;
-    border: 1px solid var(--main) ;
-    color: var(--main) ;
-    transform: scale(1.06) ;
+    background-color: white;
+    border: 1px solid var(--main);
+    color: var(--main);
+    transform: scale(1.06);
   }
 }
 button.save {
-  display: block ;
-  margin-inline-start: auto ;
-  background-color: var(--main) ;
-  color: white ;
-  font-family: "regular" ;
+  display: block;
+  margin-inline-start: auto;
+  background-color: var(--main);
+  color: white;
+  font-family: "regular";
   border: 0;
-  padding: 0.8rem 2rem ;
-  border-radius: 10px ;
-  transition: 0.7s ;
-  width: 20% ;
-  border: 1px solid var(--main) ;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  transition: 0.7s;
+  width: 20%;
+  border: 1px solid var(--main);
   &:hover {
-    background-color: white ;
-    border: 1px solid var(--main) ;
-    color: var(--main) ;
-    transform: scale(1.06) ;
+    background-color: white;
+    border: 1px solid var(--main);
+    color: var(--main);
+    transform: scale(1.06);
   }
 }
 i.fa-solid.fa-plus {
@@ -242,5 +239,8 @@ i.fa-solid.fa-plus {
   h4 {
     margin-bottom: 0;
   }
-
+}
+i.fa-solid.fa-pen-to-square {
+  color: #06797e;
+  margin-bottom: 1rem;
 }

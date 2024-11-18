@@ -1,5 +1,4 @@
 <template>
-
   <div class="admininfo-add">
     <div class="plus">
       <i class="fa-solid fa-plus"></i>
@@ -9,7 +8,6 @@
         link="/add-admins"
       />
     </div>
-
 
     <form @submit.prevent="save()">
       <div class="row">

@@ -1,6 +1,10 @@
 <template>
   <div class="editdisabilities">
-    <HeaderPages :showButton="false" title="تعديل اعاقه" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <HeaderPages title="تعديل اعاقه" :showButton="false" />
+    </div>
+
     <div class="disabilities-edit">
       <form action="" @submit.prevent="updateDisabilitie">
         <div class="row">
@@ -189,6 +193,4 @@ export default {
   color: red;
   font-size: 0.85rem;
 }
-
-
 </style>

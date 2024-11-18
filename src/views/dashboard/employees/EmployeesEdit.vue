@@ -1,6 +1,9 @@
 <template>
   <div class="employees-edit">
-    <HeaderPages title="تعديل موظف" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <HeaderPages title="تعديل موظف" :showButton="false" />
+    </div>
     <form @submit.prevent="updateEmployee">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -74,19 +77,19 @@
           </div>
         </div>
 
-<!--        <div class="col-lg-6 col-md-6 col-sm-12">-->
-<!--          <label for="">الصلاحيات</label>-->
-<!--          <multiselect-->
-<!--            v-model="employee.permissions"-->
-<!--            :options="permissionOptions"-->
-<!--            :multiple="true"-->
-<!--            :close-on-select="false"-->
-<!--          ></multiselect>-->
+        <!--        <div class="col-lg-6 col-md-6 col-sm-12">-->
+        <!--          <label for="">الصلاحيات</label>-->
+        <!--          <multiselect-->
+        <!--            v-model="employee.permissions"-->
+        <!--            :options="permissionOptions"-->
+        <!--            :multiple="true"-->
+        <!--            :close-on-select="false"-->
+        <!--          ></multiselect>-->
 
-<!--          <span class="error-feedback" v-if="v$.employee.permissions.$error">{{-->
-<!--            getErrorMessage(v$.employee.permissions)-->
-<!--          }}</span>-->
-<!--        </div>-->
+        <!--          <span class="error-feedback" v-if="v$.employee.permissions.$error">{{-->
+        <!--            getErrorMessage(v$.employee.permissions)-->
+        <!--          }}</span>-->
+        <!--        </div>-->
       </div>
       <div class="all-btn">
         <button type="submit" class="save" @click="Edit()">تعديل</button>
@@ -187,8 +190,6 @@ export default {
         // !this.employee.imageSrc ||
         !this.employee.permissions
       ) {
-    
-
         this.$router.go(-1);
         return;
       }

@@ -1,7 +1,9 @@
 <template>
   <div class="steps-add">
-    <header-pages title="تعديل مرحلة" :showButton="false" />
-
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل مرحلة" :showButton="false" />
+    </div>
     <form @submit.prevent="updateSteps">
       <div class="row">
         <!-- Step Title Input -->

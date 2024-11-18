@@ -1,79 +1,75 @@
-
 .team_shift {
-    margin: 2rem 0;
-    border: 1px solid #ebeaed;
-    border-radius: 5px;
-    padding: 1rem;
-    height: 400px;
-    overflow-y: auto;
-    h5 {
-      font-family: "regular";
-      color: #011c1e;
-      margin-bottom: 0;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .btn {
-      font-family: "regular";
-      color: #828282;
-      font-size: 0.9rem;
-    }
-    table tr td .details_team {
-      display: flex;
-      align-items: center;
-    }
-    table.table {
-        & thead {
-            & tr {
-                th {
-                    background: var(--main) !important;
-                    color: white;
-          
-                }
-            }
-        }
-    }
-    table tr td .details_team img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      -webkit-margin-end: 1rem;
-      margin-inline-end: 1rem;
-    
-    }
-    table tr td {
-      font-family: "regular";
-      color: #011c1e;
-      font-size: 0.7rem;
-      padding: 1rem 0.5rem;
-    }
-  
-    table tr td .details_team span {
-      font-family: "regular";
-      color: #828c8d;
-    }
-    thead {
-      font-family: "regular";
-      color: #828c8d;
-      font-size: 0.7rem;
-    }
+  margin: 2rem 0;
+  border: 1px solid #ebeaed;
+  border-radius: 5px;
+  padding: 1rem;
+  height: 400px;
+  overflow-y: auto;
+  h5 {
+    font-family: "regular";
+    color: #011c1e;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: bold;
   }
-  .employment_rates {
-    margin: 2rem 0;
-    border: 1px solid #ebeaed;
-    border-radius: 5px;
-    padding: 16px;
-    h5 {
-      color: #011c1e;
-      margin-bottom: 2rem;
-      font-size: 0.8rem;
-      font-family: "bold";
-    }
+  .btn {
+    font-family: "regular";
+    color: #828282;
+    font-size: 0.9rem;
   }
-
-  .table .details_team .contact{
+  table tr td .details_team {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    
   }
+  table.table {
+    & thead {
+      & tr {
+        th {
+          background: var(--main) !important;
+          color: white;
+        }
+      }
+    }
+  }
+  table tr td .details_team img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    -webkit-margin-end: 1rem;
+    margin-inline-end: 1rem;
+  }
+  table tr td {
+    font-family: "regular";
+    color: #011c1e;
+    font-size: 0.7rem;
+    padding: 1rem 0.5rem;
+  }
+
+  table tr td .details_team span {
+    font-family: "regular";
+    color: #828c8d;
+  }
+  thead {
+    font-family: "regular";
+    color: #828c8d;
+    font-size: 0.7rem;
+  }
+}
+.employment_rates {
+  margin: 2rem 0;
+  border: 1px solid #ebeaed;
+  border-radius: 5px;
+  padding: 16px;
+  h5 {
+    color: #011c1e;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    font-family: "bold";
+  }
+}
+
+.table .details_team .contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

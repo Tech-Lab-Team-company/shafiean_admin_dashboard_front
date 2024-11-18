@@ -1,21 +1,6 @@
 .employees-add {
-  height: 100vh;
-  .input {
-    border-radius: 10px;
-    padding: 0.5rem;
-    margin-bottom: 0.3rem;
+  height: 100%;
 
-    input {
-      border-radius: 33px;
-      padding: .75rem;
-      background-color: #f7f7f7;
-      padding-right: 10px;
-      border: unset;
-      font-family: "light";
-      font-size: 13px;
-      width: 100%;
-    }
-  }
   .all-btn {
     margin-top: 0.5rem;
     display: flex;
@@ -31,15 +16,9 @@ label {
   margin-bottom: 0.5rem;
 }
 
-
-
-
-
 .avatar-preview {
   margin-top: 10px;
 }
-
-
 
 .multiselect__select {
   line-height: 16px;
@@ -57,4 +36,3 @@ label {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-

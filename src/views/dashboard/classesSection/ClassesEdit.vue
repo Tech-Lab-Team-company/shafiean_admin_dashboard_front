@@ -1,10 +1,13 @@
 <template>
-  <div class="employees-edit">
-    <header-pages title="تعديل فصول دراسيه" :showButton="false" />
+  <div class="add-countries">
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="اضافة فصول دراسيه" :showButton="false" />
+    </div>
 
     <form @submit.prevent="submitForm">
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-12">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12">
           <label for="">أسم الفصل الدراسي</label>
           <div class="input">
             <input
@@ -35,7 +38,7 @@
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" >تعديل</button>
+        <button type="submit" class="save" @click="Edit()">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
