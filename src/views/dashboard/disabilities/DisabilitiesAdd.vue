@@ -1,6 +1,9 @@
 <template>
   <div class="disabilities-add">
-    <HeaderPages title="اضافة اعاقه" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <HeaderPages title="اضافة اعاقه" :showButton="false" />
+    </div>
     <form action="" @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -191,12 +194,5 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
-}
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
 }
 </style>

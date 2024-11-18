@@ -206,6 +206,15 @@ export default {
 };
 </script>
 <style scoped>
+.upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed rgba(0, 0, 0, 0.123);
+  padding: 0.5rem;
+  border-radius: 33px;
+  margin-top: unset !important;
+}
 .avatar-preview {
   position: relative;
 }

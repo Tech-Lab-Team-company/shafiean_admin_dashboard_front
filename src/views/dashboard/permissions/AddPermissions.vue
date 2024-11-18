@@ -1,6 +1,9 @@
 <template>
   <div class="add-courses">
-    <header-pages title="اضافة صلاحية" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة صلاحية" :showButton="false" />
+    </div>
     <div class="all-permisson-permisson">
       <form action="permations.html" class="add_form">
         <div class="row">
@@ -1915,83 +1918,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.Addd button {
-  width: 15%;
-  background-color: var(--main);
-  color: white;
-  font-size: 0.8rem;
-  padding: 0.75rem 5rem;
-  transition: 0.7s ease-in-out;
-}
-.Addd button:hover {
-  border-color: var(--main);
-  color: var(--main);
-  font-size: 0.8rem;
-  padding: 0.75rem 5rem;
-  transition: 0.7s ease-in-out;
-}
-* {
-  margin: 0;
-  font-family: "regular";
-}
-
-table.table {
-  & tbody {
-    & tr {
-      td {
-        text-align: right !important;
-      }
-    }
-  }
-}
-.add-permisson {
-  display: flex;
-  //   gap: 250px;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  justify-content: space-around;
-}
-form {
-  border: 0px solid var(--main);
-  padding: 0.5rem;
-  border-radius: 15px;
-  margin-top: 0.5rem;
-}
-.all-permisson label {
-  margin-top: 10px;
-  margin-bottom: 25px;
-}
-.table {
-  border: none !important;
-}
-.table > :not(caption) {
-  padding: 0.5rem 0.5rem;
-  color: red;
-  background-color: var(--bs-table-bg);
-  border-bottom-width: var(--bs-border-width);
-  border-color: var(--main);
-  box-shadow: inset 0 0 0 9999px
-    var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
-}
-.form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.input {
-  border-radius: 6px !important;
-  margin: 6px;
-  margin-bottom: 10px;
-}
-input.form-control {
-  //   border-radius: 33px;
-  padding: 0.75rem;
-  background-color: #f7f7f7;
-  padding-right: 40px;
-  border: unset;
-  font-family: "light";
-  font-size: 13px;
-}
-</style>

@@ -1,4 +1,7 @@
 @media screen and (max-width: 768px) {
+  textarea {
+    width: 100% !important;
+  }
   .sidebar {
     position: fixed;
     height: 100vh;

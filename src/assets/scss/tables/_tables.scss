@@ -1,21 +1,17 @@
 table.table {
   text-align: center;
   font-family: "regular";
-
+  border: 0;
   border-radius: 10px;
   margin-top: 0.5rem;
   padding: 2rem !important;
   thead {
     border-bottom: 1px solid #ebeaed !important;
     tr {
-      
       th {
-        
-
         font-size: 0.9rem;
         background: none !important;
         color: #828c8d;
-        text-align: start !important;
       }
     }
   }
@@ -41,45 +37,12 @@ img.image {
   border-radius: 50%;
 }
 i {
-  color:#828c8d;
+  color: #828c8d;
   margin: 0 5px;
   cursor: pointer;
 }
 
-.table {
-  border: 1px solid #00000036;
-  padding: 1rem;
-  border-radius: 10px;
-}
-.search {
-  background-color: #f7f7f7 !important;
 
-
-  padding: 0.2rem;
-  border-radius: 33px !important;
-  width: 97%;
-  display: flex;
-  align-items: center;
-  margin: auto;
-  height: 45px;
-  margin-bottom: -1rem;
-  background: none;
-
-  &.half-width {
-    width: 50%;
-  }
-
-  input {
-    border: none;
-    outline: none;
-    width: 90%;
-    padding: 0 0.3rem;
-  }
-  .input input:focus {
-    border: 2px solid var(--main);
-    transform: scale(1.06);
-  }
-}
 
 .header {
   display: flex;

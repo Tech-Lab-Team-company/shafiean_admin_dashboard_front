@@ -1,6 +1,9 @@
 <template>
   <div class="Curricula-add">
-    <header-pages title="اضافة منهج" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة منهج" :showButton="false" />
+    </div>
     <form action="" @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">

@@ -1,6 +1,9 @@
 <template>
   <div class="employees-add">
-    <HeaderPages title="اضافة موظف" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <HeaderPages title="اضافة موظف" :showButton="false" />
+    </div>
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -79,6 +82,7 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="password">الرقم السري</label>
           <div class="input">
+            <i class="fa-solid fa-eye"></i>
             <input
               type="password"
               id="password"
@@ -244,5 +248,8 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+.upload-icon {
+  margin-top: 0.9rem !important;
 }
 </style>

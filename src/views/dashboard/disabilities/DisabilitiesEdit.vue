@@ -196,11 +196,4 @@ export default {
   color: red;
   font-size: 0.85rem;
 }
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-}
 </style>

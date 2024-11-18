@@ -99,4 +99,21 @@
   button.save {
     width: 100% !important;
   }
+  .search {
+    input {
+      width: 91% !important;
+    }
+  }
+  .all-btn {
+    display: block !important;
+  }
+  button.save {
+    margin-inline-start: unset !important;
+    width: 100% !important;
+    display: unset !important;
+    margin-bottom: 1rem;
+  }
+  button.bake {
+    width: 100% !important;
+  }
 }

@@ -76,37 +76,32 @@ form {
 .input {
   input {
     border-radius: 33px !important;
+    padding: 0.75rem !important;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.164) !important;
+    box-shadow: none !important;
+    font-family: "regular" !important;
+    font-size: 1rem !important;
+    width: 100% !important;
 
-    padding: 0.75rem;
-    background-color: #f7f7f7 !important;
-    padding-right: 33px !important;
-    border: none !important;
-    font-family: "light";
-    font-size: 13px;
-    width: 100%;
-    margin-right: -21px !important;
+    &:focus {
+      outline: none !important;
+      border: 1px solid #5c9ded !important;
+      box-shadow: 0 0 5px var(--main) !important;
+    }
 
+    &:focus-visible {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
   }
 }
-.search {
-  input {
-    border: none !important   ;
-    background: none !important;
-  }
+
+::placeholder {
+  color: #0000003d !important;
 }
 
-input[type="search"] {
-  width: 97% !important;
-}
-.multiselect__tags  {
-  border-radius: 33px !important; 
-  border: 1px solid #e8e8e8 !important;
-  padding: 0.75rem;
-  font-family: "light";
-  font-size: 13px;
-  width: 100% !important;
-
-}
 .alll {
   border: 1px solid #ebeaed !important;
   border-radius: 10px;
@@ -114,13 +109,131 @@ input[type="search"] {
   padding: 2rem !important;
 }
 .action-icons {
-  .red{
+  .red {
     color: red;
   }
 }
-label{
-  margin-right: 6px !important  ;
+label {
+  margin-right: 15px !important  ;
+}
+.multiselect__tags {
+  border-radius: 33px !important;
+  width: 98% !important;
+  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  margin-right: 11px !important;
+  margin-top: 0.3rem !important;
+}
+.multiselect__placeholder {
+  margin-top: unset !important;
+}
+.multiselect__content-wrapper {
+  width: 98% !important;
+  margin-right: 11px !important;
+}
+.upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed rgba(0, 0, 0, 0.123);
+  padding: 0.7rem;
+  border-radius: 33px;
+  i {
+    color: #06797e;
+  }
+}
+.avatar-preview {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #0000002b;
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
 }
 
+.upload-icon span {
+  font-size: 14px;
+  font-family: "regular";
+}
 
+.search {
+  border: 1px solid #0000002b;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  input {
+    background-color: transparent;
+    box-shadow: none !important;
+    font-family: "regular" !important;
+    font-size: 1rem !important;
+    width: 98%;
+    padding: 0.3rem;
+    border: 0;
+    &:focus {
+      outline: none !important;
+      border: 1px solid #5c9ded !important;
+      box-shadow: 0 0 5px var(--main) !important;
+    }
 
+    &:focus-visible {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+textarea {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  padding: 0.5rem;
+  border-radius: 15px;
+}
+button.bake {
+  background-color: var(--main) ;
+  color: white ;
+  font-family: "regular" ;
+  border: 0;
+  padding: 0.8rem 2rem ;
+  border-radius: 10px ;
+  transition: 0.7s ;
+  width: 10% ;
+  border: 1px solid var(--main) ;
+  &:hover {
+    background-color: white ;
+    border: 1px solid var(--main) ;
+    color: var(--main) ;
+    transform: scale(1.06) ;
+  }
+}
+button.save {
+  display: block ;
+  margin-inline-start: auto ;
+  background-color: var(--main) ;
+  color: white ;
+  font-family: "regular" ;
+  border: 0;
+  padding: 0.8rem 2rem ;
+  border-radius: 10px ;
+  transition: 0.7s ;
+  width: 20% ;
+  border: 1px solid var(--main) ;
+  &:hover {
+    background-color: white ;
+    border: 1px solid var(--main) ;
+    color: var(--main) ;
+    transform: scale(1.06) ;
+  }
+}
+i.fa-solid.fa-plus {
+  color: #06797e;
+  margin-bottom: 1rem;
+}
+.plus {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  h4 {
+    margin-bottom: 0;
+  }
+}

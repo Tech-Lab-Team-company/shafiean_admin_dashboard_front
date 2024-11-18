@@ -1,6 +1,9 @@
 <template>
   <div class="steps-add">
-    <header-pages title="اضافة مرحلة" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة مرحلة" :showButton="false" />
+    </div>
     <form @submit.prevent="submitForm">
       <div class="row">
         <!-- Step Title Input -->
@@ -49,7 +52,6 @@
             label="title"
             :close-on-select="false"
             @update:model-value="handleCurriculaChange"
-            placeholder="اختر منهجاً دراسياً"
           ></multiselect>
           <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">
             {{ getErrorMessage(v$.steps.curriculum_id) }}
@@ -67,7 +69,6 @@
             :multiple="true"
             :close-on-select="false"
             @update:model-value="handleDisabilitiesChange"
-            placeholder="اختر الإعاقات"
           />
           <span class="error-feedback" v-if="v$.steps.disability_ids.$error">
             {{ getErrorMessage(v$.steps.disability_ids) }}
@@ -85,7 +86,6 @@
             label="name"
             track-by="id"
             @update:model-value="handleTypeChange"
-            placeholder="اختر نوعاً"
           ></multiselect>
           <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">
             {{ getErrorMessage(v$.steps.type_id) }}
@@ -250,12 +250,5 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
-}
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
 }
 </style>

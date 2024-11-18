@@ -1,49 +1,6 @@
 .disabilities-add {
   height: 100vh;
-  .input {
-    border-radius: 10px;
-    padding: 0.5rem;
-    margin-bottom: 0.3rem;
 
-    input {
-
-      border-radius: px;
-      height: 40px;
-      padding: 0 0.3rem;
-      width: 100%;
-      outline: none;
-    }
-  }
-  button.save {
-    display: block;
-    margin-inline-start: auto;
-    background-color: var(--main);
-    color: white;
-    font-family: "regular";
-    border: 0;
-    padding: 0.8rem 2rem;
-    border-radius: 10px;
-    transition: 0.7s;
-    width: 20%;
-    border: 1px solid var(--main);
-  }
-  button.bake {
-    display: block;
-    background-color: var(--main);
-    color: white;
-    font-family: "regular";
-    border: 0;
-    padding: 0.8rem 2rem;
-    border-radius: 10px;
-    transition: 0.7s;
-    border: 1px solid var(--main);
-  }
-  button:hover {
-    background-color: white;
-    border: 1px solid var(--main);
-    color: var(--main);
-    transform: scale(1.06);
-  }
   .all-btn {
     margin-top: 0.5rem;
     display: flex;
@@ -58,49 +15,17 @@ label {
   font-family: "medium";
   margin-bottom: 0.5rem;
 }
-.multiselect__tags {
-  border: 1px solid var(--main) !important;
-}
-.upload-icon {
-  cursor: pointer;
 
-  color: var(--main);
-  font-size: 24px;
-}
 
-.upload-icon span {
-  margin-top: 5px;
-  font-size: 14px;
-  margin-right: 10px;
-  font-family: "regular";
-}
+
 
 .avatar-preview {
   margin-top: 10px;
 }
 
-.avatar-preview img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--main);
-}
-.input input:focus {
-  border: 2px solid var(--main);
-  transform: scale(1.06);
-}
-.multiselect__tags {
-  min-height: 40px;
-  display: block;
-  padding: 0px 12px 0px 9px !important;
-  border-radius: 5px;
-  border: 1px solid #e8e8e8;
-  background: #fff;
-  font-size: 14px;
-  margin-top: 7px;
-  border-radius: 12px !important;
-}
+
+
+
 .multiselect__select {
   line-height: 16px;
   display: block;

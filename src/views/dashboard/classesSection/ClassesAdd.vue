@@ -1,6 +1,9 @@
 <template>
   <div class="add-countries">
-    <header-pages title="اضافة فصل دراسي " :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة فصل دراسي " :showButton="false" />
+    </div>
 
     <form @submit.prevent="submitForm">
       <div class="row">
