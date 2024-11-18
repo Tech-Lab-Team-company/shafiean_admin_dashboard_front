@@ -209,7 +209,7 @@
                     <span>{{ student.user_count }}</span>
                   </div>
                 </div>
-                <div class="percent">90%</div>
+                <div class="percent">{{ student.user_count }}</div>
               </div>
             </div>
             <!-- End Card project -->
@@ -246,7 +246,7 @@
             <!-- End best performance project -->
           </div>
           <!-- End best performance project -->
-          <div class="average">
+          <!-- <div class="average">
             <circle-progress value="75" max="100"></circle-progress>
             <div class="text-average">
               <h4>معدل تزايد الطلاب على المنصة</h4>
@@ -257,7 +257,7 @@
             <div class="text-average">
               <h4>معدل التفاعل بين الطلاب والمدرسين</h4>
             </div>
-          </div>
+          </div> -->
           <!-- Start Region project -->
           <div class="region_project">
             <div class="d-flex justify-content-between align-items-center">
