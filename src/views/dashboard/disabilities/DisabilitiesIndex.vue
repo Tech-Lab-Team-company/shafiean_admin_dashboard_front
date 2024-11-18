@@ -5,12 +5,13 @@
       button="+ اضافة اعاقه "
       link="/add-disabilities"
     />
+
     <div class="alll">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن موظف..."
+          placeholder="بحث عن أعاقه..."
           v-model="word"
           @input="debouncedSearch"
         />

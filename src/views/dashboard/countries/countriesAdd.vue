@@ -63,7 +63,7 @@
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
 // import Swal from "sweetalert2";
-import { required } from "@vuelidate/validators";
+import { required, minValue } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
   data() {
@@ -80,8 +80,8 @@ export default {
     return {
       countries: {
         title: { required },
-        code: { required },
-        phone_code: { required },
+        code: { required, minValue: minValue(1) },
+        phone_code: { required, minValue: minValue(1) },
       },
     };
   },
@@ -91,7 +91,11 @@ export default {
   methods: {
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
-        return "هذا الحقل مطلوب";
+        if (field.required.$invalid) {
+          return "هذا الحقل مطلوب";
+        } else if (field.minValue.$invalid) {
+          return "يجب ان يكون القيمة اكبر من 0";
+        }
       }
       return "";
     },

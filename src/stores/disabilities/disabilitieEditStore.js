@@ -30,7 +30,9 @@ export const useDisabilitieEditStore = defineStore("disabilitiesEdit", {
         formData.append("id", id);
         formData.append("title", updatedData.title);
         formData.append("description", updatedData.description);
-        formData.append("image", updatedData.image);
+        if (updatedData.image instanceof File) {
+          formData.append("image", updatedData.image);
+        }
 
         const response = await axios.post("edit_disability", formData, {
           headers: {

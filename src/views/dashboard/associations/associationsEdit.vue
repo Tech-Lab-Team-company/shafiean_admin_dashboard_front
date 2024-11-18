@@ -18,7 +18,6 @@
               ref="fileInput"
               style="display: none"
             />
-
             <div
               v-if="!organizations.imageSrc"
               class="upload-icon"
@@ -200,10 +199,12 @@
             />
           </div>
         </div>
-      </div>
-      <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">تعديل</button>
-        <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
+        <div class="all-btn">
+          <button type="submit" class="save" @click="Edit()">تعديل</button>
+          <button type="button" class="bake" @click="$router.go(-1)">
+            رجوع
+          </button>
+        </div>
       </div>
     </form>
   </div>

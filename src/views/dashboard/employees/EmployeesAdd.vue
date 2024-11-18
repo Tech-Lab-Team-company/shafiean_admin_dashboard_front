@@ -54,11 +54,12 @@
           <label for="phone">رقم الهاتف</label>
           <div class="input">
             <input
-              type="number"
+              type="tel"
               id="phone"
+              class="no-spinner"
               placeholder="أدخل رقم الهاتف"
               v-model="form.phone"
-              class="no-spinner"
+              @keypress="onlyAllowNumbers"
             />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
               getErrorMessage(v$.form.phone)
@@ -73,6 +74,7 @@
               id="email"
               placeholder="أدخل البريد الالكتروني"
               v-model="form.email"
+              @input="validatePhone"
             />
             <span class="error-feedback" v-if="v$.form.email.$error">{{
               getErrorMessage(v$.form.email)
@@ -110,7 +112,6 @@
             :multiple="true"
             :close-on-select="false"
           ></multiselect>
-
           <span class="error-feedback" v-if="v$.form.role.$error">{{
             getErrorMessage(v$.form.role)
           }}</span>
@@ -217,7 +218,6 @@ export default {
           return;
         }
         await employeesStore.addEmployee(this.form); // Call addEmployee instead of fetchEmployees
-        this.$router.push("/employees");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }

@@ -30,7 +30,6 @@
             track-by="id"
             label="title"
             :close-on-select="true"
-            @update:model-value="updatecountryValue"
           ></multiselect>
 
           <span class="error-feedback" v-if="v$.years.country_id.$error">
@@ -96,12 +95,12 @@ export default {
       }
       return "";
     },
-    updatecountryValue() {
-      this.years.country_id = this.Country_values
-        ? this.Country_values.id
-        : null;
-      console.log("Selected Country ID:", this.years.country_id);
-    },
+    // updatecountryValue() {
+    //   this.years.country_id = this.Country_values
+    //     ? this.Country_values.id
+    //     : null;
+    //   console.log("Selected Country ID:", this.years.country_id);
+    // },
 
     async fetchData() {
       const store = useYearsEditStore();
@@ -119,15 +118,15 @@ export default {
       const id = this.$route.params.id;
       await store.updateYears(id, {
         title: this.years.title,
-        country_id: this.years.country,
+        country_id: this.years.country.id,
       });
       if (!this.years.title || !this.years.country) {
         Swal.fire("Error", "Please fill in all fields", "error");
+        this.$router.go(-1);
         return;
       } else {
-        Swal.fire("Success", "تم تعديل السنه الدراسيه بنجاح", "success");
+        Swal.fire("Success", "تم تعديـل السنه الدراسيه بنجاح", "success");
       }
-      this.$router.go(-1);
     },
     // async fetchEidtCountries() {
     //   const store = useYearsEditStore();

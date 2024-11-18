@@ -14,7 +14,6 @@
               type="text"
               placeholder="أسم الفصل الدراسي "
               v-model="form.title"
-              required
             />
           </div>
           <span class="error-feedback" v-if="v$.form.title.$error"
@@ -138,5 +137,40 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
+}
+button.save {
+  display: block;
+  margin-inline-start: auto;
+  background-color: var(--main);
+  color: white;
+  font-family: "regular";
+  border: 0;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  transition: 0.7s;
+  width: 20%;
+  border: 1px solid var(--main);
+}
+button.bake {
+  display: block;
+  background-color: var(--main);
+  color: white;
+  font-family: "regular";
+  border: 0;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  transition: 0.7s;
+  border: 1px solid var(--main);
+}
+button:hover {
+  background-color: white;
+  border: 1px solid var(--main);
+  color: var(--main);
+  transform: scale(1.06);
+}
+.all-btn {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 10px;
 }
 </style>

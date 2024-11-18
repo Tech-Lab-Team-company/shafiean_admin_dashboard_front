@@ -17,12 +17,16 @@
       <label for="password">ادخل كلمة المرور</label>
       <div class="input">
         <input
-          type="password"
+          :type="showPassword ? 'text' : 'password'"
           id="password"
           v-model="password"
           placeholder="ادخل كلمة المرور"
           required
         />
+        <span @click="togglePasswordVisibility" class="toggle-password">
+          <i v-if="showPassword" class="fa fa-eye"></i>
+          <i v-else class="fa fa-eye-slash"></i>
+        </span>
       </div>
       <button type="submit">تسجيل الدخول</button>
     </form>
@@ -41,6 +45,7 @@ export default {
     return {
       email: "",
       password: "",
+      showPassword: false,
     };
   },
   computed: {
@@ -49,6 +54,9 @@ export default {
     },
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     async login() {
       await this.authStore.login({
         email: this.email,
@@ -60,3 +68,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+::placeholder {
+  color: #999;
+  margin-right: 20px;
+}
+</style>

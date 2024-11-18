@@ -1,18 +1,17 @@
 <template>
   <div class="admininfo-add">
-    <div class="plus">
-      <i class="fa-solid fa-pen-to-square"></i>
-      <header-pages
-        title="معلومات المسؤل"
-        :showButton="false"
-        link="/Edit-admins"
-      />
-    </div>
+    <header-pages
+      title="معلومات المسؤل"
+      :showButton="false"
+      link="/Edit-admins"
+    />
+
     <form action="">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
+
             <input
               type="file"
               id="avatar"

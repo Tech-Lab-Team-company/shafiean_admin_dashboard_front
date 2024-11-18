@@ -6,11 +6,12 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن موظف..."
+          placeholder="بحث عن دوله..."
           v-model="word"
           @input="debouncedSearch"
         />
       </div>
+
       <TablesPageVue
         :headers="tableHeaders"
         :rows="tableRowsCountries"

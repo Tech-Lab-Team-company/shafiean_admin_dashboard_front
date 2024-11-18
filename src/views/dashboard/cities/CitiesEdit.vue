@@ -14,6 +14,7 @@
               placeholder="اسم المدينه"
               v-model="Cities.title"
             />
+
             <span class="error-feedback" v-if="v$.Cities.title.$error">{{
               getErrorMessage(v$.Cities.title)
             }}</span>

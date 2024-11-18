@@ -12,7 +12,7 @@ export const useCurriculumEditStore = defineStore("curriculaEdit", {
         const response = await axios.post("fetch_curriculum_details", { id });
         if (response.data.status == true) {
           this.Curriculas = response.data.data;
-          console.log(this.Curriculas, "Curriculas");
+          // console.log(this.Curriculas, "Curriculas");
         } else {
           throw new Error("Failed to fetch Curriculas data");
         }

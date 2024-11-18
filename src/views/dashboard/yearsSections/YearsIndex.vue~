@@ -1,17 +1,16 @@
 <template>
-  <div class="classes">
+  <div class="years">
     <header-pages
-      title=" الفصول الدراسية"
-      button="+ اضافة فصل دراسي"
-      link="/add-classes"
+      title=" السنوات الدراسية"
+      button="+  اضافة سنة دراسية"
+      link="/add-years"
     />
-
     <div class="alll">
       <div class="search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن فصل دراسي..."
+          placeholder="بحث عن موظف..."
           v-model="word"
           @input="debouncedSearch"
         />
@@ -19,11 +18,11 @@
 
       <TablesPageVue
         :headers="tableHeaders"
-        :rows="tableRowsClasses"
+        :rows="tableRowsYears"
         :pages="tablePages"
-        editLink="/edit-classes"
-        viewLink="/view-classes"
-        @delete="handleDeleteClasses"
+        editLink="/edit-years"
+        viewLink="/view-years"
+        @delete="handleDeleteYears"
       />
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
@@ -41,7 +40,7 @@ import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import TablesPageVue from "@/components/tables/TablesPage.vue";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import PaginationPage from "@/components/pagination/PaginationPage.vue";
-import { useClassesStore } from "@/stores/Classess/ClassesStore";
+import { useYearsStore } from "@/stores/Years/YearsStore";
 import { mapState } from "pinia";
 import { debounce } from "lodash"; // استيراد دالة debounce
 
@@ -57,13 +56,13 @@ export default {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
       errorMessage: "",
-      tableHeaders: ["ID", "اسم الفصول الدراسية", "الدوله"],
+      tableHeaders: ["ID", "اسم السنة الدراسية", "الدوله"],
     };
   },
 
   computed: {
-    ...mapState(useClassesStore, {
-      Classes: (state) => state.Classes,
+    ...mapState(useYearsStore, {
+      years: (state) => state.years,
     }),
     ...mapState(usePaginationStore, {
       paginationCurrent: (state) => state.current_page,
@@ -73,10 +72,15 @@ export default {
       paginationTo: (state) => state.to,
       paginationTotal: (state) => state.total,
     }),
-    tableRowsClasses() {
-      const dataToDisplay = this.Classes;
-      return dataToDisplay.map((cl) => [cl.id, cl.title, cl.country.title]);
+    tableRowsYears() {
+      const dataToDisplay = this.years;
+      return dataToDisplay.map((yr) => [
+        yr.id,
+        yr.title,
+        yr.country?.title || "",
+      ]);
     },
+
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);
     },
@@ -88,37 +92,37 @@ export default {
       this.debouncedSearch();
     },
     async handleSearch() {
-      const ClassesStore = useClassesStore();
+      const yearsStore = useYearsStore();
       if (this.word.trim() === "") {
         this.errorMessage = "";
-        await ClassesStore.getClasses(1);
+        await yearsStore.getYears(1);
         return;
       } else {
         this.errorMessage = "";
       }
 
-      await ClassesStore.getClasses(1, this.word);
+      await yearsStore.getYears(1, this.word);
 
-      if (ClassesStore.Classes.length === 0) {
+      if (yearsStore.years.length === 0) {
         this.errorMessage = "لم يتم العثور على أي كلمة";
       } else {
         this.errorMessage = "";
       }
     },
 
-    handlePageChange(page) {
-      const useClasses = useClassesStore();
-      useClasses.getClasses(page);
-    },
-    handleDeleteClasses(id) {
-      const ClassesStore = useClassesStore();
+    handleDeleteYears(id) {
+      const yearsStore = useYearsStore();
       console.log(id);
-      ClassesStore.deleteClasses(id);
+      yearsStore.deleteYear(id);
+    },
+    handlePageChange(page) {
+      const yearsStore = useYearsStore();
+      yearsStore.getYears(page);
     },
   },
   async mounted() {
-    const ClassesStore = useClassesStore();
-    await ClassesStore.getClasses();
+    const yearsStore = useYearsStore();
+    await yearsStore.getYears();
     this.debouncedSearch = debounce(() => {
       this.handleSearch(); // استخدم الدالة handleSearch
     }, 700); // تأخير 1500 مللي ثانية

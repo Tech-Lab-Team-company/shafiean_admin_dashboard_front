@@ -9,19 +9,18 @@
       />
     </div>
 
-    <form action="">
+    <form @submit.prevent="save()">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <div class="avatar-uploader">
             <label for="avatar">صوره</label>
-
             <input
-              type="file"
               id="avatar"
-              @change="handleFileChange"
-              accept="image/*"
               ref="fileInput"
+              accept="image/*"
               style="display: none"
+              type="file"
+              @change="handleFileChange"
             />
 
             <div
@@ -34,11 +33,11 @@
               <span>اختيار صورة</span>
             </div>
 
-            <div v-if="imageSrc" class="avatar-preview">
-              <img :src="imageSrc" alt="Avatar Preview" />
+            <div v-if="admin.imageSrc" class="avatar-preview">
+              <img :src="admin.imageSrc" alt="Avatar Preview" />
             </div>
 
-            <span class="error-feedback" v-if="v$.admin.imageSrc.$error">{{
+            <span v-if="v$.admin.imageSrc.$error" class="error-feedback">{{
               v$.admin.imageSrc.$errors[0].$message
             }}</span>
           </div>
@@ -46,8 +45,8 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="name">أسم المسؤل</label>
           <div class="input">
-            <input type="text" placeholder="أسم المسؤل" v-model="admin.name" />
-            <span class="error-feedback" v-if="v$.admin.name.$error">{{
+            <input v-model="admin.name" placeholder="أسم المسؤل" type="text" />
+            <span v-if="v$.admin.name.$error" class="error-feedback">{{
               v$.admin.name.$errors[0].$message
             }}</span>
           </div>
@@ -56,11 +55,11 @@
           <label for="name">رقم الهاتف </label>
           <div class="input">
             <input
-              type="text"
-              placeholder="رقم الهاتف "
               v-model="admin.phone"
+              placeholder="رقم الهاتف "
+              type="text"
             />
-            <span class="error-feedback" v-if="v$.admin.phone.$error">{{
+            <span v-if="v$.admin.phone.$error" class="error-feedback">{{
               v$.admin.phone.$errors[0].$message
             }}</span>
           </div>
@@ -69,19 +68,19 @@
           <label for="name">البريد الالكتروني </label>
           <div class="input">
             <input
-              type="text"
-              placeholder=" البريد الالكتروني "
               v-model="admin.email"
+              placeholder=" البريد الالكتروني "
+              type="text"
             />
-            <span class="error-feedback" v-if="v$.admin.email.$error">{{
+            <span v-if="v$.admin.email.$error" class="error-feedback">{{
               v$.admin.email.$errors[0].$message
             }}</span>
           </div>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="save()">حفظ</button>
-        <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
+        <button class="save" type="submit">حفظ</button>
+        <button class="bake" type="button" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
   </div>
@@ -91,6 +90,7 @@
 import HeaderPages from "@/components/headerpages/HeaderPages.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+
 export default {
   components: { HeaderPages },
   data() {
@@ -109,23 +109,22 @@ export default {
     return {
       admin: {
         imageSrc: { required },
-        name: {
-          required: {
-            $validator: required,
-            $message: "الاسم مطلوب",
-          },
-        },
+        name: { required },
         phone: { required },
         email: { required },
       },
     };
   },
   methods: {
-    handleFileChange(event) {
-      const file = event.target.files[0];
+    async handleFileChange(event) {
+      const file = await event.target.files[0];
+      if (file) {
+        this.admin.image = file;
+      }
       const reader = new FileReader();
+
       reader.onload = () => {
-        this.imageSrc = reader.result;
+        this.admin.imageSrc = reader.result;
       };
       reader.readAsDataURL(file);
     },
