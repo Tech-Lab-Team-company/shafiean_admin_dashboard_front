@@ -16,17 +16,19 @@
       </div>
       <label for="password">ادخل كلمة المرور</label>
       <div class="input">
-        <input
-          :type="showPassword ? 'text' : 'password'"
-          id="password"
-          v-model="password"
-          placeholder="ادخل كلمة المرور"
-          required
-        />
-        <span @click="togglePasswordVisibility" class="toggle-password">
-          <i v-if="showPassword" class="fa fa-eye"></i>
-          <i v-else class="fa fa-eye-slash"></i>
-        </span>
+        <div class="pas">
+          <input
+            :type="showPassword ? 'text' : 'password'"
+            id="password"
+            v-model="password"
+            placeholder="ادخل كلمة المرور"
+            required
+          />
+          <span @click="togglePasswordVisibility" class="toggle-password">
+            <i v-if="showPassword" class="fa fa-eye"></i>
+            <i v-else class="fa fa-eye-slash"></i>
+          </span>
+        </div>
       </div>
       <button type="submit">تسجيل الدخول</button>
     </form>
