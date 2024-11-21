@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useYearsEditStore = defineStore("yearsEdit", {
   state: () => ({
@@ -47,14 +48,8 @@ export const useYearsEditStore = defineStore("yearsEdit", {
           },
         });
 
-        if (response.data.status) {
-          const index = this.years.findIndex((year) => year.id === id);
-          if (index !== -1) {
-            this.years.splice(index, 1, {
-              ...this.years[index],
-              ...updatedData,
-            });
-          }
+        if (response.data.status === true) {
+          router.push("/years");
           Swal.fire("Success", "Year has been updated.", "success");
         } else {
           Swal.fire("Error", "Failed to update year.", "error");
