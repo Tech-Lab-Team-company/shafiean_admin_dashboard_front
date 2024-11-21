@@ -23,13 +23,23 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        this.employees.push(response.data);
-        await router.push("/employees");
-
-        Swal.fire("Success", "Employee has been saved.", "success");
+        this.employees = response.data.data;
+        if (response.data.status === true) {
+          await router.push("/employees");
+          Swal.fire({
+            icon: "success",
+            title: "تم الحفظ بنجاح",
+            text: response.data.message || "تم إضافة الموظف بنجاح",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "خطأ",
+            text: response.data.message,
+          });
+        }
       } catch (error) {
         console.error("Error saving employee:", error);
-        Swal.fire("Error", "There was a problem saving the employee.", "error");
       }
     },
   },
