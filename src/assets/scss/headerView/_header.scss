@@ -285,15 +285,16 @@
   }
 }
 .accuracy_projects {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   p {
     font-family: "regular";
     color: #828c8d;
   }
   .text-chart {
-    position: absolute;
-    top: 14rem;
-    right: 13rem;
+    text-align: center;
   }
 }
 .percentage_projects {
@@ -322,24 +323,3 @@
   }
 }
 
-@media screen and (min-width: 320px) and (max-width: 600px) {
-  .accuracy_projects {
-    position: relative;
-    height: 350px;
-
-    .text-chart {
-      position: absolute;
-      top: 10rem !important;
-      right: 8.6rem !important;
-    }
-  }
-  canvas {
-    box-sizing: border-box;
-    display: block;
-    height: 333px !important;
-    width: 341px !important;
-  }
-  .card {
-    height: 360px !important;
-  }
-}

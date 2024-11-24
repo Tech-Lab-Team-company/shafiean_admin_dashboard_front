@@ -11,7 +11,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن أعاقه..."
+          placeholder="بحث عن أسم أعاقه..."
           v-model="word"
           @input="debouncedSearch"
         />

@@ -16,10 +16,16 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  position: fixed;
+  height: 100vh;
+  transition: 0.7s;
+  overflow-y: auto;
+ 
 }
 
 .sidebar-item {
   padding: 10px 20px;
+  transition: 0.7s;
 }
 
 .sidebar-link {
@@ -31,6 +37,7 @@
   border-radius: 4px;
   transition: background-color 0.3s ease;
   font-family: "regular";
+  transition: 0.5s;
 
   i {
     font-size: 18px;

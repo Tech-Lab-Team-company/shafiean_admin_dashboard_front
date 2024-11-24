@@ -1,22 +1,4 @@
 @media screen and (max-width: 600px) {
-  .employees {
-    height: 100vh;
-  }
-  .disabilities {
-    height: 100vh !important;
-  }
-  .curricula {
-    height: 100vh !important;
-  }
-  .lessons {
-    height: 100vh !important;
-  }
-  .countries {
-    height: 100vh !important;
-  }
-  .Associations {
-    height: 100vh !important;
-  }
   .admin-info {
     height: 100vh !important;
   }
@@ -114,6 +96,29 @@
     margin-bottom: 1rem;
   }
   button.bake {
+    width: 100% !important;
+  }
+  .statistics {
+    display: block !important;
+  }
+  .card_statistics {
+    width: 100% !important;
+  }
+  .percentage_projects.mt-4 {
+    .d-flex.justify-content-between {
+      display: block !important;
+      text-align: center !important;
+    }
+  }
+  .sidebar-expanded {
+    .sidebar-menu {
+      height: 100vh;
+      overflow-y: scroll;
+      left: 0;
+      width: 54%;
+    }
+  }
+  canvas {
     width: 100% !important;
   }
 }

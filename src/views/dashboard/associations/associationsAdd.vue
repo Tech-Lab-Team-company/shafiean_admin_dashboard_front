@@ -62,7 +62,7 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="phone">رقم التليفون</label>
           <div class="input">
-            <input type="tel" placeholder="رقم التليفون" v-model="form.phone" />
+            <input type="number" placeholder="رقم التليفون" v-model="form.phone" />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
               getErrorMessage(v$.form.phone)
             }}</span>
@@ -104,10 +104,10 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="manager_phone">رقم المدير</label>
+          <label for="manager_phone">رقم هاتف المدير</label>
           <div class="input">
             <input
-              type="tel"
+              type="number"
               placeholder="رقم المدير"
               v-model="form.manager_phone"
             />
@@ -137,6 +137,7 @@
             :options="CountryOptions"
             track-by="id"
             label="title"
+            placeholder="أختر الدوله"
             :close-on-select="true"
             @update:model-value="updateCountryValue"
           />
@@ -152,6 +153,7 @@
             :options="cityOptions"
             track-by="id"
             label="title"
+            placeholder="أختر مدينه"
             :close-on-select="true"
             @update:model-value="updateCityValue"
           />
@@ -167,6 +169,8 @@
             :options="disabilitiesOptions"
             track-by="id"
             label="title"
+            placeholder="أختر الاعاقات"
+
             :multiple="true"
             :close-on-select="false"
             @update:model-value="updateDisabilitiesValue"

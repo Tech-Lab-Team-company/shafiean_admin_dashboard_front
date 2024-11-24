@@ -7,7 +7,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن مرحلة..."
+          placeholder="بحث عن أسم مرحلة..."
           v-model="word"
           @input="debouncedSearch"
         />

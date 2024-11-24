@@ -10,7 +10,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن سنة دراسية..."
+          placeholder="بحث عن أسم سنة دراسية..."
           v-model="word"
           @input="debouncedSearch"
         />

@@ -111,6 +111,7 @@
             :options="permissionOptions"
             :multiple="true"
             :close-on-select="false"
+            placeholder="ادخل الصلاحيات"
           ></multiselect>
           <span class="error-feedback" v-if="v$.form.role.$error">{{
             getErrorMessage(v$.form.role)
@@ -242,7 +243,7 @@ export default {
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.164) !important;
-  border-radius: 33px;
+  border-radius: 15px;
 }
 .no-spinner::-webkit-inner-spin-button,
 .no-spinner::-webkit-outer-spin-button {
