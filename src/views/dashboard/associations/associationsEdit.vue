@@ -70,7 +70,7 @@
           <label for="phone">رقم التليفون</label>
           <div class="input">
             <input
-              type="tel"
+              type="number"
               placeholder="رقم التليفون"
               v-model="organizations.phone"
             />

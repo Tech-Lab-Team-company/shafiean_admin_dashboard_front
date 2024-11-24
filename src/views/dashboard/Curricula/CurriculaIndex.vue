@@ -6,7 +6,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن منهج..."
+          placeholder="بحث عن أسم منهج..."
           v-model="word"
           @input="debouncedSearch"
         />

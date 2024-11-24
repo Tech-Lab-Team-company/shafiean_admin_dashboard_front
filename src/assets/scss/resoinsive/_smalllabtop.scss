@@ -17,4 +17,23 @@
   .allnav {
     justify-content: space-between !important;
   }
+  .p-chart.h-\[30rem\] {
+    height: 189px !important;
+  }
+  .card {
+    .p-chart.h-\[30rem\] {
+      height: 189px !important;
+    }
+  }
+
+  .percentage_projects {
+    .d-flex.justify-content-between {
+      display: block !important;
+    }
+  }
+  .search {
+    input {
+      width: 92% !important;
+    }
+  }
 }

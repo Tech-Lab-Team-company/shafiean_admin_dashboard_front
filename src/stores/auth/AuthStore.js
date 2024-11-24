@@ -22,13 +22,13 @@ export const useAuthStore = defineStore("auth", {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Login Successful",
+          text: response.data.message || "login-success",
         });
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: error.response.data.message,
+          text: response.data.message || "login-filed",
         });
       }
     },

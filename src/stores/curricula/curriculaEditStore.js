@@ -35,9 +35,17 @@ export const useCurriculumEditStore = defineStore("curriculaEdit", {
 
         if (response.data.status == true) {
           this.Curriculas = updatedData;
-          Swal.fire("Success", "Curriculum has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Curriculum has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update curriculum.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Curriculum has been filed.",
+          });
         }
       } catch (error) {
         console.error("error in updating curriculum:", error);

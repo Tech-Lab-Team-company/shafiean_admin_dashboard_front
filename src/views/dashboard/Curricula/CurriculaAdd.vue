@@ -29,6 +29,7 @@
             :close-on-select="true"
             label="name"
             track-by="id"
+            placeholder="اختر نوع المنهج"
             @update:model-value="updateTypeId"
           ></multiselect>
           <span class="error-feedback" v-if="v$.Curriculas.type.$error">

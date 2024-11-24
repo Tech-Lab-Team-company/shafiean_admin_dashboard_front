@@ -48,6 +48,7 @@
             v-model="curricula_values"
             :options="curriculaOptions"
             track-by="id"
+            placeholder="اختر المنهج الدراسي"
             label="title"
             :close-on-select="false"
             @update:model-value="handleCurriculaChange"
@@ -65,6 +66,7 @@
             :options="disabilitiesOptions"
             track-by="id"
             label="title"
+            placeholder="اختر الإعاقات"
             :multiple="true"
             :close-on-select="false"
             @update:model-value="handleDisabilitiesChange"
@@ -84,6 +86,7 @@
             :close-on-select="true"
             label="name"
             track-by="id"
+            placeholder="اختر قرأن"
             @update:model-value="handleTypeChange"
           ></multiselect>
           <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">

@@ -47,11 +47,18 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
 
         if (response.data.status == true) {
           this.employee = updatedData;
-          Swal.fire("Success", "employee has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Employee has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update employee.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Employee has been filed.",
+          });
         }
-        Swal.fire("Success", "Employee has been updated.", "success");
       } catch (error) {
         console.error("Error", "Failed to update employee.", "error");
       }

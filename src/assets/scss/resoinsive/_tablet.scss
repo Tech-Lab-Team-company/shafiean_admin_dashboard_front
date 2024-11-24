@@ -27,7 +27,7 @@
   }
 
   table.table {
-    min-width: 859px;
+    min-width: 1179px;
   }
 
   .allnav {
@@ -48,4 +48,17 @@
   .image-container {
     display: none;
   }
+  .statistics {
+    display: block !important;
+  }
+  .card_statistics {
+    width: 100% !important;
+  }
+  .p-chart.h-\[30rem\] {
+    height: 313px !important;
+  }
+  canvas {
+    width: 100% !important;
+  }
+ 
 }

@@ -1,63 +1,72 @@
 <template>
-  <div class="col-lg-8 col-md-12 col-12 px-4">
-    <div class="team_shift">
-      <div class="d-flex justify-content-between align-items-center">
-        <h5>الطلاب المنضمين حديثا</h5>
-        <router-link to="/students" class="btn">عرض الكل</router-link>
-      </div>
-      <!-- ======= table team ======= -->
+  <div class="row">
+    <div class="col-lg-7 col-md-12 col-12">
+      <div class="team_shift">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5>الطلاب المنضمين حديثا</h5>
+          <router-link to="/students" class="btn">عرض الكل</router-link>
+        </div>
+        <!-- ======= table team ======= -->
 
-      <div class="table-responsive">
-        <table class="table" style="text-align: start">
-          <thead>
-            <tr>
-              <th style="padding-left: 26%" scope="col">الإسم</th>
-              <th scope="col">مستوي الاعاقة</th>
-              <th scope="col">المجموعة</th>
-              <th scope="col">تاريخ الانضمام</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- For loop this details team -->
-            <tr v-for="student in this.store.lastStudents" :key="student.id">
-              <td class="name">
-                <div class="details_team">
-                  <div class="contact">
-                    <img :src="student.image" alt="" />
-                    <div>
-                      <p>{{ student.name }}</p>
-                      <span>{{ student.phone }}</span>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">صوره</th>
+                <th scope="col">الاسم</th>
+                <th scope="col">الهاتف</th>
+                <th scope="col">اسم المجموعة</th>
+                <th scope="col">المستوي الاعاقة</th>
+                <th scope="col">تاريخ الانضمام</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- For loop this details team -->
+              <tr v-for="student in this.store.lastStudents" :key="student.id">
+                <td class="name">
+                  <div class="details_team">
+                    <div class="contact">
+                      <img :src="student.image" alt="" />
+                      <div></div>
                     </div>
                   </div>
-                </div>
-              </td>
-              <td data-label="المستوي الاعاقة">
-                {{ student.disability_type }}
-              </td>
-              <td data-label="رقم الهاتف">{{ student.group.title }}</td>
-              <td data-label="نوع العمل">
-                <span class="type_work total">{{ student.created_at }}</span>
-              </td>
-            </tr>
-            <!-- For loop this details team -->
-          </tbody>
-        </table>
+                </td>
+                <td>
+                  <p>{{ student.name }}</p>
+                </td>
+                <td>
+                  <span>{{ student.phone }}</span>
+                </td>
+                <td data-label="رقم الهاتف">{{ student.group.title }}</td>
+                <td data-label="المستوي الاعاقة">
+                  {{ student.disability_type }}
+                </td>
+                <td data-label="نوع العمل">
+                  <span class="type_work total">{{ student.created_at }}</span>
+                </td>
+              </tr>
+              <!-- For loop this details team -->
+            </tbody>
+          </table>
+        </div>
+        <!-- ======= table team ======= -->
       </div>
-      <!-- ======= table team ======= -->
     </div>
-    <div class="employment_rates">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5>معدل التفاعل مع الموظفين</h5>
-      </div>
+    <div class="col-lg-5 col-md-12 col-12 px-4">
+      <div class="employment_rates">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5>معدل التفاعل مع الموظفين</h5>
+        </div>
 
-      <div class="card">
-        <Chart
-          type="line"
-          :data="chartDataRates"
-          :options="chartOptionsRates"
-          style="height: 500px"
-          class="h-[30rem]"
-        />
+        <div class="card">
+          <Chart
+            type="line"
+            :data="chartDataRates"
+            :options="chartOptionsRates"
+            style="height: 295px"
+            class="h-[30rem]"
+          />
+        </div>
       </div>
     </div>
   </div>

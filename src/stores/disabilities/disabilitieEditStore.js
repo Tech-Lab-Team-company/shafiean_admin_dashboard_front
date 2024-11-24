@@ -42,9 +42,17 @@ export const useDisabilitieEditStore = defineStore("disabilitiesEdit", {
 
         if (response.data.status == true) {
           this.disabilitie = updatedData;
-          Swal.fire("Success", "Disabilitie has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "disabilitie has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update disabilitie.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "disabilitie has been filed.",
+          });
         }
       } catch (error) {
         console.error("Error updating disabilitie:", error);

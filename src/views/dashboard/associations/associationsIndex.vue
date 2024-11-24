@@ -10,7 +10,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن جمعيه..."
+          placeholder="ابحث باسم الجمعيه..."
           v-model="word"
           @input="handleInputChange"
         />

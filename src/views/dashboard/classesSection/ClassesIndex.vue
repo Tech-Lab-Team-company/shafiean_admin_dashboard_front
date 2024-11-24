@@ -11,7 +11,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن فصل دراسي..."
+          placeholder="بحث عن أسم فصل دراسي..."
           v-model="word"
           @input="debouncedSearch"
         />

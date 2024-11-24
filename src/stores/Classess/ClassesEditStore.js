@@ -48,7 +48,7 @@ export const useClassesEditStore = defineStore("ClassesEdit", {
           },
         });
 
-        if (response.data.status) {
+        if (response.data.status === true) {
           const index = this.Classes.findIndex((cl) => cl.id === id);
           if (index !== -1) {
             this.Classes.splice(index, 1, {
@@ -56,17 +56,20 @@ export const useClassesEditStore = defineStore("ClassesEdit", {
               ...updatedData,
             });
           }
-          Swal.fire("Success", "Classes has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Classes has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update Classes.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Classes has been filed.",
+          });
         }
       } catch (error) {
         console.error("Error in updateClasses:", error);
-        Swal.fire(
-          "Error",
-          "There was a problem updating the Classes.",
-          "error"
-        );
       }
     },
   },

@@ -107,10 +107,18 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
         if (response.data.status === true) {
           this.organizations = response.data.data;
           console.log(this.organizations);
-          Swal.fire("Success", "Organization has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Organization has been saved.",
+          });
         } else {
           console.log("error");
-          Swal.fire("Error", "Failed to update Organization.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Failed to save Organization.",
+          });
         }
       } catch (error) {
         console.error("Error updating Organization:", error);

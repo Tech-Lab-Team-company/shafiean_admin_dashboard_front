@@ -5,7 +5,7 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input
         type="text"
-        placeholder="بحث عن مدينة..."
+        placeholder="بحث عن أسم المدينه..."
         v-model="word"
         @input="debouncedSearch"
       />

@@ -37,7 +37,7 @@ body {
 @import url("../scss/countries/countriesedit.scss");
 @import url("../scss/Associations/associationsadd.scss");
 @import url("../scss/Associations/associationsedit.scss");
-@import url("../scss/admininformation/admininformationAdd.scss");
+@import url("../scss/admininformation/AdmininFormation.scss");
 @import url("../scss/lessons/addlessons.scss");
 @import url("../scss/countries/CountriesIndex.scss");
 @import url("../scss/headerView/_header.scss");
@@ -77,7 +77,7 @@ form {
 .input {
   margin-bottom: 1rem;
   input {
-    border-radius: 33px !important;
+    border-radius: 15px !important;
     padding: 0.75rem !important;
     background-color: transparent;
     border: 1px solid rgba(0, 0, 0, 0.164) !important;
@@ -118,9 +118,18 @@ input[type="tel"] {
 input[type="text"] {
   &:focus {
     outline: none !important;
-    border: 1px solid #5c9ded !important;
-    box-shadow: 0 0 5px var(--main) !important;
   }
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 input[type="number"] {
   &:focus {
@@ -149,26 +158,61 @@ label {
   margin-right: 15px !important  ;
 }
 .multiselect__tags {
-  border-radius: 33px !important;
-  width: 98% !important;
+  border-radius: 15px !important;
+  width: 100% !important;
   border: 1px solid rgba(0, 0, 0, 0.164) !important;
-  margin-right: 11px !important;
-  margin-top: 0.3rem !important;
+  input {
+    border: unset !important;
+    outline: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
+}
+.multiselect--above.multiselect {
+  input {
+    border: unset !important;
+    outline: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
+}
+.multiselect {
+  input {
+    border: unset !important;
+    outline: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
+}
+.multiselect__single {
+  input {
+    border: unset !important;
+    outline: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
 }
 .multiselect__placeholder {
-  margin-top: unset !important;
+  margin-bottom: 0.3rem !important;
+  padding-top: 0.5rem !important;
 }
 .multiselect__content-wrapper {
   width: 98% !important;
   margin-right: 11px !important;
+  input {
+    border: unset !important;
+    outline: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
 }
 .upload-icon {
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px dashed rgba(0, 0, 0, 0.123);
-  padding: 0.7rem;
-  border-radius: 33px;
+  padding: 0.9rem;
+  border-radius: 15px;
   i {
     color: #06797e;
   }
@@ -180,7 +224,6 @@ label {
     object-fit: cover;
     border: 1px solid #0000002b;
     border-radius: 50%;
-   
   }
 }
 
@@ -199,7 +242,7 @@ label {
     box-shadow: none !important;
     font-family: "regular" !important;
     font-size: 1rem !important;
-    width: 98%;
+    width: 96%;
     padding: 0.3rem;
     border: 0;
 
@@ -226,6 +269,9 @@ button.bake {
   transition: 0.7s;
   width: 10%;
   border: 1px solid var(--main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background-color: white;
     border: 1px solid var(--main);
@@ -289,4 +335,89 @@ i.fa-solid.fa-pen-to-square {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.action-icons {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+nav.navbars {
+  box-shadow: 0px 5px 4px -3px #00000040;
+  position: relative;
+}
+textarea {
+  overflow: auto;
+  width: 98% !important;
+  margin-right: 13px !important;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--main);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+span.error-feedback {
+  font-family: "bold";
+}
+.multiselect__input,
+.multiselect__single {
+  input {
+    box-shadow: unset !important;
+    border: unset !important;
+    outline: unset !important;
+  }
+}
+.custom-popup {
+  background-color: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.custom-title {
+  color: var(--main);
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "regular";
+}
+
+.custom-content {
+  color: var(--main);
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "regular";
+}
+
+.custom-confirm-button {
+  background-color: var(--main) !important;
+  color: #fff !important;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: "regular";
+}
+
+.custom-cancel-button {
+  background-color: #d33 !important;
+  color: #fff !important;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: "regular";
 }
