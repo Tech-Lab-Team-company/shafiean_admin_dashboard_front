@@ -35,10 +35,18 @@ export const useCitiesAddStore = defineStore("CitiesAdd", {
 
         this.Cities.push(response.data);
 
-        Swal.fire("Success", "Cities has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Cities has been saved.",
+        });
       } catch (error) {
         console.error("Error saving Cities:", error);
-        Swal.fire("Error", "There was a problem saving the Cities.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Cities has been filed.",
+        });
       }
     },
   },

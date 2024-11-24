@@ -20,10 +20,18 @@ export const useCountriesAddStore = defineStore("CountriesAdd", {
         console.log(response, "diaaaaaaaaaaaaa");
 
         this.Countries.push(response.data);
-        Swal.fire("Success", "Country has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Country has been saved.",
+        });
       } catch (error) {
         console.error("Error saving country:", error);
-        Swal.fire("Error", "There was a problem saving the country.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Country has been filed.",
+        });
       }
     },
   },

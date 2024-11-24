@@ -384,3 +384,40 @@ span.error-feedback {
     outline: unset !important;
   }
 }
+.custom-popup {
+  background-color: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.custom-title {
+  color: var(--main);
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "regular";
+}
+
+.custom-content {
+  color: var(--main);
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "regular";
+}
+
+.custom-confirm-button {
+  background-color: var(--main) !important;
+  color: #fff !important;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: "regular";
+}
+
+.custom-cancel-button {
+  background-color: #d33 !important;
+  color: #fff !important;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: "regular";
+}

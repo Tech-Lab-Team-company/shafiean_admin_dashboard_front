@@ -103,11 +103,19 @@ export const useStepsEditStore = defineStore("stepsEdit", {
           },
         });
 
-        if (response.status === 200) {
+        if (response.data.status === true) {
           this.Steps = response.data.data;
-          Swal.fire("Success", "Steps has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Steps has been updated.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update Steps.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Steps has been filed.",
+          });
         }
       } catch (error) {
         console.error(error);

@@ -60,9 +60,17 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
           this.lessons = this.updatedData;
           console.log("nasa");
 
-          Swal.fire("Success", "lessons has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Lessons has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update lessons.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Lessons has been filed.",
+          });
         }
       } catch (error) {
         console.error(error);

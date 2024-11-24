@@ -43,6 +43,14 @@ export default {
     };
   },
   methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat("ar-EG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(date);
+    },
     getUserData() {
       try {
         const user = localStorage.getItem("user");
@@ -52,7 +60,9 @@ export default {
           this.image = parsedUser.image || "@/assets/photos/Rectangle 8917.png";
           this.is_master = parsedUser.is_master || "";
           this.phone = parsedUser.phone || "";
-          this.created_at = parsedUser.created_at || "";
+          this.created_at = parsedUser.created_at
+            ? this.formatDate(parsedUser.created_at)
+            : "";
           this.email = parsedUser.email || "";
         }
       } catch (error) {

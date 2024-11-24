@@ -44,12 +44,19 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
 
         this.Lessons.push(response.data); // Ensure this adds the lesson to the state
 
-        Swal.fire("Success", "Lesson has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Lesson has been saved.",
+        });
 
         return response.data; // Return the saved lesson
       } catch (error) {
-        console.error("Error saving lesson:", error);
-        Swal.fire("Error", "There was a problem saving the lesson.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Lesson has been filed.",
+        });
       }
     },
   },

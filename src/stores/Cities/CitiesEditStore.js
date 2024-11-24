@@ -49,9 +49,17 @@ export const useCitiesEditStore = defineStore("citiesEdit", {
 
         if (response.data.status == true) {
           this.cities = this.updatedData;
-          // Swal.fire("Success", "cities has been updated.", "success");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "cities has been saved.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update cities.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "cities has been filed.",
+          });
         }
       } catch (error) {
         console.error(error);

@@ -119,11 +119,6 @@ export default {
         !this.countries.code ||
         !this.countries.phone_code
       ) {
-        Swal.fire("Error", "Please fill in all fields", "error");
-
-        return;
-      } else {
-        Swal.fire("تم التعديل بنجاح", "", "success");
       }
       this.$router.go(-1);
     },

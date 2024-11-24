@@ -38,13 +38,19 @@ export const useYearsStore = defineStore("years", {
     async deleteYear(id) {
       try {
         const result = await Swal.fire({
-          title: "هل انتا متاكد من عملية المسح?",
-          text: "لا يمكن التراجع عن عملية المسح!",
+          title: "هل انتا متاكد من عملية المسح؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
           confirmButtonText: "نعم، احذفه!",
+          customClass: {
+            popup: "custom-popup",
+            title: "custom-title",
+            content: "custom-content",
+            confirmButton: "custom-confirm-button",
+            cancelButton: "custom-cancel-button",
+          },
         });
 
         if (result.isConfirmed) {

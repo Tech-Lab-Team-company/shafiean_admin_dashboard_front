@@ -1,0 +1,17 @@
+.admininfo-add {
+  height: 100vh;
+
+  .all-btn {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 10px;
+  }
+}
+::placeholder {
+  font-family: "regular";
+  color: rgba(0, 0, 0, 0.267);
+}
+label {
+  font-family: "medium";
+  margin-bottom: 0.5rem;
+}

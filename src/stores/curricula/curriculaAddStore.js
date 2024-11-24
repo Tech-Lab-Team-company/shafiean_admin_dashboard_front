@@ -21,14 +21,18 @@ export const useCurriculumAddStore = defineStore("curriculaAdd", {
         console.log(response, "diaaaaaaaaaaaaa");
 
         this.Curriculas.push(response.data);
-        Swal.fire("Success", "Curriculas has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Curriculas has been saved.",
+        });
       } catch (error) {
         console.error("Error saving Curriculas:", error);
-        Swal.fire(
-          "Error",
-          "There was a problem saving the Curriculas.",
-          "error"
-        );
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Curriculas has been filed.",
+        });
       }
     },
   },

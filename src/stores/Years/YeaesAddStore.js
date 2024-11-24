@@ -31,10 +31,18 @@ export const useYearsAddStore = defineStore("YearsAdd", {
           headers: { "Content-Type": "multipart/form-data" },
         });
         this.Years.push(response.data.data);
-        Swal.fire("Success", "Year has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Year has been saved.",
+        });
       } catch (error) {
         console.error("Error saving Year:", error);
-        Swal.fire("Error", "There was a problem saving the Year.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Year has been filed.",
+        });
       }
     },
   },

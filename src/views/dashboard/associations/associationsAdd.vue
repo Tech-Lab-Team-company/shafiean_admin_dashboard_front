@@ -62,7 +62,11 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="phone">رقم التليفون</label>
           <div class="input">
-            <input type="number" placeholder="رقم التليفون" v-model="form.phone" />
+            <input
+              type="number"
+              placeholder="رقم التليفون"
+              v-model="form.phone"
+            />
             <span class="error-feedback" v-if="v$.form.phone.$error">{{
               getErrorMessage(v$.form.phone)
             }}</span>
@@ -170,7 +174,6 @@
             track-by="id"
             label="title"
             placeholder="أختر الاعاقات"
-
             :multiple="true"
             :close-on-select="false"
             @update:model-value="updateDisabilitiesValue"
@@ -328,8 +331,6 @@ export default {
           !this.form.city_id ||
           !this.form.website_link
         ) {
-          // Swal.fire("Error", "Please fill in all fields", "error");
-          return;
         }
 
         // Ensure disability_ids is always an array and filter out undefined values
@@ -342,7 +343,6 @@ export default {
         }
 
         await organizationsStore.addOrganization(this.form);
-        this.$router.push("/associations");
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
