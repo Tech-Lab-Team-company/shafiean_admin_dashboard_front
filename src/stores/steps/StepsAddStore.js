@@ -17,18 +17,8 @@ export const useStepsAddStore = defineStore("StepsAdd", {
         if (response.data.status == true) {
           this.Curriculums = response.data.data.data;
           this.Curriculums_id = this.Curriculums.map((ste) => ste.id);
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: response.data.message,
-          });
-        } else {
-          Swal.fire(
-            "Error",
-            "Failed to fetch curriculums: " + response.data.message,
-            "error"
-          );
-        }
+          
+        } 
       } catch (error) {
         Swal.fire(
           "Error",

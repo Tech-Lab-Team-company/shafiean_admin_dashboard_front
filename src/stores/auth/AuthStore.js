@@ -11,27 +11,47 @@ export const useAuthStore = defineStore("auth", {
     async login(credentials) {
       try {
         const response = await axios.post("admin/login", credentials);
-
+    
         this.token = response.data.data.token;
         this.data = response.data.data.admin;
-        console.log(this.data + "login data");
-
+        console.log(this.data + " login data");
+    
         axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
         localStorage.setItem("token", this.token);
         localStorage.setItem("user", JSON.stringify(this.data));
+    
         Swal.fire({
           icon: "success",
           title: "Success",
           text: response.data.message || "login-success",
         });
       } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.data.message || "login-filed",
-        });
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message || "login-failed";
+    
+          if (errorMessage.includes("Invalid email or password")) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "The email or password is incorrect. Please try again.",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: errorMessage,
+            });
+          }
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     },
+    
     async logout() {
       try {
         const res = axios.post("admin/logout");
