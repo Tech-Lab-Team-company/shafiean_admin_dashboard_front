@@ -10,6 +10,9 @@
       @mouseleave="closeSidebarOnLeave"
     >
       <ul class="sidebar-menu">
+        <div class="navbar-toggle" @click="toggleSidebar">
+          <i :class="isCollapsed ? 'fas fa-bars' : 'fas fa-times'"></i>
+        </div>
         <li
           v-for="(item, index) in menuItems"
           :key="index"
@@ -202,3 +205,16 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+.navbar-toggle {
+  text-align: end;
+  margin-top: 0.5rem;
+
+  i {
+    color: white !important;
+    border: 1px solid white !important;
+    padding: 0.4rem;
+    border-radius: 4px;
+  }
+}
+</style>

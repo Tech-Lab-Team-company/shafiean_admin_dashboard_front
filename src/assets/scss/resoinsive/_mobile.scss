@@ -10,11 +10,12 @@
     transition: left 0.5s ease;
 
     &.sidebar-expanded {
-      left: 0;
+      right: 0;
+      width: 250px !important;
     }
 
     &.sidebar-collapsed {
-      left: -250px;
+      right: -250px;
     }
   }
 
@@ -114,7 +115,7 @@
     .sidebar-menu {
       height: 100vh;
       overflow-y: scroll;
-      left: 0;
+      right: 0;
       width: 54%;
     }
   }

@@ -10,7 +10,8 @@
     transition: left 0.5s ease;
 
     &.sidebar-expanded {
-      left: 0;
+      right: 0;
+      width: 210px ;
     }
 
     &.sidebar-collapsed {
@@ -60,5 +61,4 @@
   canvas {
     width: 100% !important;
   }
- 
 }
