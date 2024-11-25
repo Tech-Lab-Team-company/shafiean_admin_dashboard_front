@@ -1,6 +1,9 @@
 <template>
-  <div class="add-years">
-    <header-pages title="اضافة فصل دراسي " :showButton="false" />
+  <div class="add-countries">
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة فصل دراسي " :showButton="false" />
+    </div>
 
     <form @submit.prevent="submitForm">
       <div class="row">
@@ -25,6 +28,7 @@
             :options="CountryOptions"
             track-by="id"
             label="title"
+            placeholder="أختر الدوله"
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
@@ -103,7 +107,6 @@ export default {
       try {
         const ClassesStore = useClassesAddStore();
         if (!this.form.title || !this.form.country_id) {
-          Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
 

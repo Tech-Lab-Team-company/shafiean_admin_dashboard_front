@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useOrganizationAddStore = defineStore("organizationAdd", {
   state: () => ({
@@ -55,61 +56,48 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
 
     async addOrganization(organizationData) {
       try {
-        // Convert disability_ids to an array if it's a string
-        if (typeof organizationData.disability_ids === "string") {
-          organizationData.disability_ids = organizationData.disability_ids
-            .split(",")
-            .map((id) => id.trim());
-        }
-
-        // Transform the data to FormData
+        // تحويل البيانات إلى FormData
         const formData = new FormData();
-
-        // Append each property to FormData
         Object.keys(organizationData).forEach((key) => {
-          if (key === "image" && organizationData[key]) {
-            formData.append("image", organizationData[key]);
-          } else {
-            formData.append(key, organizationData[key]);
-          }
           if (Array.isArray(organizationData[key])) {
-            // If the property is an array, append each item with the same key
             organizationData[key].forEach((item) => {
-              formData.append(`${key}[]`, item); // Use key[] for array values
+              formData.append(`${key}[]`, item);
             });
           } else {
-            // Append non-array values normally
             formData.append(key, organizationData[key]);
           }
         });
 
-        // Make the API request
+        // إرسال الطلب
         const response = await axios.post("add_organization", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        if (response.data.status) {
+        // التحقق من الاستجابة
+        if (response.data.status === true) {
           this.organizations.push(response.data);
-          Swal.fire(
-            "Success",
-            "organization have been saved successfully.",
-            "success"
-          );
+          router.push("/associations");
+          Swal.fire({
+            icon: "success",
+            title: "تم بنجاح",
+            text: response.data.message || "تم حفظ المنظمة بنجاح.",
+          });
         } else {
-          Swal.fire(
-            "Error",
-            "There was a problem saving the organization:" +
-              response.data.message,
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "خطأ",
+            text: response.data.message || "فشل في حفظ المنظمة.",
+          });
         }
       } catch (error) {
-        console.error("Error saving organization:", error);
-        Swal.fire(
-          "Error",
-          "An error occurred while saving the organization.",
-          "error"
-        );
+        // التعامل مع الأخطاء العامة
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text:
+            error.response?.data?.message || // إذا كان الخطأ مرتبطاً بالـ response
+            "حدث خطأ أثناء حفظ المنظمة. حاول مرة أخرى.", // خطأ عام
+        });
       }
     },
   },

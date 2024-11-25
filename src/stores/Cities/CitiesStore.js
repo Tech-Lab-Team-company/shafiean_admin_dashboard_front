@@ -35,13 +35,19 @@ export const useCitiesStore = defineStore("cities", {
     async deleteCities(id) {
       try {
         const result = await Swal.fire({
-          title: "هل انتا متاكد من عملية المسح?",
-          text: "لن تتمكن من التراجع عن هذا!",
+          title: "هل انتا متاكد من عملية المسح؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
           confirmButtonText: "نعم، احذفه!",
+          customClass: {
+            popup: "custom-popup",
+            title: "custom-title",
+            content: "custom-content",
+            confirmButton: "custom-confirm-button",
+            cancelButton: "custom-cancel-button",
+          },
         });
 
         if (result.isConfirmed) {

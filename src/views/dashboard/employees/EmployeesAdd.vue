@@ -1,6 +1,9 @@
 <template>
   <div class="employees-add">
-    <HeaderPages title="اضافة موظف" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <HeaderPages title="اضافة موظف" :showButton="false" />
+    </div>
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -81,15 +84,23 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="password">الرقم السري</label>
           <div class="input">
-            <input
-              type="password"
-              id="password"
-              placeholder="أدخل الرقم السري"
-              v-model="form.password"
-            />
-            <span class="error-feedback" v-if="v$.form.password.$error">{{
-              getErrorMessage(v$.form.password)
-            }}</span>
+            <div class="pas">
+              <input
+                :type="showPassword ? 'text' : 'password'"
+                id="password"
+                placeholder="أدخل الرقم السري"
+                v-model="form.password"
+              />
+              <i
+                class="fa-solid"
+                :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                @click="togglePasswordVisibility"
+                style="cursor: pointer"
+              ></i>
+            </div>
+            <span class="error-feedback" v-if="v$.form.password.$error">
+              {{ getErrorMessage(v$.form.password) }}
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -100,6 +111,7 @@
             :options="permissionOptions"
             :multiple="true"
             :close-on-select="false"
+            placeholder="ادخل الصلاحيات"
           ></multiselect>
           <span class="error-feedback" v-if="v$.form.role.$error">{{
             getErrorMessage(v$.form.role)
@@ -133,6 +145,7 @@ export default {
   data() {
     return {
       rolesOptions: ["Admin", "Manager", "Employee"],
+      showPassword: false,
 
       v$: useVuelidate(),
       form: {
@@ -161,11 +174,8 @@ export default {
     };
   },
   methods: {
-    onlyAllowNumbers(event) {
-      const char = String.fromCharCode(event.keyCode);
-      if (!/[0-9]/.test(char)) {
-        event.preventDefault();
-      }
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
     },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
@@ -225,6 +235,16 @@ export default {
 };
 </script>
 <style scoped>
+#password {
+  border: 0 !important;
+}
+.pas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  border-radius: 15px;
+}
 .no-spinner::-webkit-inner-spin-button,
 .no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;

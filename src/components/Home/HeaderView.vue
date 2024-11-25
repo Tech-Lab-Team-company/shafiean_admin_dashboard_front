@@ -39,7 +39,7 @@
           </router-link>
         </div>
       </div>
-      <div class="col-lg-8 col-md-12 col-12 px-4">
+      <div class="col-lg-12 col-md-12 col-12 px-4">
         <div class="statistics">
           <!-- Card 1: Total Organizations -->
           <div class="card_statistics">
@@ -78,14 +78,13 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-8 col-md-12 col-12 px-4">
+      <div class="col-lg-6 col-md-12 col-12 px-4">
         <div class="percentage_jobs">
           <h5 style="text-align: right">معدل التفاعل مع المنصة</h5>
           <!-- ============chart============ -->
           <div class="card">
             <Chart
               type="bar"
-              style="height: 500px"
               :data="chartData"
               :options="chartOptions"
               class="h-[30rem]"
@@ -154,8 +153,6 @@
                   type="line"
                   :data="chartDatapercentageProjectsDay"
                   :options="chartOptionspercentageProjectsDay"
-                  sssss
-                  style="height: 500px !important"
                   class="h-[30rem]"
                 />
               </div>
@@ -185,7 +182,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-12 col-12">
+      <div class="col-lg-6 col-md-12 col-12">
         <div class="left_content">
           <!-- Start best performance job -->
           <div class="best_job">
@@ -209,7 +206,7 @@
                     <span>{{ student.user_count }}</span>
                   </div>
                 </div>
-                <div class="percent">90%</div>
+                <div class="percent">{{ student.user_count }}</div>
               </div>
             </div>
             <!-- End Card project -->
@@ -246,7 +243,7 @@
             <!-- End best performance project -->
           </div>
           <!-- End best performance project -->
-          <div class="average">
+          <!-- <div class="average">
             <circle-progress value="75" max="100"></circle-progress>
             <div class="text-average">
               <h4>معدل تزايد الطلاب على المنصة</h4>
@@ -257,7 +254,7 @@
             <div class="text-average">
               <h4>معدل التفاعل بين الطلاب والمدرسين</h4>
             </div>
-          </div>
+          </div> -->
           <!-- Start Region project -->
           <div class="region_project">
             <div class="d-flex justify-content-between align-items-center">
@@ -282,7 +279,7 @@
             <img src="../../assets/photos/map.png" alt="map" />
             <div>
               <div class="table-responsive">
-                <table class="table" style="text-align: right">
+                <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">المدينة</th>

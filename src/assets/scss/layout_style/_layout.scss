@@ -1,6 +1,7 @@
 .layout {
   display: flex;
   min-height: 100vh;
+  margin-left: 5px;
 
   .main {
     flex: 1;
@@ -19,16 +20,19 @@
     color: #ecf0f1;
     transition: width 0.3s ease;
     z-index: 1;
+    overflow: hidden;
     flex-shrink: 0;
 
     &.sidebar-expanded {
-      width: 250px;
+      width: 242px;
       height: 100%;
+      overflow: hidden;
     }
 
     &.sidebar-collapsed {
       width: 80px;
       height: 100%;
+      overflow: hidden;
     }
   }
 

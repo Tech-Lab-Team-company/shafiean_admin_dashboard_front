@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useYearsEditStore = defineStore("yearsEdit", {
   state: () => ({
@@ -47,21 +48,23 @@ export const useYearsEditStore = defineStore("yearsEdit", {
           },
         });
 
-        if (response.data.status) {
-          const index = this.years.findIndex((year) => year.id === id);
-          if (index !== -1) {
-            this.years.splice(index, 1, {
-              ...this.years[index],
-              ...updatedData,
-            });
-          }
-          Swal.fire("Success", "Year has been updated.", "success");
+        if (response.data.status === true) {
+          router.push("/years");
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text:
+              response.data.message || "Year has been updated successfully.",
+          });
         } else {
-          Swal.fire("Error", "Failed to update year.", "error");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Year has been filed.",
+          });
         }
       } catch (error) {
         console.error("Error in updateYears:", error);
-        Swal.fire("Error", "There was a problem updating the year.", "error");
       }
     },
   },

@@ -1,6 +1,10 @@
 <template>
   <div class="editdisabilities">
-    <HeaderPages :showButton="false" title="تعديل اعاقه" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <HeaderPages title="تعديل اعاقه" :showButton="false" />
+    </div>
+
     <div class="disabilities-edit">
       <form action="" @submit.prevent="updateDisabilitie">
         <div class="row">
@@ -188,13 +192,5 @@ export default {
 .error-feedback {
   color: red;
   font-size: 0.85rem;
-}
-
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
 }
 </style>

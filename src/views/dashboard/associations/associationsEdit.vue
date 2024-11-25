@@ -1,6 +1,9 @@
 <template>
   <div class="associations-edit">
-    <header-pages title="تعديل جمعية" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل جمعية" :showButton="false" />
+    </div>
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -67,7 +70,7 @@
           <label for="phone">رقم التليفون</label>
           <div class="input">
             <input
-              type="tel"
+              type="number"
               placeholder="رقم التليفون"
               v-model="organizations.phone"
             />

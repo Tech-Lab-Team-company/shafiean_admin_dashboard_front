@@ -1,6 +1,9 @@
 <template>
   <div class="lessons-add">
-    <header-pages title="اضافة حصه" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-plus"></i>
+      <header-pages title="اضافة حصه" :showButton="false" />
+    </div>
     <form @submit.prevent="submitForm">
       <div class="row">
         <!-- <div class="col-lg-6 col-md-6 col-12">
@@ -23,6 +26,7 @@
             :options="StagesOptions"
             track-by="id"
             label="title"
+            placeholder="اختر المرحلة"
             :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
@@ -34,10 +38,10 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="">القرأن</label>
           <multiselect
-            id="type"
             v-model="selectedType"
             :options="typeOptions"
             :close-on-select="true"
+            placeholder="اختر القرأن"
             label="name"
             track-by="id"
             @update:model-value="updateTypeId"

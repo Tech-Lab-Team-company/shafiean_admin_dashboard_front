@@ -14,19 +14,12 @@ export const useStepsAddStore = defineStore("StepsAdd", {
     async fetchCurriculums() {
       try {
         const response = await axios.post("fetch_curriculums");
-        if (response.data.status) {
+        if (response.data.status == true) {
           this.Curriculums = response.data.data.data;
           this.Curriculums_id = this.Curriculums.map((ste) => ste.id);
-        } else {
-          console.error("Error fetching curriculums:", response.data.message);
-          Swal.fire(
-            "Error",
-            "Failed to fetch curriculums: " + response.data.message,
-            "error"
-          );
-        }
+          
+        } 
       } catch (error) {
-        console.error("Error fetching curriculums:", error);
         Swal.fire(
           "Error",
           "An error occurred while fetching curriculums.",

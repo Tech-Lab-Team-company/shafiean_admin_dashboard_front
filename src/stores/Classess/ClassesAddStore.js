@@ -31,10 +31,17 @@ export const useClassesAddStore = defineStore("ClassesAdd", {
           headers: { "Content-Type": "multipart/form-data" },
         });
         this.Classes.push(response.data.data);
-        Swal.fire("Success", "Classes has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "Classes has been saved.",
+        });
       } catch (error) {
-        console.error("Error saving Classes:", error);
-        Swal.fire("Error", "There was a problem saving the Classes.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "Classes has been filed.",
+        });
       }
     },
   },

@@ -1,6 +1,9 @@
 <template>
   <div class="edit-countries">
-    <header-pages title="تعديل دوله" link="/countries" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل دوله" link="/countries" :showButton="false" />
+    </div>
     <form action="" @submit.prevent="updatecountries">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -116,11 +119,6 @@ export default {
         !this.countries.code ||
         !this.countries.phone_code
       ) {
-        Swal.fire("Error", "Please fill in all fields", "error");
-
-        return;
-      } else {
-        Swal.fire("تم التعديل بنجاح", "", "success");
       }
       this.$router.go(-1);
     },

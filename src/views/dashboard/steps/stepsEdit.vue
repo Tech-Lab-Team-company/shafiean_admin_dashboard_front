@@ -1,7 +1,9 @@
 <template>
   <div class="steps-add">
-    <header-pages title="تعديل مرحلة" :showButton="false" />
-
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل مرحلة" :showButton="false" />
+    </div>
     <form @submit.prevent="updateSteps">
       <div class="row">
         <!-- Step Title Input -->
@@ -217,13 +219,3 @@ export default {
   },
 };
 </script>
-
-<style>
-textarea {
-  border: 1px solid #06797e;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-</style>

@@ -1,5 +1,8 @@
 <template>
-  <header-pages title="تعديل منهج" :showButton="false" />
+  <div class="plus">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <header-pages title="تعديل منهج" :showButton="false" />
+  </div>
   <div class="edit-curricula">
     <form action="" @submit.prevent="updateCurricula">
       <div class="row">
@@ -26,6 +29,7 @@
             :close-on-select="true"
             label="name"
             track-by="id"
+            placeholder="اختر نوع المنهج"
             @update:model-value="updateTypeId"
           ></multiselect>
           <span class="error-feedback" v-if="v$.Curriculas.type.$error">
@@ -150,7 +154,7 @@ export default {
   },
   async mounted() {
     await this.fetchData();
-// console.log("Curriculas:", this.Curriculas);
+    // console.log("Curriculas:", this.Curriculas);
     // Ensure type is always an object
     if (this.Curriculas.type) {
       this.selectedType = this.getType(this.Curriculas.type);

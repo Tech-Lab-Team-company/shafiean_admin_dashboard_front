@@ -25,14 +25,18 @@ export const useDisabilitieAddStore = defineStore("DisabilitiesAdd", {
 
         this.Disabilities.push(response.data);
 
-        Swal.fire("Success", "disability has been saved.", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message || "disability has been saved.",
+        });
       } catch (error) {
         console.error("Error saving disability:", error);
-        Swal.fire(
-          "Error",
-          "There was a problem saving the disability.",
-          "error"
-        );
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message || "disability has been filed.",
+        });
       }
     },
   },

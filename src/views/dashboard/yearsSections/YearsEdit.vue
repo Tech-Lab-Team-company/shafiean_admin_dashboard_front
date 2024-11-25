@@ -1,6 +1,10 @@
 <template>
   <div class="add-countries">
-    <header-pages title="تعديل سنه دراسيه" :showButton="false" />
+    <div class="plus">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <header-pages title="تعديل سنه دراسيه" :showButton="false" />
+    </div>
+
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
@@ -13,9 +17,6 @@
               required
             />
           </div>
-          <span class="error-feedback" v-if="v$.years.title.$error">
-            {{ getErrorMessage(v$.years.title) }}
-          </span>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Country">أختر الدوله</label>
@@ -27,14 +28,10 @@
             label="title"
             :close-on-select="true"
           ></multiselect>
-
-          <span class="error-feedback" v-if="v$.years.country_id.$error">
-            {{ getErrorMessage(v$.years.country_id) }}
-          </span>
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">حفظ</button>
+        <button type="submit" class="save">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -46,9 +43,6 @@ import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useYearsEditStore } from "@/stores/Years/YearsEditStore";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
-import Swal from "sweetalert2";
-import { required } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
 import { mapState } from "pinia";
 
 export default {
@@ -59,7 +53,6 @@ export default {
 
   data() {
     return {
-      v$: useVuelidate(),
       years: {
         title: "",
         country: "",
@@ -68,16 +61,6 @@ export default {
       CountryOptions: [],
     };
   },
-
-  validations() {
-    return {
-      years: {
-        title: { required },
-        country_id: { required },
-      },
-    };
-  },
-
   computed: {
     ...mapState(useYearsEditStore, {
       countries: (state) => state.countries,
@@ -85,19 +68,6 @@ export default {
   },
 
   methods: {
-    getErrorMessage(field) {
-      if (field.$invalid && field.$dirty) {
-        return "هذا الحقل مطلوب";
-      }
-      return "";
-    },
-    // updatecountryValue() {
-    //   this.years.country_id = this.Country_values
-    //     ? this.Country_values.id
-    //     : null;
-    //   console.log("Selected Country ID:", this.years.country_id);
-    // },
-
     async fetchData() {
       const store = useYearsEditStore();
       const id = this.$route.params.id;
@@ -116,23 +86,8 @@ export default {
         title: this.years.title,
         country_id: this.years.country.id,
       });
-      if (!this.years.title || !this.years.country) {
-        Swal.fire("Error", "Please fill in all fields", "error");
-        this.$router.go(-1);
-        return;
-      } else {
-        Swal.fire("Success", "تم تعديـل السنه الدراسيه بنجاح", "success");
-      }
     },
-    // async fetchEidtCountries() {
-    //   const store = useYearsEditStore();
-    //   try {
-    //     await store.getCountries();
-    //     this.CountryOptions = store.countries || [];
-    //   } catch (error) {
-    //     console.error("Error fetching countries:", error);
-    //   }
-    // },
+
     async fetchEidtCountries() {
       const store = useYearsEditStore();
       await store.getCountries();
@@ -142,13 +97,6 @@ export default {
         this.Country_values = this.CountryOptions.find(
           (country) => country.id === this.years.country
         );
-      }
-    },
-
-    Edit() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("no error");
       }
     },
   },

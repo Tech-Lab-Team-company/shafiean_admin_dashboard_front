@@ -1,3 +1,61 @@
 .admin-info {
-  height: 100vh;
+  height: 100%;
+  padding: 20px;
+
+  .all-information {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--main);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    img {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      border: 3px solid var(--main);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    h4 {
+      font-family: "bold";
+      margin: 0.9rem 0 1.2rem;
+      font-size: 1.1rem;
+      color: #333;
+
+      span {
+        font-family: "regular";
+        color: #666;
+      }
+    }
+  }
+  .fri {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    .headers {
+      margin-bottom: 0;
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+    i {
+      color: var(--main);
+    }
+  }
 }

@@ -10,12 +10,19 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
     async fetchCountries(id) {
       try {
         const response = await axios.post("fetch_country_details", { id });
-        if (response.status === 200) {
+        if (response.data.status === true) {
           this.countries = response.data.data;
         } else {
-          throw new Error("Failed to fetch countries data");
+          throw new Error(
+            response.data.message || "Failed to fetch countries data"
+          );
         }
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message || "Something went wrong while fetching data.",
+        });
         console.error(error);
       }
     },
@@ -24,7 +31,6 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
       try {
         const formData = new FormData();
         formData.append("id", id);
-
         formData.append("title", updatedData.title);
         formData.append("code", updatedData.code);
         formData.append("phone_code", updatedData.phone_code);
@@ -32,12 +38,29 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
         const response = await axios.post("edit_country", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log(response, "diaaaaaaaaaaaaa");
 
-        this.Countries.push(response.data);
-        Swal.fire("Success", "Country has been saved.", "success");
+        if (response.data.status === true) {
+          this.countries = { ...this.countries, ...updatedData };
+
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text:
+              response.data.message || "Country has been updated successfully.",
+          });
+        } else {
+          throw new Error(
+            response.data.message || "Failed to update the country."
+          );
+        }
       } catch (error) {
-        console.error("Error", "Failed to update country.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text:
+            error.message || "Something went wrong while updating the country.",
+        });
+        console.error(error);
       }
     },
   },

@@ -10,7 +10,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن جمعيه..."
+          placeholder="ابحث باسم الجمعيه..."
           v-model="word"
           @input="handleInputChange"
         />
@@ -133,17 +133,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.error-message {
-  color: white;
-  background-color: #ef0000a3;
-  margin-top: -39px;
-  margin-right: 23px;
-  width: 97.4%;
-  margin-bottom: -25px;
-  padding: 8px;
-  text-align: center;
-  border-radius: 3px;
-}
-</style>
