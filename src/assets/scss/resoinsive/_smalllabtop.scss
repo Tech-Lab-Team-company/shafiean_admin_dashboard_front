@@ -14,9 +14,6 @@
   .navbar-toggle {
     display: block !important;
   }
-  .allnav {
-    justify-content: space-between !important;
-  }
   .p-chart.h-\[30rem\] {
     height: 189px !important;
   }
@@ -25,6 +22,9 @@
       height: 189px !important;
     }
   }
+  .navbar-toggle {
+    display: none !important;
+  } 
 
   .percentage_projects {
     .d-flex.justify-content-between {
