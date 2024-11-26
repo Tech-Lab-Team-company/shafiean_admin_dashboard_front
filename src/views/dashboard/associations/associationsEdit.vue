@@ -1,7 +1,7 @@
 <template>
   <div class="associations-edit">
     <div class="plus">
-      <!-- <i class="fa-solid fa-pen-to-square"></i> -->
+      <i class="fa-solid fa-pen-to-square"></i>
       <header-pages title="تعديل جمعية" :showButton="false" />
     </div>
     <form @submit.prevent="submitForm">

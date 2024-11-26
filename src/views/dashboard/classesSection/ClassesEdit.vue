@@ -2,7 +2,7 @@
   <div class="add-countries">
     <div class="plus">
       <i class="fa-solid fa-pen-to-square"></i>
-      <header-pages title="اضافة فصول دراسيه" :showButton="false" />
+      <header-pages title="تعديل الفصول الدراسيه" :showButton="false" />
     </div>
 
     <form @submit.prevent="submitForm">
