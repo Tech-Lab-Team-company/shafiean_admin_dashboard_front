@@ -26,7 +26,7 @@
           />
           <span @click="togglePasswordVisibility" class="toggle-password">
             <i v-if="showPassword" class="fa fa-eye"></i>
-            <i v-else class="fa fa-eye-slash"></i>
+            <i  v-else class="fa fa-eye-slash "></i>
           </span>
         </div>
       </div>
@@ -75,4 +75,5 @@ export default {
   color: #999;
   margin-right: 20px;
 }
+
 </style>
