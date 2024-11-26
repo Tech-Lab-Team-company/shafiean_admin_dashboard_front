@@ -387,6 +387,7 @@ export default {
       });
 
       await store.updateOrganization(id, this.organizations);
+      console.log(this.organizations , "diaaaaaa");
       this.$router.go(-1);
     },
     Edit() {

@@ -88,6 +88,11 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
         formData.append("licence_number", updatedData.licence_number);
         formData.append("phone", updatedData.phone);
         formData.append("email", updatedData.email);
+        formData.append("manager_email", updatedData.manager_email);
+        formData.append("manager_name", updatedData.manager_name);
+
+        
+        formData.append("manager_phone", updatedData.manager_phone);
         formData.append("address", updatedData.address);
         formData.append("website_link", updatedData.website_link);
         formData.append("country_id", updatedData.country_id);
