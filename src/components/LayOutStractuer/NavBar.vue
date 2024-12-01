@@ -43,7 +43,7 @@ export default {
     return {
       name: "",
       image: "",
-      isDarkMode: false, // حالة الوضع الليلي
+      isDarkMode: false,
     };
   },
   props: {
@@ -82,20 +82,29 @@ export default {
       this.$router.push("/login");
     },
     toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode; // عكس الحالة
+      this.isDarkMode = !this.isDarkMode;
       const body = document.body;
+
       if (this.isDarkMode) {
         body.classList.add("dark-mode");
+        body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "true");
       } else {
         body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "false");
       }
     },
   },
   mounted() {
     this.getNameFromLocalStorage();
-    // تحقق من الوضع الليلي عند التحميل
-    if (document.body.classList.contains("dark-mode")) {
+
+    const darkModeFromStorage = localStorage.getItem("darkMode");
+    if (darkModeFromStorage === "true") {
       this.isDarkMode = true;
+      document.body.classList.add("dark-mode");
+    } else {
+      this.isDarkMode = false;
+      document.body.classList.remove("dark-mode");
     }
   },
 };

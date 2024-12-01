@@ -19,6 +19,9 @@ body {
     color: #06797e;
   }
 }
+  .table>tbody {
+    vertical-align: unset !important;
+}
 @import url("../scss/layout_style/_layout.scss");
 @import url("../scss/_darkmode.scss");
 @import url("../scss/layout_style/_navstyle.scss");
