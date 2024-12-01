@@ -30,6 +30,8 @@
             track-by="id"
             label="title"
             placeholder="أختر الدوله"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>

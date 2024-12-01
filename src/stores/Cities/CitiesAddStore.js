@@ -21,7 +21,6 @@ export const useCitiesAddStore = defineStore("CitiesAdd", {
       }
     },
     async addCitiesData(CitiesData) {
-      console.log(CitiesData);
       try {
         const formData = new FormData();
         Object.keys(CitiesData).forEach((key) => {
@@ -31,7 +30,6 @@ export const useCitiesAddStore = defineStore("CitiesAdd", {
         const response = await axios.post("add_city", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log(response, "diaaaaaaaaaaaaa");
 
         this.Cities.push(response.data);
 

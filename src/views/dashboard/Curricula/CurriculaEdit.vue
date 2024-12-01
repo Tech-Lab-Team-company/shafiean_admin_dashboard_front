@@ -26,6 +26,8 @@
             id="type"
             v-model="selectedType"
             :options="typeOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"

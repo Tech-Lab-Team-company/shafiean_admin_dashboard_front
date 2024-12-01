@@ -13,7 +13,9 @@
             :options="StagesOptions"
             track-by="id"
             label="title"
-            :close-on-select="false"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
           <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
@@ -26,6 +28,8 @@
             id="type"
             v-model="selectedType"
             :options="typeOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"

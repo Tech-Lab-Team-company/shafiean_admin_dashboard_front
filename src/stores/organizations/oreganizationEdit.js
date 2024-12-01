@@ -12,8 +12,10 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
     country_id: [],
   }),
   actions: {
-    async getcities() {
-      const response = await axios.post("fetch_cities");
+    async getcities(countryId) {
+      const response = await axios.post("fetch_cities", {
+        country_id: countryId,
+      });
       if (response.data.status === true) {
         this.cities = response.data.data.data;
 
@@ -91,7 +93,6 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
         formData.append("manager_email", updatedData.manager_email);
         formData.append("manager_name", updatedData.manager_name);
 
-        
         formData.append("manager_phone", updatedData.manager_phone);
         formData.append("address", updatedData.address);
         formData.append("website_link", updatedData.website_link);

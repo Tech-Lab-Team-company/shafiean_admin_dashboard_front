@@ -20,7 +20,6 @@ export const useDisabilitieStore = defineStore("disabilities", {
 
         if (response.data.status) {
           this.disabilitie = response.data.data.data;
-          console.log(this.disabilitie);
           paginationStore.setPage(current_page);
           paginationStore.setfrom(from);
           paginationStore.setlastpage(last_page);

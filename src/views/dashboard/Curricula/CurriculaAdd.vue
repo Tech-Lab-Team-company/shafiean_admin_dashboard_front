@@ -24,9 +24,11 @@
           <label for="">نوع المنهج</label>
           <multiselect
             id="type"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             v-model="selectedType"
             :options="typeOptions"
-            :close-on-select="true"
             label="name"
             track-by="id"
             placeholder="اختر نوع المنهج"

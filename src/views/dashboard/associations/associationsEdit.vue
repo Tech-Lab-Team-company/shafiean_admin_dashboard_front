@@ -160,6 +160,8 @@
             :options="CountryOptions"
             track-by="id"
             label="title"
+            select-label=""
+            deselect-label=""
             :close-on-select="true"
             @update:model-value="updatecountryValue"
           ></multiselect>
@@ -171,8 +173,10 @@
             v-model="city_values"
             track-by="id"
             label="title"
-            :options="cityOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
+            :options="cityOptions"
             @update:model-value="updateModelValue"
           ></multiselect>
         </div>
@@ -182,7 +186,9 @@
             id="disabilities"
             v-model="disabilities_values"
             :options="disabilitiesOptions"
+            select-label=""
             track-by="id"
+            deselect-label=""
             label="title"
             :multiple="true"
             :close-on-select="false"
@@ -296,11 +302,25 @@ export default {
         ? this.city_values.id
         : null;
     },
-    updatecountryValue() {
+    async updatecountryValue() {
       this.organizations.country_id = this.Country_values
         ? this.Country_values.id
         : null;
+
+      if (this.organizations.country_id) {
+        const organizationsStore = useOrganizationEditStore();
+        await organizationsStore.getcities(this.organizations.country_id);
+        this.cityOptions = organizationsStore.cities.map((city) => ({
+          id: city.id,
+          title: city.title,
+        }));
+        this.city_values = null;
+      } else {
+        this.cityOptions = [];
+        this.city_values = null;
+      }
     },
+
     updatedisabilitiesValue() {
       console.log("disabilities_values", this.disabilities_values);
       console.log("organizations", this.organizations);
@@ -387,7 +407,7 @@ export default {
       });
 
       await store.updateOrganization(id, this.organizations);
-      console.log(this.organizations , "diaaaaaa");
+      console.log(this.organizations, "diaaaaaa");
       this.$router.go(-1);
     },
     Edit() {
