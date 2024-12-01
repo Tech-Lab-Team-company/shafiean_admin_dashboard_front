@@ -19,7 +19,7 @@
     margin-inline-start: auto;
 
     background-color: var(--main);
-    color: white;
+    color: #ffffff;
     font-family: "regular";
     border: 0;
     padding: 0.5rem 1rem;
@@ -29,7 +29,7 @@
   button.bake {
     display: block;
     background-color: var(--main);
-    color: white;
+    color: #ffffff;
     font-family: "regular";
     border: 0;
     padding: 0.5rem 1rem;
@@ -37,7 +37,7 @@
     transition: 0.7s;
   }
   button:hover {
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid var(--main);
     color: var(--main);
   }

@@ -46,7 +46,7 @@ export default {
 a {
   background-color: var(--main);
   padding: 1rem;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
   font-family: "regular";
   border-radius: 10px;

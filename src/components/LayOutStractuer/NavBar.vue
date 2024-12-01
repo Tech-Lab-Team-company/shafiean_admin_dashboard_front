@@ -20,9 +20,13 @@
               <li><a class="dropdown-item" @click="logout">logout</a></li>
             </ul>
           </div>
-          <a class="navbar-brand" href="#"
-            ><img src="@/assets/photos/logo.png" alt=""
-          /></a>
+          <a class="navbar-brand" href="#">
+            <img src="@/assets/photos/logo.png" alt="Logo" />
+          </a>
+          <!-- زر تبديل الوضع الليلي -->
+          <button class="btn-dark-mode" @click="toggleDarkMode">
+            <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+          </button>
         </div>
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
@@ -33,11 +37,13 @@
 <script>
 import { useAuthStore } from "@/stores/auth/AuthStore";
 import { mapState } from "pinia";
+
 export default {
   data() {
     return {
       name: "",
       image: "",
+      isDarkMode: false, // حالة الوضع الليلي
     };
   },
   props: {
@@ -71,16 +77,26 @@ export default {
     toggleSidebar() {
       this.$emit("toggle-sidebar");
     },
-    showName() {
-      this.authStore.login;
-    },
     logout() {
       this.authStore.logout();
       this.$router.push("/login");
     },
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode; // عكس الحالة
+      const body = document.body;
+      if (this.isDarkMode) {
+        body.classList.add("dark-mode");
+      } else {
+        body.classList.remove("dark-mode");
+      }
+    },
   },
   mounted() {
     this.getNameFromLocalStorage();
+    // تحقق من الوضع الليلي عند التحميل
+    if (document.body.classList.contains("dark-mode")) {
+      this.isDarkMode = true;
+    }
   },
 };
 </script>

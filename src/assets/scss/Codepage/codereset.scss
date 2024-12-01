@@ -3,14 +3,13 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to top, var(--main), #cde382);
+  background: linear-gradient(to top, var(--main), var(--primary));
   padding: 2rem;
   .content {
     text-align: center;
-    background: #ffffff;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 8px #cde382;
+    box-shadow: 0 4px 8px var(--primary);
     max-width: 400px;
     width: 100%;
   }
@@ -35,12 +34,12 @@ button.btn {
   background: var(--main);
   border: none;
   transition: background-color 0.3s ease;
-  color: white;
+  color: #ffffff;
   font-family: "medium";
   cursor: pointer;
 
   &:hover {
-    background-color: #cde382 !important;
+    background-color: var(--primary) !important;
   }
 }
 
@@ -50,6 +49,6 @@ button.btn {
   .img-fluid {
     max-width: 80%;
     border-radius: 12px;
-    box-shadow: 0 4px 8px #cde382;
+    box-shadow: 0 4px 8px var(--primary);
   }
 }

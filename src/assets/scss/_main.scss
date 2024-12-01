@@ -11,8 +11,16 @@ body {
 .navbar-toggle {
   display: none;
 }
-
+.btn-dark-mode {
+  border: 0;
+  background-color: transparent;
+  i {
+    font-size: 1.5rem;
+    color: #06797e;
+  }
+}
 @import url("../scss/layout_style/_layout.scss");
+@import url("../scss/_darkmode.scss");
 @import url("../scss/layout_style/_navstyle.scss");
 @import url("../scss/layout_style/_sidebar.scss");
 @import url("../scss/layout_style/_footer.scss");
@@ -70,6 +78,8 @@ body {
 :root {
   --main: #06797e;
   --primary: #cde382;
+  --placeholder: rgba(0, 0, 0, 0.199);
+  --white: white;
 }
 form {
   border: 1px solid var(--main);
@@ -83,14 +93,14 @@ form {
     border-radius: 15px !important;
     padding: 0.75rem !important;
     background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.164) !important;
+    border: 1px solid var(--placeholder) !important;
     box-shadow: none !important;
     font-family: "regular" !important;
     font-size: 1rem !important;
     width: 100% !important;
 
     &:focus {
-      border: 1px solid #5c9ded !important;
+      border: 1px solid var(--main) !important;
       box-shadow: 0 0 5px var(--main) !important;
     }
   }
@@ -99,7 +109,7 @@ form {
 input[type="email"] {
   &:focus {
     outline: none !important;
-    border: 1px solid #5c9ded !important;
+    border: 1px solid var(--main) !important;
     box-shadow: 0 0 5px var(--main) !important;
   }
 }
@@ -107,14 +117,14 @@ input[type="email"] {
 input[type="password"] {
   &:focus {
     outline: none !important;
-    border: 1px solid #5c9ded !important;
+    border: 1px solid var(--main) !important;
     box-shadow: 0 0 5px var(--main) !important;
   }
 }
 input[type="tel"] {
   &:focus {
     outline: none !important;
-    border: 1px solid #5c9ded !important;
+    border: 1px solid var(--main) !important;
     box-shadow: 0 0 5px var(--main) !important;
   }
 }
@@ -137,17 +147,17 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   &:focus {
     outline: none !important;
-    border: 1px solid #5c9ded !important;
+    border: 1px solid var(--main) !important;
     box-shadow: 0 0 5px var(--main) !important;
   }
 }
 
 ::placeholder {
-  color: #0000003d !important;
+  color: var(--placeholder) !important;
 }
 
 .alll {
-  border: 1px solid #ebeaed !important;
+  border: 1px solid var(--main) #ebeaed !important;
   border-radius: 10px;
   margin-top: 0.5rem;
   padding: 2rem !important;
@@ -163,10 +173,10 @@ label {
 .multiselect__tags {
   border-radius: 15px !important;
   width: 100% !important;
-  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  border: 1px solid var(--placeholder) !important;
 }
 .multiselect__placeholder {
-  color: #aaa;
+  color: var(--placeholder);
   direction: ltr;
   text-align: left;
   font-family: "regular";
@@ -221,7 +231,7 @@ label {
   padding: 0.9rem;
   border-radius: 15px;
   i {
-    color: #06797e;
+    color: var(--main);
   }
 }
 .avatar-preview {
@@ -229,7 +239,7 @@ label {
     width: 124px;
     height: 124px;
     object-fit: cover;
-    border: 1px solid #0000002b;
+    border: 1px solid var(--placeholder);
     border-radius: 50%;
   }
 }
@@ -240,7 +250,7 @@ label {
 }
 
 .search {
-  border: 1px solid #0000002b;
+  border: 1px solid var(--placeholder);
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 10px;
@@ -262,13 +272,13 @@ label {
 }
 textarea {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  border: 1px solid var(--placeholder) !important;
   padding: 0.5rem;
   border-radius: 15px;
 }
 button.bake {
   background-color: var(--main);
-  color: white;
+  color: var(--white);
   font-family: "regular";
   border: 0;
   padding: 0.8rem 2rem;
@@ -290,7 +300,7 @@ button.save {
   display: block;
   margin-inline-start: auto;
   background-color: var(--main);
-  color: white;
+  color: var(--white);
   font-family: "regular";
   border: 0;
   padding: 0.8rem 2rem;
@@ -299,14 +309,14 @@ button.save {
   width: 20%;
   border: 1px solid var(--main);
   &:hover {
-    background-color: white;
+    background-color: var(--white);
     border: 1px solid var(--main);
     color: var(--main);
     transform: scale(1.06);
   }
 }
 i.fa-solid.fa-plus {
-  color: #06797e;
+  color: var(--main);
   margin-bottom: 1rem;
 }
 .plus {
@@ -318,7 +328,7 @@ i.fa-solid.fa-plus {
   }
 }
 i.fa-solid.fa-pen-to-square {
-  color: #06797e;
+  color: var(--main);
   margin-bottom: 1rem;
 }
 .error-message {
@@ -349,7 +359,7 @@ i.fa-solid.fa-pen-to-square {
   align-items: start;
 }
 nav.navbars {
-  box-shadow: 0px 5px 4px -3px #00000040;
+  box-shadow: 0px 5px 4px -3px var(--placeholder);
   position: relative;
 }
 textarea {
@@ -374,7 +384,7 @@ textarea {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--primary);
 }
 canvas {
   width: 100% !important;
@@ -392,8 +402,8 @@ span.error-feedback {
   }
 }
 .custom-popup {
-  background-color: #f9f9f9;
-  border: 2px solid #ccc;
+  background-color: var(--white);
+  border: 2px solid var(--placeholder);
   border-radius: 10px;
 }
 
@@ -413,7 +423,7 @@ span.error-feedback {
 
 .custom-confirm-button {
   background-color: var(--main) !important;
-  color: #fff !important;
+  color: var(--white) !important;
   font-size: 14px;
   border-radius: 5px;
   padding: 10px 20px;

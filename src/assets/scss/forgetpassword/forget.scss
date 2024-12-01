@@ -4,7 +4,7 @@
   align-items: center;
   height: 100vh;
   width: 100%;
-  background: linear-gradient(to top, var(--main), #cde382);
+  background: linear-gradient(to top, var(--main), var(--primary));
   gap: 3rem;
   padding: 1rem;
 
@@ -38,8 +38,8 @@
         transition: border-color 0.3s ease;
 
         &:focus {
-          border-color: #cde382;
-          box-shadow: 0 0 0 3px #cde382;
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px var(--primary);
         }
       }
     }
@@ -61,7 +61,7 @@
         transition: background 0.3s ease;
 
         &:hover {
-          background: #cde382;
+          background: var(--primary);
         }
       }
     }

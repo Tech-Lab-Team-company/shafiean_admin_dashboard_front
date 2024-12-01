@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(to top, var(--main), #cde382);
+  background: linear-gradient(to top, var(--main), var(--primary));
   form {
     padding: 2rem;
     background: #ffffff;
@@ -37,7 +37,6 @@
         width: 94%;
         background-color: #e8f0fe !important;
 
-
         &:focus-visible {
           border: 0 !important;
           box-shadow: unset !important;
@@ -58,7 +57,7 @@
       font-family: "Medium";
 
       &:hover {
-        background: #cde382;
+        background: var(--primary);
         color: var(--main);
       }
     }
@@ -77,7 +76,7 @@
       font-family: "Medium";
 
       &:hover {
-        color: #cde382;
+        color: var(--primary);
       }
     }
   }
