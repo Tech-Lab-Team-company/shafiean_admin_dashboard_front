@@ -8,7 +8,6 @@ export const useCountriesAddStore = defineStore("CountriesAdd", {
   }),
   actions: {
     async addCountriesData(CountriesData) {
-      console.log(CountriesData);
       try {
         const formData = new FormData();
         Object.keys(CountriesData).forEach((key) => {
@@ -17,8 +16,6 @@ export const useCountriesAddStore = defineStore("CountriesAdd", {
         const response = await axios.post("add_country", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log(response, "diaaaaaaaaaaaaa");
-
         this.Countries.push(response.data);
         Swal.fire({
           icon: "success",

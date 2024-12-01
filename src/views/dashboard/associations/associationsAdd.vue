@@ -136,11 +136,15 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="country">دوله</label>
           <multiselect
+            :select-by="false"
             id="country"
             v-model="Country_values"
             :options="CountryOptions"
             track-by="id"
             label="title"
+            select-label=""
+            deselect-label=""
+            :clear-on-select="true"
             placeholder="أختر الدوله"
             :close-on-select="true"
             @update:model-value="updateCountryValue"
@@ -152,12 +156,15 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="city">مدينه</label>
           <multiselect
+            :select-by="false"
             id="city"
             v-model="city_values"
             :options="cityOptions"
+            deselect-label=""
             track-by="id"
             label="title"
             placeholder="أختر مدينه"
+            select-label=""
             :close-on-select="true"
             @update:model-value="updateCityValue"
           />
@@ -172,9 +179,12 @@
             v-model="disabilities_values"
             :options="disabilitiesOptions"
             track-by="id"
+            deselect-label=""
             label="title"
             placeholder="أختر الاعاقات"
             :multiple="true"
+            :clear-on-select="true"
+            select-label=""
             :close-on-select="false"
             @update:model-value="updateDisabilitiesValue"
           />
@@ -282,14 +292,26 @@ export default {
     updateCityValue() {
       this.form.city_id = this.city_values ? this.city_values.id : null;
     },
-    updateCountryValue() {
+    async updateCountryValue() {
       this.form.country_id = this.Country_values
         ? this.Country_values.id
         : null;
+
+      if (this.form.country_id) {
+        const organizationsStore = useOrganizationAddStore();
+        await organizationsStore.getcities(this.form.country_id);
+        this.cityOptions = organizationsStore.cities.map((city) => ({
+          id: city.id,
+          title: city.title,
+        }));
+        this.city_values = null;
+      } else {
+        this.cityOptions = [];
+        this.city_values = null;
+      }
     },
     updateDisabilitiesValue() {
       if (Array.isArray(this.disabilities_values)) {
-        // Filter out any invalid values
         this.form.disability_ids = this.disabilities_values
           .map((dis) => dis.id)
           .filter((id) => id !== undefined && id !== null);
@@ -353,18 +375,34 @@ export default {
         if (!organizationsStore) {
           throw new Error("Failed to load organizations store");
         }
-        await organizationsStore.getcities();
-        this.cityOptions = this.cities;
+
+        // جلب الدول
         await organizationsStore.getCountries();
-        this.CountryOptions = this.countries;
+        this.CountryOptions = organizationsStore.countries.map((country) => ({
+          id: country.id,
+          title: country.title, // اسم الدولة
+        }));
+
+        // جلب المدن
+        await organizationsStore.getcities();
+        this.cityOptions = organizationsStore.cities.map((city) => ({
+          id: city.id,
+          title: city.title, // اسم المدينة
+        }));
+
+        // جلب الإعاقات
         await organizationsStore.getDisabilities();
-        this.disabilitiesOptions = this.disabilities;
-        this.disabilities_values = []; // Ensure this is reset
+        this.disabilitiesOptions = organizationsStore.disabilities.map(
+          (disability) => ({
+            id: disability.id,
+            title: disability.title, // اسم الإعاقة
+          })
+        );
+        this.disabilities_values = []; // إعادة التعيين
       } catch (error) {
         console.error("Error in fetchData:", error);
       }
     },
-
     save() {
       this.v$.$validate();
       if (!this.v$.$error) {

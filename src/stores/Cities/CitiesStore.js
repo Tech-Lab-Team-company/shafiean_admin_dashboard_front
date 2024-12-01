@@ -18,7 +18,6 @@ export const useCitiesStore = defineStore("cities", {
           response.data.data.meta;
         this.cities = response.data.data.data;
         if (response.data.status == true) {
-          console.log(this.cities, "Diaaa");
           paginationStore.setPage(current_page);
           paginationStore.setfrom(from);
           paginationStore.setlastpage(last_page);

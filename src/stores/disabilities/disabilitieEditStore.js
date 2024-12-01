@@ -16,7 +16,6 @@ export const useDisabilitieEditStore = defineStore("disabilitiesEdit", {
         console.log(this.disabilitie, "disssss");
 
         if (response.data.status == true) {
-          console.log(this.disabilitie);
         } else {
           console.log("erorr");
         }

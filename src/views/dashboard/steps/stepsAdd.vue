@@ -50,7 +50,9 @@
             track-by="id"
             placeholder="اختر المنهج الدراسي"
             label="title"
-            :close-on-select="false"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             @update:model-value="handleCurriculaChange"
           ></multiselect>
           <span class="error-feedback" v-if="v$.steps.curriculum_id.$error">
@@ -68,7 +70,9 @@
             label="title"
             placeholder="اختر الإعاقات"
             :multiple="true"
-            :close-on-select="false"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             @update:model-value="handleDisabilitiesChange"
           />
           <span class="error-feedback" v-if="v$.steps.disability_ids.$error">
@@ -83,6 +87,8 @@
             id="type"
             v-model="selectedType_values"
             :options="typeOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"

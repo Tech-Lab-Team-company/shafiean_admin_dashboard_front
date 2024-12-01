@@ -14,8 +14,10 @@ export const useOrganizationAddStore = defineStore("organizationAdd", {
     country_id: [],
   }),
   actions: {
-    async getcities() {
-      const response = await axios.post("fetch_cities");
+    async getcities(countryId) {
+      const response = await axios.post("fetch_cities", {
+        country_id: countryId,
+      });
       if (response.data.status === true) {
         this.cities = response.data.data.data;
 

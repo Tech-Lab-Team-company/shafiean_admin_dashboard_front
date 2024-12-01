@@ -107,10 +107,12 @@
           <label for="roles">الصلاحيات</label>
           <multiselect
             id="roles"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             v-model="form.role"
             :options="permissionOptions"
             :multiple="true"
-            :close-on-select="false"
             placeholder="ادخل الصلاحيات"
           ></multiselect>
           <span class="error-feedback" v-if="v$.form.role.$error">{{

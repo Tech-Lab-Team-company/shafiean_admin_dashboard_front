@@ -20,12 +20,8 @@ export const useCountriesStore = defineStore("countries", {
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
 
-        console.log(response.data.data.meta, "meta Data");
-
         if (response.data.status == true) {
           this.countries = response.data.data.data;
-          console.log(this.countries, "Countries List");
-
           paginationStore.setPage(current_page);
           paginationStore.setfrom(from);
           paginationStore.setlastpage(last_page);
@@ -41,8 +37,6 @@ export const useCountriesStore = defineStore("countries", {
     },
 
     async deleteCountry(id) {
-      console.log(id + "nasra");
-
       try {
         const result = await Swal.fire({
           title: "هل انتا متاكد من عملية المسح؟",

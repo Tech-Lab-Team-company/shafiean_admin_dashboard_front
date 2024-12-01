@@ -8,7 +8,6 @@ export const useCurriculumAddStore = defineStore("curriculaAdd", {
   }),
   actions: {
     async addCurriculasData(CurriculasData) {
-      console.log(CurriculasData);
       try {
         const formData = new FormData();
         Object.keys(CurriculasData).forEach((key) => {
@@ -18,8 +17,6 @@ export const useCurriculumAddStore = defineStore("curriculaAdd", {
         const response = await axios.post("add_curriculum", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log(response, "diaaaaaaaaaaaaa");
-
         this.Curriculas.push(response.data);
         Swal.fire({
           icon: "success",

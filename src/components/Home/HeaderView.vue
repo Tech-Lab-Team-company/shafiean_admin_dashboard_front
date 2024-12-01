@@ -399,7 +399,6 @@ export default {
       (this.userCount = this.store.Counts.user_count),
       1500
     );
-    console.log(this.store.ChartData.user_counts);
   },
 
   methods: {

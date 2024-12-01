@@ -29,6 +29,8 @@
             :options="CountryOptions"
             track-by="id"
             label="title"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
           ></multiselect>
 

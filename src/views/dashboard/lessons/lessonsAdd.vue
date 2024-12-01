@@ -27,6 +27,8 @@
             track-by="id"
             label="title"
             placeholder="اختر المرحلة"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
@@ -40,6 +42,8 @@
           <multiselect
             v-model="selectedType"
             :options="typeOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             placeholder="اختر القرأن"
             label="name"

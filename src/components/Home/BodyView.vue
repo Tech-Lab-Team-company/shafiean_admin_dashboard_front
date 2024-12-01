@@ -37,9 +37,19 @@
                 <td>
                   <span>{{ student.phone }}</span>
                 </td>
-                <td data-label="رقم الهاتف">{{ student.group.title }}</td>
+                <td data-label="رقم الهاتف">
+                  {{
+                    student.group && student.group.title
+                      ? student.group.title
+                      : "لا توجد مجموعة"
+                  }}
+                </td>
                 <td data-label="المستوي الاعاقة">
-                  {{ student.disability_type }}
+                  {{
+                    student.disability_type
+                      ? student.disability_type
+                      : "لا يوجد"
+                  }}
                 </td>
                 <td data-label="نوع العمل">
                   <span class="type_work total">{{ student.created_at }}</span>
@@ -94,7 +104,7 @@ export default {
     this.chartDataRates = this.setChartDataRates();
     this.chartOptionsRates = this.setChartOptionsRates();
     await this.store.getLastStudents();
-    // console.log(this.store.lastStudents, "llllll");
+  
   },
   methods: {
     // =============Chart Employment Rates=============

@@ -18,8 +18,6 @@ export const useCurriculaStore = defineStore("curricula", {
         const { current_page, from, last_page, per_page, to, total } =
           response.data.data.meta;
 
-        console.log(response.data.data.meta, "meta Data");
-
         if (response.data.status == true) {
           this.Curriculas = response.data.data.data;
           paginationStore.setPage(current_page);
@@ -36,8 +34,6 @@ export const useCurriculaStore = defineStore("curricula", {
       }
     },
     async deleteCurriculas(id) {
-      console.log(id + "diaa");
-
       try {
         const result = await Swal.fire({
           title: "هل انتا متاكد من عملية المسح؟",

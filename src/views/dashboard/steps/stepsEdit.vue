@@ -29,7 +29,9 @@
             :options="curriculaOptions"
             track-by="id"
             label="title"
-            :close-on-select="false"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             placeholder="اختر منهجاً دراسياً"
             required
           ></multiselect>
@@ -47,7 +49,9 @@
             track-by="id"
             label="title"
             :multiple="true"
-            :close-on-select="false"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
             placeholder="اختر الإعاقات"
           />
 
@@ -63,6 +67,8 @@
             id="type"
             v-model="selectedType_values"
             :options="typeOptions"
+            deselect-label=""
+            select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"
