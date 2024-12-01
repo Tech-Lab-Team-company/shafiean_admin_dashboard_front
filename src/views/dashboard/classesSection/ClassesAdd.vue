@@ -144,7 +144,7 @@ button.save {
   display: block;
   margin-inline-start: auto;
   background-color: var(--main);
-  color: white;
+  color: #ffffff;
   font-family: "regular";
   border: 0;
   padding: 0.8rem 2rem;
@@ -156,7 +156,7 @@ button.save {
 button.bake {
   display: block;
   background-color: var(--main);
-  color: white;
+  color: #ffffff;
   font-family: "regular";
   border: 0;
   padding: 0.8rem 2rem;
@@ -165,7 +165,7 @@ button.bake {
   border: 1px solid var(--main);
 }
 button:hover {
-  background-color: white;
+  background-color: #ffffff;
   border: 1px solid var(--main);
   color: var(--main);
   transform: scale(1.06);

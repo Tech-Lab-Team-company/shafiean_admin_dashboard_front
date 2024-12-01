@@ -4,7 +4,7 @@
       <img src="@/assets/photos/logo.png" alt="" />
     </div>
 
-    <h4>منصة شفيعا</h4>
+    <h4 class="namessss">منصة شفيعا</h4>
   </div>
 </template>
 

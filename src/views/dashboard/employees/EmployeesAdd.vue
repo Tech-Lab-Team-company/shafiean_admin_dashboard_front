@@ -244,7 +244,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.164) !important;
+  border: 1px solid rgba(0, 0, 0, 0.164) ;
   border-radius: 15px;
 }
 .no-spinner::-webkit-inner-spin-button,

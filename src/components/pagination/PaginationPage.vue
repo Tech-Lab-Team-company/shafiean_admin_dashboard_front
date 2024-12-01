@@ -83,7 +83,7 @@ export default {
 .active > .page-link,
 .page-link.active {
   background-color: var(--main) !important;
-  color: white !important;
+  color: #ffffff !important;
   border: 0 !important;
 }
 </style>

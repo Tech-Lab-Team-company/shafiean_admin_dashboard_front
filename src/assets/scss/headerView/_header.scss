@@ -1,5 +1,4 @@
 .content {
-  background-color: #fff;
   padding: 1.5rem 1rem 0;
   min-height: 90vh;
 
@@ -61,7 +60,7 @@
 }
 .buton-index a {
   font-family: "regular";
-  background-color: #06797e;
+  background-color: var(--main);
   color: #fff;
   border-radius: 10px;
   font-size: 16px;
@@ -71,8 +70,8 @@
 }
 .buton-index a:hover {
   background-color: #fff;
-  color: #06797e;
-  border: 1px solid #06797e;
+  color: var(--main);
+  border: 1px solid var(--main);
 }
 .statistics {
   padding: 1.5rem;
@@ -209,7 +208,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  background-color: white;
+  background-color: #ffffff;
   .text-average {
     h4 {
       font-size: 0.7rem;
@@ -221,10 +220,10 @@
   color: #707070b0;
 }
 .left_content {
-  background-color: #fcfcfc;
+  background-color: #ffffff;
   padding: 1rem;
   .best_project .card_project .percentage_bar .bar {
-    background-image: linear-gradient(to left, #fff, #abd0c8);
+    background-image: linear-gradient(to left, #ffffff, #abd0c8);
     border-radius: 8px;
     padding: 1rem;
     display: flex;
@@ -322,4 +321,3 @@
     border-radius: 5px !important;
   }
 }
-

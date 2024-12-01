@@ -1,0 +1,321 @@
+.dark-mode {
+  .content {
+    background-color: #1E1E1E !important;
+    color: white !important;
+  }
+  .allnav {
+    background-color: #1E1E1E;
+    color: white;
+    border-bottom: 1px solid #252525;
+    button.btn.dropdown-toggle {
+      background-color: #1E1E1E;
+      color: #e0e0e0;
+    }
+    & a.navbar-brand {
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 1px solid #252525;
+      }
+    }
+  }
+  .buton-index a {
+    background-color: #252525;
+    color: white;
+    border: 1px solid #252525;
+  }
+  .card_statistics {
+    background-color: #252525;
+    border: 1px solid #252525;
+    i {
+      color: white;
+    }
+    p {
+      color: white;
+    }
+  }
+  .left_content {
+    border: 1px solid #252525;
+    border-radius: 15px;
+    background-color: #252525;
+    color: #e0e0e0;
+    .percent {
+      color: #e0e0e0;
+    }
+    .dropdown-toggle {
+      background-color: #e0e0e0;
+    }
+  }
+
+  .team_shift {
+    background: #252525;
+    border: 0;
+  
+  }
+  .team_shift {
+    .btn {
+      color: #e0e0e0;
+    }
+    h5 {
+      color: #e0e0e0;
+    }
+  }
+  .employment_rates {
+    h5 {
+      color: #e0e0e0;
+    }
+  }
+  .all-footer {
+    background-color: #1E1E1E;
+    color: #e0e0e0;
+    border-top: 1px solid #252525;
+  }
+  .layout {
+    .sidebar {
+      background-color: #1E1E1E;
+      color: #e0e0e0;
+      border-left: 1px solid #252525;
+    }
+  }
+  .sidebar-link {
+    &.router-link-active {
+      background-color: #e0e0e0;
+      color: #1E1E1E;
+      i {
+        color: #1E1E1E;
+      }
+    }
+  }
+  .sidebar-link {
+    i {
+      color: #e0e0e0;
+    }
+  }
+  .sidebar-link {
+    color: #e0e0e0;
+  }
+  .card {
+    padding: 1.5rem;
+    background-color: #e0e0e0;
+    border: 1px solid #252525;
+  }
+  .employment_rates {
+    background-color: #252525;
+    border: 0;
+    .card {
+      padding: 1.5rem;
+      background-color: #e0e0e0;
+      border: 1px solid #252525;
+    }
+  }
+  .percentage_jobs {
+    background-color: #252525;
+    border: 1px solid #252525;
+    padding: 0.5rem;
+    border-radius: 15px;
+  }
+  .percentage_projects {
+    background-color: #252525;
+    border: 0;
+  }
+  .accuracy_projects {
+    p {
+      color: white;
+    }
+  }
+  .percentage_projects {
+    .nav-pills .nav-item .nav-link.active {
+      background-color: #252525 !important;
+      color: #fff;
+    }
+  }
+  .left_content {
+    .best_project .card_project .percentage_bar .bar {
+      background-image: linear-gradient(to left, #252525, #7a7777);
+
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "regular";
+      color: #3f3f44;
+      font-size: 0.7rem !important;
+      span {
+        color: white;
+      }
+      .title {
+        color: white;
+      }
+      i {
+        color: white;
+      }
+    }
+  }
+
+    .headers {
+    .add {
+        background-color: #252525;
+        color: white;
+        border: 1px solid #252525;
+      
+    }
+      h4 {
+        color: white;
+        }
+}
+  ::placeholder {
+    color: #e0e0e0 !important;
+  }
+    .input {
+    input {
+     color: #e0e0e0 !important;
+        border: 1px solid #e0e0e0 !important;
+     &:focus {
+       background-color: #252525;
+     }
+    }
+}
+  .pas {
+
+    border: 1px solid #e0e0e0  !important;
+
+
+}
+  .multiselect__tags {
+
+    border: 1px solid #e0e0e0;
+    background: #252525;
+}
+  form {
+    border: 1px solid #e0e0e0;
+    }
+.upload-icon {
+    border: 1px dashed #e0e0e0;
+  }
+    button.save {
+      background-color: #333333;
+      color: white;
+      border: 1px solid #333333;
+    }
+      button.bake {
+        background-color: #333333;
+        color: white;
+        border: 1px solid #333333;
+      }
+        i.fa-solid.fa-pen-to-square {
+          color:white;
+          }
+            .pagination {
+    a.page-link {
+        color: white;
+        background-color: #252525;
+    }
+}
+  .table {
+  background-color: #1E1E1E; 
+  color: #FFFFFF;
+
+  th, td {
+    border: 1px solid #444444; 
+    padding: 0.75rem; 
+  }
+
+  thead {
+    background-color: var(--main); 
+    color: #E0E0E0; 
+    border-bottom: 2px solid #5E5E5E; 
+    th {
+      font-weight: bold; 
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: #2C2C2C; 
+      }
+      &:nth-child(even) {
+        background-color: #1E1E1E; 
+      }
+     
+    }
+    td {
+      color: #B0B0B0; 
+    }
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #2C2C2C; 
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #333333; 
+  }
+
+  .table-dark {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+  }
+}
+.table>:not(caption)>*>* {
+  background-color: unset ;
+  }
+    textarea {
+      border: 1px solid #e0e0e0;
+      background-color: #252525;
+      color: #e0e0e0;
+      }
+        .namessss {
+          color: white;
+          }
+            .search {
+    border: 1px solid #e0e0e0;
+   input {
+    color:white;
+    }
+}
+ 
+::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E1E1E; 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444444; 
+  border-radius: 10px; 
+  border: 2px solid #1E1E1E; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #03DAC6; 
+}
+
+
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: #444444 #1E1E1E;
+}
+.all-information {
+    background-color: #252525   !important;
+    
+      .text {
+        h4 {
+        color: white;
+        span {
+          color: white;
+          }
+          }
+  }
+}
+  .multiselect__input, .multiselect__single {
+    color: white;
+    background-color: #252525;
+    }
+}

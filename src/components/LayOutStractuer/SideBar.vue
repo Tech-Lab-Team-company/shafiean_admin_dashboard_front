@@ -211,8 +211,8 @@ export default {
   margin-top: 0.5rem;
 
   i {
-    color: white !important;
-    border: 1px solid white !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
     padding: 0.4rem;
     border-radius: 4px;
   }
