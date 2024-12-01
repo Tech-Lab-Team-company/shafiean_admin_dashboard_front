@@ -12,6 +12,7 @@
     &.sidebar-expanded {
       right: 0;
       width: 250px !important;
+      z-index: 11111111111111111111111111111111111111;
     }
 
     &.sidebar-collapsed {
