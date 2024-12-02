@@ -13,7 +13,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img :src="image" alt="User Image" />
+              <img :src="image || defaultImage" alt="User Image" />
               <h4>{{ name }}</h4>
             </button>
             <ul class="dropdown-menu">
@@ -43,6 +43,7 @@ export default {
     return {
       name: "",
       image: "",
+      defaultImage: require("@/assets/photos/pngtree-user-login-or-authenticate-icon-on-gray-background-flat-icon-ve-png-image_5089976.jpg"),
       isDarkMode: false,
     };
   },
