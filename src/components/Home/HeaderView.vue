@@ -321,7 +321,7 @@
           <!-- End Region project -->
 
           <!-- Start accuracy in completing projects -->
-          <div class="accuracy_projects">
+          <!-- <div class="accuracy_projects">
             <div class="text-chart">
               <h4>70,5%</h4>
               <p>دقة الوقت</p>
@@ -333,7 +333,7 @@
               :options="chartOptionsAccuracy"
               class="w-full md:w-[30rem]"
             />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -408,13 +408,13 @@ export default {
       const step = (timestamp) => {
         if (!startTime) startTime = timestamp;
         const progress = timestamp - startTime;
-        const increment = Math.min(progress / duration, 1); // Ensure it does not go beyond 1
-        this[variable] = Math.floor(increment * target); // Update the reactive property
+        const increment = Math.min(progress / duration, 1); 
+        this[variable] = Math.floor(increment * target); 
 
         if (progress < duration) {
-          window.requestAnimationFrame(step); // Continue animation
+          window.requestAnimationFrame(step); 
         } else {
-          this[variable] = target; // Ensure final value is set precisely
+          this[variable] = target; 
         }
       };
 

@@ -123,4 +123,10 @@
   canvas {
     width: 100% !important;
   }
+  .row {
+    --bs-gutter-x: 0.9rem !important;
+  }
+  .all-information {
+    text-align: center !important;
+  }
 }
