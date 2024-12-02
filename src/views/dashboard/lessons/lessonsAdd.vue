@@ -150,25 +150,24 @@ export default {
 
     async submitForm() {
       try {
-        const LessonsIndexStore = useLessonsAddStore();
-        if (!LessonsIndexStore) {
-          throw new Error("Failed to load Lessons store");
-        }
-
-        if (
-          !this.lessons.stage_id ||
-          !this.lessons.quraan_id ||
-          !this.lessons.title
-        ) {
-          // Swal.fire("Error", "Please fill in all fields", "error");
+        if (!this.v$.$validate()) {
+          Swal.fire("Error", "Please fill in all required fields", "error");
           return;
         }
 
-        await LessonsIndexStore.addLessonsData(this.lessons);
-        this.$router.push("/lessons");
+        const lessonsStore = useLessonsAddStore();
+        await lessonsStore.addLessonsData(this.lessons);
+
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
+    },
+
+    updateStagesValue() {
+      this.lessons.stage_id = this.Stages_values?.id || null;
+    },
+    updateTypeId(selectedOption) {
+      this.lessons.quraan_id = selectedOption?.id || null;
     },
 
     updateStagesValue() {
