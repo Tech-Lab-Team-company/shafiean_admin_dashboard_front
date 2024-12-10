@@ -9,6 +9,8 @@ export const useStepsAddStore = defineStore("StepsAdd", {
     Curriculums_id: [],
     disabilities: [],
     disability_ids: [],
+    surahs: [],
+    surahs_ids: [],
   }),
   actions: {
     async fetchCurriculums() {
@@ -17,14 +19,24 @@ export const useStepsAddStore = defineStore("StepsAdd", {
         if (response.data.status == true) {
           this.Curriculums = response.data.data.data;
           this.Curriculums_id = this.Curriculums.map((ste) => ste.id);
-          
-        } 
+        }
       } catch (error) {
         Swal.fire(
           "Error",
           "An error occurred while fetching curriculums.",
           "error"
         );
+      }
+    },
+    async fetchSurahs() {
+      try {
+        const response = await axios.post("fetch_surahs");
+        if (response.data.status == true) {
+          this.surahs = response.data.data;
+          this.surahs_ids = this.surahs.map((ste) => ste.id);
+        }
+      } catch (error) {
+        Swal.fire("Error", "An error occurred while fetching surahs.", "error");
       }
     },
 
@@ -76,6 +88,7 @@ export const useStepsAddStore = defineStore("StepsAdd", {
           } else {
             // Append non-array values normally
             formData.append(key, StepsData[key]);
+            formData.append("is_full", 1);
           }
         });
 
