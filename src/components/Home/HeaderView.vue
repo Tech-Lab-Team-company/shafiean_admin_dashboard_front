@@ -375,7 +375,7 @@ export default {
     await this.store.fetchPlaces();
 
     this.chartData = this.setChartData();
-    // this.chartOptions = this.setChartOptions();
+    this.chartOptions = this.setChartOptions();
 
     this.chartDataAccuracy = this.setChartDataAccuracy();
     this.chartOptionsAccuracy = this.setChartOptionsAccuracy();

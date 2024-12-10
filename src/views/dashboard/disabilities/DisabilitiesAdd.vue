@@ -28,9 +28,9 @@
               />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span class="error-feedback" v-if="v$.form.imageSrc.$error"
+            <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error"
               >{{ getErrorMessage(v$.form.imageSrc) }}
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -108,15 +108,15 @@ export default {
       form: {
         title: "",
         description: "",
-        image: null,
-        imageSrc: "",
+        // image: null,
+        // imageSrc: "",
       },
     };
   },
   validations() {
     return {
       form: {
-        imageSrc: { required },
+        // imageSrc: { required },
         title: { required },
         description: { required },
       },
@@ -153,7 +153,7 @@ export default {
         if (!disabilitieStore) {
           throw new Error("Failed to load disabilities store");
         }
-        if (!this.form.imageSrc || !this.form.title || !this.form.description) {
+        if ( !this.form.title || !this.form.description) {
           Swal.fire("Error", "Please fill in all fields", "error");
           return;
         }
