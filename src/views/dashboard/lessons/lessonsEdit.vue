@@ -18,24 +18,62 @@
             :close-on-select="true"
             @update:model-value="updateStagesValue"
           ></multiselect>
-          <span class="error-feedback" v-if="v$.lessons.stage_id.$error">
-            {{ getErrorMessage(v$.lessons.stage_id) }}
-          </span>
+         
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">القرأن</label>
+          <label for="type">السور</label>
           <multiselect
             id="type"
-            v-model="selectedType"
-            :options="typeOptions"
+            v-model="selectedType_values"
+            :options="surahOptions"
             deselect-label=""
             select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"
-            @update:model-value="updateTypeId"
+            placeholder="اختر السور"
+            @update:model-value="handleTypeChange"
           ></multiselect>
+     
         </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="type"> من الايه (يجب عليك اختيار السوره اولا)</label>
+          <multiselect
+            id="type"
+            v-model="ayaType_values"
+            :options="ayaOptions"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
+            label="text"
+            track-by="id"
+            placeholder="اختر الايه"
+            @change="handleStartAyaChange"
+            @update:model-value="handleayaChange"
+          ></multiselect>
+     
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="type"> الى الايه (يجب عليك اختيار السوره اولا)</label>
+          <multiselect
+            id="type"
+            v-model="ayaTypeto_values"
+            :options="filteredAyaOptions"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
+            label="text"
+            track-by="id"
+            placeholder="اختر الايه"
+            :disabled="!ayaType_values"
+            @change="handleEndAyaChange"
+            @update:model-value="handleayaChange"
+          ></multiselect>
+       
+        </div>
+
         <div class="col-lg-12 col-md-6 col-12">
           <div class="input">
             <label for=""> الوصف</label>
@@ -69,127 +107,168 @@ import { mapState } from "pinia";
 import Swal from "sweetalert2";
 
 import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
 
 export default {
   components: { HeaderPages, Multiselect },
   data() {
-    return {
-      v$: useVuelidate(),
-      lessons: {
-        title: "",
-        // start_verse: "",
-        // end_verse: "",
-        stage_id: "",
-        quraan_id: "",
-      },
-      StagesOptions: [],
-      Stages_values: {},
-      typeOptions: [
-        { id: 1, name: "قرأن" },
-        { id: 2, name: "حديث" },
-        { id: 3, name: "فقه" },
-      ],
-      selectedType: null,
-    };
+  return {
+    v$: useVuelidate(),
+    lessons: {
+      title: "",
+      start_ayah_id: "",
+      end_ayah_id: "",
+      stage_id: "",
+      surah: "",
+    },
+    surahOptions: [], // Make sure this is initialized as an empty array
+    selectedType_values: null,
+    ayaType_values: null,
+    ayaTypeto_values: null,
+    ayaOptions: [], // Initialize ayaOptions as empty
+    filteredAyaOptions: [], // Initialize filteredAyaOptions as empty
+    StagesOptions: [], // Initialize StagesOptions as empty
+    Stages_values: {},
+  };
+
   },
-  validations() {
-    return {
-      lessons: {
-        title: { required },
-        // start_verse: { required },
-        // end_verse: { required },
-        stage_id: { required },
-        // quraan_id: { required },
-      },
-    };
-  },
+  // validations() {
+  //   return {
+  //     lessons: {
+  //       title: { required },
+  //       start_ayah_id: { required },
+  //       end_ayah_id: { required },
+  //       stage_id: { required },
+  //       surah: { required },
+  //     },
+  //   };
+  // },
   computed: {
     ...mapState(useLessonsEditStore, {
       lessons: (state) => state.lessons,
     }),
   },
   methods: {
-    getErrorMessage(field) {
-      if (field.$invalid && field.$dirty) {
-        return "هذا الحقل مطلوب";
-      }
-      return "";
-    },
+    // getErrorMessage(field) {
+    //   if (field.$invalid && field.$dirty) {
+    //     return "هذا الحقل مطلوب";
+    //   }
+    //   return "";
+    // },
     updateStagesValue() {
       this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
       console.log("Updated Stage ID:", this.lessons.stage_id);
     },
     updateTypeId(selectedOption) {
-      this.lessons.quraan_id = selectedOption ? selectedOption.id : null;
-    },
-    async fetchData() {
-      const store = useLessonsEditStore();
-      const id = this.$route.params.id;
-      await store.fetchLessons(id);
-      await store.fetchSteps();
-      this.StagesOptions = store.lesson; // Assuming this is correct
-      this.lessons = store.lessons;
-      console.log(
-        this.lessons.stage.title,
-        "this.lessonssssssssssssssssssssssss"
-      );
-      this.Stages_values = this.lessons.stage
-        ? {
-            id: this.lessons.stage.id,
-            title: this.lessons.stage.title,
-          }
-        : null;
-    },
+  this.lessons.surah_id = selectedOption ? selectedOption.id : null;
+  console.log("surah_id:", this.lessons.surah_id); 
+},
+  async fetchData() {
+  const store = useLessonsEditStore();
+  const id = this.$route.params.id;
+  await store.fetchLessons(id);
+  
+  this.lessons = store.lessons;
+
+  await store.fetchSteps();
+  await store.fetchSurahs();
+
+  if (this.lessons.surah) {
+    await store.fetchayah(this.lessons.surah);
+  }
+
+  this.StagesOptions = store.lesson; 
+  this.surahOptions = store.surahs ;  
+  this.ayaOptions = store.ayahs;    
+
+  console.log(this.lessons, "Lesson data:");
+
+  this.Stages_values = this.lessons.stage
+    ? {
+        id: this.lessons.stage.id,
+        title: this.lessons.stage.title,
+      }
+    : null;
+this.selectedType_values = this.lessons.surah
+    ? {
+        id: this.lessons.surah.id,
+        name: this.lessons.surah.name,
+      }
+    : null;
+
+  this.ayaType_values = this.lessons.start_ayah
+    ? {
+        id: this.lessons.start_ayah.id,
+        text: this.lessons.start_ayah.text,
+      }
+    : null;
+
+  this.ayaTypeto_values = this.lessons.end_ayah
+    ? {
+        id: this.lessons.end_ayah.id,
+        text: this.lessons.end_ayah.text,
+      }
+    : null;
+
+  
+  this.lessonDescription = this.lessons.description; 
+},
+
     async updateLessons() {
-      console.log("stage_id", this.lessons.stage_id);
+  console.log("stage_id", this.lessons.stage_id);
 
-      if (
-        !this.lessons.title ||
-        !this.lessons.stage_id
-        // !this.lessons.quraan_id
-      ) {
-        // Swal.fire("Error", "Please fill in all fields", "error");
-        return;
-      }
 
-      const store = useLessonsEditStore();
-      const id = this.$route.params.id;
 
-      console.log("Payload being sent:", this.lessons); // Debugging payload
+  const store = useLessonsEditStore();
+  const id = this.$route.params.id;
 
-      try {
-        await store.updateLessons(id, this.lessons); // Sending the request
-        Swal.fire("Success", "Lesson updated successfully", "success");
-        this.$router.go(-1);
-      } catch (error) {
-        console.error("Error details:", error); // Detailed logging of the error
-        console.error("Response data:", error.response?.data); // API response
-        Swal.fire(
-          "Error",
-          error.response?.data.message || "Update failed",
-          "error"
-        );
-      }
+  console.log("Payload being sent:", this.lessons); 
+
+  try {
+    await store.updateLessons(id, this.lessons); 
+    Swal.fire("Success", "Lesson updated successfully", "success");
+     
+  } catch (error) {
+    console.error("Error details:", error); 
+    console.error("Response data:", error.response?.data); 
+    Swal.fire(
+      "Error",
+      error.response?.data.message || "There was an issue updating the lesson. Please try again.",
+      "error"
+    );
+  }
+},
+handleTypeChange() {
+  this.lessons.surah = this.selectedType_values?.name || null;
+  this.lessons.surah_id = this.selectedType_values?.id || null;  
+  console.log("surah", this.lessons.surah);
+  console.log("surah_id", this.lessons.surah_id); 
+},
+    handleayaChange() {
+      this.lessons.start_ayah_id = this.ayaType_values?.id || null;
+      this.lessons.end_ayah_id = this.ayaTypeto_values?.id || null;
     },
-
     Edit() {
       this.v$.$validate();
       if (!this.v$.$error) {
         console.log("lessons");
-        // this.updateLessons();
+        this.updateLessons();
       }
     },
   },
+
   mounted() {
     this.fetchData();
   },
-  watch: {
-    Stages_values(newVal) {
-      this.lessons.stage_id = newVal ? newVal.id : null;
-      console.log("Updated via watcher:", this.lessons.stage_id);
-    },
-  },
+
+  computed: {
+  filteredAyaOptions() {
+    if (this.selectedTypeto_values) {
+      return this.ayaOptions.filter(ayah => ayah.surah_id === this.selectedType_values.id);
+    }
+    return this.ayaOptions; 
+  }
+}
+
 };
 </script>
 <style scoped>
