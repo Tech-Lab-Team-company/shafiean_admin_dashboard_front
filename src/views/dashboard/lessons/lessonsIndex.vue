@@ -57,7 +57,14 @@ export default {
       word: "",
       errorMessage: "",
       debouncedSearch: null,
-      tableHeaders: ["ID", " وصف المنهج", " المرحله", "قران"],
+      tableHeaders: [
+        "ID",
+        " وصف المنهج",
+        " المرحله",
+        "السوره",
+        "من ايه",
+        "الي ايه",
+      ],
     };
   },
   computed: {
@@ -80,7 +87,9 @@ export default {
         les.id,
         les.title,
         les.stage?.title || "",
-        les.quraan?.title || "",
+        les.surah?.name || "",
+        les.start_ayah?.text || "",
+        les.end_ayah?.text || "",
       ]);
     },
     tablePages() {

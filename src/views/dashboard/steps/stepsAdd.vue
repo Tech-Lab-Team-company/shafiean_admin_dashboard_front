@@ -82,22 +82,23 @@
 
         <!-- Type Select -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="type">قرأن</label>
+          <label for="type">السور</label>
           <multiselect
             id="type"
             v-model="selectedType_values"
-            :options="typeOptions"
+            :options="surahOptions"
             deselect-label=""
+            multiple="true"
             select-label=""
             :close-on-select="true"
             label="name"
             track-by="id"
-            placeholder="اختر قرأن"
+            placeholder="اختر السور"
             @update:model-value="handleTypeChange"
           ></multiselect>
-          <!-- <span class="error-feedback" v-if="v$.steps.type_id.$error">
-            {{ getErrorMessage(v$.steps.type_id) }}
-          </span> -->
+          <span class="error-feedback" v-if="v$.steps.surah_ids.$error">
+            {{ getErrorMessage(v$.steps.surah_ids) }}
+          </span>
         </div>
         <div class="col-lg-12 col-md-6 col-12 mt-3">
           <label for="description">وصف المرحلة</label>
@@ -144,24 +145,19 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      selectedType_values: [],
+
       curricula_values: null,
       disabilities_values: [],
-      typeOptions: [],
+      selectedType_values: [],
+      surahOptions: [],
       curriculaOptions: [],
       disabilitiesOptions: [],
       steps: {
         title: "",
         description: "",
-        type_id: "",
+        surah_ids: [],
         curriculum_id: null,
         disability_ids: [],
-        typeOptions: [
-          { id: 1, name: "قرأن" },
-          { id: 2, name: "حديث" },
-          { id: 3, name: "فقه" },
-        ],
-        selectedType: null,
       },
     };
   },
@@ -169,9 +165,11 @@ export default {
     return {
       steps: {
         title: { required },
-        curriculum_id: { required },
+        curriculum_id: {
+          required,
+        },
         disability_ids: { required },
-        // type_id: { required },
+        surah_ids: { required },
         description: { required },
       },
     };
@@ -181,7 +179,12 @@ export default {
     await this.fetchData();
   },
   computed: {
-    ...mapState(useStepsAddStore, ["Curriculums", "types", "disabilities"]),
+    ...mapState(useStepsAddStore, [
+      "Curriculums",
+      "types",
+      "disabilities",
+      "surahs",
+    ]),
   },
   methods: {
     getErrorMessage(field) {
@@ -192,7 +195,7 @@ export default {
     },
 
     handleTypeChange() {
-      this.steps.type_id = this.selectedType_values
+      this.steps.surah_ids = this.selectedType_values
         ? this.selectedType_values.map((type) => type.id)
         : "";
     },
@@ -212,13 +215,21 @@ export default {
         this.steps.disability_ids = [];
       }
     },
+    handleDisabilitiesChange() {
+      if (Array.isArray(this.disabilities_values)) {
+        this.steps.disability_ids = this.disabilities_values.map(
+          (dis) => dis.id
+        );
+      } else {
+        this.steps.disability_ids = [];
+      }
+    },
 
     async submitForm() {
       this.v$.$touch(); // Mark all fields as touched to show errors
       if (this.v$.$error) {
         // If there are validation errors, stop submission
         console.error("Form validation failed.");
-        return;
       }
 
       try {
@@ -239,6 +250,8 @@ export default {
         this.curriculaOptions = stepsStore.Curriculums;
         await stepsStore.getDisabilities();
         this.disabilitiesOptions = stepsStore.disabilities;
+        await stepsStore.fetchSurahs();
+        this.surahOptions = stepsStore.surahs;
       } catch (error) {
         console.error("Error fetching data:", error);
       }

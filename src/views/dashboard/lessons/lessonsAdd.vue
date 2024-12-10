@@ -6,18 +6,6 @@
     </div>
     <form @submit.prevent="submitForm">
       <div class="row">
-        <!-- <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> من </label>
-          <div class="input">
-            <input type="date" placeholder="من" v-model="lessons.start_verse" />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> إلي</label>
-          <div class="input">
-            <input type="date" placeholder="إلي" v-model="lessons.end_verse" />
-          </div>
-        </div> -->
         <!-- Multiselect for Stages -->
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
@@ -36,22 +24,61 @@
             {{ getErrorMessage(v$.lessons.stage_id) }}
           </span>
         </div>
-
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="">القرأن</label>
+          <label for="type">السور</label>
           <multiselect
-            v-model="selectedType"
-            :options="typeOptions"
+            id="type"
+            v-model="selectedType_values"
+            :options="surahOptions"
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            placeholder="اختر القرأن"
             label="name"
             track-by="id"
-            @update:model-value="updateTypeId"
+            placeholder="اختر السور"
+            @update:model-value="handleTypeChange"
           ></multiselect>
-          <span class="error-feedback" v-if="v$.lessons.quraan_id.$error">
-            {{ getErrorMessage(v$.lessons.quraan_id) }}
+          <span class="error-feedback" v-if="v$.lessons.surah_id.$error">
+            {{ getErrorMessage(v$.lessons.surah_id) }}
+          </span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="type"> من الايه (يجب عليك اختيار السوره اولا)</label>
+          <multiselect
+            id="type"
+            v-model="ayaType_values"
+            :options="ayaOptions"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
+            label="text"
+            track-by="id"
+            placeholder="اختر السور"
+            @change="handleStartAyaChange"
+            @update:model-value="handleayaChange"
+          ></multiselect>
+          <span class="error-feedback" v-if="v$.lessons.start_ayah_id.$error">
+            {{ getErrorMessage(v$.lessons.start_ayah_id) }}
+          </span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <label for="type"> الى الايه (يجب عليك اختيار السوره اولا)</label>
+          <multiselect
+            id="type"
+            v-model="ayaTypeto_values"
+            :options="filteredAyaOptions"
+            deselect-label=""
+            select-label=""
+            :close-on-select="true"
+            label="text"
+            track-by="id"
+            placeholder="اختر السور"
+            :disabled="!ayaType_values"
+            @change="handleEndAyaChange"
+            @update:model-value="handleayaChange"
+          ></multiselect>
+          <span class="error-feedback" v-if="v$.lessons.start_ayah_id.$error">
+            {{ getErrorMessage(v$.lessons.start_ayah_id) }}
           </span>
         </div>
         <div class="col-lg-12 col-md-6 col-12">
@@ -64,8 +91,7 @@
               cols="100"
               placeholder="اسم الدرس"
               v-model="lessons.title"
-            >
-            </textarea>
+            ></textarea>
             <span class="error-feedback" v-if="v$.lessons.title.$error">
               {{ getErrorMessage(v$.lessons.title) }}
             </span>
@@ -87,9 +113,10 @@ import { useLessonsAddStore } from "@/stores/lessons/LessonsAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 import Multiselect from "vue-multiselect";
 import { mapState } from "pinia";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+
 export default {
   components: { HeaderPages, Multiselect },
 
@@ -98,25 +125,27 @@ export default {
       v$: useVuelidate(),
       lessons: {
         title: "",
-        quraan_id: null,
+        start_ayah_id: "",
+        end_ayah_id: "",
         stage_id: "",
+        surah_id: "",
       },
-      StagesOptions: [], // Updated to hold fetched options
+      surahOptions: [],
+      selectedType_values: null,
+      ayaType_values: null,
+      ayaTypeto_values: null,
+      ayaOptions: [],
+      StagesOptions: [],
       Stages_values: {},
-      typeOptions: [
-        { id: 1, name: "قرأن" },
-        { id: 2, name: "حديث" },
-        { id: 3, name: "فقه" },
-      ],
-      selectedType: null,
     };
   },
   validations() {
     return {
       lessons: {
         title: { required },
-        quraan_id: { required },
+        surah_id: { required },
         stage_id: { required },
+        start_ayah_id: { required },
       },
     };
   },
@@ -125,9 +154,28 @@ export default {
     ...mapState(useLessonsAddStore, {
       lesson: (state) => state.lesson,
     }),
+    filteredAyaOptions() {
+      // Filter out the selected ayaType_values from the options for "الى الايه"
+      return this.ayaOptions.filter(
+        (option) => option.id !== this.ayaType_values?.id
+      );
+    },
   },
 
   methods: {
+    handleStartAyaChange() {
+      // تحديث الحقل start_ayah_id
+      this.lessons.start_ayah_id = this.ayaType_values?.id || null;
+
+      // تفعيل القائمة الثانية عند اختيار من الآية
+      if (this.ayaType_values) {
+        this.disableAyaToOptions = false;
+      }
+    },
+    handleEndAyaChange() {
+      // تحديث الحقل end_ayah_id
+      this.lessons.end_ayah_id = this.ayaTypeto_values?.id || null;
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
@@ -141,13 +189,44 @@ export default {
           throw new Error("Failed to load Lessons store");
         }
         await LessonsStore.fetchSteps();
-        this.StagesOptions = LessonsStore.lesson; // Populate StagesOptions
-        console.log("StagesOptions:", this.StagesOptions);
+        this.StagesOptions = LessonsStore.lesson;
       } catch (error) {
         console.error("Error fetching stages", error);
       }
     },
+    async fetchsurahs() {
+      try {
+        const LessonsStore = useLessonsAddStore();
+        if (!LessonsStore) {
+          throw new Error("Failed to load Lessons store");
+        }
+        await LessonsStore.fetchSurahs();
+        this.surahOptions = LessonsStore.surahs;
+      } catch (error) {
+        console.error("Error fetching surahs", error);
+      }
+    },
+    // تعديل fetchAYA لجلب الآيات بناءً على السورة
+    async fetchAYA() {
+      if (!this.selectedType_values) {
+        Swal.fire("خطأ", "يجب اختيار سورة أولًا.", "error");
+        return;
+      }
 
+      try {
+        const LessonsStore = useLessonsAddStore();
+        if (!LessonsStore) {
+          throw new Error("Failed to load Lessons store");
+        }
+
+        // جلب الآيات بناءً على السورة المحددة
+        await LessonsStore.fetchayah(this.selectedType_values.id); // تمرير السورة المحددة
+        this.ayaOptions = LessonsStore.ayahs;
+      } catch (error) {
+        console.error("Error fetching aya", error);
+        Swal.fire("خطأ", "حدث خطأ أثناء جلب الآيات.", "error");
+      }
+    },
     async submitForm() {
       try {
         if (!this.v$.$validate()) {
@@ -157,26 +236,24 @@ export default {
 
         const lessonsStore = useLessonsAddStore();
         await lessonsStore.addLessonsData(this.lessons);
-
       } catch (error) {
         console.error("Error in submitForm:", error);
       }
     },
 
     updateStagesValue() {
-      this.lessons.stage_id = this.Stages_values?.id || null;
-    },
-    updateTypeId(selectedOption) {
-      this.lessons.quraan_id = selectedOption?.id || null;
-    },
-
-    updateStagesValue() {
       this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
       console.log("Stages_id", this.lessons.stage_id);
     },
-    updateTypeId(selectedOption) {
-      this.lessons.quraan_id = selectedOption ? selectedOption.id : null;
+    handleTypeChange() {
+      this.lessons.surah_id = this.selectedType_values?.id || null;
+      this.fetchAYA();
     },
+    handleayaChange() {
+      this.lessons.start_ayah_id = this.ayaType_values?.id || null;
+      this.lessons.end_ayah_id = this.ayaTypeto_values?.id || null;
+    },
+
     save() {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -187,6 +264,7 @@ export default {
 
   mounted() {
     this.fetchStages();
+    this.fetchsurahs();
   },
 };
 </script>

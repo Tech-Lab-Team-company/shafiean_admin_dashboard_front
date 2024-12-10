@@ -8,6 +8,10 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
     Lessons: [],
     lesson: [], // Stores stages data
     Stages_id: [], // Stores stage IDs
+    surahs: [],
+    ayahs: [],
+    ayahs_ids: [],
+    surahs_ids: [],
   }),
 
   actions: {
@@ -24,6 +28,30 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
         }
       } catch (error) {
         console.error("Error fetching steps:", error);
+      }
+    },
+    async fetchSurahs() {
+      try {
+        const response = await axios.post("fetch_surahs");
+        if (response.data.status == true) {
+          this.surahs = response.data.data;
+          this.surahs_ids = this.surahs.map((ste) => ste.id);
+        }
+      } catch (error) {
+        Swal.fire("Error", "An error occurred while fetching surahs.", "error");
+      }
+    },
+    async fetchayah(id) {
+      try {
+        const response = await axios.post("fetch_surah_ayahs", {
+          surah_id: id,
+        });
+        if (response.data.status == true) {
+          this.ayahs = response.data.data;
+          this.ayahs_ids = this.ayahs.map((ste) => ste.id);
+        }
+      } catch (error) {
+        Swal.fire("Error", "An error occurred while fetching surahs.", "error");
       }
     },
 
@@ -57,7 +85,9 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: error.response?.data?.message || "An error occurred while saving the lesson.",
+          text:
+            error.response?.data?.message ||
+            "An error occurred while saving the lesson.",
         });
       }
     },
