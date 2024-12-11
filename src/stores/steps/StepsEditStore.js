@@ -53,11 +53,7 @@ export const useStepsEditStore = defineStore("stepsEdit", {
         }
       } catch (error) {
         console.error("Error fetching Surah:", error);
-        Swal.fire(
-          "Error",
-          "An error occurred while fetching Surah.",
-          "error"
-        );
+        Swal.fire("Error", "An error occurred while fetching Surah.", "error");
       }
     },
 
@@ -102,58 +98,80 @@ export const useStepsEditStore = defineStore("stepsEdit", {
 
     async updateSteps(id, updatedData) {
       try {
-        console.log("updatedData", updatedData);
-        
-        // if (typeof updatedData.disability_ids === "string") {
-        //   updatedData.disability_ids = updatedData.disability_ids
-        //     .split(",")
-        //     .map((id) => id.trim());
-        // }
-        // console.log("updatedData", updatedData.disability_ids);
-        const formData = new FormData();
-        
-        // Append each property to FormData
-        Object.keys(updatedData).forEach((key) => {
-          if (Array.isArray(updatedData[key]) ) {
-            // If the property is an array, append each item with the same key
-            updatedData[key].forEach((item) => {
-              formData.append(`${key}[]`, item); // Use key[] for array values
-            });
-          } else {
-            // Append non-array values normally
-            formData.append(key, updatedData[key]);
-
+        console.log("Updated Data before filtering:", JSON.stringify(updatedData, null, 2));
+    
+        const filteredData = {};
+        for (const key in updatedData) {
+          if (updatedData.hasOwnProperty(key)) {
+            const value = updatedData[key];
+            if (Array.isArray(value)) {
+              filteredData[key] = value.filter((item) => typeof item === "number");
+            } else if (typeof value !== "object") {
+              filteredData[key] = value; 
+            }
           }
-        });
-        formData.append("id", id);
-        formData.append("is_full", 1);
-
-
+        }
+    
+        console.log("Filtered Data after filtering:", JSON.stringify(filteredData, null, 2));
+    
+        const formData = new FormData();
+    
+        for (const key in filteredData) {
+          if (filteredData.hasOwnProperty(key)) {
+            if (Array.isArray(filteredData[key])) {
+              filteredData[key].forEach((item) => {
+                formData.append(`${key}[]`, item);
+              });
+            } else {
+              formData.append(key, filteredData[key]);
+            }
+          }
+        }
+    
+        // إضافة المزيد من البيانات الخاصة (مثل surah_ids)
+        // if (Array.isArray(this.surahs_ids)) {
+        //   this.surahs_ids.forEach((id) => {
+        //     formData.append('surah_ids[]', id); // إضافة مصفوفة السور
+        //   });
+        // }
+        
+        
+        formData.append("is_full", 1); 
+    
+        console.log("FormData before sending:", formData);
+    
         const response = await axios.post("edit_stage", formData, {
-          is_master: 1,
-          
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-
+    
+        console.log("Server Response:", response.data);
+    
         if (response.data.status === true) {
-          this.Steps = response.data.data;
+          this.Steps = { ...updatedData }; 
           Swal.fire({
             icon: "success",
             title: "Success",
-            text: response.data.message || "Steps has been updated.",
+            text: response.data.message || "Steps have been updated.",
           });
         } else {
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: response.data.message || "Steps has been filed.",
+            text: response.data.message || "Steps update failed.",
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error updating steps:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An unexpected error occurred. Please try again.",
+        });
       }
-    },
+    }
+    
+    
   },
 });

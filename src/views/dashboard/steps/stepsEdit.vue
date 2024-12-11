@@ -1,5 +1,5 @@
 <template>
-  <div class="steps-add">
+  <div class="steps-add mt-1">
     <div class="plus">
       <i class="fa-solid fa-pen-to-square"></i>
       <header-pages title="تعديل مرحلة" :showButton="false" />
@@ -114,9 +114,9 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      selectedType_values: [], // Initialize as an empty array for multiple selection
-      curricula_values: null, // Initialize as null for single selection
-      disabilities_values: [], // Initialize as an empty array for multiple selection
+      selectedType_values: [],
+      curricula_values: null,
+      disabilities_values: [],
       typeOptions: [],
       curriculaOptions: [],
       disability_ids: [],
@@ -128,12 +128,10 @@ export default {
         curriculum: {},
         surahs: [],
         type_id: "",
-        curriculum_id: null, // Initialize as null for single selection
-        disability_ids: "", // Initialize as an empty array
+        curriculum_id: null,
+        disability_ids: "",
         surah_ids: null,
-
       },
-     
     };
   },
   validations() {
@@ -161,14 +159,12 @@ export default {
       return "";
     },
     handleTypeChange() {
-  // Ensure selectedType_values is always an array
-  if (Array.isArray(this.selectedType_values)) {
-    this.Steps.type_id = this.selectedType_values.map((type) => type.id);
-  } else {
-    // Handle the case where selectedType_values is not an array
-    this.Steps.type_id = [];
-  }
-},
+      if (Array.isArray(this.selectedType_values)) {
+        this.Steps.type_id = this.selectedType_values.map((type) => type.id);
+      } else {
+        this.Steps.type_id = [];
+      }
+    },
     handleCurriculaChange() {
       this.Steps.curriculum_id = this.curricula_values
         ? this.curricula_values.id
@@ -195,59 +191,47 @@ export default {
 
       await store.fetchSurah();
       this.surahOptions = store.surahs;
+      this.selectedType_values = this.Steps.surahs.map((surah) => ({
+        id: surah.id,
+        name: surah.name,
+      }));
 
-      if (Array.isArray(this.Steps.surahs) && this.Steps.surahs.length > 0) {
-    this.selectedType_values = this.Steps.surahs.map((surah) => ({
-      id: surah.id,
-      name: surah.name,
-    }));
-  } else {
-    this.selectedType_values = [];
-  }
-
-      // Set curricula_values
       this.curricula_values = this.Steps.curriculum
         ? { id: this.Steps.curriculum.id, title: this.Steps.curriculum.title }
         : null;
 
-      // Set disabilities_values with proper structure
       this.disabilities_values = this.Steps.disability.map((dis) => ({
         id: dis.id,
         title: dis.title,
       }));
 
-      // console.log("curricula_values", this.curricula_values);
-      // console.log("disabilities_values", this.disabilities_values);
-
-      // Fetch options for multiselect components
       await store.fetchCurriculums();
       this.curriculaOptions = store.Curriculums;
 
       await store.getDisabilities();
       this.disabilitiesOptions = store.disabilities;
     },
- async updateSteps() {
-  const store = useStepsEditStore();
-  const id = this.$route.params.id;
-  this.Steps.curriculum_id = this.curricula_values.id;
+    async updateSteps() {
+      const store = useStepsEditStore();
+      const id = this.$route.params.id;
 
-  // Safely map surah_ids only if selectedType_values is an array
-  if (Array.isArray(this.selectedType_values)) {
-    this.Steps.surah_ids = this.selectedType_values.map((surah) => surah.id);
-  } else {
-    this.Steps.surah_ids = [];  // Handle as empty array
-  }
+      this.Steps.curriculum_id = this.curricula_values?.id || null;
 
-  // Safely map disability_ids only if disabilities_values is an array
-  if (Array.isArray(this.disabilities_values)) {
-    this.Steps.disability_ids = this.disabilities_values.map((dis) => dis.id);
-  } else {
-    this.Steps.disability_ids = [];  // Handle as empty array
-  }
+      this.Steps.surah_ids =
+        this.selectedType_values.length > 0
+          ? [this.selectedType_values[0].id]
+          : [];
 
-  await store.updateSteps(id, this.Steps);
-  this.$router.go(-1);
-},
+      this.Steps.disability_ids = Array.isArray(this.disabilities_values)
+        ? this.disabilities_values.map((dis) => dis.id) // أخذ IDs فقط
+        : [];
+
+      console.log("Prepared Steps Data:", JSON.stringify(this.Steps, null, 2));
+
+      await store.updateSteps(id, this.Steps);
+
+      this.$router.go(-1);
+    },
 
     Edit() {
       this.v$.$validate();
