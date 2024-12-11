@@ -48,7 +48,7 @@ export default {
       word: "",
       debouncedSearch: null,
       errorMessage: "",
-      tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   "],
+      tableHeaders: ["ID", "اسم المرحله", "وصف المرحله", "  المنهج الدراسي   " , "السوره"],
     };
   },
 
@@ -72,6 +72,7 @@ export default {
         st.title,
         st.description,
         st.curriculum?.title || "",
+        st.surahs.map(surah => surah.name).join(", "), 
       ]);
     },
     tablePages() {
