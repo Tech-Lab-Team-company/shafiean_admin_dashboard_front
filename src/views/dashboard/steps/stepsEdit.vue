@@ -66,7 +66,7 @@
           <multiselect
             id="type"
             v-model="selectedType_values"
-            :options="typeOptions"
+            :options="surahOptions"
             deselect-label=""
             select-label=""
             :close-on-select="true"
@@ -121,14 +121,19 @@ export default {
       curriculaOptions: [],
       disability_ids: [],
       disabilitiesOptions: [],
+      surahOptions: [],
       Steps: {
         title: "",
         description: "",
         curriculum: {},
+        surahs: [],
         type_id: "",
         curriculum_id: null, // Initialize as null for single selection
         disability_ids: "", // Initialize as an empty array
+        surah_ids: null,
+
       },
+     
     };
   },
   validations() {
@@ -156,8 +161,14 @@ export default {
       return "";
     },
     handleTypeChange() {
-      this.Steps.type_id = this.selectedType_values.map((type) => type.id);
-    },
+  // Ensure selectedType_values is always an array
+  if (Array.isArray(this.selectedType_values)) {
+    this.Steps.type_id = this.selectedType_values.map((type) => type.id);
+  } else {
+    // Handle the case where selectedType_values is not an array
+    this.Steps.type_id = [];
+  }
+},
     handleCurriculaChange() {
       this.Steps.curriculum_id = this.curricula_values
         ? this.curricula_values.id
@@ -182,6 +193,18 @@ export default {
       await store.fetchSteps(id);
       this.Steps = store.Steps;
 
+      await store.fetchSurah();
+      this.surahOptions = store.surahs;
+
+      if (Array.isArray(this.Steps.surahs) && this.Steps.surahs.length > 0) {
+    this.selectedType_values = this.Steps.surahs.map((surah) => ({
+      id: surah.id,
+      name: surah.name,
+    }));
+  } else {
+    this.selectedType_values = [];
+  }
+
       // Set curricula_values
       this.curricula_values = this.Steps.curriculum
         ? { id: this.Steps.curriculum.id, title: this.Steps.curriculum.title }
@@ -203,15 +226,28 @@ export default {
       await store.getDisabilities();
       this.disabilitiesOptions = store.disabilities;
     },
-    async updateSteps() {
-      const store = useStepsEditStore();
-      const id = this.$route.params.id;
-      this.Steps.curriculum_id = this.curricula_values.id;
+ async updateSteps() {
+  const store = useStepsEditStore();
+  const id = this.$route.params.id;
+  this.Steps.curriculum_id = this.curricula_values.id;
 
-      this.Steps.disability_ids = this.disabilities_values.map((dis) => dis.id);
-      await store.updateSteps(id, this.Steps);
-      this.$router.go(-1);
-    },
+  // Safely map surah_ids only if selectedType_values is an array
+  if (Array.isArray(this.selectedType_values)) {
+    this.Steps.surah_ids = this.selectedType_values.map((surah) => surah.id);
+  } else {
+    this.Steps.surah_ids = [];  // Handle as empty array
+  }
+
+  // Safely map disability_ids only if disabilities_values is an array
+  if (Array.isArray(this.disabilities_values)) {
+    this.Steps.disability_ids = this.disabilities_values.map((dis) => dis.id);
+  } else {
+    this.Steps.disability_ids = [];  // Handle as empty array
+  }
+
+  await store.updateSteps(id, this.Steps);
+  this.$router.go(-1);
+},
 
     Edit() {
       this.v$.$validate();

@@ -9,6 +9,8 @@ export const useStepsEditStore = defineStore("stepsEdit", {
     Curriculums_id: [],
     disabilities: [],
     disability_ids: [],
+    surahs: [],
+    surahs_ids: [],
   }),
   actions: {
     async fetchCurriculums() {
@@ -30,6 +32,30 @@ export const useStepsEditStore = defineStore("stepsEdit", {
         Swal.fire(
           "Error",
           "An error occurred while fetching curriculums.",
+          "error"
+        );
+      }
+    },
+
+    async fetchSurah() {
+      try {
+        const response = await axios.post("fetch_surahs");
+        if (response.data.status == true) {
+          this.surahs = response.data.data;
+          this.surahs_ids = this.surahs.map((ste) => ste.id);
+        } else {
+          console.error("Error fetching Surah:", response.data.message);
+          Swal.fire(
+            "Error",
+            "Failed to fetch Surah: " + response.data.message,
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching Surah:", error);
+        Swal.fire(
+          "Error",
+          "An error occurred while fetching Surah.",
           "error"
         );
       }
@@ -76,16 +102,19 @@ export const useStepsEditStore = defineStore("stepsEdit", {
 
     async updateSteps(id, updatedData) {
       try {
-        if (typeof updatedData.disability_ids === "string") {
-          updatedData.disability_ids = updatedData.disability_ids
-            .split(",")
-            .map((id) => id.trim());
-        }
+        console.log("updatedData", updatedData);
+        
+        // if (typeof updatedData.disability_ids === "string") {
+        //   updatedData.disability_ids = updatedData.disability_ids
+        //     .split(",")
+        //     .map((id) => id.trim());
+        // }
         // console.log("updatedData", updatedData.disability_ids);
         const formData = new FormData();
+        
         // Append each property to FormData
         Object.keys(updatedData).forEach((key) => {
-          if (Array.isArray(updatedData[key])) {
+          if (Array.isArray(updatedData[key]) ) {
             // If the property is an array, append each item with the same key
             updatedData[key].forEach((item) => {
               formData.append(`${key}[]`, item); // Use key[] for array values
@@ -93,11 +122,16 @@ export const useStepsEditStore = defineStore("stepsEdit", {
           } else {
             // Append non-array values normally
             formData.append(key, updatedData[key]);
+
           }
         });
         formData.append("id", id);
+        formData.append("is_full", 1);
+
 
         const response = await axios.post("edit_stage", formData, {
+          is_master: 1,
+          
           headers: {
             "Content-Type": "multipart/form-data",
           },

@@ -68,39 +68,48 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
       }
     },
     async updateLessons(id, updatedData) {
-      console.log(updatedData, "updatedDataaaaaaaaaaaaaaa");
-    
       const formData = new FormData();
       formData.append("id", id);
       formData.append("title", updatedData.title);
-      formData.append("stage_id", updatedData.stage_id); 
+      formData.append("stage_id", updatedData.stage_id);
       formData.append("start_ayah_id", updatedData.start_ayah_id);
       formData.append("end_ayah_id", updatedData.end_ayah_id);
-      formData.append("surah_id", updatedData.surah_id);  
-      const response = await axios.post("edit_session", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      formData.append("surah_id", updatedData.surah_id);
     
-      if (response.data.status === true) {
-        this.lessons = updatedData;  
-        console.log("nasa");
-    
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: response.data.message || "Lessons has been saved.",
+      try {
+        const response = await axios.post("edit_session", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
-        router.push("/lessons");
-      } else {
+    
+        if (response.data.status === true) {
+          this.lessons = { ...updatedData };
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: response.data.message || "Lesson has been updated.",
+          });
+          router.push("/lessons");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.data.message || "Failed to update the lesson.",
+          });
+        }
+      } catch (error) {
+        console.error("Error updating lesson:", error);
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: error.response.data.message || "Lessons has been filed.",
+          text: error.message || "An error occurred while updating the lesson.",
         });
       }
     }
+    
+    
+    
     ,
   },
 });
