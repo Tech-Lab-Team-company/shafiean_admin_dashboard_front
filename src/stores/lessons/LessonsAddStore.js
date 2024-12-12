@@ -30,9 +30,11 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
         console.error("Error fetching steps:", error);
       }
     },
-    async fetchSurahs() {
+    async fetchSurahs(id) {
       try {
-        const response = await axios.post("fetch_surahs");
+        const response = await axios.post("fetch_stage_surahs", {
+          stage_id: id,
+        });
         if (response.data.status == true) {
           this.surahs = response.data.data;
           this.surahs_ids = this.surahs.map((ste) => ste.id);

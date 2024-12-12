@@ -36,6 +36,7 @@
             label="name"
             track-by="id"
             placeholder="اختر السور"
+            @change="fetchsurahs"
             @update:model-value="handleTypeChange"
           ></multiselect>
           <span class="error-feedback" v-if="v$.lessons.surah_id.$error">
@@ -200,7 +201,7 @@ export default {
         if (!LessonsStore) {
           throw new Error("Failed to load Lessons store");
         }
-        await LessonsStore.fetchSurahs();
+        await LessonsStore.fetchSurahs(this.Stages_values.id);
         this.surahOptions = LessonsStore.surahs;
       } catch (error) {
         console.error("Error fetching surahs", error);
@@ -243,6 +244,7 @@ export default {
 
     updateStagesValue() {
       this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
+      this.fetchsurahs();
       console.log("Stages_id", this.lessons.stage_id);
     },
     handleTypeChange() {
@@ -264,7 +266,7 @@ export default {
 
   mounted() {
     this.fetchStages();
-    this.fetchsurahs();
+    // this.fetchsurahs();
   },
 };
 </script>

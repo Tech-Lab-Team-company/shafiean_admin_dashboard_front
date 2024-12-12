@@ -5,7 +5,7 @@ import router from "@/router";
 export const useLessonsEditStore = defineStore("lessonsEdit", {
   state: () => ({
     lessons: [],
-    lesson: {}, 
+    lesson: {},
     Stages_id: [],
     surahs: [],
     surahs_ids: [],
@@ -44,9 +44,11 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
         Swal.fire("Error", "An error occurred while fetching surahs.", "error");
       }
     },
-    async fetchSurahs() {
+    async fetchSurahs(id) {
       try {
-        const response = await axios.post("fetch_surahs");
+        const response = await axios.post("fetch_stage_surahs", {
+          stage_id: id,
+        });
         if (response.data.status == true) {
           this.surahs = response.data.data;
           this.surahs_ids = this.surahs.map((ste) => ste.id);
@@ -75,14 +77,14 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
       formData.append("start_ayah_id", updatedData.start_ayah_id);
       formData.append("end_ayah_id", updatedData.end_ayah_id);
       formData.append("surah_id", updatedData.surah_id);
-    
+
       try {
         const response = await axios.post("edit_session", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-    
+
         if (response.data.status === true) {
           this.lessons = { ...updatedData };
           Swal.fire({
@@ -106,10 +108,6 @@ export const useLessonsEditStore = defineStore("lessonsEdit", {
           text: error.message || "An error occurred while updating the lesson.",
         });
       }
-    }
-    
-    
-    
-    ,
+    },
   },
 });
