@@ -191,11 +191,17 @@ export default {
     },
     updateStagesValue() {
       this.lessons.stage_id = this.Stages_values ? this.Stages_values.id : null;
+      this.handelss();
       console.log("Updated Stage ID:", this.lessons.stage_id);
     },
     updateTypeId(selectedOption) {
       this.lessons.surah_id = selectedOption ? selectedOption.id : null;
       console.log("surah_id:", this.lessons.surah_id);
+    },
+    async handelss() {
+      const store = useLessonsEditStore();
+      await store.fetchSurahs(this.Stages_values.id);
+      this.surahOptions = store.surahs;
     },
     async fetchData() {
       const store = useLessonsEditStore();
@@ -205,14 +211,13 @@ export default {
       this.lessons = store.lessons;
 
       await store.fetchSteps();
-      await store.fetchSurahs();
 
       if (this.lessons.surah) {
         await store.fetchayah(this.lessons.surah);
       }
 
       this.StagesOptions = store.lesson;
-      this.surahOptions = store.surahs;
+
       this.ayaOptions = store.ayahs;
 
       console.log(this.lessons, "Lesson data:");
