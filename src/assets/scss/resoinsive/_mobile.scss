@@ -127,6 +127,22 @@
     --bs-gutter-x: 0.9rem !important;
   }
   .all-information {
-    text-align: center !important;
+    text-align: start !important;
+  }
+
+  .left_content {
+    .best_project .card_project .percentage_bar .bar {
+      width: 50% !important;
+    }
+  }
+  .multiselect__select {
+    margin-right: -13px !important;
+    margin-top: -3px !important;
+  }
+
+  .add-permisson {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
   }
 }
