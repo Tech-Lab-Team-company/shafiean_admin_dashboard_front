@@ -62,13 +62,14 @@
 
         <!-- Type Select -->
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="type">قرأن</label>
+          <label for="type">السورة</label>
           <multiselect
             id="type"
             v-model="selectedType_values"
             :options="surahOptions"
             deselect-label=""
             select-label=""
+            multiple="true"
             :close-on-select="true"
             label="name"
             track-by="id"
@@ -170,18 +171,7 @@ export default {
         ? this.curricula_values.id
         : null;
     },
-    // handleDisabilitiesChange() {
-    //   // console.log("disabilities_values", this.disabilities_values);
-    //   // console.log("steps", this.Steps);
-    //
-    //   if (Array.isArray(this.disabilities_values)) {
-    //     this.Steps.disability_ids = this.disabilities_values.map(
-    //       (dis) => dis.id
-    //     );
-    //   } else {
-    //     this.Steps.disability_ids = "";
-    //   }
-    // },
+
     async fetchData() {
       const store = useStepsEditStore();
       const id = this.$route.params.id;
@@ -217,13 +207,12 @@ export default {
 
       this.Steps.curriculum_id = this.curricula_values?.id || null;
 
-      this.Steps.surah_ids =
-        this.selectedType_values.length > 0
-          ? [this.selectedType_values[0].id]
-          : [];
+      this.Steps.surah_ids = Array.isArray(this.selectedType_values)
+        ? this.selectedType_values.map((item) => item.id)
+        : [];
 
       this.Steps.disability_ids = Array.isArray(this.disabilities_values)
-        ? this.disabilities_values.map((dis) => dis.id) // أخذ IDs فقط
+        ? this.disabilities_values.map((dis) => dis.id)
         : [];
 
       console.log("Prepared Steps Data:", JSON.stringify(this.Steps, null, 2));

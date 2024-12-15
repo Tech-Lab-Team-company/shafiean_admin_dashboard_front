@@ -1904,7 +1904,7 @@
       </tbody>
     </table>
     <div class="Addd">
-      <button class="btn">اضافه</button>
+      <button class="btn mb-4">اضافه</button>
     </div>
   </div>
 </template>

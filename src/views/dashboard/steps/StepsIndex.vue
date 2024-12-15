@@ -72,7 +72,7 @@ export default {
         st.title,
         st.description,
         st.curriculum?.title || "",
-        st.surahs.map(surah => surah.name).join(", "), 
+        st.surahs.map(surah => surah.name).join(', ')
       ]);
     },
     tablePages() {

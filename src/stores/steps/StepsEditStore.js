@@ -96,10 +96,9 @@ export const useStepsEditStore = defineStore("stepsEdit", {
       }
     },
 
+
     async updateSteps(id, updatedData) {
       try {
-        console.log("Updated Data before filtering:", JSON.stringify(updatedData, null, 2));
-    
         const filteredData = {};
         for (const key in updatedData) {
           if (updatedData.hasOwnProperty(key)) {
@@ -107,7 +106,7 @@ export const useStepsEditStore = defineStore("stepsEdit", {
             if (Array.isArray(value)) {
               filteredData[key] = value.filter((item) => typeof item === "number");
             } else if (typeof value !== "object") {
-              filteredData[key] = value; 
+              filteredData[key] = value;
             }
           }
         }
@@ -128,15 +127,16 @@ export const useStepsEditStore = defineStore("stepsEdit", {
           }
         }
     
-        // إضافة المزيد من البيانات الخاصة (مثل surah_ids)
-        // if (Array.isArray(this.surahs_ids)) {
-        //   this.surahs_ids.forEach((id) => {
-        //     formData.append('surah_ids[]', id); // إضافة مصفوفة السور
-        //   });
-        // }
-        
-        
-        formData.append("is_full", 1); 
+        if (updatedData.surah_ids && updatedData.surah_ids.length > 0) {
+          updatedData.surah_ids.forEach(id => {
+            formData.append('surah_ids[]', id);  
+          });
+        } else {
+          console.error("No selected surah ID found");
+        }
+    
+        formData.append("is_full", 1);
+
     
         console.log("FormData before sending:", formData);
     
@@ -149,7 +149,7 @@ export const useStepsEditStore = defineStore("stepsEdit", {
         console.log("Server Response:", response.data);
     
         if (response.data.status === true) {
-          this.Steps = { ...updatedData }; 
+          this.Steps = { ...updatedData };
           Swal.fire({
             icon: "success",
             title: "Success",
@@ -167,11 +167,17 @@ export const useStepsEditStore = defineStore("stepsEdit", {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "An unexpected error occurred. Please try again.",
+          text: "An error occurred while updating steps.",
         });
       }
     }
     
-    
+
+
+
+
+
+
+
   },
 });
