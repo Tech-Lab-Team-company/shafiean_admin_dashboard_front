@@ -40,7 +40,7 @@ export default {
     return {
       tableHeaders: ["ID", "	نوع الوظيفه	", "	الصلاحيه", "	الأدوار"],
       editLink: " /edit-permissions",
-      viewLink: " view-permissions",
+      viewLink: "view-permissions",
     };
   },
 
