@@ -5,6 +5,7 @@
   height: 100vh;
   background: linear-gradient(to top, var(--main), var(--primary));
   padding: 2rem;
+
   .content {
     text-align: center;
     padding: 2rem;
@@ -12,6 +13,11 @@
     box-shadow: 0 4px 8px var(--primary);
     max-width: 400px;
     width: 100%;
+
+    img{
+      margin-top: 62px;
+    }
+    
   }
 }
 
@@ -50,5 +56,6 @@ button.btn {
     max-width: 80%;
     border-radius: 12px;
     box-shadow: 0 4px 8px var(--primary);
+    margin-top: 110px;
   }
 }
