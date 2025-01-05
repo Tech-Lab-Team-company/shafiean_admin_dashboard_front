@@ -75,7 +75,7 @@ export default {
     }),
     tableRowsClasses() {
       const dataToDisplay = this.Classes;
-      return dataToDisplay.map((cl) => [cl.id, cl.title, cl.country.title]);
+      return dataToDisplay.map((cl) => [cl?.id, cl?.title, cl?.country?.title]);
     },
     tablePages() {
       return Array.from({ length: this.paginationLast }, (_, i) => i + 1);

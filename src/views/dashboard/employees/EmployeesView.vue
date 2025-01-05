@@ -1,11 +1,11 @@
 <template>
   <div class="employees-edit">
     <div class="plus">
-      <i class="fa-solid fa-pen-to-square"></i>
+      <!-- <i class="fa-solid fa-pen-to-square"></i> -->
       <HeaderPages title="تفاصيل موظف" :showButton="false" />
     </div>
-    <div class="container employees-view">
-      <div class="row">
+    <div class="employees-view">
+      <div class="row g-4">
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="avatar-uploader">
             <div
@@ -47,7 +47,9 @@
         <!--            getErrorMessage(v$.employee.permissions)-->
         <!--          }}</span>-->
         <!--        </div>-->
-        <button type="button" class="bake mt-3" @click="$router.go(-1)">رجوع</button>
+        <button type="button" class="bake mt-3" @click="$router.go(-1)">
+          رجوع
+        </button>
       </div>
     </div>
   </div>
@@ -83,26 +85,6 @@ export default {
 
       await store.fetchEmployee(id);
       this.employee = store.employee;
-    },
-    async updateEmployee() {
-      const store = useEmployeesEditStore();
-      const id = this.$route.params.id;
-      await store.updateEmployees(id, {
-        name: this.employee.name,
-        phone: this.employee.phone,
-        email: this.employee.email,
-        sssions: this.employee.permissions,
-        image: this.employee.image,
-      });
-      if (
-        !this.employee.name ||
-        !this.employee.phone ||
-        !this.employee.email ||
-        // !this.employee.imageSrc ||
-        !this.employee.permissions
-      ) {
-        return;
-      }
     },
   },
   mounted() {

@@ -20,28 +20,35 @@ import CurriculaEdit from "@/views/dashboard/Curricula/CurriculaEdit.vue";
 import StepsIndex from "@/views/dashboard/steps/StepsIndex.vue";
 import stepsAdd from "@/views/dashboard/steps/stepsAdd.vue";
 import stepsEdit from "@/views/dashboard/steps/stepsEdit.vue";
+import stepsView from "@/views/dashboard/steps/stepsView.vue";
 import countriesIndex from "@/views/dashboard/countries/countriesIndex.vue";
 import countriesAdd from "@/views/dashboard/countries/countriesAdd.vue";
 import countriesEdit from "@/views/dashboard/countries/countriesEdit.vue";
+import countriesView from "@/views/dashboard/countries/countriesView.vue";
 import associationsIndex from "@/views/dashboard/associations/associationsIndex.vue";
 import associationsAdd from "@/views/dashboard/associations/associationsAdd.vue";
 import associationsEdit from "@/views/dashboard/associations/associationsEdit.vue";
+import associationsView from "@/views/dashboard/associations/associationsView.vue";
 import adminInformationIndex from "@/views/dashboard/adminInformation/adminInformationIndex.vue";
 import LessonsIndex from "@/views/dashboard/lessons/lessonsIndex.vue";
 import lessonsAdd from "@/views/dashboard/lessons/lessonsAdd.vue";
 import lessonsEdit from "@/views/dashboard/lessons/lessonsEdit.vue";
+import LessonsView from "@/views/dashboard/lessons/LessonsView.vue";
 import CitiesIndex from "@/views/dashboard/cities/CitiesIndex.vue";
 import CitiesAdd from "@/views/dashboard/cities/CitiesAdd.vue";
 import CitiesEdit from "@/views/dashboard/cities/CitiesEdit.vue";
+import CitiesView from "@/views/dashboard/cities/CitiesView.vue";
 import ErrorPage from "@/views/ErrorPage/ErrorPage.vue";
 import HeaderView from "@/components/Home/HeaderView.vue";
 import BodyView from "@/components/Home/BodyView.vue";
 import YearsIndex from "@/views/dashboard/yearsSections/YearsIndex.vue";
 import YearsAdd from "@/views/dashboard/yearsSections/YearsAdd.vue";
 import YearsEdit from "@/views/dashboard/yearsSections/YearsEdit.vue";
+import YearsView from "@/views/dashboard/yearsSections/YearsView.vue";
 import ClassesIndex from "@/views/dashboard/classesSection/ClassesIndex.vue";
 import ClassesAdd from "@/views/dashboard/classesSection/ClassesAdd.vue";
 import ClassesEdit from "@/views/dashboard/classesSection/ClassesEdit.vue";
+import ClassesView from "@/views/dashboard/classesSection/ClassesView.vue";
 import IndexPermission from "@/views/dashboard/permissions/IndexPermissions.vue";
 import AddPermission from "@/views/dashboard/permissions/AddPermissions.vue";
 const routes = [
@@ -149,6 +156,11 @@ const routes = [
         component: stepsEdit,
       },
       {
+        path: "/view-steps/:id",
+        name: "stepsView",
+        component: stepsView,
+      },
+      {
         path: "/countries",
         name: "CountriesIndex",
         component: countriesIndex,
@@ -164,6 +176,11 @@ const routes = [
         component: countriesEdit,
       },
       {
+        path: "/view-countries/:id",
+        name: "CountriesView",
+        component: countriesView,
+      },
+      {
         path: "/associations",
         name: "associationsIndex",
         component: associationsIndex,
@@ -177,6 +194,11 @@ const routes = [
         path: "/edit-associations/:id",
         name: "associationsEdit",
         component: associationsEdit,
+      },
+      {
+        path: "/view-associations/:id",
+        name: "associationsView",
+        component: associationsView,
       },
       {
         path: "/adminInformation",
@@ -199,6 +221,11 @@ const routes = [
         component: lessonsEdit,
       },
       {
+        path: "/view-lessons/:id",
+        name: "lessonsView",
+        component: LessonsView,
+      },
+      {
         path: "/cities",
         name: "CitiesIndex",
         component: CitiesIndex,
@@ -212,6 +239,11 @@ const routes = [
         path: "/edit-cities/:id",
         name: "CitiesEdit",
         component: CitiesEdit,
+      },
+      {
+        path: "/view-cities/:id",
+        name: "CitiesView",
+        component: CitiesView,
       },
       {
         path: "/header",
@@ -239,6 +271,11 @@ const routes = [
         component: YearsEdit,
       },
       {
+        path:'/view-years/:id',
+        name:'YearsView',
+        component:YearsView
+      },
+      {
         path: "/classes",
         name: "ClassesIndex",
         component: ClassesIndex,
@@ -252,6 +289,11 @@ const routes = [
         path: "/edit-classes/:id",
         name: "ClassesEdit",
         component: ClassesEdit,
+      },
+      {
+        path: "/view-classes/:id",
+        name: "ClassesView",
+        component: ClassesView,
       },
       {
         path: "/index-permission",
