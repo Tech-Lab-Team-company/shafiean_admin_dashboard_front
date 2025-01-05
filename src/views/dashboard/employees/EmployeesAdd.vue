@@ -33,7 +33,6 @@
             <!-- <span class="error-feedback" v-if="v$.form.imageSrc.$error">{{
               getErrorMessage(v$.form.imageSrc)
             }}</span> -->
-            
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -45,6 +44,7 @@
               class="form-control"
               placeholder="أدخل أسم الموظف"
               v-model="form.name"
+              @keypress="onlyAllowLetters"
             />
             <span class="error-feedback" v-if="v$.form.name.$error">{{
               getErrorMessage(v$.form.name)
@@ -55,7 +55,7 @@
           <label for="phone">رقم الهاتف</label>
           <div class="input">
             <input
-              type="tel"
+              type="text"
               id="phone"
               class="no-spinner"
               placeholder="أدخل رقم الهاتف"
@@ -75,7 +75,7 @@
               id="email"
               placeholder="أدخل البريد الالكتروني"
               v-model="form.email"
-              @input="validatePhone"
+              @input="validateEmail"
             />
             <span class="error-feedback" v-if="v$.form.email.$error">{{
               getErrorMessage(v$.form.email)
@@ -122,7 +122,7 @@
         </div>
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="save()">حفظ</button>
+        <button type="submit" class="save">حفظ</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -136,6 +136,7 @@ import { useEmployeesAddStore } from "@/stores/employees/EmployeesAddStore";
 import "vue-multiselect/dist/vue-multiselect.css";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import Swal from "sweetalert2";
 
 // import Swal from "sweetalert2";
 
@@ -157,7 +158,7 @@ export default {
         email: "",
         password: "",
         role: "",
-        // image: null, 
+        // image: null,
         // imageSrc: "",
       },
       permissionOptions: ["list", "of", "options"],
@@ -184,7 +185,6 @@ export default {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
       }
-      return "";
     },
     removeImage() {
       this.form.image = null;
@@ -205,13 +205,21 @@ export default {
       }
     },
     async submitForm() {
+      this.v$.$validate();
+      if (this.v$.$invalid) {
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: "يرجى ملء جميع الحقول المطلوبة",
+        });
+        return;
+      }
       try {
         const employeesStore = useEmployeesAddStore();
         if (!employeesStore) {
           throw new Error("Failed to load employees store");
         }
         if (
-          
           !this.form.name ||
           !this.form.phone ||
           !this.form.email ||
@@ -226,13 +234,36 @@ export default {
         console.error("Error in submitForm:", error);
       }
     },
-
-    save() {
-      console.log("errorrrrrr");
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        // this.submitForm();
+    onlyAllowLetters(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[\u0621-\u064A\u0660-\u0669a-zA-Z\s]+$/; // يسمح بالحروف العربية والإنجليزية والمسافات
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح بإدخال الأرقام في هذا الحقل", "error");
       }
+    },
+    onlyAllowNumbers(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[0-9]+$/; // يسمح فقط بالأرقام
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح إلا بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
+    validateForm() {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // التحقق من صحة البريد الإلكتروني
+      if (!this.form.email || !emailPattern.test(this.form.email)) {
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: "البريد الالكتروني غير صالح",
+        });
+        return false;
+      }
+
+      return true; // إذا كان البريد الإلكتروني صحيحًا
     },
   },
 };
@@ -245,7 +276,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.164) ;
+  border: 1px solid rgba(0, 0, 0, 0.164);
   border-radius: 15px;
 }
 .no-spinner::-webkit-inner-spin-button,

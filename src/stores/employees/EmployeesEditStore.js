@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useEmployeesEditStore = defineStore("employeesEdit", {
   state: () => ({
@@ -46,12 +47,14 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
         });
 
         if (response.data.status == true) {
+          await router.push("/employees");
           this.employee = updatedData;
           Swal.fire({
             icon: "success",
             title: "Success",
             text: response.data.message || "Employee has been saved.",
           });
+
         } else {
           Swal.fire({
             icon: "error",
@@ -61,6 +64,13 @@ export const useEmployeesEditStore = defineStore("employeesEdit", {
         }
       } catch (error) {
         console.error("Error", "Failed to update employee.", "error");
+        const errorMessage = error.response?.data?.message || "حدث خطأ غير متوقع";
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: errorMessage,
+        });
+        console.error("Error saving employee:", error);
       }
     },
   },
