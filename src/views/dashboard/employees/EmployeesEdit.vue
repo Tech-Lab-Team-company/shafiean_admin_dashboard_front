@@ -43,6 +43,7 @@
               v-model="employee.name"
               type="text"
               placeholder="أدخل أسم الموظف"
+              @keypress="onlyAllowLetters"
             />
             <span class="error-feedback" v-if="v$.employee.name.$error">{{
               getErrorMessage(v$.employee.name)
@@ -57,6 +58,7 @@
               type="tel"
               placeholder="أدخل رقم الهاتف"
               class="no-spinner"
+              @keypress="onlyAllowNumbers"
             />
             <span class="error-feedback" v-if="v$.employee.phone.$error">{{
               getErrorMessage(v$.employee.phone)
@@ -70,6 +72,7 @@
               v-model="employee.email"
               type="email"
               placeholder="أدخل البريد الالكتروني"
+              @keypress="validateEmail"
             />
             <span class="error-feedback" v-if="v$.employee.email.$error">{{
               getErrorMessage(v$.employee.email)
@@ -92,7 +95,7 @@
         <!--        </div>-->
       </div>
       <div class="all-btn">
-        <button type="submit" class="save" @click="Edit()">تعديل</button>
+        <button type="submit" class="save">تعديل</button>
         <button type="button" class="bake" @click="$router.go(-1)">رجوع</button>
       </div>
     </form>
@@ -140,6 +143,38 @@ export default {
     };
   },
   methods: {
+    onlyAllowLetters(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[\u0621-\u064A\u0660-\u0669a-zA-Z\s]+$/; // يسمح بالحروف العربية والإنجليزية والمسافات
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
+    onlyAllowNumbers(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[0-9]+$/; // يسمح فقط بالأرقام
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح إلا بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
+    validateForm() {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // التحقق من صحة البريد الإلكتروني
+      if (!this.form.email || !emailPattern.test(this.form.email)) {
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: "البريد الالكتروني غير صالح",
+        });
+        return false;
+      }
+
+      return true; // إذا كان البريد الإلكتروني صحيحًا
+    },
+
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
@@ -172,8 +207,6 @@ export default {
       this.employee = store.employee;
     },
     async updateEmployee() {
-      console.log(this.employee.image);
-
       const store = useEmployeesEditStore();
       const id = this.$route.params.id;
       await store.updateEmployees(id, {
@@ -190,14 +223,7 @@ export default {
         // !this.employee.imageSrc ||
         !this.employee.permissions
       ) {
-        this.$router.go(-1);
         return;
-      }
-    },
-    Edit() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("errorrrrrr edit");
       }
     },
   },

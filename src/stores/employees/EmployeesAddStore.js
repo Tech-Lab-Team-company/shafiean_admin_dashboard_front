@@ -24,7 +24,8 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
         });
 
         this.employees = response.data.data;
-        if (response.data.status === true) {
+        if (response.data.status == true) {
+          // alert(response.data.message);
           await router.push("/employees");
           Swal.fire({
             icon: "success",
@@ -32,6 +33,7 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
             text: response.data.message || "تم إضافة الموظف بنجاح",
           });
         } else {
+          // alert(response.data.message);
           Swal.fire({
             icon: "error",
             title: "خطأ",
@@ -39,8 +41,15 @@ export const useEmployeesAddStore = defineStore("employeesAdd", {
           });
         }
       } catch (error) {
+        const errorMessage = error.response?.data?.message || "حدث خطأ غير متوقع";
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: errorMessage,
+        });
         console.error("Error saving employee:", error);
       }
-    },
+    }
   },
+
 });
