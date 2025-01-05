@@ -9,6 +9,7 @@ import EmployeesIndex from "@/views/dashboard/employees/EmployeesIndex.vue";
 import DisabilitiesIndex from "@/views/dashboard/disabilities/DisabilitiesIndex.vue";
 import EmployeesAdd from "@/views/dashboard/employees/EmployeesAdd.vue";
 import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
+import EmployeesView from "@/views/dashboard/employees/EmployeesView.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
 import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
 import CurriculaIndex from "@/views/dashboard/Curricula/CurriculaIndex.vue";
@@ -84,6 +85,11 @@ const routes = [
         path: "/edit-employee/:id",
         name: "EmployeesEdit",
         component: EmployeesEdit,
+      },
+      {
+        path: "/view-employee/:id",
+        name: "EmployeesView",
+        component: EmployeesView,
       },
       {
         path: "/Disabilities",

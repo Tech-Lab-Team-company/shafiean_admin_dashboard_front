@@ -41,13 +41,14 @@
                     @click="handleIconClick('delete', row[0])"
                   ></i>
                   <i
+                    v-if="isMaster(rowIndex)"
+                    class="blue fa-solid fa-eye action-icon"
+                    @click="handleIconClick('view', row[0])"
+                  ></i>
+                  <i
                     class="fa-solid fa-pen-to-square action-icon"
                     @click="handleIconClick('edit', row[0])"
                   ></i>
-                  <!--                  <i-->
-                  <!--                    class="fa-solid fa-eye action-icon"-->
-                  <!--                    @click="handleIconClick('view', row[0])"-->
-                  <!--                  ></i>-->
                 </div>
               </td>
             </tr>
@@ -100,6 +101,7 @@ export default {
     editLink: {
       type: String,
     },
+
     viewLink: {
       type: String,
     },
