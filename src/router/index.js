@@ -12,7 +12,9 @@ import EmployeesEdit from "@/views/dashboard/employees/EmployeesEdit.vue";
 import EmployeesView from "@/views/dashboard/employees/EmployeesView.vue";
 import DisabilitiesAdd from "@/views/dashboard/disabilities/DisabilitiesAdd.vue";
 import DisabilitiesEdit from "@/views/dashboard/disabilities/DisabilitiesEdit.vue";
+import DisabilitiesView from "@/views/dashboard/disabilities/DisabilitiesView.vue";
 import CurriculaIndex from "@/views/dashboard/Curricula/CurriculaIndex.vue";
+import CurriculaView from "@/views/dashboard/Curricula/CurriculaView.vue";
 import CurriculaAdd from "@/views/dashboard/Curricula/CurriculaAdd.vue";
 import CurriculaEdit from "@/views/dashboard/Curricula/CurriculaEdit.vue";
 import StepsIndex from "@/views/dashboard/steps/StepsIndex.vue";
@@ -107,9 +109,19 @@ const routes = [
         component: DisabilitiesEdit,
       },
       {
+        path: "/view-disabilities/:id",
+        name: "DisabilitiesView",
+        component: DisabilitiesView,
+      },
+      {
         path: "/Curricula",
         name: "Curricula",
         component: CurriculaIndex,
+      },
+      {
+        path: "/view-Curricula/:id",
+        name: "CurriculaView",
+        component: CurriculaView,
       },
       {
         path: "/add-curricula",
