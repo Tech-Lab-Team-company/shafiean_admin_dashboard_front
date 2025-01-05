@@ -14,6 +14,7 @@
               type="text"
               placeholder="اسم الدوله"
               v-model="countries.title"
+              @keypress="onlyAllowLetters"
             />
             <span class="error-feedback" v-if="v$.countries.title.$error">{{
               getErrorMessage(v$.countries.title)
@@ -28,6 +29,7 @@
               placeholder="كود الدوله"
               class="no-spinner"
               v-model="countries.code"
+              @keypress="onlyAllowNumbers"
             />
             <span class="error-feedback" v-if="v$.countries.code.$error">{{
               getErrorMessage(v$.countries.code)
@@ -42,6 +44,7 @@
               class="no-spinner"
               placeholder="كود الدوله"
               v-model="countries.phone_code"
+              @keypress="onlyAllowNumbers"
             />
             <span
               class="error-feedback"
@@ -62,7 +65,7 @@
 <script>
 import headerPages from "@/components/headerpages/HeaderPages.vue";
 import { useCountriesAddStore } from "@/stores/countries/countriesAddStore";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import { required, minValue } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
@@ -89,6 +92,22 @@ export default {
     headerPages,
   },
   methods: {
+    onlyAllowLetters(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[\u0621-\u064A\u0660-\u0669a-zA-Z\s]+$/; // يسمح بالحروف العربية والإنجليزية والمسافات
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
+    onlyAllowNumbers(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[0-9]+$/; // يسمح فقط بالأرقام
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح إلا بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         if (field.required.$invalid) {

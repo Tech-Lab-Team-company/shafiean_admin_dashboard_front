@@ -10,7 +10,7 @@ export const useCountriesEditStore = defineStore("countriesEdit", {
     async fetchCountries(id) {
       try {
         const response = await axios.post("fetch_country_details", { id });
-        if (response.data.status === true) {
+        if (response.data.status == true) {
           this.countries = response.data.data;
         } else {
           throw new Error(

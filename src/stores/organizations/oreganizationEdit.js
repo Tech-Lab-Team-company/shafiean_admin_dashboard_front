@@ -10,6 +10,7 @@ export const useOrganizationEditStore = defineStore("organizationEdit", {
     disabilities_id: [],
     cities_id: [],
     country_id: [],
+    cities: [],
   }),
   actions: {
     async getcities(countryId) {

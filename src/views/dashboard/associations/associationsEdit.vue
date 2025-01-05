@@ -31,11 +31,6 @@
               <img :src="organizations.imageSrc" alt="Avatar Preview" />
               <i class="fa fa-times delete-icon" @click="removeImage"></i>
             </div>
-            <span
-              class="error-feedback"
-              v-if="v$.organizations.imageSrc.$error"
-              >{{ getErrorMessage(v$.organizations.imageSrc) }}</span
-            >
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -177,7 +172,7 @@
             select-label=""
             :close-on-select="true"
             :options="cityOptions"
-            @update:model-value="updateModelValue"
+            @update:model-value="updateCityValue"
           ></multiselect>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
@@ -248,6 +243,7 @@ export default {
         city_id: null,
         disability_ids: null,
         website_link: "",
+        disabilities: [],
       },
       CountryOptions: [],
       cityOptions: [],
@@ -260,7 +256,6 @@ export default {
   validations() {
     return {
       organizations: {
-        imageSrc: { required },
         name: { required },
         licence_number: { required },
         phone: { required },
@@ -297,11 +292,7 @@ export default {
       this.organizations.image = null;
       this.organizations.imageSrc = "";
     },
-    updateModelValue() {
-      this.organizations.city_id = this.city_values
-        ? this.city_values.id
-        : null;
-    },
+
     async updatecountryValue() {
       this.organizations.country_id = this.Country_values
         ? this.Country_values.id
@@ -319,6 +310,12 @@ export default {
         this.cityOptions = [];
         this.city_values = null;
       }
+    },
+    async updateCityValue() {
+      this.organizations.city_id = this.city_values
+        ? this.city_values.id
+        : null;
+      // console.log("city_values", this.city_values);
     },
 
     updatedisabilitiesValue() {
@@ -350,32 +347,61 @@ export default {
     async fetchData() {
       const store = useOrganizationEditStore();
       const id = this.$route.params.id;
+
+      // جلب البيانات للمؤسسة
       await store.fetchOrganizations(id);
 
       this.organizations = store.organizations;
       if (this.organizations.image) {
         this.organizations.imageSrc = this.organizations.image;
       }
+
+      // جلب الدول والبيانات الأخرى
       await store.getCountries();
-      await store.getcities();
       await store.getDisabilities();
 
+      // التحقق من أنه يتم استدعاء getcities بعد الحصول على country_id
+      if (this.organizations.country_id) {
+        await store.getcities(this.organizations.country_id); // تمرير country_id إلى دالة getcities
+      }
+
+      // تعيين القيم من البيانات المسترجعة
       this.CountryOptions = store.countries;
       this.cityOptions = store.cities;
       this.disabilitiesOptions = store.disabilities;
-      console.log(this.disabilities, "org");
 
+      // تعيين القيم بناءً على البيانات المحفوظة
       this.Country_values = this.CountryOptions.find(
         (country) => country.id === this.organizations.country_id
       );
+
       this.city_values = this.cityOptions.find(
         (city) => city.id === this.organizations.city_id
       );
 
+      // تحضير القيم الأخرى للـ disabilities
       this.disabilities_values = this.organizations.disabilities.map((dis) => ({
         id: dis.id,
         title: dis.title,
       }));
+    },
+
+    // دالة لجلب المدن بناءً على country_id
+    async getcities(countryId) {
+      const response = await axios.post("fetch_cities", {
+        country_id: countryId,
+      });
+
+      if (response.data.status === true) {
+        this.cityOptions = response.data.data.data; // تعيين المدن في cityOptions
+
+        // تحديث cities_id بناءً على المدن المسترجعة
+        this.cityOptions.forEach((city) => {
+          this.cities_id.push(city.id); // حفظ الـ IDs في مصفوفة cities_id
+        });
+      } else {
+        console.log("Error fetching cities.");
+      }
     },
     async submitForm() {
       const store = useOrganizationEditStore();
@@ -384,7 +410,6 @@ export default {
         throw new Error("Failed to load organizations store");
       }
       if (
-        !this.organizations.imageSrc ||
         !this.organizations.name ||
         !this.organizations.licence_number ||
         !this.organizations.phone ||
