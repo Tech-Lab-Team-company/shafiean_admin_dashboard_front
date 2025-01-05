@@ -13,6 +13,7 @@
               type="text"
               placeholder="اسم الدوله"
               v-model="countries.title"
+              @keypress="onlyAllowLetters"
             />
             <span class="error-feedback" v-if="v$.countries.title.$error">{{
               getErrorMessage(v$.countries.title)
@@ -27,6 +28,7 @@
               placeholder="كود الدوله"
               v-model="countries.code"
               class="no-spinner"
+              @keypress="onlyAllowNumbers"
             />
             <span class="error-feedback" v-if="v$.countries.code.$error">{{
               getErrorMessage(v$.countries.code)
@@ -41,6 +43,7 @@
               placeholder="كود الدوله"
               v-model="countries.phone_code"
               class="no-spinner"
+              @keypress="onlyAllowNumbers"
             />
             <span
               class="error-feedback"
@@ -89,6 +92,22 @@ export default {
     };
   },
   methods: {
+    onlyAllowLetters(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[\u0621-\u064A\u0660-\u0669a-zA-Z\s]+$/; // يسمح بالحروف العربية والإنجليزية والمسافات
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
+    onlyAllowNumbers(event) {
+      const char = String.fromCharCode(event.keyCode);
+      const regex = /^[0-9]+$/; // يسمح فقط بالأرقام
+      if (!regex.test(char)) {
+        event.preventDefault();
+        Swal.fire("خطأ", "لا يُسمح إلا بإدخال الأرقام في هذا الحقل", "error");
+      }
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";

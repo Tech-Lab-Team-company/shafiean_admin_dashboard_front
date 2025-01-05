@@ -127,6 +127,8 @@
               type="email"
               placeholder="بريد الالكتروني المدير"
               v-model="form.manager_email"
+              class="no-spinner"
+              @change="validateForm"
             />
             <span class="error-feedback" v-if="v$.form.manager_email.$error">{{
               getErrorMessage(v$.form.manager_email)
@@ -136,7 +138,6 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="country">دوله</label>
           <multiselect
-            :select-by="false"
             id="country"
             v-model="Country_values"
             :options="CountryOptions"
@@ -156,21 +157,20 @@
         <div class="col-lg-6 col-md-6 col-12">
           <label for="city">مدينه</label>
           <multiselect
-            :select-by="false"
             id="city"
             v-model="city_values"
             :options="cityOptions"
             deselect-label=""
             track-by="id"
             label="title"
-            placeholder="أختر مدينه"
+            placeholder="أختر المدينه"
             select-label=""
             :close-on-select="true"
             @update:model-value="updateCityValue"
           />
-          <span class="error-feedback" v-if="v$.form.city_id.$error">{{
+          <!-- <span class="error-feedback" v-if="v$.form.city_id.$error">{{
             getErrorMessage(v$.form.city_id)
-          }}</span>
+          }}</span> -->
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="disabilities">الاعاقات</label>
@@ -218,7 +218,7 @@ import { useOrganizationAddStore } from "@/stores/organizations/organizationAddS
 import { mapState } from "pinia";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -265,7 +265,7 @@ export default {
         manager_phone: { required },
         manager_email: { required, email },
         country_id: { required },
-        city_id: { required },
+        // city_id: { required },
         disability_ids: { required },
         website_link: { required },
       },
@@ -279,6 +279,21 @@ export default {
     }),
   },
   methods: {
+    validateForm() {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // التحقق من صحة البريد الإلكتروني
+      if (!this.form.email || !emailPattern.test(this.form.email)) {
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: "البريد الالكتروني غير صالح",
+        });
+        return false;
+      }
+
+      return true; // إذا كان البريد الإلكتروني صحيحًا
+    },
     getErrorMessage(field) {
       if (field.$invalid && field.$dirty) {
         return "هذا الحقل مطلوب";
@@ -340,7 +355,6 @@ export default {
           throw new Error("Failed to load organizations store");
         }
         if (
-      
           !this.form.name ||
           !this.form.licence_number ||
           !this.form.phone ||
