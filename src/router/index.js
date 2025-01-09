@@ -315,7 +315,7 @@ const routes = [
         component: AddTypeLesson,
       },
       {
-        path: "/edit-type-lesson",
+        path: "/edit-type-lesson/:id",
         name: "edit-type-lesson",
         component: EditTypeLesson,
       },
@@ -325,7 +325,7 @@ const routes = [
         component: IndexTypeLesson,
       },
       {
-        path: "/view-type-lesson",
+        path: "/view-type-lesson/:id",
         name: "view-type-lesson",
         component: ViewTypeLesson,
       },

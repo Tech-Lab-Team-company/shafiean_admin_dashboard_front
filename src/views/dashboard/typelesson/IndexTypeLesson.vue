@@ -99,7 +99,7 @@ export default {
 
       await lessonsStore.fetchTypeLessons(1, this.word);
 
-      if (lessonsStore.lessons.length === 0) {
+      if (lessonsStore.type_lessons.length === 0) {
         this.errorMessage = "لم يتم العثور على أي كلمة";
       } else {
         this.errorMessage = "";
