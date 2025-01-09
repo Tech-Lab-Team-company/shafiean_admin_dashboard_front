@@ -12,7 +12,7 @@ export const useLessonsAddStore = defineStore("LessonsAdd", {
     ayahs: [],
     ayahs_ids: [],
     surahs_ids: [],
-
+    
   }),
 
   actions: {

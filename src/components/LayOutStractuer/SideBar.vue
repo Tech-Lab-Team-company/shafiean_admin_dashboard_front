@@ -156,7 +156,7 @@ export default {
               route: "/steps",
               icon: "fa-regular fa-clipboard",
             },
-            { name: "الحصص", route: "/lessons", icon: "fa-regular fa-file" },
+            { name: "الحلقات", route: "/lessons", icon: "fa-regular fa-file" },
             {
               name: "السنين الدراسيه",
               route: "/years",
@@ -165,6 +165,11 @@ export default {
             {
               name: "الفصول الدراسيه",
               route: "/classes",
+              icon: "fa-solid fa-person-chalkboard",
+            },
+            {
+              name: "نوع الحلقه",
+              route: "/index-type-lesson",
               icon: "fa-solid fa-person-chalkboard",
             },
           ],
