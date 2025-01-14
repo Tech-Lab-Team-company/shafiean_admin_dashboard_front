@@ -2,10 +2,21 @@
   <div class="lessons-add">
     <div class="plus">
       <i class="fa-solid fa-pen-to-square"></i>
-      <header-pages title="تعديل حصه" :showButton="false" />
+      <header-pages title="تعديل حلقه" :showButton="false" />
     </div>
     <form @submit.prevent="updateLessons">
       <div class="row">
+        <div class="col-lg-12 col-md-6 col-12">
+          <div class="input">
+            <label for=""> اسم الحلقه</label>
+
+            <input
+              type="text"
+              placeholder="اسم الحلقه"
+              v-model="lessons.title"
+            />
+          </div>
+        </div>
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
           <multiselect
@@ -28,7 +39,7 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="name"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             @update:model-value="handleTypeChange"
@@ -44,7 +55,7 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="text"
+            label="title"
             track-by="id"
             placeholder="اختر الايه"
             @change="handleStartAyaChange"
@@ -61,28 +72,13 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="text"
+            label="title"
             track-by="id"
             placeholder="اختر الايه"
             :disabled="!ayaType_values"
             @change="handleEndAyaChange"
             @update:model-value="handleayaChange"
           ></multiselect>
-        </div>
-
-        <div class="col-lg-12 col-md-6 col-12">
-          <div class="input">
-            <label for=""> الوصف</label>
-            <textarea
-              id="description"
-              name="w3review"
-              rows="4"
-              cols="100"
-              placeholder="اسم الدرس"
-              v-model="lessons.title"
-            >
-            </textarea>
-          </div>
         </div>
       </div>
 
@@ -231,21 +227,21 @@ export default {
       this.selectedType_values = this.lessons.surah
         ? {
             id: this.lessons.surah.id,
-            name: this.lessons.surah.name,
+            title: this.lessons.surah.title,
           }
         : null;
 
       this.ayaType_values = this.lessons.start_ayah
         ? {
             id: this.lessons.start_ayah.id,
-            text: this.lessons.start_ayah.text,
+            title: this.lessons.start_ayah.title,
           }
         : null;
 
       this.ayaTypeto_values = this.lessons.end_ayah
         ? {
             id: this.lessons.end_ayah.id,
-            text: this.lessons.end_ayah.text,
+            title: this.lessons.end_ayah.title,
           }
         : null;
 

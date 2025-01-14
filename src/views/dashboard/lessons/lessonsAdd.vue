@@ -2,10 +2,23 @@
   <div class="lessons-add">
     <div class="plus">
       <i class="fa-solid fa-plus"></i>
-      <header-pages title="اضافة حصه" :showButton="false" />
+      <header-pages title="اضافة حلقه" :showButton="false" />
     </div>
     <form @submit.prevent="submitForm">
       <div class="row">
+        <div class="col-lg-12 col-md-6 col-12">
+          <label for="" class="mt-3"> اسم الحلقه</label>
+          <div class="input">
+            <input
+              type="text"
+              placeholder="اسم الحلقه"
+              v-model="lessons.title"
+            />
+            <span class="error-feedback" v-if="v$.lessons.title.$error">
+              {{ getErrorMessage(v$.lessons.title) }}
+            </span>
+          </div>
+        </div>
         <!-- Multiselect for Stages -->
         <div class="col-lg-6 col-md-6 col-12">
           <label for="Stages">المرحلة</label>
@@ -33,7 +46,7 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="name"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             @change="fetchsurahs"
@@ -52,7 +65,7 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="text"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             @change="handleStartAyaChange"
@@ -71,7 +84,7 @@
             deselect-label=""
             select-label=""
             :close-on-select="true"
-            label="text"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             :disabled="!ayaType_values"
@@ -81,22 +94,6 @@
           <span class="error-feedback" v-if="v$.lessons.start_ayah_id.$error">
             {{ getErrorMessage(v$.lessons.start_ayah_id) }}
           </span>
-        </div>
-        <div class="col-lg-12 col-md-6 col-12">
-          <label for="" class="mt-3"> وصف المنهج</label>
-          <div class="input">
-            <textarea
-              id="description"
-              name="w3review"
-              rows="4"
-              cols="100"
-              placeholder="اسم الدرس"
-              v-model="lessons.title"
-            ></textarea>
-            <span class="error-feedback" v-if="v$.lessons.title.$error">
-              {{ getErrorMessage(v$.lessons.title) }}
-            </span>
-          </div>
         </div>
       </div>
 
@@ -137,7 +134,7 @@ export default {
       ayaTypeto_values: null,
       ayaOptions: [],
       StagesOptions: [],
-      Stages_values: {},
+      Stages_values: null,
     };
   },
   validations() {

@@ -51,6 +51,10 @@ import ClassesEdit from "@/views/dashboard/classesSection/ClassesEdit.vue";
 import ClassesView from "@/views/dashboard/classesSection/ClassesView.vue";
 import IndexPermission from "@/views/dashboard/permissions/IndexPermissions.vue";
 import AddPermission from "@/views/dashboard/permissions/AddPermissions.vue";
+import AddTypeLesson from "@/views/dashboard/typelesson/AddTypeLesson.vue";
+import EditTypeLesson from "@/views/dashboard/typelesson/EditTypeLesson.vue";
+import IndexTypeLesson from "@/views/dashboard/typelesson/IndexTypeLesson.vue";
+import ViewTypeLesson from "@/views/dashboard/typelesson/ViewTypeLesson.vue";
 const routes = [
   {
     path: "/login",
@@ -271,9 +275,9 @@ const routes = [
         component: YearsEdit,
       },
       {
-        path:'/view-years/:id',
-        name:'YearsView',
-        component:YearsView
+        path: '/view-years/:id',
+        name: 'YearsView',
+        component: YearsView
       },
       {
         path: "/classes",
@@ -304,6 +308,26 @@ const routes = [
         path: "/add-permission",
         name: "add-permission",
         component: AddPermission,
+      },
+      {
+        path: "/add-type-lesson",
+        name: "add-type-lesson",
+        component: AddTypeLesson,
+      },
+      {
+        path: "/edit-type-lesson/:id",
+        name: "edit-type-lesson",
+        component: EditTypeLesson,
+      },
+      {
+        path: "/index-type-lesson",
+        name: "index-type-lesson",
+        component: IndexTypeLesson,
+      },
+      {
+        path: "/view-type-lesson/:id",
+        name: "view-type-lesson",
+        component: ViewTypeLesson,
       },
     ],
   },

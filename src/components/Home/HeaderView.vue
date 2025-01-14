@@ -20,7 +20,7 @@
             المناهج</router-link
           >
           <router-link to="/lessons" class="btn btn_title_page">
-            الحصص</router-link
+            الحلقات</router-link
           >
           <router-link to="/steps" class="btn btn_title_page">
             المراحل</router-link
@@ -408,13 +408,13 @@ export default {
       const step = (timestamp) => {
         if (!startTime) startTime = timestamp;
         const progress = timestamp - startTime;
-        const increment = Math.min(progress / duration, 1); 
-        this[variable] = Math.floor(increment * target); 
+        const increment = Math.min(progress / duration, 1);
+        this[variable] = Math.floor(increment * target);
 
         if (progress < duration) {
-          window.requestAnimationFrame(step); 
+          window.requestAnimationFrame(step);
         } else {
-          this[variable] = target; 
+          this[variable] = target;
         }
       };
 

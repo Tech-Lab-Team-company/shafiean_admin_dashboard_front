@@ -1,9 +1,9 @@
 <template>
   <div class="lessons">
     <header-pages
-      title="الحصص"
+      title="الحلقات"
       button="+ اضافة 
-    حصه"
+    حلقه"
       link="/add-lessons"
     />
     <div class="alll">
@@ -11,7 +11,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن أسم حصه..."
+          placeholder="بحث عن أسم حلقه..."
           v-model="word"
           @input="debouncedSearch"
         />
@@ -59,7 +59,7 @@ export default {
       debouncedSearch: null,
       tableHeaders: [
         "ID",
-        " وصف المنهج",
+        " اسم الحلقه",
         " المرحله",
         "السوره",
         "من ايه",
@@ -87,9 +87,9 @@ export default {
         les.id,
         les.title,
         les.stage?.title || "",
-        les.surah?.name || "",
-        les.start_ayah?.text || "",
-        les.end_ayah?.text || "",
+        les.surah?.title || "",
+        les.start_ayah?.title || "",
+        les.end_ayah?.title || "",
       ]);
     },
     tablePages() {
