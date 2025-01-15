@@ -91,7 +91,7 @@
             multiple="true"
             select-label=""
             :close-on-select="true"
-            label="name"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             @update:model-value="handleTypeChange"
@@ -237,7 +237,7 @@ export default {
         if (!stepsStore) throw new Error("Failed to load steps store");
 
         await stepsStore.addStepsData(this.steps); // Save the form data
-        this.$router.push("/steps"); // Navigate to steps page after successful save
+        // this.$router.push("/steps"); // Navigate to steps page after successful save
       } catch (error) {
         console.error("Error submitting form:", error);
       }

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export const useStepsAddStore = defineStore("StepsAdd", {
   state: () => ({
@@ -112,6 +113,7 @@ export const useStepsAddStore = defineStore("StepsAdd", {
             "Steps have been saved successfully.",
             "success"
           );
+          router.push("/steps");
         } else {
           Swal.fire(
             "Error",
