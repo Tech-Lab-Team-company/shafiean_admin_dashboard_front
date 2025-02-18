@@ -91,7 +91,7 @@
             multiple="true"
             select-label=""
             :close-on-select="true"
-            label="name"
+            label="title"
             track-by="id"
             placeholder="اختر السور"
             @update:model-value="handleTypeChange"
