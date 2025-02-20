@@ -72,8 +72,9 @@ export default {
 
       typeOptions: [
         { id: 1, name: "قرأن" },
-        { id: 2, name: "حديث" },
-        { id: 3, name: "فقه" },
+        { id: 2, name: "فقه" },
+        { id: 3, name: "حديث" },
+        { id: 4, name: "العلوم الاسلامية" },
       ],
       selectedType: null,
     };
@@ -102,12 +103,18 @@ export default {
       } else if (selectedOption === 2) {
         return {
           id: 2,
-          name: "حديث",
+
+          name: "فقه",
         };
       } else if (selectedOption === 3) {
         return {
           id: 3,
-          name: "فقه",
+          name: "حديث",
+        };
+      } else if (selectedOption === 4) {
+        return {
+          id: 4,
+          name: "العلوم الاسلامية",
         };
       }
     },
