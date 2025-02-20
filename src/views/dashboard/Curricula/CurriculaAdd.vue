@@ -71,7 +71,7 @@ export default {
         { id: 1, name: "قرأن" },
         { id: 2, name: "فقه" },
         { id: 3, name: "حديث" },
-        { id: 4, name: "علوم اسلاميه" },
+        { id: 4, name: "العلوم الاسلامية" },
       ],
       selectedType: null,
     };
