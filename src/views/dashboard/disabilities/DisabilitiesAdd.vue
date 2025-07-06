@@ -2,7 +2,7 @@
   <div class="disabilities-add">
     <div class="plus">
       <i class="fa-solid fa-plus"></i>
-      <HeaderPages title="اضافة اعاقه" :showButton="false" />
+      <HeaderPages title="اضافة فئه تعليمية" :showButton="false" />
     </div>
     <form action="" @submit.prevent="submitForm">
       <div class="row">
@@ -35,11 +35,11 @@
         </div>
 
         <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> اسم الاعاقه</label>
+          <label for=""> اسم الفئه تعليمية</label>
           <div class="input">
             <input
               type="text"
-              placeholder="أدخل أسم الاعاقه"
+              placeholder="أدخل أسم الفئه تعليمية"
               v-model="form.title"
             />
             <span class="error-feedback" v-if="v$.form.title.$error">{{
@@ -55,7 +55,7 @@
               id="description"
               name="w3review"
               rows="4"
-              placeholder="وصف الاعاقه"
+              placeholder="وصف الفئه تعليمية"
               v-model="form.description"
               required
             >
@@ -67,12 +67,12 @@
         </div>
 
         <!-- <div class="col-lg-6 col-md-6 col-12">
-          <label for=""> وصف الاعاقه</label>
+          <label for=""> وصف الفئه تعليمية</label>
           <div class="input">
             <input
               v-model="form.description"
               type="text"
-              placeholder="وصف الاعاقه"
+              placeholder="وصف الفئه تعليمية"
             />
             <span class="error-feedback" v-if="v$.form.description.$error">{{
               getErrorMessage(v$.form.description)

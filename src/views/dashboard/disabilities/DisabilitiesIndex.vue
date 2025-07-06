@@ -1,8 +1,8 @@
 <template>
   <div class="disabilities">
     <HeadersPages
-      title="الأعاقات"
-      button="+ اضافة اعاقه "
+      title="الفئات التعليمية"
+      button="+ اضافة فئه تعليمية "
       link="/add-disabilities"
     />
 
@@ -11,7 +11,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
-          placeholder="بحث عن أسم أعاقه..."
+          placeholder="بحث عن أسم فئه تعليمية..."
           v-model="word"
           @input="debouncedSearch"
         />
@@ -54,7 +54,7 @@ export default {
       word: "", // الكلمة المدخلة في البحث
       debouncedSearch: null,
       errorMessage: "",
-      tableHeaders: ["ID", "الصور", "اسم الأعاقه", "وصف الأعاقه"],
+      tableHeaders: ["ID", "الصور", "اسم الفئه تعليمية", "وصف الفئه تعليمية"],
       editLink: "/edit-disabilities",
       viewLink: "/view-disabilities",
     };

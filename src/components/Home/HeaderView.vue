@@ -14,7 +14,7 @@
           >
 
           <router-link to="/disabilities" class="btn btn_title_page"
-            >الاعاقات</router-link
+            >فئه تعليمية</router-link
           >
           <router-link to="/curricula" class="btn btn_title_page good">
             المناهج</router-link
