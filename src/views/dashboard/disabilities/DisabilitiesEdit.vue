@@ -2,7 +2,7 @@
   <div class="editdisabilities">
     <div class="plus">
       <i class="fa-solid fa-pen-to-square"></i>
-      <HeaderPages title="تعديل اعاقه" :showButton="false" />
+      <HeaderPages title="تعديل فئه تعليمية" :showButton="false" />
     </div>
 
     <div class="disabilities-edit">
@@ -40,11 +40,11 @@
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-12">
-            <label for=""> اسم الاعاقه</label>
+            <label for=""> اسم الفئه تعليمية</label>
             <div class="input">
               <input
                 v-model="disabilitie.title"
-                placeholder="أدخل اسم الاعاقه"
+                placeholder="أدخل اسم الفئه تعليمية"
                 type="text"
               />
               <span v-if="v$.disabilitie.title.$error" class="error-feedback">{{
@@ -59,7 +59,7 @@
                 id="description"
                 v-model="disabilitie.description"
                 name="w3review"
-                placeholder="وصف الاعاقه"
+                placeholder="وصف الفئه تعليمية"
                 required
                 rows="4"
               >

@@ -138,7 +138,7 @@ export default {
           icon: "fa-solid fa-building-user",
         },
         {
-          name: "الأعاقات",
+          name: "الفئات التعليمية",
           route: "/disabilities",
           icon: "fa-solid fa-wheelchair",
         },

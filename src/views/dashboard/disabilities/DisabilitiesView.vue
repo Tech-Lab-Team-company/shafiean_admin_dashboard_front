@@ -2,7 +2,7 @@
   <div>
     <div class="plus">
       <!-- <i class="fa-solid fa-pen-to-square"></i> -->
-      <HeaderPages title="تفاصيل اعاقه" :showButton="false" />
+      <HeaderPages title="تفاصيل فئه تعليمية" :showButton="false" />
     </div>
 
     <div class="disabilities-view">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <p>اسم الاعاقه</p>
+          <p>اسم الفئه تعليمية</p>
 
           <span class="data">{{ disabilitie.title }}</span>
         </div>

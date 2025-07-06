@@ -14,7 +14,7 @@ const pinia = createPinia();
 
 // Create the app instance and use Pinia and the router
 const app = createApp(App);
-axios.defaults.baseURL = "https://api.shafean.x-coders.net/api/";
+axios.defaults.baseURL = "http://api.shafean.x-coders.net/api/";
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "token"
 )}`;

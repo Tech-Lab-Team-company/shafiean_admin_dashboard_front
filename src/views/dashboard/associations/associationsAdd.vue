@@ -173,7 +173,7 @@
           }}</span> -->
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-          <label for="disabilities">الاعاقات</label>
+          <label for="disabilities">فئه تعليمية</label>
           <multiselect
             id="disabilities"
             v-model="disabilities_values"
@@ -181,7 +181,7 @@
             track-by="id"
             deselect-label=""
             label="title"
-            placeholder="أختر الاعاقات"
+            placeholder="أختر فئه تعليمية"
             :multiple="true"
             :clear-on-select="true"
             select-label=""
