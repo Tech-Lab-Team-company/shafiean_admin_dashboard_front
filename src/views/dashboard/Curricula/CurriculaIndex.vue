@@ -42,6 +42,7 @@ import { useCurriculaStore } from "@/stores/curricula/curriculaStore";
 import { usePaginationStore } from "@/stores/pagination/PaginationStore";
 import { mapState } from "pinia";
 import { debounce } from "lodash"; // استيراد دالة debounce
+import Swal from "sweetalert2";
 
 export default {
   components: { HeaderPages, TablesPageVue, PaginationPage },
@@ -114,8 +115,16 @@ export default {
     },
 
     async handleDeleteCurriculas(id) {
-      const curriculaStore = useCurriculaStore();
-      await curriculaStore.deleteCurriculas(id);
+      if (id == 18) {
+        Swal.fire({
+          icon: "error",
+          title: "حذر",
+          text: "لا يمكن حذف هذا المنهج",
+        });
+      } else {
+        const curriculaStore = useCurriculaStore();
+        await curriculaStore.deleteCurricula(id);
+      }
     },
     handlePageChange(page) {
       const curriculaStore = useCurriculaStore();
