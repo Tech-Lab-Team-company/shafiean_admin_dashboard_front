@@ -81,7 +81,7 @@
         </div>
 
         <!-- Type Select -->
-        <div class="col-lg-6 col-md-6 col-12">
+        <div class="col-lg-6 col-md-6 col-12" v-if="steps.curriculum_id == 18">
           <label for="type">السور</label>
           <multiselect
             id="type"

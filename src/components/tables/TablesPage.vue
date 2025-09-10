@@ -36,7 +36,10 @@
               <td>
                 <div class="action-icons">
                   <i
-                    v-if="isMaster(rowIndex)"
+                    v-if="
+                      isMaster(rowIndex) &&
+                      (row[0] !== 18 || $route.path !== '/curricula')
+                    "
                     class="red fa-solid fa-trash action-icon"
                     @click="handleIconClick('delete', row[0])"
                   ></i>
